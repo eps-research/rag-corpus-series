@@ -85,11 +85,11 @@ The EPS Research publication arc underlying this platform.
 | Paper | Journal | DOI / ID | Status |
 |-------|---------|----------|--------|
 | Flynn & Cannaliato (2025) — Omega correction introduced | Frontiers Astron Space Sci | [10.3389/fspas.2025.1680387](https://doi.org/10.3389/fspas.2025.1680387) | Published |
-| Flynn (2026) — 84 SPARC baryonic validation | New Astronomy | NEWAST-D-26-00207 | Under review |
+| Flynn (2026) — 84 SPARC baryonic validation | Seeking journal | [10.5281/zenodo.20132805](https://doi.org/10.5281/zenodo.20132805) | Letter to Open J. Astrophysics |
 | Flynn (2026) — Unified HI Corpus v7.0 data descriptor | Astronomy & Computing | [arXiv:2604.13489](https://arxiv.org/abs/2604.13489) | Under review |
 | Flynn (2026) — GC Corpus v1.3.1 data descriptor | PASP | [arXiv:2605.03099](https://arxiv.org/abs/2605.03099) | Submitted |
 | Flynn (2026) — Dwarf/Irregular Corpus v1.0 data descriptor | PASP | [arXiv:2605.22163](https://arxiv.org/abs/2605.22163) | Submitted |
-| Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Published |
+| Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Published |
 | Flynn (2026+) — Cross-epoch omega evolution (z=0 to z~6) | TBD | planned | Planned |
 | Flynn (2026+) — RAMSES simulation Paper 3 | TBD | planned | Planned |
 
