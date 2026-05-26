@@ -152,10 +152,11 @@ This platform is designed to grow. Planned additions:
 
 | Addition | Description | Timeline |
 |----------|-------------|----------|
-| High-z Corpus Z2 | REBELS + CRISTAL [CII] data at z ~ 6–8 | 2026–2027 |
-| GC Corpus v2.0 | Extended globular cluster parameters | 2026 |
+| RAMSES simulations | z = 6 → z = 0 omega evolution | August 2026 |
+| High-z Corpus Z2 | REBELS + CRISTAL [CII] data at z ~ 6–8 | 2027 |
+| GC Corpus v2.0 | Extended globular cluster parameters | 2027 |
 | Unified HI v8.0 | Updated SPARC + WALLABY DR3 | 2027 |
-| RAMSES simulations | z = 6 → z = 0 omega evolution | 2027 |
+| Gravitational lensing paper | Omega spin as spacetime distortion | 2027 |
 | New LLM adapters | Fine-tunes on expanded corpora | Ongoing |
 
 ---
