@@ -22,3 +22,8 @@ Thumbs.db
 
 # Logs
 *.log
+*.json
+*.jsonl
+*.csv
+quickstart_*.png
+.ipynb_checkpoints/
