@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+*.so
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data files (large - stored on Zenodo not GitHub)
+*.fits
+*.hdf5
+*.h5
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
