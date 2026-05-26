@@ -78,13 +78,16 @@ git clone https://github.com/eps-research/rag-corpus-series
 cd rag-corpus-series
 
 # Install dependencies
-pip install numpy matplotlib jupyter
+pip install -r requirements.txt
+
+# Download all 4 corpora from Zenodo
+python download_corpora.py
 
 # Launch JupyterLab
 jupyter lab
 ```
 
-Navigate to the relevant examples folder and open any `.ipynb` file. Each notebook is self-contained and loads data from the Zenodo corpus files. Download the corpus JSON from the relevant Zenodo record and place it in the same directory as the notebook.
+Navigate to the relevant examples folder and open any `.ipynb` file. Each notebook is self-contained and loads data from the corpus files downloaded by `download_corpora.py`.
 
 ---
 
