@@ -11,7 +11,7 @@ ALMA [CII] 158μm morpho-kinematic data for 31 star-forming main-sequence galaxi
 | Resource | Link |
 |----------|------|
 | Zenodo deposit | [10.5281/zenodo.20369285](https://doi.org/10.5281/zenodo.20369285) |
-| arXiv preprint | pending (submit/7633036) |
+| arXiv preprint | 2605.25339 |
 | Journal submission | arXiv (submitted) |
 
 ## Coverage
