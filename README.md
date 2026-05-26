@@ -101,10 +101,10 @@ The EPS Research publication arc underlying this platform.
 Fine-tuned models and RAG utilities. Four-model team spanning laptop to research cluster.
 Full details in [llms/README.md](./llms/).
 
-| Model | Size | Target | Hardware | Cloud | Role |
-|-------|------|--------|----------|-------|------|
+| Model | Size | Target | Hardware | Cloud Options | Role |
+|-------|------|--------|----------|---------------|------|
 | Flagship | ~72B | Researchers | Node1+Node2 (192GB) | Salad Cloud | Top-tier research grade |
-| Desktop | ~31B | Advanced users | RTX 5090 (32GB) | Colab Pro | Local inference |
+| Desktop | ~31B | Advanced users | RTX 5090 (32GB) | Salad Cloud | Local inference |
 | Laptop | ~7B | HS students | CPU/laptop GPU | [Colab Free](./examples/highschool/) | In-school use |
 | Vision Expert | ~72B | Researchers | Node1 (96GB) | Salad Cloud | Figure reading |
 
