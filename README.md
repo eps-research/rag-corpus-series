@@ -89,7 +89,7 @@ The EPS Research publication arc underlying this platform.
 | Flynn (2026) — Unified HI Corpus v7.0 data descriptor | Astronomy & Computing | [arXiv:2604.13489](https://arxiv.org/abs/2604.13489) | Under review |
 | Flynn (2026) — GC Corpus v1.3.1 data descriptor | PASP | [arXiv:2605.03099](https://arxiv.org/abs/2605.03099) | Submitted |
 | Flynn (2026) — Dwarf/Irregular Corpus v1.0 data descriptor | PASP | [arXiv:2605.22163](https://arxiv.org/abs/2605.22163) | Submitted |
-| Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | submit/7633036 (pending ID) | On hold |
+| Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | arXiv:2605.25339 | On hold |
 | Flynn (2026+) — Cross-epoch omega evolution (z=0 to z~6) | TBD | planned | Planned |
 | Flynn (2026+) — RAMSES simulation Paper 3 | TBD | planned | Planned |
 
