@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use this platform, please cite as below."
+title: "EPS Research Astro-RAG Platform"
+authors:
+  - family-names: Flynn
+    given-names: David C.
+    orcid: "https://orcid.org/0000-0002-2768-6650"
+    affiliation: EPS Research
+version: "1.0.0"
+date-released: "2026-05-26"
+url: "https://github.com/eps-research/rag-corpus-series"
+repository-code: "https://github.com/eps-research/rag-corpus-series"
+license: CC-BY-4.0
+abstract: >
+  A unified platform of open astrophysics corpora, cross-epoch kinematic
+  analysis tools, LLM-assisted scientific workflows, and educational resources
+  spanning Milky Way globular clusters to z~6. Includes four machine-readable
+  corpora (438 HI galaxies, 129 dwarfs, 174 globular clusters, 31 high-z
+  galaxies) and 120 verified Jupyter notebook examples.
+keywords:
+  - astrophysics
+  - galaxy rotation curves
+  - RAG
+  - LLM
+  - open science
+  - high-redshift galaxies
+  - globular clusters
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Flynn
+      given-names: David C.
+    - family-names: Cannaliato
+      given-names: J.
+  title: "A New Empirical Fit to Galaxy Rotation Curves"
+  journal: "Frontiers in Astronomy and Space Sciences"
+  year: 2025
+  doi: "10.3389/fspas.2025.1680387"

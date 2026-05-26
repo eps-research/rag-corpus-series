@@ -11,11 +11,11 @@ A unified platform of open astrophysics corpora, cross-epoch kinematic analysis 
 ```
 EPS Research Astro-RAG Platform
 │
-├── Silo 1 — z = 0 Data         Local Universe RAG Corpora
-├── Silo 2 — z ~ 6 Data         Early Universe RAG Corpus
-├── Silo 3 — Example Library    Notebooks + High-School Track
-├── Silo 4 — Papers & Preprints Published Research Arc
-└── Silo 5 — LLMs & Tools       Fine-tuned Models + RAG Utilities
+├── Silo 1 — z = 0 Data         Local Universe RAG Corpora        ✓ Stage 1
+├── Silo 2 — z ~ 6 Data         Early Universe RAG Corpus          ✓ Stage 1
+├── Silo 3 — Example Library    Notebooks + High-School Track      ✓ Stage 1
+├── Silo 4 — Papers & Preprints Published Research Arc             ✓ Stage 1
+└── Silo 5 — LLMs & Tools       Fine-tuned Models + RAG Utilities  ○ Stage 2
 ```
 
 ---
