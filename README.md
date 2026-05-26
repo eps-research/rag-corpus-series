@@ -40,7 +40,7 @@ The high-redshift anchor of the platform, bridging local kinematic surveys to th
 
 | Corpus | N | Tracer | Zenodo | arXiv |
 |--------|---|--------|--------|-------|
-| [High-z Kinematic Corpus Z1](./highz_corpus_z1/) | 31 galaxies, z = 4.26–5.68 | ALMA [CII] 158μm | [10.5281/zenodo.20369285](https://doi.org/10.5281/zenodo.20369285) | pending |
+| [High-z Kinematic Corpus Z1](./highz_corpus_z1/) | 31 galaxies, z = 4.26–5.68 | ALMA [CII] 158μm | [10.5281/zenodo.20369285](https://doi.org/10.5281/zenodo.20369285) | [2605.25339](https://arxiv.org/abs/2605.25339) |
 
 Z1 is the fourth and most recent corpus in the series, providing ALPINE survey morpho-kinematic data with per-ring 3DBarolo rotation curves for 8 confirmed rotators and morpho-kinematic classifications for 23 additional galaxies.
 
@@ -89,7 +89,7 @@ The EPS Research publication arc underlying this platform.
 | Flynn (2026) — Unified HI Corpus v7.0 data descriptor | Astronomy & Computing | [arXiv:2604.13489](https://arxiv.org/abs/2604.13489) | Under review |
 | Flynn (2026) — GC Corpus v1.3.1 data descriptor | PASP | [arXiv:2605.03099](https://arxiv.org/abs/2605.03099) | Submitted |
 | Flynn (2026) — Dwarf/Irregular Corpus v1.0 data descriptor | PASP | [arXiv:2605.22163](https://arxiv.org/abs/2605.22163) | Submitted |
-| Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | arXiv:2605.25339 | On hold |
+| Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Published |
 | Flynn (2026+) — Cross-epoch omega evolution (z=0 to z~6) | TBD | planned | Planned |
 | Flynn (2026+) — RAMSES simulation Paper 3 | TBD | planned | Planned |
 
