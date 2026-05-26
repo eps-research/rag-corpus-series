@@ -130,5 +130,19 @@ Paper 7 (2027) — cross-epoch omega evolution — PLANNED
 Paper 8 (2027) — RAMSES Paper 3 — PLANNED
 ```
 
+## Planned Paper — Omega Correction and Gravitational Lensing
+
+**Flynn, D.C. (planned)**
+*Omega Kinematic Correction as a New Source of Spacetime Distortion: Implications for Gravitational Lensing*
+
+Einstein's general relativity accounts for spacetime curvature from mass-energy.
+The EPS omega correction introduces a spin-derived kinematic term — a second,
+independent source of effective spacetime distortion beyond Einsteinian mass concentration.
+This paper will explore the observational predictions for gravitational lensing
+that differ from pure GR: modified Einstein ring radii, altered shear profiles,
+and testable deviations in strong lensing systems.
+
+**Status:** Planned
+
 ---
 *Part of the [EPS Research Astro-RAG Platform](../README.md)*
