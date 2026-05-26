@@ -102,7 +102,7 @@ Full details in [llms/README.md](./llms/).
 
 | Model | Size | Target | Hardware | Role |
 |-------|------|--------|----------|------|
-| Flagship | ~72B | Researchers | Node1+Node2 (192GB) | AstroSage-70B competitor |
+| Flagship | ~72B | Researchers | Node1+Node2 (192GB) | Top-tier research grade |
 | Desktop | ~31B | Advanced users | RTX 5090 (32GB) | Local inference |
 | Laptop | ~7B | HS students | CPU/laptop GPU | In-school use |
 | Vision Expert | ~72B | Researchers | Node1 (96GB) | Figure reading |
