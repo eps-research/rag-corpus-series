@@ -4,6 +4,8 @@
 
 A unified platform of open astrophysics corpora, cross-epoch kinematic analysis tools, LLM-assisted scientific workflows, and educational resources — spanning Milky Way globular clusters to the epoch approaching cosmic reionization.
 
+> 🚀 **New here?** Start with [QuickStart.ipynb](./QuickStart.ipynb) — load all four corpora and reproduce the core omega sign reversal result in 10 minutes.
+
 ---
 
 ## Platform Architecture
