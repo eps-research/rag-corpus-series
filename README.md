@@ -57,7 +57,7 @@ Executable Jupyter notebooks organized into five groups. All examples load direc
 | [SPARC / HI Examples](./examples/hi/) | ~25 | Rotation curve plotting, baryonic decomposition, omega correction, WALLABY tier-2 analysis |
 | [Dwarf / Irregular Examples](./examples/dwarfs/) | ~25 | Omega-ready galaxies, DDO154/DDO161 cross-analysis, LVHIS/VLA-ANGST comparisons |
 | [Globular Cluster Examples](./examples/gc/) | ~25 | Proper motion queries, N-body mass modeling, APOGEE chemistry, multi-survey cross-matching |
-| [High-z Examples](./examples/highz/) | 3 | [CII] rotation curves, ALPINE population statistics, cross-corpus omega bridge |
+| [High-z Examples](./examples/highz/) | 25 | [CII] rotation curves, ALPINE population statistics, cross-corpus omega bridge |
 | [High-School Exploration Track](./examples/highschool/) | 20 | Friendly introductory notebooks for students: what is a rotation curve? what is a galaxy? |
 
 ### Running the Examples
