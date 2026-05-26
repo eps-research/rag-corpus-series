@@ -62,6 +62,14 @@ Executable Jupyter notebooks organized into five groups. All examples load direc
 | [High-z Examples](./examples/highz/) | 25 | [CII] rotation curves, ALPINE population statistics, cross-corpus omega bridge |
 | [High-School Exploration Track](./examples/highschool/) | 20 | Friendly introductory notebooks for students: what is a rotation curve? what is a galaxy? |
 
+### 🚀 Quick Start
+
+New here? The QuickStart notebook loads all four corpora and reproduces the core omega sign reversal result in under 10 minutes — no prior astrophysics knowledge required.
+
+[![Open QuickStart](https://img.shields.io/badge/▶%20Open-QuickStart.ipynb-2ca02c?style=for-the-badge&logo=jupyter)](./QuickStart.ipynb)
+
+---
+
 ### Running the Examples
 
 ```bash
