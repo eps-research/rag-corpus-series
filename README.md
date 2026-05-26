@@ -148,16 +148,31 @@ EPS Research is an independent research organization conducting self-directed, c
 
 ## Future Expansion
 
-This platform is designed to grow. Planned additions:
+This platform is designed to grow.
 
-| Addition | Description | Timeline |
-|----------|-------------|----------|
-| RAMSES simulations | z = 6 → z = 0 omega evolution | August 2026 |
+**Planned RAG Corpora:**
+
+| Corpus | Description | Timeline |
+|--------|-------------|----------|
 | High-z Corpus Z2 | REBELS + CRISTAL [CII] data at z ~ 6–8 | 2027 |
 | GC Corpus v2.0 | Extended globular cluster parameters | 2027 |
 | Unified HI v8.0 | Updated SPARC + WALLABY DR3 | 2027 |
-| Gravitational lensing paper | Omega spin as spacetime distortion | 2027 |
-| New LLM adapters | Fine-tunes on expanded corpora | Ongoing |
+
+**Planned Research Papers:**
+
+| Paper | Description | Timeline |
+|-------|-------------|----------|
+| RAMSES Paper 3 | z = 6 → z = 0 omega evolution simulations | August 2026 |
+| Gravitational lensing | Omega spin as a new source of spacetime distortion | 2027 |
+
+**Planned LLM Adapters:**
+
+| Model | Description | Timeline |
+|-------|-------------|----------|
+| Flagship 72B | Qwen2.5-72B fine-tuned on all four EPS corpora | 2026 |
+| Desktop 31B | Gemma 4 31B fine-tuned on all four EPS corpora | 2026 |
+| Laptop 7B | Qwen2.5-7B fine-tuned, optimized for students | 2026 |
+| Vision Expert 72B | Qwen2-VL-72B for scientific figure reading | 2027 |
 
 ---
 
