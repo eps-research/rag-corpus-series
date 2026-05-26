@@ -103,10 +103,10 @@ Full details in [llms/README.md](./llms/).
 
 | Model | Size | Target | Hardware | Cloud Options | Role |
 |-------|------|--------|----------|---------------|------|
-| Flagship | ~72B | Researchers | Node1+Node2 (192GB) | [Salad Cloud](https://salad.com) | Top-tier research grade |
-| Desktop | ~31B | Advanced users | RTX 5090 (32GB) | [Salad Cloud](https://salad.com) | Local inference |
-| Laptop | ~7B | HS students | CPU/laptop GPU | [Google Colab](https://colab.research.google.com) | In-school use |
-| Vision Expert | ~72B | Researchers | Node1 (96GB) | [Salad Cloud](https://salad.com) | Figure reading |
+| Flagship | ~72B | Researchers | Node1+Node2 (192GB) | Salad Cloud (coming soon) | Top-tier research grade |
+| Desktop | ~31B | Advanced users | RTX 5090 (32GB) | Salad Cloud (coming soon) | Local inference |
+| Laptop | ~7B | HS students | CPU/laptop GPU | Google Colab (coming soon) | In-school use |
+| Vision Expert | ~72B | Researchers | Node1 (96GB) | Salad Cloud (coming soon) | Figure reading |
 
 **Quick inference snippet:**
 
