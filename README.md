@@ -108,20 +108,7 @@ Full details in [llms/README.md](./llms/).
 | Laptop | ~7B | HS students | CPU/laptop GPU | Google Colab (coming soon) | In-school use |
 | Vision Expert | ~72B | Researchers | Node1 (96GB) | Salad Cloud (coming soon) | Figure reading |
 
-**Quick inference snippet:**
-
-```python
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from peft import PeftModel
-
-base = AutoModelForCausalLM.from_pretrained("google/gemma-4-31b")
-model = PeftModel.from_pretrained(base, "eps-research/gemma4-astro-rag")
-tokenizer = AutoTokenizer.from_pretrained("google/gemma-4-31b")
-
-query = "Plot the rotation curve of DDO161 and compute its omega value."
-inputs = tokenizer(query, return_tensors="pt")
-outputs = model.generate(**inputs, max_new_tokens=512)
-print(tokenizer.decode(outputs[0]))
+> **Inference snippet:** Coming with model release. Fine-tuned adapters will be published to HuggingFace at `eps-research/` upon completion.
 ```
 
 ### RAG Tools
@@ -140,7 +127,7 @@ EPS Research is an independent research organization conducting self-directed, c
 
 **Open corpora** — All data products are released under CC BY 4.0 at Zenodo, with full provenance documentation, primary-source verification, and machine-readable schemas.
 
-**Cross-epoch kinematic analysis** — The four corpora together span z = 0 to z ~ 6, enabling the first unified kinematic dataset from local HI rotation curves to ALMA [CII] observations approaching the epoch of reionization.
+**Cross-epoch kinematic analysis** — The four corpora together span z = 0 to z ~ 6, enabling the first unified kinematic dataset from local HI rotation curves to ALMA [CII] observations approaching the epoch of reionization. The omega kinematic correction, introduced by Flynn \& Cannaliato (2025), provides the unifying scientific framework across all four corpora and cosmic epochs.
 
 **Educational outreach** — The High-School Exploration Track makes the platform accessible to students, with friendly notebooks that require no prior astrophysics background.
 
