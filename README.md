@@ -162,6 +162,7 @@ This platform is designed to grow.
 
 | Paper | Description | Timeline |
 |-------|-------------|----------|
+| Cross-epoch omega evolution | z = 0 to z ~ 6 kinematic analysis | 2026 |
 | RAMSES Paper 3 | z = 6 → z = 0 omega evolution simulations | August 2026 |
 | Gravitational lensing | Omega spin as a new source of spacetime distortion | 2027 |
 
