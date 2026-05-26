@@ -109,15 +109,14 @@ Full details in [llms/README.md](./llms/).
 | Vision Expert | ~72B | Researchers | Node1 (96GB) | Salad Cloud (coming soon) | Figure reading |
 
 > **Inference snippet:** Coming with model release. Fine-tuned adapters will be published to HuggingFace at `eps-research/` upon completion.
-```
 
 ### RAG Tools
 
 | Tool | Description |
 |------|-------------|
-| [FAISS indexes](./tools/faiss/) | Pre-built vector indexes for all four corpora |
-| [RAG query scripts](./tools/rag/) | Python scripts for corpus retrieval |
-| [Schema validator](./tools/validators/) | Cross-corpus schema validation utilities |
+| FAISS indexes | Pre-built vector indexes for all four corpora |
+| RAG query scripts | Python scripts for corpus retrieval |
+| Schema validator | Cross-corpus schema validation utilities |
 
 ---
 
