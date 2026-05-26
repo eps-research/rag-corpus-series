@@ -192,6 +192,8 @@ DOI: 10.3389/fspas.2025.1680387
 
 ## Contact
 
+**Platform DOI:** [10.5281/zenodo.20398430](https://doi.org/10.5281/zenodo.20398430)
+
 **David C. Flynn** | EPS Research  
 📧 davidflynn@eps-research.com  
 🌐 [eps-research.com](https://eps-research.com)  

@@ -9,6 +9,7 @@ authors:
 version: "1.0.0"
 date-released: "2026-05-26"
 url: "https://github.com/eps-research/rag-corpus-series"
+doi: "10.5281/zenodo.20398430"
 repository-code: "https://github.com/eps-research/rag-corpus-series"
 license: CC-BY-4.0
 abstract: >
