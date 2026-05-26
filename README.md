@@ -97,16 +97,15 @@ The EPS Research publication arc underlying this platform.
 
 ## Silo 5 — LLMs & Tools
 
-Fine-tuned models and RAG utilities for astrophysical research workflows.
+Fine-tuned models and RAG utilities. Four-model team spanning laptop to research cluster.
+Full details in [llms/README.md](./llms/).
 
-### Gemma 4 31B Dense — Fine-tuned on EPS Corpora
-
-| Component | Description |
-|-----------|-------------|
-| [Base model](./llms/gemma4/) | Gemma 4 31B Dense (Google) |
-| [LoRA adapter](./llms/gemma4/adapter/) | Fine-tuned on all four EPS corpora |
-| [Training notes](./llms/gemma4/training_notes.md) | Dataset construction, hyperparameters, validation |
-| [Inference instructions](./llms/gemma4/inference.md) | How to load and query the model |
+| Model | Size | Target | Hardware | Role |
+|-------|------|--------|----------|------|
+| Flagship | ~72B | Researchers | Node1+Node2 (192GB) | AstroSage-70B competitor |
+| Desktop | ~31B | Advanced users | RTX 5090 (32GB) | Local inference |
+| Laptop | ~7B | HS students | CPU/laptop GPU | In-school use |
+| Vision Expert | ~72B | Researchers | Node1 (96GB) | Figure reading |
 
 **Quick inference snippet:**
 
