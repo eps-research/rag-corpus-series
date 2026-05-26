@@ -92,6 +92,7 @@ The EPS Research publication arc underlying this platform.
 | Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Published |
 | Flynn (2026+) — Cross-epoch omega evolution (z=0 to z~6) | TBD | planned | Planned |
 | Flynn (2026+) — RAMSES simulation Paper 3 | TBD | planned | Planned |
+| Flynn (2026+) — Omega correction and gravitational lensing: spin as a new source of spacetime distortion | TBD | planned | Planned |
 
 ---
 
