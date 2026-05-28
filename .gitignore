@@ -27,3 +27,6 @@ Thumbs.db
 *.csv
 quickstart_*.png
 .ipynb_checkpoints/
+papers/*.aux
+papers/*.out
+papers/*.log
