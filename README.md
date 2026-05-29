@@ -1,6 +1,6 @@
 # EPS Research Astro-RAG Platform
 
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/eps-research/rag-corpus-series&count_bg=%2379C83D&title_bg=%23555555&title=views&edge_flat=false)](https://hits.seeyoufarm.com)
+[![Hits](https://hits.sh/github.com/eps-research/rag-corpus-series.svg)](https://hits.sh/github.com/eps-research/rag-corpus-series/)
 
 
 **EPS Research** | Laurel, MD | [eps-research.com](https://eps-research.com) | ORCID: [0000-0002-2768-6650](https://orcid.org/0000-0002-2768-6650)
