@@ -46,7 +46,11 @@ Two corpora spanning the intermediate and high-redshift universe, bridging local
 | IntZ Kinematic Corpus v1.0 | 1,292 galaxies | z = 0.38–2.68 | Hα / [O III] | [10.5281/zenodo.20453189](https://doi.org/10.5281/zenodo.20453189) | in prep |
 | High-z Kinematic Corpus Z1 | 31 galaxies | z = 4.26–5.68 | ALMA [CII] 158μm | [10.5281/zenodo.20369285](https://doi.org/10.5281/zenodo.20369285) | [2605.25339](https://arxiv.org/abs/2605.25339) |
 
-**IntZ\_v1** combines the KROSS survey (Harrison et al. 2017; 586 galaxies, z~0.6–1.0) and the KMOS³D survey (Wisnioski et al. 2019; 706 galaxies, z~0.4–2.7) into a unified schema. 166 Tier-1 KROSS galaxies have spatially resolved, beam-smear-corrected kinematics with omega corrections applied.
+**IntZ\_v1** combines two major IFU surveys into a unified schema:
+- **KROSS** (Harrison et al. 2017): 586 galaxies, z = 0.60–1.04, Hα tracer
+- **KMOS³D** (Wisnioski et al. 2019): 706 galaxies, z = 0.38–2.68, Hα/[O III] tracer
+
+166 Tier-1 KROSS galaxies have spatially resolved, beam-smear-corrected kinematics with omega corrections applied. 1,126 Tier-2 galaxies have integrated kinematics only.
 
 **Z1** provides ALPINE survey morpho-kinematic data with per-ring 3DBarolo rotation curves for 8 confirmed rotators and morpho-kinematic classifications for 23 additional galaxies at z~4–6.
 
