@@ -29,9 +29,9 @@ Three unified, machine-readable corpora of the local universe, designed for both
 
 | Corpus | N | Tracer | Zenodo | arXiv |
 |--------|---|--------|--------|-------|
-| Unified HI Rotation Curve Corpus v7.0 | 438 galaxies | HI 21cm | [10.5281/zenodo.19563417](https://doi.org/10.5281/zenodo.19563417) | [2604.13489](https://arxiv.org/abs/2604.13489) |
-| Dwarf/Irregular HI Corpus v1.0 | 129 galaxies | HI 21cm | [10.5281/zenodo.20320362](https://doi.org/10.5281/zenodo.20320362) | [2605.22163](https://arxiv.org/abs/2605.22163) |
-| Milky Way Globular Cluster Corpus v1.3.1 | 174 clusters | Multi-survey | [10.5281/zenodo.19907765](https://doi.org/10.5281/zenodo.19907765) | [2605.03099](https://arxiv.org/abs/2605.03099) |
+| [Unified HI Rotation Curve Corpus v7.0](./hi_corpus_v7/) | 438 galaxies | HI 21cm | [10.5281/zenodo.19563417](https://doi.org/10.5281/zenodo.19563417) | [2604.13489](https://arxiv.org/abs/2604.13489) |
+| [Dwarf/Irregular HI Corpus v1.0](./dwarf_corpus_v1/) | 129 galaxies | HI 21cm | [10.5281/zenodo.20320362](https://doi.org/10.5281/zenodo.20320362) | [2605.22163](https://arxiv.org/abs/2605.22163) |
+| [Milky Way Globular Cluster Corpus v1.3.1](./gc_corpus_v1/) | 174 clusters | Multi-survey | [10.5281/zenodo.19907765](https://doi.org/10.5281/zenodo.19907765) | [2605.03099](https://arxiv.org/abs/2605.03099) |
 
 All three corpora share a common design philosophy: structured JSON + flat CSV + RAG-ready JSONL, with explicit quality tiers, verified kinematic parameters, and self-describing schemas for LLM ingestion.
 
@@ -43,8 +43,8 @@ Two corpora spanning the intermediate and high-redshift universe, bridging local
 
 | Corpus | N | z range | Tracer | Zenodo | arXiv |
 |--------|---|---------|--------|--------|-------|
-| IntZ Kinematic Corpus v1.0 | 1,292 galaxies | z = 0.38–2.68 | Hα / [O III] | [10.5281/zenodo.20453189](https://doi.org/10.5281/zenodo.20453189) | in prep |
-| High-z Kinematic Corpus Z1 | 31 galaxies | z = 4.26–5.68 | ALMA [CII] 158μm | [10.5281/zenodo.20369285](https://doi.org/10.5281/zenodo.20369285) | [2605.25339](https://arxiv.org/abs/2605.25339) |
+| [IntZ Kinematic Corpus v1.0](./intz_corpus_v1/) | 1,292 galaxies | z = 0.38–2.68 | Hα / [O III] | [10.5281/zenodo.20453189](https://doi.org/10.5281/zenodo.20453189) | in prep |
+| [High-z Kinematic Corpus Z1](./highz_corpus_z1/) | 31 galaxies | z = 4.26–5.68 | ALMA [CII] 158μm | [10.5281/zenodo.20369285](https://doi.org/10.5281/zenodo.20369285) | [2605.25339](https://arxiv.org/abs/2605.25339) |
 
 **IntZ\_v1** combines two major IFU surveys into a unified schema:
 - **KROSS** (Harrison et al. 2017): 586 galaxies, z = 0.60–1.04, Hα tracer
@@ -72,12 +72,12 @@ Executable Jupyter notebooks organized into six groups. All examples load direct
 
 | Group | Examples | Description |
 |-------|----------|-------------|
-| SPARC / HI Examples | 25 | Rotation curve plotting, baryonic decomposition, omega correction, WALLABY tier-2 analysis |
-| Dwarf / Irregular Examples | 25 | Omega-ready galaxies, DDO154/DDO161 cross-analysis, LVHIS/VLA-ANGST comparisons |
-| Globular Cluster Examples | 25 | Proper motion queries, N-body mass modeling, APOGEE chemistry, multi-survey cross-matching |
-| IntZ Examples | 20 | KROSS/KMOS3D kinematics, omega distributions, cross-epoch comparisons, RAG queries |
-| High-z Examples | 25 | [CII] rotation curves, ALPINE population statistics, cross-corpus omega bridge |
-| High-School Exploration Track | 20 | Friendly introductory notebooks for students: what is a rotation curve? what is a galaxy? |
+| [SPARC / HI Examples](./examples/hi/) | 25 | Rotation curve plotting, baryonic decomposition, omega correction, WALLABY tier-2 analysis |
+| [Dwarf / Irregular Examples](./examples/dwarfs/) | 25 | Omega-ready galaxies, DDO154/DDO161 cross-analysis, LVHIS/VLA-ANGST comparisons |
+| [Globular Cluster Examples](./examples/gc/) | 25 | Proper motion queries, N-body mass modeling, APOGEE chemistry, multi-survey cross-matching |
+| [IntZ Examples](./examples/intz/) | 20 | KROSS/KMOS3D kinematics, omega distributions, cross-epoch comparisons, RAG queries |
+| [High-z Examples](./examples/highz/) | 25 | [CII] rotation curves, ALPINE population statistics, cross-corpus omega bridge |
+| [High-School Exploration Track](./examples/highschool/) | 20 | Friendly introductory notebooks for students: what is a rotation curve? what is a galaxy? |
 
 ### 🚀 Quick Start
 
