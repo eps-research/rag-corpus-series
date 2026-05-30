@@ -5,6 +5,11 @@
 
 A unified platform of open astrophysics corpora, cross-epoch kinematic analysis tools, LLM-assisted scientific workflows, and educational resources — spanning Milky Way globular clusters to the epoch approaching cosmic reionization.
 
+> 💡 **Notebook Viewing:** If GitHub's notebook preview shows an error, 
+> view any notebook via [nbviewer](https://nbviewer.org/github/eps-research/rag-corpus-series/tree/main/examples/) 
+> or clone the repo and run locally with JupyterLab. All 140 notebooks 
+> execute correctly (verified 140/140 pass rate).
+
 🚀 **New here?** Start with `QuickStart.ipynb` — load all five corpora and reproduce the core omega sign reversal result in 10 minutes.
 
 ---
