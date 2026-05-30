@@ -19,7 +19,7 @@ A unified platform of open astrophysics corpora, cross-epoch kinematic analysis 
 > or clone the repo and run locally with JupyterLab. All 140 notebooks 
 > execute correctly (verified 140/140 pass rate).
 
-🚀 **New here?** Start with [`QuickStart.ipynb`](./QuickStart.ipynb) — load all five corpora and reproduce the core omega sign reversal result in 10 minutes.
+🚀 **New here?** Start with [**QuickStart.ipynb** — Open in Colab](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/QuickStart.ipynb) — load all five corpora and reproduce the core omega sign reversal result in 10 minutes.
 
 ---
 
