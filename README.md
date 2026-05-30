@@ -1,7 +1,7 @@
 # EPS Research Astro-RAG Platform
 ![Hits](https://hits.sh/github.com/eps-research/rag-corpus-series.svg)
 
-**EPS Research | Laurel, MD | eps-research.com | ORCID: 0000-0002-2768-6650**
+**EPS Research | Laurel, MD | [eps-research.com](https://eps-research.com) | ORCID: [0000-0002-2768-6650](https://orcid.org/0000-0002-2768-6650)**
 
 A unified platform of open astrophysics corpora, cross-epoch kinematic analysis tools, LLM-assisted scientific workflows, and educational resources — spanning Milky Way globular clusters to the epoch approaching cosmic reionization.
 
