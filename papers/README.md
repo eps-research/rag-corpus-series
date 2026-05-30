@@ -41,8 +41,7 @@ Derived from two boundary points (innermost and outermost measured rotation curv
 **Flynn, D.C. (2026)**  
 *Baryonic Validation of the Omega Kinematic Correction Across 84 SPARC Galaxies*  
 Submitted to New Astronomy (NEWAST-D-26-00207)  
-Preprint: Zenodo [10.5281/zenodo.20132805](https://doi.org/10.5281/zenodo.20132805)  
-arXiv: [2601.00522](https://arxiv.org/abs/2601.00522)
+Preprint: Zenodo [10.5281/zenodo.20132805](https://doi.org/10.5281/zenodo.20132805)
 
 **Status:** Under review
 
@@ -101,9 +100,47 @@ arXiv: [2605.03099](https://arxiv.org/abs/2605.03099)
 
 **Flynn, D.C. (2026)**  
 *A Unified [CII] Morpho-Kinematic Corpus for 31 Star-Forming Galaxies at z = 4.26-5.68: The High-z Kinematic Corpus Z1*  
-arXiv: submit/7633036 (ID pending)
+arXiv: [2605.25339](https://arxiv.org/abs/2605.25339)
 
-**Status:** Submitted to arXiv
+**Status:** Published on arXiv
+
+---
+
+## Paper 7 — IntZ Kinematic Corpus v1.0 Data Descriptor ⭐ NEW
+
+**Flynn, D.C. (2026)**  
+*The EPS Research Intermediate-z Kinematic Corpus v1.0 (IntZ_v1): 1,292 Star-Forming Galaxies at z~0.4–2.7 from KROSS and KMOS³D for Cross-Epoch Kinematic Analysis and RAG Pipelines*  
+Zenodo: [10.5281/zenodo.20453189](https://zenodo.org/records/20453189)  
+arXiv: **submission in preparation** (target: astro-ph.IM)
+
+**Status:** Zenodo published 2026-05-30 | arXiv submission in preparation
+
+### Summary
+
+Machine-readable kinematic corpus of 1,292 star-forming galaxies at z = 0.382–2.675, combining KROSS (Harrison et al. 2017; 586 galaxies) and KMOS³D (Wisnioski et al. 2019; 706 galaxies). Provides the intermediate-redshift anchor of the EPS cross-epoch omega arc.
+
+**Key results:**
+
+| Metric | Value |
+|--------|-------|
+| Total galaxies | 1,292 |
+| Tier-1 (resolved, beam-corrected) | 166 (KROSS) |
+| Tier-2 (integrated kinematics) | 1,126 |
+| Omega median (Tier-1) | −9.087 ± 8.940 rad/Gyr |
+| Omega sign | 100% negative |
+| z range | 0.382–2.675 |
+
+**Cross-epoch arc with this corpus:**
+
+| Epoch | Survey | N (T1) | Median ω |
+|-------|--------|--------|----------|
+| z = 0 | SPARC | 84 | +7.06 rad/Gyr |
+| z ~ 0.9 | KROSS (IntZ) | 166 | −9.087 rad/Gyr |
+| z ~ 5 | ALPINE (Z1) | 8 | −13.05 rad/Gyr |
+
+Note: These samples use different kinematic tracers (HI, Hα, [CII]). Physical interpretation deferred to Flynn & Cannaliato (in preparation).
+
+**Note on MOSDEF:** Price et al. 2020 (ApJ 894, 91) was evaluated for inclusion. The individual galaxy kinematic catalog is not publicly archived. Data request recommended to S. H. Price.
 
 ---
 
@@ -111,9 +148,9 @@ arXiv: submit/7633036 (ID pending)
 
 | Paper | Target | Description |
 |-------|--------|-------------|
-| Paper 7 | A&A or ApJ | Cross-epoch omega evolution: z=0 to z~6 |
-| Paper 8 | ApJ | RAMSES cosmological simulations z=6 → z=0 |
-| Paper 9 | PASP | Z2 corpus: REBELS + CRISTAL at z~6-8 |
+| Paper 8 | A&A or ApJ | Cross-epoch omega evolution: z=0 to z~6 |
+| Paper 9 | ApJ | RAMSES cosmological simulations z=6 → z=0 |
+| Paper 10 | PASP | Z2 corpus: REBELS + CRISTAL at z~6-8 |
 
 ---
 
@@ -125,14 +162,17 @@ Paper 2 (2026) — 84 SPARC baryonic validation, New Astronomy — UNDER REVIEW
 Paper 3 (2026) — v7 unified HI corpus 438 galaxies, A&C — UNDER REVIEW
 Paper 4 (2026) — dwarf corpus 129 galaxies, PASP — SUBMITTED
 Paper 5 (2026) — GC corpus 174 clusters, PASP — SUBMITTED
-Paper 6 (2026) — high-z Z1 corpus 31 galaxies, arXiv — SUBMITTED
-Paper 7 (2027) — cross-epoch omega evolution — PLANNED
-Paper 8 (2027) — RAMSES Paper 3 — PLANNED
+Paper 6 (2026) — high-z Z1 corpus 31 galaxies, arXiv — PUBLISHED
+Paper 7 (2026) — IntZ corpus 1,292 galaxies, Zenodo — PUBLISHED | arXiv IN PREP
+Paper 8 (2027) — cross-epoch omega evolution — PLANNED
+Paper 9 (2027) — RAMSES Paper 3 — PLANNED
 ```
+
+---
 
 ## Planned Paper — Omega Correction and Gravitational Lensing
 
-**Flynn, D.C. (planned)**
+**Flynn, D.C. (planned)**  
 *Omega Kinematic Correction as a New Source of Spacetime Distortion: Implications for Gravitational Lensing*
 
 Einstein's general relativity accounts for spacetime curvature from mass-energy.
