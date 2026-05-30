@@ -97,7 +97,7 @@ Executable Jupyter notebooks organized into six groups. All examples load direct
 
 New here? The QuickStart notebook loads all five corpora and reproduces the core omega sign reversal result in under 10 minutes — no prior astrophysics knowledge required.
 
-[Open QuickStart](QuickStart.ipynb)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/QuickStart.ipynb)
 
 ### Running the Examples
 
