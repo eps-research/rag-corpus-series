@@ -5,12 +5,14 @@
 
 A unified platform of open astrophysics corpora, cross-epoch kinematic analysis tools, LLM-assisted scientific workflows, and educational resources — spanning Milky Way globular clusters to the epoch approaching cosmic reionization.
 
-> 🚀 **Open in Google Colab** (recommended — renders and runs in browser):
-> 
-> [![QuickStart](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/QuickStart.ipynb)
-> [![Three-Epoch Arc](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/intz/intz_nb14_three_epoch_arc.ipynb)
-> [![Sign Reversal](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/intz/intz_nb15_sign_reversal.ipynb)
-> [![End-to-End](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/intz/intz_nb20_end_to_end_workflow.ipynb)
+> ### 🚀 Open in Google Colab — runs live in your browser, no setup required
+>
+> | Notebook | Topic | Launch |
+> |----------|-------|--------|
+> | **QuickStart** | Load all 5 corpora, reproduce omega sign reversal in 10 min | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/QuickStart.ipynb) |
+> | **Three-Epoch Arc** | z=0 → z~0.9 → z~5 omega evolution ⭐ | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/intz/intz_nb14_three_epoch_arc.ipynb) |
+> | **Sign Reversal Test** | Statistical proof of z=0 vs z~0.9 sign flip ⭐ | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/intz/intz_nb15_sign_reversal.ipynb) |
+> | **End-to-End Pipeline** | Full cross-epoch z=0→z~0.9→z~5 workflow ⭐ | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/intz/intz_nb20_end_to_end_workflow.ipynb) |
 
 > 💡 **Notebook Viewing:** If GitHub's notebook preview shows an error, 
 > view any notebook via [nbviewer](https://nbviewer.org/github/eps-research/rag-corpus-series/tree/main/examples/) 
