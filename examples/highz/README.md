@@ -14,7 +14,7 @@ Three worked Jupyter notebook examples for the High-z Kinematic Corpus Z1.
 
 ```bash
 # Download corpus from Zenodo
-# DOI: 10.5281/zenodo.20369285
+# DOI: 10.5281/zenodo.20369286
 # Place high_z_kinematic_corpus_Z1.json in this directory
 
 pip install numpy matplotlib jupyter
@@ -23,7 +23,7 @@ jupyter lab
 
 ## Data Required
 
-Download from [Zenodo 10.5281/zenodo.20369285](https://doi.org/10.5281/zenodo.20369285):
+Download from [Zenodo 10.5281/zenodo.20369286](https://doi.org/10.5281/zenodo.20369286):
 - `high_z_kinematic_corpus_Z1.json`
 - `high_z_kinematic_corpus_Z1_flat.csv`
 

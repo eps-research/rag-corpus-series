@@ -40,22 +40,22 @@ CORPORA = {
     },
     'gc': {
         'name': 'Milky Way Globular Cluster Corpus v1.3.1',
-        'doi': '10.5281/zenodo.19907765',
+        'doi': '10.5281/zenodo.19907766',
         'files': [
-            ('https://zenodo.org/records/19907765/files/harris_gc_corpus_v1.3.1.jsonl',
+            ('https://zenodo.org/records/19907766/files/harris_gc_corpus_v1.3.1.jsonl',
              'harris_gc_corpus_v1.3.1.jsonl'),
         ],
         'dest': 'examples/gc/'
     },
     'highz': {
         'name': 'High-z Kinematic Corpus Z1',
-        'doi': '10.5281/zenodo.20369285',
+        'doi': '10.5281/zenodo.20369286',
         'files': [
-            ('https://zenodo.org/records/20369285/files/high_z_kinematic_corpus_Z1.json',
+            ('https://zenodo.org/records/20369286/files/high_z_kinematic_corpus_Z1.json',
              'high_z_kinematic_corpus_Z1.json'),
-            ('https://zenodo.org/records/20369285/files/high_z_kinematic_corpus_Z1_flat.csv',
+            ('https://zenodo.org/records/20369286/files/high_z_kinematic_corpus_Z1_flat.csv',
              'high_z_kinematic_corpus_Z1_flat.csv'),
-            ('https://zenodo.org/records/20369285/files/high_z_kinematic_corpus_Z1.jsonl',
+            ('https://zenodo.org/records/20369286/files/high_z_kinematic_corpus_Z1.jsonl',
              'high_z_kinematic_corpus_Z1.jsonl'),
         ],
         'dest': 'examples/highz/'

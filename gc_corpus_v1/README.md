@@ -10,7 +10,7 @@ A unified, machine-readable corpus of fundamental parameters for 174 Milky Way g
 
 | Resource | Link |
 |----------|------|
-| Zenodo deposit | [10.5281/zenodo.19907765](https://doi.org/10.5281/zenodo.19907765) |
+| Zenodo deposit | [10.5281/zenodo.19907766](https://doi.org/10.5281/zenodo.19907766) |
 | arXiv preprint | [arXiv:2605.03099](https://arxiv.org/abs/2605.03099) |
 | Journal submission | PASP (pending) |
 
@@ -69,7 +69,7 @@ print(f"Clusters with APOGEE [Fe/H]: {len(with_chem)}")
 
 ```
 Flynn, D.C. (2026). Milky Way Globular Cluster Corpus v1.3.1.
-Zenodo. DOI: 10.5281/zenodo.19907765
+Zenodo. DOI: 10.5281/zenodo.19907766
 arXiv: 2605.03099
 ```
 

@@ -8,7 +8,7 @@ Usage:
     python3 build_gc_examples.py
 
 Flynn, D.C. (2026) EPS Research
-DOI: 10.5281/zenodo.19907765
+DOI: 10.5281/zenodo.19907766
 """
 
 import json
@@ -28,7 +28,7 @@ def code(text):
     return {"cell_type": "code", "execution_count": None,
             "metadata": {}, "outputs": [], "source": text}
 
-NOTE = ("**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19907765  \n"
+NOTE = ("**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19907766  \n"
         "**Sources:** Harris (1996/2010), Vasiliev & Baumgardt (2021), "
         "Baumgardt et al. (2023), Schiavon et al. (2024) APOGEE DR17  \n"
         "**Dependencies:** Python 3, numpy, matplotlib")

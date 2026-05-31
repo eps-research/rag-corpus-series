@@ -10,7 +10,7 @@ ALMA [CII] 158μm morpho-kinematic data for 31 star-forming main-sequence galaxi
 
 | Resource | Link |
 |----------|------|
-| Zenodo deposit | [10.5281/zenodo.20369285](https://doi.org/10.5281/zenodo.20369285) |
+| Zenodo deposit | [10.5281/zenodo.20369286](https://doi.org/10.5281/zenodo.20369286) |
 | arXiv preprint | 2605.25339 |
 | Journal submission | arXiv (submitted) |
 
@@ -80,7 +80,7 @@ for g in rotators:
 
 ```
 Flynn, D.C. (2026). High-z Kinematic Corpus Z1.
-Zenodo. DOI: 10.5281/zenodo.20369285
+Zenodo. DOI: 10.5281/zenodo.20369286
 
 Jones, G.C. et al. (2021). MNRAS, 507, 3540.
 DOI: 10.1093/mnras/stab2703
