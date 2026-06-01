@@ -155,12 +155,19 @@ Fine-tuned models and RAG utilities. Four-model team spanning laptop to research
 
 ### RAG Tools
 
+**🚀 Available Now**
+
+| Tool | Description |
+|------|-------------|
+| EPS Astro Extractor | Streamlit app for extracting structured data from astronomical databases via local LLM — [Zenodo](https://doi.org/10.5281/zenodo.20486198) |
+
+**🔧 Coming Soon**
+
 | Tool | Description |
 |------|-------------|
 | FAISS indexes | Pre-built vector indexes for all five corpora |
 | RAG query scripts | Python scripts for corpus retrieval |
 | Schema validator | Cross-corpus schema validation utilities |
-| EPS Astro Extractor | Streamlit app for extracting structured data from astronomical databases via local LLM — [Zenodo](https://doi.org/10.5281/zenodo.20486198) |
 
 ---
 
