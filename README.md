@@ -160,6 +160,7 @@ Fine-tuned models and RAG utilities. Four-model team spanning laptop to research
 | FAISS indexes | Pre-built vector indexes for all five corpora |
 | RAG query scripts | Python scripts for corpus retrieval |
 | Schema validator | Cross-corpus schema validation utilities |
+| EPS Astro Extractor | Streamlit app for extracting structured data from astronomical databases via local LLM — [Zenodo](https://doi.org/10.5281/zenodo.20486198) |
 
 ---
 
@@ -170,7 +171,7 @@ Fine-tuned models and RAG utilities. Four-model team spanning laptop to research
 | Total corpora | 5 |
 | Total galaxies / clusters | **2,064** |
 | Redshift range | z = 0 to z ~ 2.7 (with z ~ 5 anchor) |
-| Zenodo deposits | 6 (5 corpora + platform) |
+| Zenodo deposits | 7 (5 corpora + platform + extractor) |
 | arXiv papers | 4 published + 2 in prep |
 | Jupyter notebooks | 140 (120 research + 20 IntZ) |
 | License | CC BY 4.0 |
