@@ -146,9 +146,9 @@ The EPS Research publication arc underlying this platform.
 | Flynn (2026) — Unified HI Corpus v7.0 data descriptor | Astronomy & Computing | [arXiv:2604.13489](https://arxiv.org/abs/2604.13489) | Under review |
 | Flynn (2026) — GC Corpus v1.3.1 data descriptor | PASP | [arXiv:2605.03099](https://arxiv.org/abs/2605.03099) | Submitted |
 | Flynn (2026) — Dwarf/Irregular Corpus v1.0 data descriptor | PASP | [arXiv:2605.22163](https://arxiv.org/abs/2605.22163) | Submitted |
-| Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Published |
-| Flynn (2026) — IntZ Kinematic Corpus v1.0 data descriptor | arXiv (astro-ph.IM) | [Zenodo:20453189](https://zenodo.org/records/20453189) — arXiv in prep | In preparation |
-| Flynn (2026) — EPS Astro Extractor v1.0.0 (software) | Zenodo | [10.5281/zenodo.20486198](https://doi.org/10.5281/zenodo.20486198) | Published |
+| Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Preprint |
+| Flynn (2026) — IntZ Kinematic Corpus v1.0 data descriptor | arXiv (astro-ph.IM) | [Zenodo:20453189](https://zenodo.org/records/20453189) | Preprint |
+| Flynn (2026) — EPS Astro Extractor v1.0.0 (software) | Zenodo | [10.5281/zenodo.20486198](https://doi.org/10.5281/zenodo.20486198) | Preprint |
 | Flynn (2026+) — Cross-epoch omega evolution (z=0 to z~6) | TBD | planned | Planned |
 | Flynn (2026+) — RAMSES simulation Paper 3 | TBD | planned | Planned |
 | Flynn (2026+) — Omega correction: implications for gravitational lensing | TBD | planned | Planned |
