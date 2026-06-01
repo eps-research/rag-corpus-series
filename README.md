@@ -9,6 +9,20 @@ A unified platform of open astrophysics corpora, cross-epoch kinematic analysis 
 >
 > | Notebook | Topic | Launch |
 > |----------|-------|--------|
+> **A unified open-science astrophysics platform combining five machine-readable corpora, 140 reproducible notebooks, and cross-epoch kinematic tools spanning z = 0 to z ~ 6.**
+
+---
+
+## 📄 Cite This Platform
+
+If you use this platform, please cite:
+
+```
+Flynn, D.C. (2026). EPS Research Astro-RAG Platform. Zenodo: https://doi.org/10.5281/zenodo.20398430
+```
+
+---
+
 > | **QuickStart** | Load all 5 corpora, reproduce omega sign reversal in 10 min | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/QuickStart.ipynb) |
 > | **Three-Epoch Arc** | z=0 → z∼0.9 → z∼5 omega evolution ⭐ | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/intz/intz_nb14_three_epoch_arc.ipynb) |
 > | **Sign Reversal Test** | Statistical proof of z=0 vs z∼0.9 sign flip ⭐ | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/intz/intz_nb15_sign_reversal.ipynb) |
