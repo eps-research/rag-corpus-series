@@ -9,7 +9,8 @@ A unified platform of open astrophysics corpora, cross-epoch kinematic analysis 
 >
 > | Notebook | Topic | Launch |
 > |----------|-------|--------|
-> **A unified open-science astrophysics platform combining five machine-readable corpora, 140 reproducible notebooks, and cross-epoch kinematic tools spanning z = 0 to z ~ 6.**
+> **A unified open-science astrophysics platform integrating five machine-readable corpora, 147 fully reproducible notebooks, and cross-epoch kinematic analysis tools spanning z = 0 to z ≈ 6.
+**
 
 ---
 
