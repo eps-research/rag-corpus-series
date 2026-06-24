@@ -85,7 +85,24 @@ EPS Research Astro-RAG Platform
 └── Silo 5 — LLMs & Tools       Fine-tuned Models + RAG Utilities            ○ Stage 2
 ```
 
----
+------
+
+## 🔭 Live MCP Endpoint
+
+All five corpora are available via a persistent **Model Context Protocol (MCP)** server — a true LLM-native data API implementing the Anthropic MCP specification with SSE and Streamable HTTP transports.
+
+**Endpoint:** `https://dflynn5656-astro-rag-mcp.hf.space/mcp`
+
+| Tool | Description |
+|------|-------------|
+| `list_corpora` | List all five corpora with metadata, record counts, and Zenodo DOIs |
+| `list_objects` | List object IDs with optional survey/tier filter and pagination |
+| `get_object` | Retrieve full record for any galaxy or cluster by name |
+| `search_metadata` | Search any metadata field by value (case-insensitive) |
+| `filter_objects` | Filter by numeric range on any field; supports `omega_ready_only` flag |
+| `get_corpus_schema` | Return field schema and column definitions for any corpus |
+
+Hosted on Hugging Face Spaces (Docker, always-on). Serves 2,064 objects across all five corpora.
 
 ## Silo 1 — z = 0 Data: Local Universe RAG Corpora
 
