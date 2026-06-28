@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPS Research — Astro-RAG</title>
+<style>
+  /* ── Tokens ── */
+  :root {
+    --space:       #0b0f1a;
+    --deep:        #111827;
+    --panel:       #1a2236;
+    --border:      #2a3a55;
+    --accent:      #4a9eff;
+    --accent-dim:  #1e3a5f;
+    --gold:        #f0a500;
+    --text:        #e2e8f0;
+    --muted:       #8899b0;
+    --success:     #22c55e;
+    --error:       #ef4444;
+    --mono:        'JetBrains Mono', 'Fira Mono', 'Courier New', monospace;
+    --sans:        'Inter', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--space);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--deep);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .logo-icon {
+    width: 28px; height: 28px;
+  }
+
+  .logo-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .logo-sep {
+    color: var(--border);
+    font-size: 18px;
+    font-weight: 200;
+  }
+
+  .logo-sub {
+    font-size: 13px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .header-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--muted);
+    display: inline-block;
+  }
+  .status-dot.online { background: var(--success); box-shadow: 0 0 6px var(--success); }
+  .status-dot.offline { background: var(--error); }
+
+  .status-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .docs-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: var(--mono);
+    opacity: 0.7;
+    transition: opacity 0.15s;
+  }
+  .docs-link:hover { opacity: 1; }
+
+  /* ── Layout ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    height: calc(100vh - 56px);
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    background: var(--deep);
+    border-right: 1px solid var(--border);
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
+  }
+
+  .sidebar-section {
+    margin-bottom: 1.75rem;
+  }
+
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    padding: 0 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .corpus-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--text);
+    padding: 0.45rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: var(--mono);
+    transition: background 0.12s, color 0.12s;
+    margin-bottom: 2px;
+  }
+  .corpus-btn:hover { background: var(--panel); }
+  .corpus-btn.active {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  .corpus-desc {
+    font-size: 11px;
+    color: var(--muted);
+    padding: 0 0.75rem 0.4rem;
+    font-family: var(--sans);
+  }
+
+  .op-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--muted);
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.12s, color 0.12s;
+    margin-bottom: 2px;
+  }
+  .op-btn:hover { background: var(--panel); color: var(--text); }
+  .op-btn.active { color: var(--accent); background: var(--accent-dim); }
+
+  /* ── Main ── */
+  .main {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── Query Bar ── */
+  .query-bar {
+    background: var(--deep);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+  }
+
+  .query-bar h2 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+
+  .param-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: flex-end;
+  }
+
+  .param-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 120px;
+  }
+
+  .param-group.grow { flex: 1; min-width: 160px; }
+
+  label {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  input, select {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.45rem 0.65rem;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: var(--sans);
+    outline: none;
+    transition: border-color 0.15s;
+    width: 100%;
+  }
+  input:focus, select:focus { border-color: var(--accent); }
+  select option { background: var(--panel); }
+
+  .run-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 0.45rem 1.25rem;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+    height: 34px;
+    align-self: flex-end;
+  }
+  .run-btn:hover { opacity: 0.85; }
+  .run-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ── Output toggle ── */
+  .output-toggle {
+    display: flex;
+    gap: 0;
+    background: var(--panel);
+    border-radius: 6px;
+    padding: 2px;
+    align-self: flex-end;
+    height: 34px;
+  }
+  .toggle-opt {
+    background: none;
+    border: none;
+    color: var(--muted);
+    padding: 0 0.85rem;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+    height: 100%;
+  }
+  .toggle-opt.active {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  /* ── Results ── */
+  .results-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--muted);
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .empty-icon {
+    font-size: 48px;
+    opacity: 0.3;
+  }
+
+  .empty-state p { font-size: 13px; max-width: 320px; }
+
+  /* ── Human text result ── */
+  .result-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--deep);
+  }
+
+  .result-tool {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .result-meta {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .result-body {
+    padding: 1.25rem 1.25rem;
+  }
+
+  /* Human text rendering */
+  .human-text {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .human-text-section {
+    margin-bottom: 1rem;
+  }
+
+  .object-card {
+    background: var(--deep);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .object-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    font-family: var(--mono);
+  }
+
+  .object-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.4rem 1rem;
+  }
+
+  .field-row {
+    display: flex;
+    gap: 0.4rem;
+    font-size: 12px;
+  }
+
+  .field-key {
+    color: var(--muted);
+    font-family: var(--mono);
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+
+  .field-val {
+    color: var(--text);
+    word-break: break-all;
+  }
+
+  /* JSON view */
+  .json-view {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.6;
+    color: #a8c0d6;
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: var(--deep);
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+
+  .json-key   { color: #7ec8e3; }
+  .json-str   { color: #a8d8a8; }
+  .json-num   { color: #f0a500; }
+  .json-bool  { color: #ff9d6e; }
+  .json-null  { color: var(--muted); }
+
+  /* Download bar */
+  .download-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+    border-top: 1px solid var(--border);
+    background: var(--deep);
+  }
+
+  .dl-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.3rem 0.85rem;
+    border-radius: 5px;
+    font-size: 11px;
+    font-family: var(--mono);
+    cursor: pointer;
+    transition: border-color 0.12s, color 0.12s;
+  }
+  .dl-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Error */
+  .error-box {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    color: #fca5a5;
+    font-size: 13px;
+  }
+
+  /* Spinner */
+  .spinner {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-msg {
+    color: var(--muted);
+    font-size: 13px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Star field signature */
+  .star-field {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--dur, 3s) ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--lo, 0.1); }
+    50%       { opacity: var(--hi, 0.5); }
+  }
+
+  .layout, header { position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+
+<!-- Star field signature element -->
+<div class="star-field" id="stars"></div>
+
+<header>
+  <div class="logo">
+    <svg class="logo-icon" viewBox="0 0 28 28" fill="none">
+      <circle cx="14" cy="14" r="13" stroke="#4a9eff" stroke-width="1.5" opacity="0.4"/>
+      <circle cx="14" cy="14" r="3" fill="#4a9eff"/>
+      <ellipse cx="14" cy="14" rx="13" ry="5" stroke="#4a9eff" stroke-width="1" opacity="0.3" transform="rotate(-30 14 14)"/>
+      <circle cx="22" cy="8"  r="1.5" fill="#f0a500" opacity="0.8"/>
+      <circle cx="7"  cy="20" r="1"   fill="#fff"    opacity="0.6"/>
+      <circle cx="20" cy="20" r="1"   fill="#fff"    opacity="0.5"/>
+    </svg>
+    <span class="logo-text">EPS Research</span>
+    <span class="logo-sep">|</span>
+    <span class="logo-sub">Astro-RAG</span>
+  </div>
+  <div class="header-right">
+    <span class="status-dot" id="statusDot"></span>
+    <span class="status-label" id="statusLabel">checking…</span>
+    <a href="/docs" class="docs-link" target="_blank">API docs →</a>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Corpus</div>
+      <button class="corpus-btn active" data-corpus="v7" onclick="selectCorpus(this)">v7
+        <div class="corpus-desc">HI rotation curves</div>
+      </button>
+      <button class="corpus-btn" data-corpus="dwarf" onclick="selectCorpus(this)">dwarf
+        <div class="corpus-desc">Dwarf/irregular HI</div>
+      </button>
+      <button class="corpus-btn" data-corpus="gc" onclick="selectCorpus(this)">gc
+        <div class="corpus-desc">Globular clusters</div>
+      </button>
+      <button class="corpus-btn" data-corpus="intz" onclick="selectCorpus(this)">intz
+        <div class="corpus-desc">IntZ / z≈2 kinematics</div>
+      </button>
+      <button class="corpus-btn" data-corpus="z1" onclick="selectCorpus(this)">z1
+        <div class="corpus-desc">High-z ALPINE z≈5</div>
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Operation</div>
+      <button class="op-btn active" data-op="list_corpora"     onclick="selectOp(this)">List corpora</button>
+      <button class="op-btn"        data-op="get_corpus_schema" onclick="selectOp(this)">Corpus schema</button>
+      <button class="op-btn"        data-op="list_objects"     onclick="selectOp(this)">List objects</button>
+      <button class="op-btn"        data-op="get_object"       onclick="selectOp(this)">Get object</button>
+      <button class="op-btn"        data-op="search_metadata"  onclick="selectOp(this)">Search metadata</button>
+      <button class="op-btn"        data-op="filter_objects"   onclick="selectOp(this)">Filter objects</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Query bar -->
+    <div class="query-bar">
+      <h2 id="opTitle">List corpora</h2>
+      <div class="param-grid" id="paramGrid">
+        <!-- rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-area" id="resultsArea">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🔭</div>
+        <p>Select a corpus and operation, set any parameters, then click <strong>Run</strong>.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────────
+let selectedCorpus = 'v7';
+let selectedOp     = 'list_corpora';
+let outputMode     = 'text';   // 'text' | 'json'
+let lastResponse   = null;
+
+// ── Operation definitions ──────────────────────────────────────────────────────
+const OPS = {
+  list_corpora: {
+    label: 'List corpora',
+    endpoint: '/api/list_corpora',
+    params: [],
+  },
+  get_corpus_schema: {
+    label: 'Corpus schema',
+    endpoint: '/api/get_corpus_schema',
+    params: [{ id:'corpus', label:'Corpus', type:'corpus' }],
+  },
+  list_objects: {
+    label: 'List objects',
+    endpoint: '/api/list_objects',
+    params: [
+      { id:'corpus',  label:'Corpus',  type:'corpus' },
+      { id:'survey',  label:'Survey',  type:'text',   optional:true,  placeholder:'e.g. THINGS' },
+      { id:'tier',    label:'Tier',    type:'text',   optional:true,  placeholder:'e.g. gold' },
+      { id:'page',    label:'Page',    type:'number', default:'1',    width:'70px' },
+      { id:'limit',   label:'Limit',   type:'number', default:'25',   width:'70px' },
+    ],
+  },
+  get_object: {
+    label: 'Get object',
+    endpoint: '/api/get_object',
+    params: [
+      { id:'corpus',    label:'Corpus',    type:'corpus' },
+      { id:'object_id', label:'Object ID', type:'text',   placeholder:'e.g. NGC3198', grow:true },
+    ],
+  },
+  search_metadata: {
+    label: 'Search metadata',
+    endpoint: '/api/search_metadata',
+    params: [
+      { id:'corpus', label:'Corpus', type:'corpus' },
+      { id:'field',  label:'Field',  type:'text',   placeholder:'e.g. survey',   grow:true },
+      { id:'value',  label:'Value',  type:'text',   placeholder:'e.g. THINGS',   grow:true },
+    ],
+  },
+  filter_objects: {
+    label: 'Filter objects',
+    endpoint: '/api/filter_objects',
+    params: [
+      { id:'corpus',           label:'Corpus',  type:'corpus' },
+      { id:'field',            label:'Field',   type:'text',   placeholder:'e.g. distance_mpc', grow:true },
+      { id:'min',              label:'Min',     type:'number', optional:true, width:'80px' },
+      { id:'max',              label:'Max',     type:'number', optional:true, width:'80px' },
+      { id:'omega_ready_only', label:'ω-ready', type:'bool',   optional:true },
+    ],
+  },
+};
+
+// ── Star field ─────────────────────────────────────────────────────────────────
+(function() {
+  const sf = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 1.5 + 0.5;
+    s.style.cssText = `
+      width:${sz}px; height:${sz}px;
+      left:${Math.random()*100}%;
+      top:${Math.random()*100}%;
+      --dur:${(Math.random()*4+2).toFixed(1)}s;
+      --lo:${(Math.random()*0.08+0.02).toFixed(2)};
+      --hi:${(Math.random()*0.3+0.1).toFixed(2)};
+      animation-delay:${(Math.random()*4).toFixed(1)}s;
+    `;
+    sf.appendChild(s);
+  }
+})();
+
+// ── Health check ───────────────────────────────────────────────────────────────
+async function checkHealth() {
+  const dot   = document.getElementById('statusDot');
+  const label = document.getElementById('statusLabel');
+  try {
+    const r = await fetch('/health', { signal: AbortSignal.timeout(4000) });
+    if (r.ok) {
+      dot.className   = 'status-dot online';
+      label.textContent = 'online';
+    } else {
+      throw new Error();
+    }
+  } catch {
+    dot.className   = 'status-dot offline';
+    label.textContent = 'offline';
+  }
+}
+checkHealth();
+setInterval(checkHealth, 30000);
+
+// ── Sidebar selection ──────────────────────────────────────────────────────────
+function selectCorpus(btn) {
+  document.querySelectorAll('.corpus-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedCorpus = btn.dataset.corpus;
+  renderParams();
+}
+
+function selectOp(btn) {
+  document.querySelectorAll('.op-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedOp = btn.dataset.op;
+  renderParams();
+}
+
+// ── Param rendering ────────────────────────────────────────────────────────────
+function renderParams() {
+  const op   = OPS[selectedOp];
+  const grid = document.getElementById('paramGrid');
+  document.getElementById('opTitle').textContent = op.label;
+  grid.innerHTML = '';
+
+  op.params.forEach(p => {
+    const g = document.createElement('div');
+    g.className = 'param-group' + (p.grow ? ' grow' : '');
+    if (p.width) g.style.maxWidth = p.width;
+
+    if (p.type === 'corpus') {
+      g.innerHTML = `
+        <label>${p.label}</label>
+        <select id="p_${p.id}">
+          ${['v7','dwarf','gc','intz','z1'].map(k =>
+            `<option value="${k}" ${k===selectedCorpus?'selected':''}>${k}</option>`
+          ).join('')}
+        </select>`;
+    } else if (p.type === 'bool') {
+      g.innerHTML = `
+        <label>${p.label}</label>
+        <select id="p_${p.id}">
+          <option value="">—</option>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>`;
+    } else {
+      g.innerHTML = `
+        <label>${p.label}${p.optional?' <span style="opacity:.4">(opt)</span>':''}</label>
+        <input id="p_${p.id}" type="${p.type==='number'?'number':'text'}"
+               placeholder="${p.placeholder||''}"
+               value="${p.default||''}"
+               style="${p.width?'width:'+p.width:''}">`;
+    }
+    grid.appendChild(g);
+  });
+
+  // Output toggle
+  const tg = document.createElement('div');
+  tg.className = 'output-toggle';
+  tg.innerHTML = `
+    <button class="toggle-opt ${outputMode==='text'?'active':''}" onclick="setMode('text',this)">Readable</button>
+    <button class="toggle-opt ${outputMode==='json'?'active':''}" onclick="setMode('json',this)">JSON</button>`;
+  grid.appendChild(tg);
+
+  // Run button
+  const rb = document.createElement('button');
+  rb.className = 'run-btn';
+  rb.id = 'runBtn';
+  rb.textContent = 'Run';
+  rb.onclick = runQuery;
+  grid.appendChild(rb);
+}
+
+function setMode(mode, btn) {
+  outputMode = mode;
+  document.querySelectorAll('.toggle-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (lastResponse) renderResult(lastResponse);
+}
+
+// ── Build URL ──────────────────────────────────────────────────────────────────
+function buildURL() {
+  const op  = OPS[selectedOp];
+  const url = new URL(op.endpoint, window.location.origin);
+  op.params.forEach(p => {
+    const el = document.getElementById('p_' + p.id);
+    if (!el) return;
+    const v = el.value.trim();
+    if (v !== '' && v !== '—') url.searchParams.set(p.id, v);
+  });
+  return url.toString();
+}
+
+// ── Run query ──────────────────────────────────────────────────────────────────
+async function runQuery() {
+  const btn  = document.getElementById('runBtn');
+  const area = document.getElementById('resultsArea');
+  btn.disabled = true;
+  document.getElementById('emptyState')?.remove();
+
+  area.innerHTML = '<div class="loading-msg"><span class="spinner"></span>Querying MCP server…</div>';
+
+  try {
+    const url = buildURL();
+    const res = await fetch(url);
+    const json = await res.json();
+    lastResponse = json;
+    renderResult(json);
+  } catch (err) {
+    area.innerHTML = `<div class="error-box">Request failed: ${err.message}</div>`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ── Render result ──────────────────────────────────────────────────────────────
+function renderResult(json) {
+  const area = document.getElementById('resultsArea');
+  area.innerHTML = '';
+
+  if (!json.success) {
+    area.innerHTML = `<div class="error-box">Error from server: ${json.error || 'Unknown error'}</div>`;
+    return;
+  }
+
+  const card = document.createElement('div');
+  card.className = 'result-card';
+
+  // Header
+  const hdr = document.createElement('div');
+  hdr.className = 'result-header';
+  const count = countResults(json.data);
+  hdr.innerHTML = `
+    <span class="result-tool">${json.tool}</span>
+    <span class="result-meta">${count} result${count!==1?'s':''}</span>`;
+  card.appendChild(hdr);
+
+  // Body
+  const body = document.createElement('div');
+  body.className = 'result-body';
+
+  if (outputMode === 'text') {
+    body.appendChild(renderHuman(json));
+  } else {
+    const pre = document.createElement('div');
+    pre.className = 'json-view';
+    pre.innerHTML = syntaxHighlight(JSON.stringify(json, null, 2));
+    body.appendChild(pre);
+  }
+  card.appendChild(body);
+
+  // Download bar
+  const dl = document.createElement('div');
+  dl.className = 'download-bar';
+  dl.innerHTML = `
+    <button class="dl-btn" onclick="downloadJSON()">⬇ Download JSON</button>
+    <button class="dl-btn" onclick="downloadText()">⬇ Download text</button>`;
+  card.appendChild(dl);
+
+  area.appendChild(card);
+}
+
+function countResults(data) {
+  if (!data) return 0;
+  if (Array.isArray(data)) return data.length;
+  if (data.objects && Array.isArray(data.objects)) return data.objects.length;
+  if (data.corpora && Array.isArray(data.corpora)) return data.corpora.length;
+  if (data.results && Array.isArray(data.results)) return data.results.length;
+  return 1;
+}
+
+// ── Human-readable renderer ────────────────────────────────────────────────────
+function renderHuman(json) {
+  const wrap = document.createElement('div');
+
+  // If MCP returned human_text, show it prominently
+  if (json.human_text) {
+    const ht = document.createElement('pre');
+    ht.className = 'human-text';
+    ht.textContent = json.human_text;
+    wrap.appendChild(ht);
+    return wrap;
+  }
+
+  // Otherwise render data structurally
+  const data = json.data;
+  if (!data) { wrap.innerHTML = '<p style="color:var(--muted)">No data returned.</p>'; return wrap; }
+
+  // Corpora list
+  if (data.corpora) {
+    data.corpora.forEach(c => {
+      const card = document.createElement('div');
+      card.className = 'object-card';
+      card.innerHTML = `<div class="object-name">${c.key || c.id || c.name || '—'}</div>`;
+      const fields = document.createElement('div');
+      fields.className = 'object-fields';
+      Object.entries(c).filter(([k]) => !['key','id','name'].includes(k)).forEach(([k,v]) => {
+        fields.innerHTML += `<div class="field-row"><span class="field-key">${k}</span><span class="field-val">${fmt(v)}</span></div>`;
+      });
+      card.appendChild(fields);
+      wrap.appendChild(card);
+    });
+    return wrap;
+  }
+
+  // Objects list
+  const items = data.objects || data.results || (Array.isArray(data) ? data : null);
+  if (items) {
+    items.forEach(obj => {
+      const card = document.createElement('div');
+      card.className = 'object-card';
+      const name = obj.object_id || obj.id || obj.name || obj.galaxy_name || '—';
+      card.innerHTML = `<div class="object-name">${name}</div>`;
+      const fields = document.createElement('div');
+      fields.className = 'object-fields';
+      Object.entries(obj)
+        .filter(([k]) => !['object_id','id','name','galaxy_name'].includes(k))
+        .slice(0, 16)
+        .forEach(([k,v]) => {
+          fields.innerHTML += `<div class="field-row"><span class="field-key">${k}</span><span class="field-val">${fmt(v)}</span></div>`;
+        });
+      card.appendChild(fields);
+      wrap.appendChild(card);
+    });
+    return wrap;
+  }
+
+  // Single object / schema / other dict
+  const card = document.createElement('div');
+  card.className = 'object-card';
+  const fields = document.createElement('div');
+  fields.className = 'object-fields';
+  Object.entries(data).forEach(([k,v]) => {
+    fields.innerHTML += `<div class="field-row"><span class="field-key">${k}</span><span class="field-val">${fmt(v)}</span></div>`;
+  });
+  card.appendChild(fields);
+  wrap.appendChild(card);
+  return wrap;
+}
+
+function fmt(v) {
+  if (v === null || v === undefined) return '<span style="color:var(--muted)">—</span>';
+  if (typeof v === 'object') return `<span style="color:var(--muted);font-size:11px">${JSON.stringify(v).slice(0,80)}</span>`;
+  return String(v);
+}
+
+// ── JSON syntax highlight ──────────────────────────────────────────────────────
+function syntaxHighlight(str) {
+  return str.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, m => {
+    if (/^"/.test(m)) {
+      if (/:$/.test(m)) return `<span class="json-key">${esc(m)}</span>`;
+      return `<span class="json-str">${esc(m)}</span>`;
+    }
+    if (/true|false/.test(m)) return `<span class="json-bool">${m}</span>`;
+    if (/null/.test(m))       return `<span class="json-null">${m}</span>`;
+    return `<span class="json-num">${m}</span>`;
+  });
+}
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── Downloads ──────────────────────────────────────────────────────────────────
+function downloadJSON() {
+  if (!lastResponse) return;
+  const blob = new Blob([JSON.stringify(lastResponse, null, 2)], { type:'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `astro-rag_${selectedOp}_${Date.now()}.json`;
+  a.click();
+}
+
+function downloadText() {
+  if (!lastResponse) return;
+  const text = lastResponse.human_text || JSON.stringify(lastResponse, null, 2);
+  const blob = new Blob([text], { type:'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `astro-rag_${selectedOp}_${Date.now()}.txt`;
+  a.click();
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────────
+renderParams();
+</script>
+</body>
+</html>
