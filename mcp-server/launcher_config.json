@@ -1,0 +1,7 @@
+{
+    "hf_space_url" : "https://dflynn5656-astro-rag-mcp.hf.space/mcp",
+    "corpus_keys"  : ["v7", "dwarf", "gc", "intz", "z1"],
+    "default_port" : 8080,
+    "default_host" : "0.0.0.0",
+    "app_module"   : "app:app"
+}
