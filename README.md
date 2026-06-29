@@ -14,32 +14,35 @@ A unified platform of open astrophysics corpora, cross-epoch kinematic analysis 
 
 ## 🚀 Launch the Astro-RAG Query Interface
 
-**Query all five corpora from a clean browser interface — no programming required.**
+### ➡ [Open in Browser — no install required](https://dflynn5656-astro-rag-mcp.hf.space)
 
-> **Download:** [astro-rag-mcp-server-v2.2.0.zip](https://doi.org/10.5281/zenodo.20985225) from Zenodo
-> **Then run:**
-
-**Windows:**
-```powershell
-python launch.py
-```
-
-**Ubuntu / Linux:**
-```bash
-python3 launch.py
-```
-
-The launcher installs all dependencies automatically (first run ~60 seconds), then opens your browser to the query interface.
+**Click the link above** — the interface loads instantly in your browser via HuggingFace Spaces.
 
 | Interface | URL | Use for |
 |-----------|-----|---------|
-| **Query UI** | `http://localhost:8080` | Daily research — human-readable results, download options |
-| **REST API** | `http://localhost:8080/docs` | Developer integration — full OpenAPI explorer |
+| **Query UI** | [dflynn5656-astro-rag-mcp.hf.space](https://dflynn5656-astro-rag-mcp.hf.space) | Daily research — human-readable results, download options |
+| **REST API / Swagger** | [.../docs](https://dflynn5656-astro-rag-mcp.hf.space/docs) | Developer integration — full OpenAPI explorer |
+| **MCP endpoint** | [.../mcp](https://dflynn5656-astro-rag-mcp.hf.space/mcp) | AI assistant integration (Claude, Copilot, etc.) |
 
 **Corpus keys:** `v7` · `dwarf` · `gc` · `intz` · `z1`
 
-> MCP server software: [Zenodo 10.5281/zenodo.20985225](https://doi.org/10.5281/zenodo.20985225) · MIT License
-> Supports Windows 11 Pro and Ubuntu 20.04+
+---
+
+### 💻 Local Installation (offline / high-performance use)
+
+For local deployment on Windows 11 or Ubuntu:
+
+> **Download:** [astro-rag-mcp-server-v2.2.0.zip](https://doi.org/10.5281/zenodo.20985225) from Zenodo · MIT License
+
+```powershell
+# Windows
+python launch.py
+
+# Ubuntu / Linux
+python3 launch.py
+```
+
+The launcher installs all dependencies automatically (first run ~60 seconds), then opens your browser to `http://localhost:8080`.
 
 ---
 
