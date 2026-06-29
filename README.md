@@ -178,15 +178,15 @@ The sign difference across epochs is an empirical finding under the Flynn & Cann
 
 Executable Jupyter notebooks organized into six groups. All examples load directly from the corpus JSON/CSV files with no external preprocessing, using only Python 3, numpy, and matplotlib.
 
-| Group | Examples | Description |
-|-------|----------|-------------|
-| SPARC / HI Examples | 25 | Rotation curve plotting, baryonic decomposition, omega correction, WALLABY tier-2 analysis |
-| Dwarf / Irregular Examples | 25 | Omega-ready galaxies, DDO154/DDO161 cross-analysis, LVHIS/VLA-ANGST comparisons |
-| Globular Cluster Examples | 25 | Proper motion queries, N-body mass modeling, APOGEE chemistry, multi-survey cross-matching |
-| IntZ Examples | 20 | KROSS/KMOS3D kinematics, omega distributions, cross-epoch comparisons, RAG queries |
-| High-z Examples | 25 | [CII] rotation curves, ALPINE population statistics, cross-corpus omega bridge |
-| 🔬 Paper 2 Validation Track | 6 | Reproduce peer-reviewed results exactly from Flynn (2026), Physics of the Dark Universe |
-| High-School Exploration Track | 20 | Friendly introductory notebooks for students |
+| Group | Examples | Description | Launch |
+|-------|----------|-------------|--------|
+| SPARC / HI Examples | 25 | Rotation curve plotting, baryonic decomposition, omega correction, WALLABY tier-2 analysis | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/hi/ex01_first_rotation_curve.ipynb) |
+| Dwarf / Irregular Examples | 25 | Omega-ready galaxies, DDO154/DDO161 cross-analysis, LVHIS/VLA-ANGST comparisons | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/dwarfs/dw01_first_dwarf_rc.ipynb) |
+| Globular Cluster Examples | 25 | Proper motion queries, N-body mass modeling, APOGEE chemistry, multi-survey cross-matching | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/gc/gc01_first_cluster.ipynb) |
+| IntZ Examples | 20 | KROSS/KMOS3D kinematics, omega distributions, cross-epoch comparisons, RAG queries | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/intz/intz_nb10_rag_jsonl_demo.ipynb) |
+| High-z Examples | 25 | [CII] rotation curves, ALPINE population statistics, cross-corpus omega bridge | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/highz/hz_nb10_redshift_distribution.ipynb) |
+| 🔬 Paper 2 Validation Track | 6 | Reproduce peer-reviewed results exactly from Flynn (2026), Physics of the Dark Universe | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/paper2/p2_nb1_reproduce_table2.ipynb) |
+| High-School Exploration Track | 20 | Friendly introductory notebooks for students | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/highschool/hs_a_01_what_is_a_galaxy.ipynb) |
 
 ### 🚀 Quick Start
 
