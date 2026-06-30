@@ -2,6 +2,7 @@
 
 [![Zenodo Platform](https://img.shields.io/badge/Zenodo-Platform%20v1.0-blue)](https://doi.org/10.5281/zenodo.20398430)
 [![Zenodo MCP Server](https://img.shields.io/badge/Zenodo-MCP%20Server%20v2.2.0-green)](https://doi.org/10.5281/zenodo.20985225)
+[![Zenodo Astro Extractor](https://img.shields.io/badge/Zenodo-Astro%20Extractor%20v1.1.0-orange)](https://doi.org/10.5281/zenodo.20534420)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)](https://creativecommons.org/licenses/by/4.0/)
 [![arXiv](https://img.shields.io/badge/arXiv-2605.30384-red)](https://arxiv.org/abs/2605.30384)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Feps-research%2Frag-corpus-series&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
@@ -46,7 +47,38 @@ The launcher installs all dependencies automatically (first run ~60 seconds), th
 
 ---
 
-## 🔭 Live MCP Endpoint
+## 🔭 EPS Astro Extractor — Local Database Mining Tool
+
+A portable Streamlit app that crawls any publicly accessible astronomical database URL, feeds the content to a local LLM via LM Studio, and returns structured JSON — parameters, table data, and export options. No API key. No cloud inference. Runs entirely on your own hardware.
+
+**Download v1.1.0:** [10.5281/zenodo.20534420](https://doi.org/10.5281/zenodo.20534420)
+
+### Windows — one-click launch
+
+1. Install [Python 3.10+](https://python.org) and [LM Studio](https://lmstudio.ai)
+2. Download and unzip the Zenodo deposit
+3. Load a model in LM Studio and start the local server (default port 1234)
+4. Double-click **`run_extractor.bat`** — browser opens automatically
+
+### Linux / macOS
+
+```bash
+bash run.sh
+```
+
+### What it includes
+
+| Sidebar section | Pre-configured targets |
+|-----------------|----------------------|
+| 🎯 Quick Targets | SPARC, VizieR/CDS, NED, HyperLeda |
+| 📡 Survey Catalogues | THINGS, LITTLE THINGS, WHISP, LVHIS |
+| 🗄️ EPS Corpora | v7/SPARC, Dwarf, GC, Z1, IntZ — direct links to this platform's source data |
+
+Results export as Parameters CSV, Table CSV, or Full JSON. Auto-extract mode (blank target) extracts all structured data found on the page.
+
+**Suitable for high school students** — no command line required on Windows, no API key, no cost.
+
+
 
 All five corpora are available via a persistent Model Context Protocol (MCP) server — a true LLM-native data API implementing the Anthropic MCP specification with SSE and Streamable HTTP transports.
 
@@ -222,7 +254,7 @@ jupyter lab
 | Flynn (2026) — Dwarf/Irregular Corpus v1.0 data descriptor | PASP | [arXiv:2605.22163](https://arxiv.org/abs/2605.22163) | Submitted |
 | Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Preprint |
 | Flynn (2026) — IntZ Kinematic Corpus v1.0 data descriptor | arXiv (astro-ph.IM) | [Zenodo:20453189](https://doi.org/10.5281/zenodo.20453189) | Preprint |
-| Flynn (2026) — EPS Astro Extractor v1.0.0 (software) | Zenodo | [10.5281/zenodo.20486198](https://doi.org/10.5281/zenodo.20486198) | Preprint |
+| Flynn (2026) — EPS Astro Extractor v1.1.0 (software) | Zenodo | [10.5281/zenodo.20534420](https://doi.org/10.5281/zenodo.20534420) | Published |
 | Flynn (2026) — EPS Astro-RAG MCP Server v2.2.0 (software) | Zenodo | [10.5281/zenodo.20985225](https://doi.org/10.5281/zenodo.20985225) | Published |
 | Flynn (2026+) — Cross-epoch omega evolution (z=0 to z~6) | TBD | planned | Planned |
 | Flynn (2026+) — RAMSES simulation Paper 3 | TBD | planned | Planned |
@@ -246,7 +278,7 @@ Fine-tuned models and RAG utilities. Four-model team spanning laptop to research
 | Tool | Description |
 |------|-------------|
 | EPS Astro-RAG MCP Server v2.2.0 | Cross-platform launcher + REST wrapper for all 5 corpora — [Zenodo](https://doi.org/10.5281/zenodo.20985225) |
-| EPS Astro Extractor | Streamlit app for extracting structured data from astronomical databases via local LLM — [Zenodo](https://doi.org/10.5281/zenodo.20486198) |
+| EPS Astro Extractor v1.1.0 | Streamlit app for extracting structured data from astronomical databases via local LLM — Windows `.bat` launcher included — [Zenodo](https://doi.org/10.5281/zenodo.20534420) |
 
 **🔧 Coming Soon**
 
@@ -263,7 +295,7 @@ Fine-tuned models and RAG utilities. Four-model team spanning laptop to research
 | Total corpora | 5 |
 | Total galaxies / clusters | 2,064 |
 | Redshift range | z = 0 to z ~ 2.7 (with z ~ 5 anchor) |
-| Zenodo deposits | 8 (5 corpora + platform + extractor + MCP server) |
+| Zenodo deposits | 9 (5 corpora + platform + extractor v1.1.0 + MCP server + extractor v1.0.0) |
 | arXiv papers | 4 published + 2 in prep |
 | Jupyter notebooks | 147 |
 | License | CC BY 4.0 |
