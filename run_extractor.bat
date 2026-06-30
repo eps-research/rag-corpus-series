@@ -2,7 +2,7 @@
 setlocal
 
 :: ================================================
-::   EPS Research Astro Extractor — Windows Launcher
+::   EPS Research Astro Extractor v1.1.0 — Windows Launcher
 ::   Flynn, D.C. (2026) -- EPS Research
 ::   ORCID: 0000-0002-2768-6650
 :: ================================================
@@ -12,7 +12,7 @@ cd /d "%~dp0"
 
 echo.
 echo ================================================
-echo   EPS Research Astro Extractor v1.0.0
+echo   EPS Research Astro Extractor v1.1.0
 echo   Flynn, D.C. (2026) -- EPS Research
 echo ================================================
 echo.
@@ -20,14 +20,23 @@ echo.
 :: Check Python is available
 python --version >nul 2>&1
 if errorlevel 1 (
-    echo ERROR: Python not found. Install Python 3.10+ and ensure it is on your PATH.
+    echo ERROR: Python not found. Install Python 3.10+ from python.org
+    echo        and make sure "Add to PATH" is checked during install.
+    pause
+    exit /b 1
+)
+
+:: Check app.py is present
+if not exist "app.py" (
+    echo ERROR: app.py not found in this folder.
+    echo        Place run_extractor.bat in the same folder as app.py.
     pause
     exit /b 1
 )
 
 :: Create venv if it doesn't exist
 if not exist "venv\" (
-    echo Creating virtual environment...
+    echo Creating virtual environment -- this happens once and takes a minute...
     python -m venv venv
     if errorlevel 1 (
         echo ERROR: Failed to create virtual environment.
@@ -40,26 +49,13 @@ if not exist "venv\" (
 :: Activate venv
 call venv\Scripts\activate.bat
 
-:: Install / upgrade dependencies
-echo Installing dependencies...
-pip install -q --upgrade pip
+:: Install dependencies (fast on repeat launches -- pip skips installed packages)
+echo Checking dependencies...
 pip install -q streamlit pandas requests beautifulsoup4 nest-asyncio
-
-:: Try crawl4ai + Playwright (optional -- falls back to bs4)
-echo Installing crawl4ai (optional JS crawler)...
-pip install -q crawl4ai >nul 2>&1 && (
-    playwright install chromium >nul 2>&1 && (
-        echo   crawl4ai + Chromium ready.
-    ) || (
-        echo   Chromium unavailable -- bs4 fallback active (works fine).
-    )
-) || (
-    echo   crawl4ai unavailable -- bs4 fallback active (works fine).
-)
 
 echo.
 echo ================================================
-echo   BEFORE RUNNING:
+echo   BEFORE EXTRACTING:
 echo   1. Open LM Studio
 echo   2. Load a model (Qwen, Llama, Mistral, etc.)
 echo   3. Go to Local Server tab
@@ -68,7 +64,7 @@ echo ================================================
 echo.
 echo Starting Astro Extractor at http://localhost:8501
 echo Your browser will open automatically.
-echo Press Ctrl+C to stop.
+echo Press Ctrl+C in this window to stop.
 echo.
 
 :: Launch -- no headless flag so browser opens automatically
