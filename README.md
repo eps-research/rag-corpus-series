@@ -5,7 +5,7 @@
 [![Zenodo Astro Extractor](https://img.shields.io/badge/Zenodo-Astro%20Extractor%20v1.1.0-orange)](https://doi.org/10.5281/zenodo.20534420)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)](https://creativecommons.org/licenses/by/4.0/)
 [![arXiv](https://img.shields.io/badge/arXiv-2605.30384-red)](https://arxiv.org/abs/2605.30384)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Feps-research%2Frag-corpus-series&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![Hits](https://hitscounter.dev/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Feps-research%2Frag-corpus-series&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hitscounter.dev)
 
 **EPS Research | Laurel, MD | [eps-research.com](https://eps-research.com) | ORCID: [0000-0002-2768-6650](https://orcid.org/0000-0002-2768-6650)**
 
@@ -56,10 +56,9 @@ A portable Streamlit app that crawls any publicly accessible astronomical databa
 ### Windows — one-click launch
 
 1. Install [Python 3.10+](https://python.org) and [LM Studio](https://lmstudio.ai)
-2. Download the Zenodo zip and unzip it — or download just the launcher: **[⬇ run_extractor.bat](https://raw.githubusercontent.com/eps-research/rag-corpus-series/main/run_extractor.bat)** (right-click → Save link as)
-3. Place `run_extractor.bat` in the same folder as `app.py`
-4. Load a model in LM Studio and start the local server (default port 1234)
-5. Double-click **`run_extractor.bat`** — browser opens automatically
+2. Download and unzip the Zenodo deposit
+3. Load a model in LM Studio and start the local server (default port 1234)
+4. Double-click **`run_extractor.bat`** — browser opens automatically
 
 ### Linux / macOS
 
