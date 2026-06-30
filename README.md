@@ -5,7 +5,7 @@
 [![Zenodo Astro Extractor](https://img.shields.io/badge/Zenodo-Astro%20Extractor%20v1.1.0-orange)](https://doi.org/10.5281/zenodo.20534420)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)](https://creativecommons.org/licenses/by/4.0/)
 [![arXiv](https://img.shields.io/badge/arXiv-2605.30384-red)](https://arxiv.org/abs/2605.30384)
-[![Hits](https://hitscounter.dev/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Feps-research%2Frag-corpus-series&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hitscounter.dev)
+[![Hits](https://hitscounter.dev/api/hit?url=https%3A%2F%2Fgithub.com%2Feps-research%2Frag-corpus-series&label=hits&icon=eye-fill&color=%2379c83d)](https://hitscounter.dev)
 
 **EPS Research | Laurel, MD | [eps-research.com](https://eps-research.com) | ORCID: [0000-0002-2768-6650](https://orcid.org/0000-0002-2768-6650)**
 
