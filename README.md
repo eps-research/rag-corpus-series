@@ -56,9 +56,10 @@ A portable Streamlit app that crawls any publicly accessible astronomical databa
 ### Windows — one-click launch
 
 1. Install [Python 3.10+](https://python.org) and [LM Studio](https://lmstudio.ai)
-2. Download and unzip the Zenodo deposit
-3. Load a model in LM Studio and start the local server (default port 1234)
-4. Double-click **`run_extractor.bat`** — browser opens automatically
+2. Download the Zenodo zip and unzip it — or download just the launcher: **[⬇ run_extractor.bat](https://raw.githubusercontent.com/eps-research/rag-corpus-series/main/run_extractor.bat)** (right-click → Save link as)
+3. Place `run_extractor.bat` in the same folder as `app.py`
+4. Load a model in LM Studio and start the local server (default port 1234)
+5. Double-click **`run_extractor.bat`** — browser opens automatically
 
 ### Linux / macOS
 
