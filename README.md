@@ -1,7 +1,7 @@
 # EPS Research Astro-RAG Platform
 
 [![Zenodo Platform](https://img.shields.io/badge/Zenodo-Platform%20v1.0-blue)](https://doi.org/10.5281/zenodo.20398430)
-[![Zenodo MCP Server](https://img.shields.io/badge/Zenodo-MCP%20Server%20v2.2.0-green)](https://doi.org/10.5281/zenodo.20985225)
+[![Zenodo MCP Server](https://img.shields.io/badge/Zenodo-MCP%20Server%20v2.3.0-green)](https://doi.org/10.5281/zenodo.21154451)
 [![Zenodo Astro Extractor](https://img.shields.io/badge/Zenodo-Astro%20Extractor%20v1.1.0-orange)](https://doi.org/10.5281/zenodo.20534420)
 [![Zenodo FAISS Indexes](https://img.shields.io/badge/Zenodo-FAISS%20Indexes%20v1.0-purple)](https://doi.org/10.5281/zenodo.21147895)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey)](https://creativecommons.org/licenses/by/4.0/)
@@ -35,7 +35,7 @@ A unified platform of open astrophysics corpora, cross-epoch kinematic analysis 
 
 For local deployment on Windows 11 or Ubuntu:
 
-> **Download:** [astro-rag-mcp-server-v2.2.0.zip](https://doi.org/10.5281/zenodo.20985225) from Zenodo · MIT License
+> **Download:** [astro-rag-mcp-server-v2.3.0.zip](https://doi.org/10.5281/zenodo.21154451) from Zenodo · MIT License
 
 ```powershell
 # Windows
@@ -150,11 +150,11 @@ If you use the MCP server or REST API, also cite:
 ```bibtex
 @software{flynn_astro_rag_mcp_2026,
   author    = {Flynn, David C.},
-  title     = {{EPS Research Astro-RAG MCP Server v2.2.0}},
+  title     = {{EPS Research Astro-RAG MCP Server v2.3.0}},
   year      = {2026},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.20985225},
-  url       = {https://doi.org/10.5281/zenodo.20985225}
+  doi       = {10.5281/zenodo.21154451},
+  url       = {https://doi.org/10.5281/zenodo.21154451}
 }
 ```
 
@@ -258,7 +258,7 @@ jupyter lab
 | Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Preprint |
 | Flynn (2026) — IntZ Kinematic Corpus v1.0 data descriptor | arXiv (astro-ph.IM) | [Zenodo:20453189](https://doi.org/10.5281/zenodo.20453189) | Preprint |
 | Flynn (2026) — EPS Astro Extractor v1.1.0 (software) | Zenodo | [10.5281/zenodo.20534420](https://doi.org/10.5281/zenodo.20534420) | Published |
-| Flynn (2026) — EPS Astro-RAG MCP Server v2.2.0 (software) | Zenodo | [10.5281/zenodo.20985225](https://doi.org/10.5281/zenodo.20985225) | Published |
+| Flynn (2026) — EPS Astro-RAG MCP Server v2.3.0 (software) | Zenodo | [10.5281/zenodo.21154451](https://doi.org/10.5281/zenodo.21154451) | Published |
 | Flynn (2026) — FAISS Semantic Search Indexes v1.0 (software) | Zenodo | [10.5281/zenodo.21147895](https://doi.org/10.5281/zenodo.21147895) | Published |
 | Flynn (2026+) — Cross-epoch omega evolution (z=0 to z~6) | TBD | planned | Planned |
 | Flynn (2026+) — RAMSES simulation Paper 3 | TBD | planned | Planned |
@@ -274,7 +274,7 @@ The MCP server (Silo 5 Stage 1) makes all five corpora queryable by any LLM toda
 
 | Tool | Description |
 |------|-------------|
-| EPS Astro-RAG MCP Server v2.2.0 | Cross-platform launcher + REST wrapper for all 5 corpora — [Zenodo](https://doi.org/10.5281/zenodo.20985225) |
+| EPS Astro-RAG MCP Server v2.3.0 | Cross-platform launcher + REST wrapper for all 5 corpora + semantic search — [Zenodo](https://doi.org/10.5281/zenodo.21154451) |
 | EPS Astro Extractor v1.1.0 | Streamlit app for extracting structured data from astronomical databases via local LLM — Windows `.bat` launcher included — [Zenodo](https://doi.org/10.5281/zenodo.20534420) |
 | FAISS Semantic Search Indexes v1.0 | Pre-built vector indexes for all 5 corpora (2,064 objects) using `all-MiniLM-L6-v2` — enables natural-language similarity search — [Zenodo](https://doi.org/10.5281/zenodo.21147895) |
 
