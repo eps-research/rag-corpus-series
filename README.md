@@ -25,6 +25,7 @@ A unified platform of open astrophysics corpora, cross-epoch kinematic analysis 
 | **Query UI** | [dflynn5656-astro-rag-mcp.hf.space](https://dflynn5656-astro-rag-mcp.hf.space) | Daily research — human-readable results, download options |
 | **REST API / Swagger** | [.../docs](https://dflynn5656-astro-rag-mcp.hf.space/docs) | Developer integration — full OpenAPI explorer |
 | **MCP endpoint** | [.../mcp](https://dflynn5656-astro-rag-mcp.hf.space/mcp) | AI assistant integration (Claude, Copilot, etc.) |
+| **Semantic search** | [.../api/semantic_search](https://dflynn5656-astro-rag-mcp.hf.space/api/semantic_search) | Natural-language similarity search via FAISS |
 
 **Corpus keys:** `v7` · `dwarf` · `gc` · `intz` · `z1`
 
@@ -93,6 +94,7 @@ All five corpora are available via a persistent Model Context Protocol (MCP) ser
 | `search_metadata` | Search any metadata field by value (case-insensitive) |
 | `filter_objects` | Filter by numeric range on any field; supports `omega_ready_only` flag |
 | `get_corpus_schema` | Return field schema and column definitions for any corpus |
+| `semantic_search` | Natural-language similarity search across any corpus using FAISS vector indexes |
 
 **Python Example:**
 ```python
