@@ -180,7 +180,7 @@ Three unified, machine-readable corpora of the local universe, designed for both
 |--------|---|--------|--------|-------|
 | Unified HI Rotation Curve Corpus v7.0 | 438 galaxies | HI 21cm | [10.5281/zenodo.19563417](https://doi.org/10.5281/zenodo.19563417) | [2604.13489](https://arxiv.org/abs/2604.13489) |
 | Dwarf/Irregular HI Corpus v1.0 | 129 galaxies | HI 21cm | [10.5281/zenodo.20320362](https://doi.org/10.5281/zenodo.20320362) | [2605.22163](https://arxiv.org/abs/2605.22163) |
-| Milky Way Globular Cluster Corpus v1.3.1 | 174 clusters | Multi-survey | [10.5281/zenodo.19907766](https://doi.org/10.5281/zenodo.19907766) | [2605.03099](https://arxiv.org/abs/2605.03099) |
+| Milky Way Globular Cluster Corpus v1.3.2 | 174 clusters | Multi-survey | [10.5281/zenodo.19907766](https://doi.org/10.5281/zenodo.19907766) | [2605.03099](https://arxiv.org/abs/2605.03099) |
 
 All three corpora share a common design philosophy: structured JSON + flat CSV + RAG-ready JSONL, with explicit quality tiers, verified kinematic parameters, and self-describing schemas for LLM ingestion.
 
