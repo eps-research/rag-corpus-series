@@ -278,6 +278,14 @@ The MCP server (Silo 5 Stage 1) makes all five corpora queryable by any LLM toda
 | EPS Astro Extractor v1.1.0 | Streamlit app for extracting structured data from astronomical databases via local LLM — Windows `.bat` launcher included — [Zenodo](https://doi.org/10.5281/zenodo.20534420) |
 | FAISS Semantic Search Indexes v1.0 | Pre-built vector indexes for all 5 corpora (2,064 objects) using `all-MiniLM-L6-v2` — enables natural-language similarity search — [Zenodo](https://doi.org/10.5281/zenodo.21147895) |
 
+**🔬 FAISS Example Notebooks**
+
+| Notebook | Description | Run |
+|----------|-------------|-----|
+| [hz_nb1_faiss_basics.ipynb](examples/faiss/hz_nb1_faiss_basics.ipynb) | Semantic search basics across all 5 corpora | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/faiss/hz_nb1_faiss_basics.ipynb) |
+| [hz_nb2_cross_epoch.ipynb](examples/faiss/hz_nb2_cross_epoch.ipynb) | Cross-epoch discovery: find similar objects from z=0 to z~5 | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/faiss/hz_nb2_cross_epoch.ipynb) |
+| [hz_nb3_semantic_vs_filter.ipynb](examples/faiss/hz_nb3_semantic_vs_filter.ipynb) | Semantic search vs. filter objects — when to use each | [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/faiss/hz_nb3_semantic_vs_filter.ipynb) |
+
 **🔧 Coming Soon**
 
 | Tool | Description |
