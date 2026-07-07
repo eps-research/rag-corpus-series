@@ -126,7 +126,7 @@ asyncio.run(query())
 | Sign Reversal Test | Statistical proof of z=0 vs z∼0.9 sign flip ⭐ | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/sign_reversal_test.ipynb) |
 | End-to-End Pipeline | Full cross-epoch z=0→z∼0.9→z∼5 workflow ⭐ | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/end_to_end_pipeline.ipynb) |
 
-**A unified open-science astrophysics platform integrating five machine-readable corpora, 147 fully reproducible notebooks, and cross-epoch kinematic analysis tools spanning z = 0 to z ≈ 6.**
+**A unified open-science astrophysics platform integrating five machine-readable corpora, 150 fully reproducible notebooks, and cross-epoch kinematic analysis tools spanning z = 0 to z ≈ 6.**
 
 ---
 
@@ -302,7 +302,7 @@ The MCP server (Silo 5 Stage 1) makes all five corpora queryable by any LLM toda
 | Redshift range | z = 0 to z ~ 2.7 (with z ~ 5 anchor) |
 | Zenodo deposits | 10 (5 corpora + platform + extractor v1.1.0 + MCP server + extractor v1.0.0 + FAISS indexes) |
 | arXiv papers | 4 published + 2 in prep |
-| Jupyter notebooks | 147 |
+| Jupyter notebooks | 150 |
 | License | CC BY 4.0 |
 
 ## Mission
