@@ -276,7 +276,7 @@ for g in sorted(rotators, key=lambda x: x['redshift']):
     d  = g['data']
     R1, V1 = d[0]['R_kpc'],  d[0]['Vrot_kms']
     R2, V2 = d[-1]['R_kpc'], d[-1]['Vrot_kms']
-    omega  = (V2/R2 - V1/R1) * (R1/R2)**1.5
+    omega  = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
     results.append({'galaxy': g['galaxy'], 'z': g['redshift'],
                     'R2': R2, 'V2': V2, 'omega': omega,
                     'n_rings': len(d)})
@@ -894,7 +894,7 @@ for g in rotators:
     d  = g['data']
     R1, V1 = d[0]['R_kpc'],  d[0]['Vrot_kms']
     R2, V2 = d[-1]['R_kpc'], d[-1]['Vrot_kms']
-    omega  = (V2/R2 - V1/R1) * (R1/R2)**1.5
+    omega  = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
     z1_results.append({'galaxy': g['galaxy'], 'z': g['redshift'], 'omega': omega})
 
 # Published z=0 reference values (Flynn & Cannaliato 2025, Flynn 2026)
@@ -1027,7 +1027,7 @@ for i,p in enumerate(g['data']):
 
 # Omega
 d=g['data']; R1,V1=d[0]['R_kpc'],d[0]['Vrot_kms']; R2,V2=d[-1]['R_kpc'],d[-1]['Vrot_kms']
-omega=(V2/R2-V1/R1)*(R1/R2)**1.5
+omega=V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
 print(f"\\nEPS omega:       {omega:.3f} rad/Gyr")""")
 ])
 
@@ -1111,7 +1111,7 @@ d = record.get('data', [])
 if d:
     R1,V1=d[0]['R_kpc'],d[0]['Vrot_kms']
     R2,V2=d[-1]['R_kpc'],d[-1]['Vrot_kms']
-    omega=(V2/R2-V1/R1)*(R1/R2)**1.5
+    omega=V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
     print(f"\\nRAG answer for {target}:")
     print(f"  omega = {omega:.3f} rad/Gyr")
     print(f"  Vmax = {record.get('vrot_max_kms','?')} km/s")
@@ -1187,7 +1187,7 @@ for g in sorted(rotators, key=lambda x: x['redshift']):
     d  = g['data']
     R1, V1 = d[0]['R_kpc'],  d[0]['Vrot_kms']
     R2, V2 = d[-1]['R_kpc'], d[-1]['Vrot_kms']
-    omega  = (V2/R2 - V1/R1) * (R1/R2)**1.5
+    omega  = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
     results.append({'galaxy': g['galaxy'], 'z': g['redshift'],
                     'omega': omega, 'vmax': g.get('vrot_max_kms', 0),
                     'n_rings': len(d)})

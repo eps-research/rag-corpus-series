@@ -534,7 +534,7 @@ R1, V1 = R[0],  Vobs[0]   # innermost point
 R2, V2 = R[-1], Vobs[-1]  # outermost point
 
 # Calculate omega (the correction)
-omega = (V2/R2 - V1/R1) * (R1/R2)**1.5
+omega = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
 
 print(f"Innermost point: R = {R1:.2f} kpc,  V = {V1:.1f} km/s")
 print(f"Outermost point: R = {R2:.2f} kpc,  V = {V2:.1f} km/s")
@@ -778,7 +778,7 @@ print(f"  Inner: R1 = {R1:.2f} kpc,  V1 = {V1:.2f} km/s,  V1/R1 = {V1/R1:.3f}")
 print(f"  Outer: R2 = {R2:.2f} kpc,  V2 = {V2:.2f} km/s,  V2/R2 = {V2/R2:.3f}")
 print()
 
-omega = (V2/R2 - V1/R1) * (R1/R2)**1.5
+omega = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
 print(f"Step 3: Omega correction")
 print(f"  ω = (V2/R2 - V1/R1) × (R1/R2)^(3/2)")
 print(f"  ω = ({V2/R2:.3f} - {V1/R1:.3f}) × ({R1/R2:.3f})^1.5")
@@ -841,7 +841,7 @@ Vgas=np.array([p['Vgas'] for p in d]); Vdisk=np.array([p['Vdisk'] for p in d])
 Vbul=np.array([p['Vbul'] for p in d])
 Vbar=np.where(Vgas<0,-np.sqrt(Vgas**2+Vdisk**2+Vbul**2),np.sqrt(Vgas**2+Vdisk**2+Vbul**2))
 R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
-omega=(V2/R2-V1/R1)*(R1/R2)**1.5
+omega=V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
 V_adj=V-R*omega
 V_kep=np.sqrt(V2**2*R2/R)
 
@@ -920,7 +920,7 @@ for g in corpus['galaxies']:
     d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
     R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
     if R1<=0 or R2<=0 or V1<=0 or V2<=0: continue
-    omega=(V2/R2-V1/R1)*(R1/R2)**1.5; V_adj_R2=V2-R2*omega
+    omega=V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix; V_adj_R2=V2-R2*omega
     Vgas=d[-1].get('Vgas',0); Vdisk=d[-1].get('Vdisk',0); Vbul=d[-1].get('Vbul',0)
     Vbar_R2=np.sqrt(Vgas**2+Vdisk**2+Vbul**2)
     if Vbar_R2>0: gaps.append(V_adj_R2-Vbar_R2)
@@ -958,7 +958,7 @@ for g in corpus['galaxies']:
     d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
     R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
     if R1>0 and R2>0 and V1>0 and V2>0:
-        omegas.append((V2/R2-V1/R1)*(R1/R2)**1.5)
+        omegas.append(V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix)
 mean_o=np.mean(omegas); std_o=np.std(omegas); se=std_o/np.sqrt(len(omegas))
 print(f"N galaxies: {len(omegas)}")
 print(f"Mean ω = {mean_o:.2f} ± {se:.2f} rad/Gyr  (standard error)")
@@ -1115,7 +1115,7 @@ for g in corpus['galaxies']:
     d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
     R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
     if R1>0 and R2>0 and V1>0 and V2>0:
-        omega=(V2/R2-V1/R1)*(R1/R2)**1.5
+        omega=V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
         results.append({'galaxy':g['galaxy'],'omega':omega,'inc':float(g['inc_deg'])})
 inc=[r['inc'] for r in results]; omegas=[r['omega'] for r in results]
 corr=np.corrcoef(inc,omegas)[0,1]

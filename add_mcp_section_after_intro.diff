@@ -1,0 +1,51 @@
+diff --git a/README.md b/README.md
+index 0000000..1111111 100644
+--- a/README.md
++++ b/README.md
+@@ -6,6 +6,48 @@ A unified platform of open astrophysics corpora, cross-epoch kinematic analysis
+ > |----------|-------|--------|
+ > **A unified open-science astrophysics platform combining five machine-readable corpora, 140 reproducible notebooks, and cross-epoch kinematic tools spanning z = 0 to z ~ 6.**
+ 
++---
++
++## 🔭 Live MCP Endpoint
++
++All five corpora are available via a persistent **Model Context Protocol (MCP)** server — a true LLM‑native data API implementing the Anthropic MCP specification with SSE and Streamable HTTP transports.
++
++**Endpoint:** `https://dflynn5656-astro-rag-mcp.hf.space/mcp`
++
++### Available Tools
++
++| Tool | Description |
++|------|-------------|
++| `list_corpora` | List all five corpora with metadata, record counts, and Zenodo DOIs |
++| `list_objects` | List object IDs with optional survey/tier filter and pagination |
++| `get_object` | Retrieve full record for any galaxy or cluster by name |
++| `search_metadata` | Search any metadata field by value (case-insensitive) |
++| `filter_objects` | Filter by numeric range on any field; supports `omega_ready_only` flag |
++| `get_corpus_schema` | Return field schema and column definitions for any corpus |
++
++### Python Example
++
++```python
++from mcp.client.streamable_http import streamablehttp_client
++from mcp import ClientSession
++import asyncio, json
++
++async def query():
++    async with streamablehttp_client("https://dflynn5656-astro-rag-mcp.hf.space/mcp") as (r, w, _):
++        async with ClientSession(r, w) as session:
++            await session.initialize()
++            result = await session.call_tool(
++                "get_object",
++                {"corpus": "v7", "object_id": "DDO161"}
++            )
++            record = json.loads(result.content[0].text)["record"]
++            print(record["galaxy"], record["distance_mpc"], "Mpc")
++
++asyncio.run(query())
++```
++
++---
++
+ ## 📄 Cite This Platform
