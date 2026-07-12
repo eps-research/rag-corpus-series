@@ -958,7 +958,7 @@ for g in corpus['galaxies']:
     d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
     R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
     if R1>0 and R2>0 and V1>0 and V2>0:
-        omegas.append(V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix)
+        omegas.append(V2/R2 - (V1/R1)*(R1/R2)**1.5)  # Eq.6 corrected 2026-07-12: operator-precedence fix
 mean_o=np.mean(omegas); std_o=np.std(omegas); se=std_o/np.sqrt(len(omegas))
 print(f"N galaxies: {len(omegas)}")
 print(f"Mean ω = {mean_o:.2f} ± {se:.2f} rad/Gyr  (standard error)")

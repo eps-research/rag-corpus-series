@@ -434,7 +434,7 @@ for g in dwarf_corpus['galaxies']:
     d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
     R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
     if R1>0 and R2>0 and V1>0 and V2>0:
-        dwarf_omegas.append(V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix)
+        dwarf_omegas.append(V2/R2 - (V1/R1)*(R1/R2)**1.5)  # Eq.6 corrected 2026-07-12: operator-precedence fix
 
 # SPARC reference values from Flynn & Cannaliato (2025)
 sparc_mean   = 7.06
