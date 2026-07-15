@@ -1,10 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from typing import Optional
+import re
 from mcp_client import call_tool
 from models.response_models import APIResponse
 from dependencies import verify_api_key
 
 router = APIRouter(prefix="/api", tags=["Objects"])
+
+def _normalize_id(s: str) -> str:
+    """Collapse spaces/hyphens to underscores, uppercase.
+    DDO 133, ddo133, DDO-133, DDO_133 all become DDO_133."""
+    return re.sub(r"[\s\-]+", "_", s.strip()).upper()
 
 @router.get("/list_objects", response_model=APIResponse, dependencies=[Depends(verify_api_key)])
 async def list_objects(
@@ -23,7 +29,8 @@ async def list_objects(
 @router.get("/get_object", response_model=APIResponse, dependencies=[Depends(verify_api_key)])
 async def get_object(corpus: str = Query(...), object_id: str = Query(...)):
     try:
-        data = await call_tool("get_object", {"corpus": corpus, "object_id": object_id})
+        normalized_id = _normalize_id(object_id)
+        data = await call_tool("get_object", {"corpus": corpus, "object_id": normalized_id})
         return APIResponse.ok("get_object", data)
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=str(e))
