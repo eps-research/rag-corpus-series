@@ -24,7 +24,7 @@ A unified platform of open astrophysics corpora, cross-epoch kinematic analysis 
 |-----------|-----|---------|
 | **Query UI** | [dflynn5656-astro-rag-mcp.hf.space](https://dflynn5656-astro-rag-mcp.hf.space) | Daily research — human-readable results, download options |
 | **REST API / Swagger** | [.../docs](https://dflynn5656-astro-rag-mcp.hf.space/docs) | Developer integration — full OpenAPI explorer |
-| **MCP endpoint** | [.../mcp](https://dflynn5656-astro-rag-mcp.hf.space/mcp) | AI assistant integration (Claude, Copilot, etc.) |
+| **MCP endpoint** | https://dflynn5656-astro-rag-mcp.hf.space/ | AI assistant integration (Claude, Copilot, etc.) |
 | **Semantic search** | [.../api/semantic_search](https://dflynn5656-astro-rag-mcp.hf.space/api/semantic_search) | Natural-language similarity search via FAISS |
 
 **Corpus keys:** `v7` · `dwarf` · `gc` · `intz` · `z1`
@@ -84,7 +84,7 @@ Results export as Parameters CSV, Table CSV, or Full JSON. Auto-extract mode (bl
 
 All five corpora are available via a persistent Model Context Protocol (MCP) server — a true LLM-native data API implementing the Anthropic MCP specification with SSE and Streamable HTTP transports.
 
-**Endpoint:** `https://dflynn5656-astro-rag-mcp.hf.space/mcp`
+**Endpoint:** `https://dflynn5656-astro-rag-mcp.hf.space/`
 
 | Tool | Description |
 |------|-------------|
@@ -103,7 +103,7 @@ from mcp import ClientSession
 import asyncio, json
 
 async def query():
-    async with streamablehttp_client("https://dflynn5656-astro-rag-mcp.hf.space/mcp") as (r, w, _):
+    async with streamablehttp_client("https://dflynn5656-astro-rag-mcp.hf.space/") as (r, w, _):
         async with ClientSession(r, w) as session:
             await session.initialize()
             result = await session.call_tool(
