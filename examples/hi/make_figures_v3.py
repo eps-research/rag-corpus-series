@@ -316,7 +316,7 @@ ax4.plot(np.log10(v_ref), 4*np.log10(v_ref)+np.log10(47),
 ax4.set_xlabel(r'$\log_{10}\,V_{\rm flat}$ (km s$^{-1}$)', fontsize=13)
 ax4.set_ylabel(r'$\log_{10}\,M_{\rm bar}$ ($M_\odot$)',    fontsize=13)
 ax4.set_title('Baryonic Tully–Fisher Relation\n'
-              'Unified HI Corpus v7.0 — SPARC · THINGS · LITTLE THINGS · WALLABY DR2',
+              'Unified Corpus v7.1 — SPARC · THINGS · LITTLE THINGS · WALLABY DR2',
               fontsize=11)
 ax4.legend(fontsize=9, framealpha=0.9)
 ax4.set_xlim(0.9, 2.8)
