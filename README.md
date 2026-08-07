@@ -1,5 +1,5 @@
 # EPS Research Astro-RAG Platform
-![Hits](https://hits.sh/github.com/eps-research/rag-corpus-series.svg)
+![Hits](https://hits.sh/github.com/eps-research/rag-corpus-series.svg?view=today-total&style=flat)
 
 [![Zenodo Platform](https://img.shields.io/badge/Zenodo-Platform-blue)](https://doi.org/10.5281/zenodo.20398430)
 [![Zenodo MCP Server](https://img.shields.io/badge/Zenodo-MCP_Server-blue)](https://doi.org/10.5281/zenodo.21154451)
