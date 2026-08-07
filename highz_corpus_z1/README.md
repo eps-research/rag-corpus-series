@@ -2,6 +2,8 @@
 
 **EPS Research — Flynn, D.C. (2026)**
 
+> **⚠️ Correction Notice (August 2026):** The previously reported negative omega values and cross-epoch sign reversal have been withdrawn. An external audit identified a formula-implementation discrepancy (operator precedence in Eq. 6) and a data-provenance issue in the high-z omega computation. The underlying morpho-kinematic corpus data (rotation curves, classifications, redshifts) are unaffected. Omega recomputation under the canonical Eq. 6 is in progress. See [CORRECTIONS.md](../CORRECTIONS.md) for full details.
+
 ## Overview
 
 ALMA [CII] 158μm morpho-kinematic data for 31 star-forming main-sequence galaxies at z = 4.26–5.68 from the ALPINE survey (Jones et al. 2021). The high-redshift anchor of the EPS Research RAG Astrophysics Corpus Series.
@@ -11,8 +13,7 @@ ALMA [CII] 158μm morpho-kinematic data for 31 star-forming main-sequence galaxi
 | Resource | Link |
 |----------|------|
 | Zenodo deposit | [10.5281/zenodo.20369286](https://doi.org/10.5281/zenodo.20369286) |
-| arXiv preprint | 2605.25339 |
-| Journal submission | arXiv (submitted) |
+| arXiv preprint | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) |
 
 ## Coverage
 
@@ -39,12 +40,14 @@ ALMA [CII] 158μm morpho-kinematic data for 31 star-forming main-sequence galaxi
 | `rag_examples_hz_Z1.json` | Three worked RAG examples |
 | `hz_nb1_rotator_kinematics.ipynb` | Example 1: J0817 rotation curve |
 | `hz_nb2_population_diversity.ipynb` | Example 2: Population statistics |
-| `hz_nb3_eps_omega_bridge.ipynb` | Example 3: Cross-corpus omega application |
+| `hz_nb3_eps_omega_bridge.ipynb` | Example 3: Cross-corpus kinematic comparison |
 | `README_Z1.md` | Full documentation |
 
-## Key Result
+## Omega Status
 
-Applying the Flynn & Cannaliato (2025) omega formula to all 8 tier-1 rotators yields negative values (median −13.05 rad/Gyr), contrasting with positive values at z = 0 (SPARC mean +7.06, dwarf median +9.94 rad/Gyr). This sign reversal is consistent with the known evolution from centrally concentrated high-z systems to extended rotating disks at z = 0.
+The previously reported omega values (median −13.05 rad/Gyr) were computed using a parenthesized implementation that did not match the canonical Eq. 6 from Flynn & Cannaliato (2025). This result has been **withdrawn**. Recomputation under the corrected equation is in progress; updated values will be published in a revised Zenodo deposit and noted in [CORRECTIONS.md](../CORRECTIONS.md).
+
+The underlying corpus — rotation curve data, morpho-kinematic classifications, redshifts, and all non-omega fields — remains valid and unchanged.
 
 ## Quick Start
 
@@ -58,13 +61,20 @@ with open('high_z_kinematic_corpus_Z1.json') as f:
 rotators = [g for g in corpus['galaxies']
             if g.get('is_rotator') and g.get('quality_tier') == 1]
 
-# Compute omega for each
+# List rotator properties
 for g in rotators:
     d  = g['data']
     R1, V1 = d[0]['R_kpc'],  d[0]['Vrot_kms']
     R2, V2 = d[-1]['R_kpc'], d[-1]['Vrot_kms']
-    omega = (V2/R2 - V1/R1) * (R1/R2)**1.5
-    print(f"{g['galaxy']:20s} z={g['redshift']:.4f}  omega={omega:.2f} rad/Gyr")
+    print(f"{g['galaxy']:20s} z={g['redshift']:.4f}  "
+          f"R1={R1:.2f} kpc  V1={V1:.1f} km/s  "
+          f"R2={R2:.2f} kpc  V2={V2:.1f} km/s")
+
+# NOTE: Omega computation removed pending correction.
+# The canonical Eq. 6 from Flynn & Cannaliato (2025) is:
+#   omega = V2/R2 - (V1/R1) * (R1/R2)**1.5
+# The (R1/R2)**1.5 factor multiplies ONLY the (V1/R1) term, not the
+# full difference. See CORRECTIONS.md for the corrected implementation.
 ```
 
 ## Important Caveats
@@ -75,6 +85,7 @@ for g in rotators:
 4. No baryonic decomposition available at z~5
 5. Beam smearing affects all entries despite 3DBarolo correction
 6. ALPINE selection bias — misses true low-mass progenitor population
+7. **Previously reported omega values have been withdrawn** (see correction notice above)
 
 ## Citation
 
