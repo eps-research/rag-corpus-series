@@ -1,0 +1,391 @@
+\documentclass[a4paper,12pt]{article}
+
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{lineno}
+\usepackage{setspace}
+\doublespacing
+%\linenumbers
+
+% ── Macros ────────────────────────────────────────────────────────────────────
+\newcommand{\om}{\omega}
+\newcommand{\omunit}{km\,s$^{-1}$\,kpc$^{-1}$}
+\newcommand{\vobs}{V_{\rm obs}}
+\newcommand{\vadj}{V_{\rm adj}}
+\newcommand{\kms}{km\,s$^{-1}$}
+
+% ── Title ─────────────────────────────────────────────────────────────────────
+\title{Correction: Cross-Epoch Application of the Omega Kinematic\\
+Correction from $z=0$ to $z\sim5$}
+
+\author{
+  Flynn, David C.\\
+  \small EPS Research, Laurel, MD, USA\\
+  \small ORCID: 0000-0002-2768-6650\\
+  \small \href{mailto:davidflynn@eps-research.com}{davidflynn@eps-research.com}
+}
+
+\date{August 2026}
+
+% ══════════════════════════════════════════════════════════════════════════════
+\begin{document}
+\maketitle
+
+% ── Correction Notice ────────────────────────────────────────────────────────
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{
+\textbf{Correction Notice --- August 2026.}
+This document supersedes Version~1.0 of ``Kinematic Sign Reversal of
+the Omega Correction Across Cosmic Time'' (Zenodo record 21383809,
+July 2026). An external formula audit identified that the
+intermediate- and high-redshift omega values in Version~1.0 were
+computed using a mis-parenthesized variant of the canonical equation,
+producing spurious negative values. Additionally, the KROSS
+intermediate-redshift values were derived from a fixed template
+rescaling rather than independently measured rotation-curve boundary
+points. The reported cross-epoch sign reversal does not survive
+correction. The $z=0$ SPARC result is unaffected. Full details are
+given below.
+}}
+\end{center}
+
+\vspace{1em}
+
+% ── Abstract ──────────────────────────────────────────────────────────────────
+\begin{abstract}
+We report a correction to our cross-epoch application of the
+Flynn \& Cannaliato (2025) kinematic omega parameter $\om$. The
+previously reported sign reversal from positive $\om$ at $z=0$ to
+uniformly negative $\om$ at $z\gtrsim0.6$ was the result of two
+errors: (1)~an operator-precedence parenthesization discrepancy
+between the canonical equation and its implementation in the
+intermediate- and high-redshift corpus-generation pipelines, and
+(2)~the use of template-derived proxy values rather than independently
+measured rotation-curve boundary points for the KROSS
+intermediate-redshift sample.
+
+Under uniform application of the canonical Equation~6 of
+Flynn \& Cannaliato (2025), the $z=0$ SPARC result is unchanged
+(median $\om = +7.13$\,\omunit, $N=175$, 100\% positive). The
+High-$z$ Corpus Z1 values ($N=8$ ALPINE rotators) require
+recomputation from their 3DBarolo boundary rings under the corrected
+formula; preliminary recomputation yields all-positive values. The
+KROSS intermediate-redshift omega values are withdrawn because the
+IntZ corpus contains no independently tabulated rotation-curve
+boundary points; the stored omega was a deterministic rescaling of
+$V_c$ and $R_{\rm half}$, not an independent kinematic measurement.
+
+The $z=0$ peer-reviewed omega correction framework
+\citep{flynnCannaliato2025} and the 84-galaxy baryonic validation
+\citep{flynn2026baryonic} are not affected by this correction.
+The cross-epoch sign-reversal claim, including all associated
+conclusions regarding a disk assembly phase transition, is withdrawn.
+\end{abstract}
+
+\textbf{Keywords:} galaxies: kinematics and dynamics --- errata ---
+galaxies: evolution --- galaxies: high-redshift
+
+% ── 1. Summary of the Error ──────────────────────────────────────────────────
+\section{Summary of the Error}
+\label{sec:error}
+
+The canonical omega correction parameter introduced by
+Flynn \& Cannaliato (2025) is defined as
+\begin{equation}
+  \om = \frac{V_2}{R_2} - \frac{V_1}{R_1}\left(\frac{R_1}{R_2}\right)^{3/2},
+  \label{eq:omega}
+\end{equation}
+where $R_1$ and $R_2$ are the innermost and outermost measured radii,
+and $V_1$ and $V_2$ are the corresponding observed rotation velocities.
+The parameter carries dimensions of angular frequency; throughout this
+work it is expressed in \omunit{} (noting that
+$1$\,km\,s$^{-1}$\,kpc$^{-1}$ $\approx 1.023$\,rad\,Gyr$^{-1}$).
+
+The $z=0$ SPARC pipeline correctly implements
+Equation~\ref{eq:omega}. However, the intermediate-redshift (IntZ)
+and high-redshift (Z1) corpus-generation code implemented a
+parenthesized variant:
+\begin{equation}
+  \om_{\rm err} = \left(\frac{V_2}{R_2} - \frac{V_1}{R_1}\right)
+                  \left(\frac{R_1}{R_2}\right)^{3/2}.
+  \label{eq:omega_wrong}
+\end{equation}
+These two expressions are not algebraically equivalent.
+Equation~\ref{eq:omega} applies the $(R_1/R_2)^{3/2}$ scaling only
+to the inner term, whereas Equation~\ref{eq:omega_wrong} applies it
+to the entire difference. For galaxies with flat or gently falling
+rotation curves, Equation~\ref{eq:omega} produces positive values
+while Equation~\ref{eq:omega_wrong} can produce negative values from
+the same input data.
+
+An operator-precedence correction was applied to 43 repository files
+on 12~July 2026, but the corrected formula was not propagated into
+the stored corpus data products (JSON, CSV, JSONL) in the IntZ and
+Z1 directories, nor into the derived figures, notebooks, or
+manuscript statistics. The Version~1.0 preprint therefore compared
+correctly computed $z=0$ values against incorrectly computed
+$z>0$ values, producing the spurious sign reversal.
+
+\subsection{The KROSS Template-Derivation Problem}
+
+Independent of the parenthesization error, an audit revealed that the
+166 KROSS Tier-1 omega values in the IntZ corpus were not computed
+from independently tabulated rotation-curve boundary points. Instead,
+each value was derived from a fixed power-law template:
+$R_1 = 0.3\,R_{\rm half}$, $V_1 = 0.6577\,V_c$, $R_2 = R_{\rm half}$,
+$V_2 = V_c$. This produces the deterministic relationship
+$\om \propto V_c / R_{\rm half}$ with a constant of proportionality
+that is invariant across all 166 galaxies (standard deviation of the
+exponent $\sim 10^{-4}$), and with null uncertainty on every record.
+
+Version~1.0 stated that the IntZ omega values used ``the innermost
+and outermost tabulated ring radii.'' This statement was incorrect;
+the IntZ corpus ships no per-ring $(R, V)$ rotation-curve data. The
+KROSS omega quantity is therefore not an independent kinematic
+measurement and cannot participate in a like-for-like cross-epoch
+comparison with the SPARC or Z1 boundary-ring values.
+
+% ── 2. Corrected Status ──────────────────────────────────────────────────────
+\section{Corrected Status of Each Sample}
+\label{sec:status}
+
+\begin{table}[h]
+\centering
+\caption{Cross-epoch omega status after correction.}
+\label{tab:status}
+\begin{tabular}{llll}
+\toprule
+Sample & $N$ & Status & Notes \\
+\midrule
+SPARC ($z=0$, HI) & 175 &
+  Retained; $\om = +7.13^{+3.31}_{-2.22}$\,\omunit &
+  Canonical Eq.~\ref{eq:omega}; unaffected \\
+KROSS ($z\sim0.9$, H$\alpha$) & 166 &
+  Withdrawn &
+  Template-derived; no boundary-ring data \\
+ALPINE Z1 ($z\sim5$, [CII]) & 8 &
+  Recomputation in progress &
+  3DBarolo boundary rings available \\
+\midrule
+Cross-epoch sign reversal & --- &
+  Withdrawn &
+  Artifact of inconsistent formula \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{SPARC ($z=0$)}
+
+The SPARC omega values were computed using the canonical
+Equation~\ref{eq:omega} and are unaffected by the correction.
+The median $\om = +7.13$\,\omunit{} with IQR
+$[+4.91, +10.44]$\,\omunit{} across 175 galaxies (100\% positive)
+is confirmed by independent reproduction \citep{flynn2026baryonic}.
+We note that the Version~1.0 cross-epoch table reported SPARC
+$\om = +7.06$, which is the sample \emph{mean}; the correct
+\emph{median} is $+7.13$.
+
+\subsection{KROSS ($z\sim0.9$)}
+
+The previously reported median $\om = -9.09$\,rad\,Gyr$^{-1}$
+is withdrawn. The IntZ corpus omega field will be set to null with
+status \texttt{not\_computable\_from\_current\_corpus} in the
+corrected Zenodo release. The legacy value is preserved in an
+explicitly deprecated field for audit purposes.
+
+To restore KROSS to the cross-epoch comparison, independently
+observed spatially-resolved rotation-curve boundary points
+($R_1, V_1, R_2, V_2$ with uncertainties) would need to be
+extracted from the KROSS survey data products. This is beyond the
+scope of the current correction.
+
+\subsection{ALPINE Z1 ($z\sim5$)}
+
+The Z1 corpus contains genuine per-ring 3DBarolo rotation curves for
+8 confirmed Tier-1 rotators. These provide independently measured
+boundary points suitable for Equation~\ref{eq:omega}. The previously
+reported median $\om = -13.05$\,rad\,Gyr$^{-1}$ was computed using
+the incorrect Equation~\ref{eq:omega_wrong}. A preliminary external
+recomputation using the canonical equation yields all-positive values
+with an approximate median of $+12.3$\,\omunit. The corrected Z1
+corpus release will contain per-galaxy recomputed values with full
+provenance fields.
+
+% ── 3. Withdrawn Claims ─────────────────────────────────────────────────────
+\section{Withdrawn Claims}
+\label{sec:withdrawn}
+
+The following claims from Version~1.0 are withdrawn in their entirety:
+
+\begin{enumerate}
+  \item The reported monotonic sign reversal from positive $\om$ at
+        $z=0$ to uniformly negative $\om$ at $z\gtrsim0.6$.
+  \item The ``three-epoch omega arc'' ($+7.13 \to -9.09 \to -13.05$).
+  \item The $>3\sigma$ statistical separation between the SPARC and
+        KROSS omega distributions.
+  \item The step-function character of the sign change between
+        $z=0$ and $z\sim0.6$.
+  \item The mass independence of the sign reversal across
+        $\log M_\star/M_\odot = 9.0$--$11.5$.
+  \item The physical interpretation of negative $\om$ as evidence
+        for a disk assembly phase transition.
+  \item The prediction that RAMSES simulations initialized at $z=6$
+        with negative omega initial conditions should reproduce the
+        sign reversal at $z\sim0.5$--$0.6$.
+  \item All five deposited figures
+        (intz\_nb11, nb14, nb15, nb16, nb18), which were products
+        of the invalid high-redshift values.
+  \item The total galaxy count of 258 in the conclusions (an artifact
+        of mixing the 84-galaxy validation sample with the 175-galaxy
+        exploratory sample).
+\end{enumerate}
+
+% ── 4. What Remains Valid ────────────────────────────────────────────────────
+\section{What Remains Valid}
+\label{sec:valid}
+
+The following results are not affected by this correction:
+
+\begin{enumerate}
+  \item The canonical omega correction equation
+        (Equation~\ref{eq:omega}), as published in the peer-reviewed
+        Flynn \& Cannaliato (2025).
+  \item The $z=0$ SPARC omega result: median $+7.13$\,\omunit{}
+        across 175 galaxies, 100\% positive.
+  \item The 84-galaxy baryonic validation demonstrating 93\% agreement
+        between the omega correction and baryonic rotation velocities
+        \citep{flynn2026baryonic}.
+  \item All underlying survey data: SPARC HI rotation curves,
+        KROSS/KMOS$^{\rm 3D}$ source parameters ($V_c$, $R_{\rm half}$,
+        stellar mass, redshift), and ALPINE per-ring 3DBarolo
+        measurements.
+  \item The EPS Research Astro-RAG Platform corpora (HI v7.0, Dwarf v1.0,
+        GC v1.3.2) except for the omega-derived fields in IntZ and Z1.
+\end{enumerate}
+
+% ── 5. Corrective Actions ───────────────────────────────────────────────────
+\section{Corrective Actions Taken}
+\label{sec:actions}
+
+\begin{enumerate}
+  \item This correction note supersedes Version~1.0 at Zenodo
+        record 21383809.
+  \item The IntZ corpus (Zenodo 20453189) will be updated to set
+        KROSS omega to null with explicit withdrawal metadata.
+  \item The Z1 corpus (Zenodo 21327061) will be updated with
+        recomputed omega values using Equation~\ref{eq:omega}.
+  \item The platform repository
+        (\url{https://github.com/eps-research/rag-corpus-series})
+        has been updated to remove sign-reversal claims from the
+        README, QuickStart, and affected notebooks.
+  \item A centralized canonical omega function with regression
+        tests (including the M33 anchor: $\om = 5.093$\,\omunit)
+        has been added to prevent recurrence.
+  \item A \texttt{CORRECTIONS.md} file has been added to the
+        repository root documenting the full correction history.
+\end{enumerate}
+
+% ── 6. Lessons and Path Forward ──────────────────────────────────────────────
+\section{Lessons and Path Forward}
+\label{sec:forward}
+
+This correction illustrates a failure mode in computational
+astrophysics pipelines: a formula can be correctly stated in a
+manuscript while being incorrectly implemented in the code that
+generates the claimed results. The 43-file operator-precedence
+patch applied on 12~July 2026 corrected the formula in code but did
+not regenerate the stored data products, creating a state in which
+corrected code coexisted with uncorrected outputs. Regression tests
+anchored to known physical values (e.g., the M33 result) and
+CI checks for disallowed formula patterns are now in place to
+prevent recurrence.
+
+A legitimate cross-epoch omega comparison requires: (a)~uniform
+application of the canonical equation, (b)~independently measured
+rotation-curve boundary points at each epoch, and (c)~explicit
+accounting for tracer-dependent radius ratios. Condition (a) is now
+satisfied. Condition (b) is satisfied for SPARC and Z1 but not for
+KROSS. If spatially resolved boundary data can be extracted from
+the KROSS survey products in future work, a corrected cross-epoch
+analysis may become possible.
+
+% ── Acknowledgements ─────────────────────────────────────────────────────────
+\section*{Acknowledgements}
+
+The author thanks Jim Cannaliato for the foundational work on the
+omega correction framework \citep{flynnCannaliato2025}. The formula
+discrepancy was identified by an external audit conducted by
+Dennis Mungai using the Kimi model. The author is grateful for
+this finding, which led to the present correction. This research
+was conducted independently at EPS Research, Laurel, MD, with no
+external funding.
+
+% ── AI-Use Disclosure ────────────────────────────────────────────────────────
+\section*{AI-Use Disclosure}
+Portions of this manuscript were prepared with assistance from
+large-language-model (LLM) systems (Claude, Anthropic; Kimi, Moonshot AI)
+for drafting, editing, code auditing, and formula verification.
+The formula discrepancy was identified by the Kimi model during an
+external audit. All scientific calculations, statistical analyses,
+and corrective actions were performed using human-supervised
+Python/JupyterLab workflows.
+
+% ── Data Availability ────────────────────────────────────────────────────────
+\section*{Data Availability}
+All data used in this analysis are publicly available:
+\begin{itemize}
+  \item Unified HI Rotation Curve Corpus v7.0:
+        \url{https://doi.org/10.5281/zenodo.19563417}
+  \item IntZ Kinematic Corpus v1.0 (corrected release pending):
+        \url{https://doi.org/10.5281/zenodo.20453189}
+  \item High-$z$ Kinematic Corpus Z1 (corrected release pending):
+        \url{https://doi.org/10.5281/zenodo.21327061}
+  \item Correction history:
+        \url{https://github.com/eps-research/rag-corpus-series/blob/main/CORRECTIONS.md}
+\end{itemize}
+
+% ── References ───────────────────────────────────────────────────────────────
+\bibliographystyle{mnras}
+\begin{thebibliography}{99}
+
+\bibitem[Flynn \& Cannaliato(2025)]{flynnCannaliato2025}
+Flynn, D.~C., \& Cannaliato, J.\ 2025, Frontiers in Astronomy and Space
+Sciences, 12, DOI: 10.3389/fspas.2025.1680387
+
+\bibitem[Flynn(2026a)]{flynn2026hi}
+Flynn, D.~C.\ 2026a, Unified Galaxy HI Rotation Curve Corpus v7.0,
+Zenodo, DOI: 10.5281/zenodo.19563417; arXiv:2604.13489
+
+\bibitem[Flynn(2026b)]{flynn2026baryonic}
+Flynn, D.~C.\ 2026b, 175-Galaxy SPARC Baryonic Validation,
+Zenodo, DOI: 10.5281/zenodo.20132805
+
+\bibitem[Flynn(2026c)]{flynn2026intz}
+Flynn, D.~C.\ 2026c, EPS Research Intermediate-$z$ Kinematic Corpus v1.0,
+Zenodo, DOI: 10.5281/zenodo.20453189
+
+\bibitem[Flynn(2026d)]{flynn2026z1}
+Flynn, D.~C.\ 2026d, High-$z$ Kinematic Corpus Z1,
+Zenodo, DOI: 10.5281/zenodo.21327061; arXiv:2605.25339
+
+\bibitem[Harrison et al.(2017)]{harrison2017}
+Harrison, C.~M., et al.\ 2017, MNRAS, 467, 1965
+
+\bibitem[Jones et al.(2021)]{jones2021}
+Jones, G.~C., et al.\ 2021, MNRAS, 507, 3540
+
+\bibitem[Lelli et al.(2016)]{lelli2016}
+Lelli, F., McGaugh, S.~S., \& Schombert, J.~M.\ 2016, AJ, 152, 157
+
+\bibitem[Wisnioski et al.(2019)]{wisnioski2019}
+Wisnioski, E., et al.\ 2019, ApJ, 886, 124
+
+\end{thebibliography}
+
+\end{document}
