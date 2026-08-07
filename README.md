@@ -163,7 +163,7 @@ Executable Jupyter notebooks organized into six groups. All examples load direct
 
 New here? The QuickStart notebook loads all five corpora and demonstrates the platform's query and analysis capabilities in under 10 minutes — no prior astrophysics knowledge required.
 
-[Open In Colab](https://colab.research.google.com/)
+[Open In Colab](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/QuickStart.ipynb)
 
 ### Running the Examples
 
