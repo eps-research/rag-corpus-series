@@ -149,15 +149,15 @@ The z=0 omega result under the Flynn & Cannaliato (2025) prescription is confirm
 
 Executable Jupyter notebooks organized into six groups. All examples load directly from the corpus JSON/CSV files with no external preprocessing, using only Python 3, numpy, and matplotlib.
 
-| Group | Examples | Description | Launch |
+| Group | Examples | Description | Browse |
 |-------|----------|-------------|--------|
-| SPARC / HI Examples | 25 | Rotation curve plotting, baryonic decomposition, omega correction, WALLABY tier-2 analysis | [Colab](https://colab.research.google.com/) |
-| Dwarf / Irregular Examples | 25 | Omega-ready galaxies, DDO154/DDO161 cross-analysis, LVHIS/VLA-ANGST comparisons | [Colab](https://colab.research.google.com/) |
-| Globular Cluster Examples | 25 | Proper motion queries, N-body mass modeling, APOGEE chemistry, multi-survey cross-matching | [Colab](https://colab.research.google.com/) |
-| IntZ Examples | 20 | KROSS/KMOS3D kinematics, survey parameters, RAG queries (omega notebooks suspended — see [CORRECTIONS.md](CORRECTIONS.md)) | [Colab](https://colab.research.google.com/) |
-| High-z Examples | 25 | [CII] rotation curves, ALPINE population statistics, kinematic analysis | [Colab](https://colab.research.google.com/) |
-| 🔬 84-Galaxy Baryonic Validation | 6 | Reproduce peer-reviewed baryonic validation results across 84 SPARC galaxies (Flynn 2026) | [Colab](https://colab.research.google.com/) |
-| High-School Exploration Track | 20 | Friendly introductory notebooks for students | [Colab](https://colab.research.google.com/) |
+| SPARC / HI Examples | 25 | Rotation curve plotting, baryonic decomposition, omega correction, WALLABY tier-2 analysis | [examples/hi](https://github.com/eps-research/rag-corpus-series/tree/main/examples/hi) |
+| Dwarf / Irregular Examples | 25 | Omega-ready galaxies, DDO154/DDO161 cross-analysis, LVHIS/VLA-ANGST comparisons | [examples/dwarfs](https://github.com/eps-research/rag-corpus-series/tree/main/examples/dwarfs) |
+| Globular Cluster Examples | 25 | Proper motion queries, N-body mass modeling, APOGEE chemistry, multi-survey cross-matching | [examples/gc](https://github.com/eps-research/rag-corpus-series/tree/main/examples/gc) |
+| IntZ Examples | 20 | KROSS/KMOS³D kinematics, Vc distributions, Tully-Fisher at z~0.9, V/σ evolution | [examples/intz](https://github.com/eps-research/rag-corpus-series/tree/main/examples/intz) |
+| High-z Examples | 25 | [CII] rotation curves, ALPINE population statistics, corrected omega (all positive) | [examples/highz](https://github.com/eps-research/rag-corpus-series/tree/main/examples/highz) |
+| 🔬 84-Galaxy Baryonic Validation | 6 | Reproduce peer-reviewed baryonic validation results across 84 SPARC galaxies (Flynn 2026) | [examples/paper2](https://github.com/eps-research/rag-corpus-series/tree/main/examples/paper2) |
+| High-School Exploration Track | 20 | Friendly introductory notebooks for students ages 14–18 | [examples/highschool](https://github.com/eps-research/rag-corpus-series/tree/main/examples/highschool) |
 
 ### 🚀 Quick Start
 
