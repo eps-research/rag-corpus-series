@@ -12,7 +12,7 @@
 
 A unified platform of open astrophysics corpora, cross-epoch kinematic analysis tools, LLM-assisted scientific workflows, and educational resources — spanning Milky Way globular clusters to the epoch approaching cosmic reionization.
 
-> **⚠️ Correction Notice (August 2026):** The previously reported cross-epoch omega sign reversal has been withdrawn. An external audit identified a formula-implementation discrepancy and a data-provenance issue in the intermediate- and high-redshift omega values. The z=0 SPARC result and underlying corpora are unaffected. See [CORRECTIONS.md](CORRECTIONS.md) for full details.
+> **✅ Correction Complete (August 2026):** A formula-implementation discrepancy and data-provenance issue in the cross-epoch omega values have been corrected. Z1 omega recomputed under canonical Eq.6 — all 8 tier-1 rotators positive (median +13.776 rad/Gyr). IntZ omega nulled pending independent boundary-ring data. The z=0 SPARC result is peer-reviewed and unaffected. See [CORRECTIONS.md](CORRECTIONS.md) for full details.
 
 ---
 
