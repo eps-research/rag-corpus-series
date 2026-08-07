@@ -91,3 +91,17 @@ The formula discrepancy was identified by Dennis Mungai via an audit conducted w
 ### Units clarification
 
 ω in km s⁻¹ kpc⁻¹ ≈ 1.023 × ω in rad Gyr⁻¹. The Version 1.0 manuscript used rad Gyr⁻¹ throughout but the table header in the platform README incorrectly stated "rads/sec" and the conclusion stated "km/sec." This correction standardizes on km s⁻¹ kpc⁻¹ as the computational unit with explicit conversion where rad Gyr⁻¹ is used.
+
+---
+
+## August 7, 2026 — Remediation Complete
+
+**Z1 omega recomputation:** All 8 tier-1 rotators recomputed under canonical
+Eq.6. All values positive (median +13.776 rad/Gyr, mean +18.099 rad/Gyr).
+Sign reversal confirmed as formula artifact. Corrected corpus published at
+Zenodo 10.5281/zenodo.21834678.
+
+**IntZ omega null-out:** All 166 KROSS omega values set to null in
+intz_corpus_v1b.json, intz_corpus_v1b_flat.csv, and intz_corpus_v1b.jsonl.
+Legacy values preserved in legacy_omega_value field. Corrected corpus
+published at Zenodo 10.5281/zenodo.21841382.
