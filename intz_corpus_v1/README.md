@@ -115,7 +115,7 @@ problems were identified by external audit:
    does **not** match the canonical Equation 6 of Flynn & Cannaliato (2025):
 
    ```
-   ω = V₂/R₂ − (V₁/R₁) × (R₁/R₂)^1.5
+   omega = V2/R2 - (V1/R1) * (R1/R2)**1.5  # canonical Eq.6
    ```
 
    The parenthesization difference changes the sign of the result for

@@ -51,7 +51,7 @@ All 24 omega-ready LITTLE THINGS galaxies yield **positive** omega values under 
 Omega is computed using the canonical Equation 6 of Flynn & Cannaliato (2025):
 
 ```
-ω = V₂/R₂ − (V₁/R₁) × (R₁/R₂)^1.5     [rad/Gyr]
+omega = V2/R2 - (V1/R1) * (R1/R2)**1.5  # canonical Eq.6     [rad/Gyr]
 V_adj = V_obs − R × ω
 ```
 
