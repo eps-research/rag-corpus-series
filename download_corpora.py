@@ -62,7 +62,7 @@ CORPORA = {
     },
     'highz': {
         'name': 'High-z Kinematic Corpus Z1',
-        'doi': '10.5281/zenodo.21834678'  # corrected v3 — Aug 2026,
+        'doi': '10.5281/zenodo.21834678',  # corrected v3 — Aug 2026
         'files': [
             ('https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json',
              'high_z_kinematic_corpus_Z1.json'),
