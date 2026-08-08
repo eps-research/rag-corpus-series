@@ -90,7 +90,7 @@ The formula discrepancy was identified by Dennis Mungai via an audit conducted w
 
 ### Units clarification
 
-ω in km s⁻¹ kpc⁻¹ ≈ 1.023 × ω in rad Gyr⁻¹. The Version 1.0 manuscript used rad Gyr⁻¹ throughout but the table header in the platform README incorrectly stated "rads/sec" and the conclusion stated "km/sec." This correction standardizes on km s⁻¹ kpc⁻¹ as the computational unit with explicit conversion where rad Gyr⁻¹ is used.
+ω in rad Gyr⁻¹ ≈ 1.0227 × ω in km s⁻¹ kpc⁻¹. The Version 1.0 manuscript used rad Gyr⁻¹ throughout but the table header in the platform README incorrectly stated "rads/sec" and the conclusion stated "km/sec." This correction standardizes on km s⁻¹ kpc⁻¹ as the computational unit with explicit conversion where rad Gyr⁻¹ is used.
 
 ---
 

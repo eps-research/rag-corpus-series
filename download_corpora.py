@@ -47,15 +47,28 @@ CORPORA = {
         ],
         'dest': 'examples/gc/'
     },
+    'intz': {
+        'name': 'EPS Research Intermediate-z Kinematic Corpus v1.0 (IntZ_v1)',
+        'doi': '10.5281/zenodo.21841382',  # corrected v2 — omega nulled Aug 2026
+        'files': [
+            ('https://zenodo.org/records/21841382/files/intz_corpus_v1b.json',
+             'intz_corpus_v1b.json'),
+            ('https://zenodo.org/records/21841382/files/intz_corpus_v1b_flat.csv',
+             'intz_corpus_v1b_flat.csv'),
+            ('https://zenodo.org/records/21841382/files/intz_corpus_v1b.jsonl',
+             'intz_corpus_v1b.jsonl'),
+        ],
+        'dest': 'examples/intz/'
+    },
     'highz': {
         'name': 'High-z Kinematic Corpus Z1',
-        'doi': '10.5281/zenodo.20369286',
+        'doi': '10.5281/zenodo.21834678'  # corrected v3 — Aug 2026,
         'files': [
-            ('https://zenodo.org/records/20369286/files/high_z_kinematic_corpus_Z1.json',
+            ('https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json',
              'high_z_kinematic_corpus_Z1.json'),
-            ('https://zenodo.org/records/20369286/files/high_z_kinematic_corpus_Z1_flat.csv',
+            ('https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1_flat.csv',
              'high_z_kinematic_corpus_Z1_flat.csv'),
-            ('https://zenodo.org/records/20369286/files/high_z_kinematic_corpus_Z1.jsonl',
+            ('https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.jsonl',
              'high_z_kinematic_corpus_Z1.jsonl'),
         ],
         'dest': 'examples/highz/'
