@@ -2,7 +2,7 @@
 
 **EPS Research — Flynn, D.C. (2026)**
 
-> **⚠️ Correction Notice (August 2026):** The previously reported negative omega values and cross-epoch sign reversal have been withdrawn. An external audit identified a formula-implementation discrepancy (operator precedence in Eq. 6) and a data-provenance issue in the high-z omega computation. The underlying morpho-kinematic corpus data (rotation curves, classifications, redshifts) are unaffected. Omega recomputation under the canonical Eq. 6 is in progress. See [CORRECTIONS.md](../CORRECTIONS.md) for full details.
+> **⚠️ Correction Notice (August 2026):** The previously reported negative omega values and cross-epoch sign reversal have been withdrawn. An external audit identified a formula-implementation discrepancy (operator precedence in Eq. 6) and a data-provenance issue in the high-z omega computation. The underlying morpho-kinematic corpus data (rotation curves, classifications, redshifts) are unaffected. Omega recomputation under the canonical Eq. 6 is complete: all 8 tier-1 rotators yield positive values (median +12.621 rad/Gyr). See [CORRECTIONS.md](../CORRECTIONS.md) for full details.
 
 ## Overview
 
@@ -45,7 +45,7 @@ ALMA [CII] 158μm morpho-kinematic data for 31 star-forming main-sequence galaxi
 
 ## Omega Status
 
-The previously reported omega values (median −13.05 rad/Gyr) were computed using a parenthesized implementation that did not match the canonical Eq. 6 from Flynn & Cannaliato (2025). This result has been **withdrawn**. Recomputation under the corrected equation is in progress; updated values will be published in a revised Zenodo deposit and noted in [CORRECTIONS.md](../CORRECTIONS.md).
+The previously reported omega values (median −13.05 rad/Gyr) were computed using a parenthesized implementation that did not match the canonical Eq. 6 from Flynn & Cannaliato (2025). This result has been **withdrawn**. Recomputation under the corrected equation is complete. All 8 tier-1 rotators yield positive omega values (median +12.621 rad/Gyr). Corrected data: Zenodo 10.5281/zenodo.21834678. See [CORRECTIONS.md](../CORRECTIONS.md).
 
 The underlying corpus — rotation curve data, morpho-kinematic classifications, redshifts, and all non-omega fields — remains valid and unchanged.
 

@@ -124,8 +124,8 @@ Two corpora spanning the intermediate and high-redshift universe, bridging local
 
 | Corpus | N | z range | Tracer | Zenodo | arXiv |
 |--------|---|---------|--------|--------|-------|
-| IntZ Kinematic Corpus v1.0 | 1,292 galaxies | z = 0.38–2.68 | Hα / [O III] | [10.5281/zenodo.20453189](https://doi.org/10.5281/zenodo.20453189) | in prep |
-| High-z Kinematic Corpus Z1 | 31 galaxies | z = 4.26–5.68 | ALMA [CII] 158μm | [10.5281/zenodo.20369286](https://doi.org/10.5281/zenodo.20369286) | [2605.25339](https://arxiv.org/abs/2605.25339) |
+| IntZ Kinematic Corpus v1.0 | 1,292 galaxies | z = 0.38–2.68 | Hα / [O III] | [10.5281/zenodo.21841382](https://doi.org/10.5281/zenodo.21841382) | in prep |
+| High-z Kinematic Corpus Z1 | 31 galaxies | z = 4.26–5.68 | ALMA [CII] 158μm | [10.5281/zenodo.21834678](https://doi.org/10.5281/zenodo.21834678) | [2605.25339](https://arxiv.org/abs/2605.25339) |
 
 IntZ\_v1 combines two major IFU surveys into a unified schema:
 - **KROSS** (Harrison et al. 2017): 586 galaxies, z = 0.60–1.04, Hα tracer
@@ -194,7 +194,7 @@ jupyter lab
 | Flynn (2026) — GC Corpus v1.3.1 data descriptor | PASP | [arXiv:2605.03099](https://arxiv.org/abs/2605.03099) | Submitted |
 | Flynn (2026) — Dwarf/Irregular Corpus v1.0 data descriptor | PASP | [arXiv:2605.22163](https://arxiv.org/abs/2605.22163) | Submitted |
 | Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Preprint |
-| Flynn (2026) — IntZ Kinematic Corpus v1.0 data descriptor | arXiv (astro-ph.IM) | [Zenodo:20453189](https://doi.org/10.5281/zenodo.20453189) | Preprint |
+| Flynn (2026) — IntZ Kinematic Corpus v1.0 data descriptor | arXiv (astro-ph.IM) | [Zenodo:21841382](https://doi.org/10.5281/zenodo.21841382) | Preprint |
 | Flynn (2026) — EPS Astro Extractor v1.1.0 (software) | Zenodo | [10.5281/zenodo.20534420](https://doi.org/10.5281/zenodo.20534420) | Published |
 | Flynn (2026) — EPS Astro-RAG MCP Server v2.3.0 (software) | Zenodo | [10.5281/zenodo.21154451](https://doi.org/10.5281/zenodo.21154451) | Published |
 | Flynn (2026) — FAISS Semantic Search Indexes v1.0 (software) | Zenodo | [10.5281/zenodo.21147895](https://doi.org/10.5281/zenodo.21147895) | Published |
