@@ -264,7 +264,7 @@ md(f"""# High-z Example 08: Reproducing Table 4 — Omega Values
 This example reproduces Table 4 from Flynn (2026) arXiv:2605.25339:
 omega values for all 8 tier-1 rotators computed from boundary points.
 
-All 8 values are negative (median -13.05 rad/Gyr), contrasting
+All 8 values are positive (median +12.621 rad/Gyr), consistent
 with positive values at z=0 (SPARC mean +7.06 rad/Gyr).
 
 **Reference:** Flynn (2026), arXiv:2605.25339
@@ -297,7 +297,7 @@ for r in results:
 print('-'*60)
 print(f"Median omega: {np.median(omegas):.3f} rad/Gyr")
 print(f"All negative: {all(o < 0 for o in omegas)}")
-print(f"\\nPublished (Flynn 2026): median = -13.05 rad/Gyr")
+print(f"\nCorrected (Flynn 2026): median = +12.621 rad/Gyr (all 8 positive; old -13.05 withdrawn)")
 print(f"SPARC z=0 mean: +7.06 rad/Gyr (Flynn & Cannaliato 2025)")"""),
 code("""fig, ax = plt.subplots(figsize=(8, 4))
 zs = [r['z'] for r in results]
@@ -309,8 +309,8 @@ for r in results:
 ax.axhline(0,    color='black', ls='-',  lw=0.8, alpha=0.3)
 ax.axhline(7.06, color='#3498db', ls='-', lw=2, alpha=0.7,
            label='SPARC mean +7.06 (z=0)')
-ax.axhline(-13.05, color='red', ls='--', lw=1.5,
-           label='Z1 median -13.05 (z~5)')
+ax.axhline(12.621, color='green', ls='--', lw=1.5,
+           label='Z1 median +12.621 rad/Gyr (corrected)')
 ax.set_xlabel('Redshift z', fontsize=12)
 ax.set_ylabel(r'$\omega$ (rad/Gyr)', fontsize=12)
 ax.set_title('Omega Values — Z1 Tier-1 Rotators (Table 4)\\n'
@@ -869,13 +869,13 @@ md(f"""# High-z Example 19: The EPS Omega Trilogy Plot (EPS Flagship)
 **EPS Research — Cross-Corpus: All Four Corpora**
 
 This is the signature EPS Research cross-epoch result:
-omega sign reversal from z~5 to z=0.
+omega evolution from z~5 to z=0 (sign reversal claim withdrawn; see CORRECTIONS.md).
 
-- Z1 (z~4-6): median -13.05 rad/Gyr (all negative)
+- Z1 (z~4-6): median +12.621 rad/Gyr (all positive, corrected Aug 2026)
 - SPARC (z=0): mean +7.06 rad/Gyr (all positive)
 - Dwarfs (z=0): median +9.94 rad/Gyr (all positive)
 
-This sign reversal across ~9 Gyr is consistent with evolution
+Note: cross-epoch sign reversal claim withdrawn. All three epochs show positive omega under canonical Eq.6.
 from compact centrally-concentrated high-z systems to extended
 rotating disks at z=0.
 
@@ -913,10 +913,10 @@ z1_z      = [r['z']     for r in z1_results]
 z1_omega  = [r['omega'] for r in z1_results]
 z1_median = np.median(z1_omega)
 
-print(f"Z1 omega: median={z1_median:.2f}, all negative={all(o<0 for o in z1_omega)}")
+print(f"Z1 omega: median={z1_median:.2f}, all positive={all(o>0 for o in z1_omega)}")
 print(f"SPARC omega: mean={sparc_mean:.2f} ± {sparc_std:.2f} rad/Gyr")
 print(f"Dwarf omega: median={dwarf_median:.2f} rad/Gyr")
-print(f"\\nSign reversal confirmed: z~5 negative, z=0 positive")"""),
+print(f"\nNote: sign reversal withdrawn. All epochs positive under canonical Eq.6. See CORRECTIONS.md.")"""),
 code("""fig, ax = plt.subplots(figsize=(10, 5))
 
 # z=0 reference bands
@@ -1227,10 +1227,10 @@ for r in results:
 print('-'*48)
 print(f"Median omega:    {np.median(omegas):.3f} rad/Gyr")
 print(f"All negative:    {all(o < 0 for o in omegas)}")
-print(f"\\nPublished result (Flynn 2026): median = -13.05 rad/Gyr")
+print(f"\nCorrected result (Flynn 2026): median = +12.621 rad/Gyr (all 8 positive; old -13.05 withdrawn)")
 print(f"SPARC z=0 mean:  +7.06 ± 3.26 rad/Gyr (Flynn & Cannaliato 2025)")
 print(f"Dwarf z=0 med:   +9.94 rad/Gyr (Flynn 2026)")
-print(f"\\nSign reversal confirmed across ~9 Gyr of cosmic evolution.")"""),
+print(f"\nNote: cross-epoch sign reversal withdrawn. See CORRECTIONS.md.")"""),
 code("""fig, axes = plt.subplots(1, 2, figsize=(11, 4))
 
 zs = [r['z'] for r in results]
