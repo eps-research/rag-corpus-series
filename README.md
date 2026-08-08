@@ -149,15 +149,15 @@ The z=0 omega result under the Flynn & Cannaliato (2025) prescription is confirm
 
 Executable Jupyter notebooks organized into six groups. All examples load directly from the corpus JSON/CSV files with no external preprocessing, using only Python 3, numpy, and matplotlib.
 
-| Group | Examples | Description | Browse |
+| Group | Examples | Description | Launch |
 |-------|----------|-------------|--------|
-| SPARC / HI Examples | 25 | Rotation curve plotting, baryonic decomposition, omega correction, WALLABY tier-2 analysis | [examples/hi](https://github.com/eps-research/rag-corpus-series/tree/main/examples/hi) |
-| Dwarf / Irregular Examples | 25 | Omega-ready galaxies, DDO154/DDO161 cross-analysis, LVHIS/VLA-ANGST comparisons | [examples/dwarfs](https://github.com/eps-research/rag-corpus-series/tree/main/examples/dwarfs) |
-| Globular Cluster Examples | 25 | Proper motion queries, N-body mass modeling, APOGEE chemistry, multi-survey cross-matching | [examples/gc](https://github.com/eps-research/rag-corpus-series/tree/main/examples/gc) |
-| IntZ Examples | 20 | KROSS/KMOS³D kinematics, Vc distributions, Tully-Fisher at z~0.9, V/σ evolution | [examples/intz](https://github.com/eps-research/rag-corpus-series/tree/main/examples/intz) |
-| High-z Examples | 25 | [CII] rotation curves, ALPINE population statistics, corrected omega (all positive) | [examples/highz](https://github.com/eps-research/rag-corpus-series/tree/main/examples/highz) |
-| 🔬 84-Galaxy Baryonic Validation | 6 | Reproduce peer-reviewed baryonic validation results across 84 SPARC galaxies (Flynn 2026) | [examples/paper2](https://github.com/eps-research/rag-corpus-series/tree/main/examples/paper2) |
-| High-School Exploration Track | 20 | Friendly introductory notebooks for students ages 14–18 | [examples/highschool](https://github.com/eps-research/rag-corpus-series/tree/main/examples/highschool) |
+| [SPARC / HI Examples](https://github.com/eps-research/rag-corpus-series/tree/main/examples/hi) | 25 | Rotation curve plotting, baryonic decomposition, omega correction, WALLABY tier-2 analysis | [▶ Colab](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/hi/ex01_first_rotation_curve.ipynb) |
+| [Dwarf / Irregular Examples](https://github.com/eps-research/rag-corpus-series/tree/main/examples/dwarfs) | 25 | Omega-ready galaxies, DDO154/DDO161 cross-analysis, LVHIS/VLA-ANGST comparisons | [▶ Colab](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/dwarfs/dw01_first_dwarf_rc.ipynb) |
+| [Globular Cluster Examples](https://github.com/eps-research/rag-corpus-series/tree/main/examples/gc) | 25 | Proper motion queries, N-body mass modeling, APOGEE chemistry, multi-survey cross-matching | [▶ Colab](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/gc/gc01_first_cluster.ipynb) |
+| [IntZ Examples](https://github.com/eps-research/rag-corpus-series/tree/main/examples/intz) | 20 | KROSS/KMOS³D kinematics, Vc distributions, Tully-Fisher at z~0.9, V/σ evolution | [▶ Colab](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/intz/intz_nb1_load_intz_corpus.ipynb) |
+| [High-z Examples](https://github.com/eps-research/rag-corpus-series/tree/main/examples/highz) | 25 | [CII] rotation curves, ALPINE population statistics, corrected omega (all positive) | [▶ Colab](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/highz/hz_nb1_rotator_kinematics.ipynb) |
+| [🔬 84-Galaxy Baryonic Validation](https://github.com/eps-research/rag-corpus-series/tree/main/examples/paper2) | 6 | Reproduce peer-reviewed baryonic validation results across 84 SPARC galaxies (Flynn 2026) | [▶ Colab](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/paper2/p2_nb1_reproduce_table2.ipynb) |
+| [High-School Exploration Track](https://github.com/eps-research/rag-corpus-series/tree/main/examples/highschool) | 20 | Friendly introductory notebooks for students ages 14–18 | [▶ Colab](https://colab.research.google.com/github/eps-research/rag-corpus-series/blob/main/examples/highschool/hs_a_01_what_is_a_galaxy.ipynb) |
 
 ### 🚀 Quick Start
 
