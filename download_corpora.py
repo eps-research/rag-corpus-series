@@ -83,10 +83,12 @@ QUICKSTART_FILES = [
     ('highz',  'high_z_kinematic_corpus_Z1.json',      '.'),
 ]
 
-def download_file(url, dest_path):
-    if os.path.exists(dest_path):
-        print(f'  Already exists: {dest_path}')
+def download_file(url, dest_path, force=False):
+    if os.path.exists(dest_path) and not force:
+        print(f'  Already exists: {dest_path} (use --force to overwrite)')
         return True
+    if os.path.exists(dest_path) and force:
+        print(f'  Overwriting: {dest_path}')
     print(f'  Downloading {os.path.basename(dest_path)}...')
     try:
         urllib.request.urlretrieve(url, dest_path)
@@ -104,12 +106,14 @@ def download_corpus(key):
     os.makedirs(corpus['dest'], exist_ok=True)
     for url, filename in corpus['files']:
         dest = os.path.join(corpus['dest'], filename)
-        download_file(url, dest)
+        download_file(url, dest, force=args.force)
 
 def main():
     parser = argparse.ArgumentParser(description='Download EPS Research corpora')
     parser.add_argument('--corpus', choices=list(CORPORA.keys()) + ['all'],
                         default='all', help='Which corpus to download')
+    parser.add_argument('--force', action='store_true',
+                        help='Overwrite existing files (always use for remediation-sensitive corpora)')
     parser.add_argument('--quickstart', action='store_true',
                         help='Also copy files to root for QuickStart.ipynb')
     args = parser.parse_args()
@@ -128,7 +132,7 @@ def main():
         for corpus_key, filename, dest_dir in QUICKSTART_FILES:
             src = os.path.join(CORPORA[corpus_key]['dest'], filename)
             dst = os.path.join(dest_dir, filename)
-            if os.path.exists(src) and not os.path.exists(dst):
+            if os.path.exists(src):
                 import shutil
                 shutil.copy2(src, dst)
                 print(f'  Copied: {filename}')
