@@ -205,7 +205,7 @@ This is the core EPS Research result. The omega kinematic correction is derived
 from boundary points only — no free parameters, no mass modeling:
 
     V_adj = V_obs - R * omega
-    omega = (V2/R2 - V1/R1) * (R1/R2)^(3/2)   [rad/Gyr]
+    omega = V2/R2 - (V1/R1) * (R1/R2)**1.5   # canonical Eq.6 [rad/Gyr]
 
 where (R1, V1) = innermost ring, (R2, V2) = outermost ring.
 Note: 1 rad/Gyr = 1.022 km/s/kpc.

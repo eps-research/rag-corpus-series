@@ -780,9 +780,9 @@ print()
 
 omega = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
 print(f"Step 3: Omega correction")
-print(f"  ω = (V2/R2 - V1/R1) × (R1/R2)^(3/2)")
+print(f"  ω = V2/R2 - (V1/R1) × (R1/R2)^(3/2)  canonical Eq.6")
 print(f"  ω = ({V2/R2:.3f} - {V1/R1:.3f}) × ({R1/R2:.3f})^1.5")
-print(f"  ω = {V2/R2 - V1/R1:.3f} × {(R1/R2)**1.5:.3f}")
+print(f"  ω = {V2/R2 - (V1/R1)*(R1/R2)**1.5:.3f}")
 print(f"  ω = {omega:.3f} km/s/kpc")
 print(f"  ω = {omega:.3f} rad/Gyr  (1 km/s/kpc ≈ 1.022 rad/Gyr)")
 print()
