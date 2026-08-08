@@ -34,12 +34,12 @@ ROOT = Path.cwd()
 
 ZENODO_MD5 = {
     # Z1 v3 — Zenodo 21834678
-    "high_z_kinematic_corpus_Z1.json": "688d0b75213141a4162e4256a5e79845",
+    "high_z_kinematic_corpus_Z1.json": "1a5136bf36a226f0df2dfa504ef9c740",
     "omega_results_z1.csv": "95a77c2192dd2ea9b3438734bb7d0bf6",
     "fig_hz_nb3_eps_omega_bridge.png": "12634d7f7f0ad62e83e65abaa02bea08",
     # IntZ v2 — Zenodo 21841382
-    "intz_corpus_v1b.json": "ab282d31533a0387f70fdd8eaa661d76",
-    "intz_corpus_v1b.jsonl": "aea7465dfa5517e6349cd2655d68bada",
+    "intz_corpus_v1b.json": "6f1131c5c317abbada8b9477ef5bb275",
+    "intz_corpus_v1b.jsonl": "d9086fe3adb0adcd749f527b0c87d736",
     "intz_corpus_v1b_flat.csv": "21804f6c3a6b9e6a394e60eb82eb8369",
 }
 
