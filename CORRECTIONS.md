@@ -47,7 +47,7 @@ Under uniform application of Formula B:
 |--------|---|-----------|-------------|--------|
 | SPARC (z=0, HI) | 175 | +7.13 | +7.13 | **Unchanged** |
 | KROSS (z~0.9, Hα) | 166 | −9.09 | null | **Withdrawn** — template-derived, no boundary-ring data |
-| ALPINE Z1 (z~5, [CII]) | 8 | −13.05 | ~+12.3 (recomputation in progress) | **Recomputing** from 3DBarolo rings |
+| ALPINE Z1 (z~5, [CII]) | 8 | −13.05 | +12.621 (median, all 8 positive) | **Complete** — Zenodo 10.5281/zenodo.21834678 |
 | Cross-epoch sign reversal | — | Claimed | Does not exist | **Withdrawn** |
 
 ### What was corrected
