@@ -51,7 +51,11 @@ All 24 omega-ready LITTLE THINGS galaxies yield **positive** omega values under 
 Omega is computed using the canonical Equation 6 of Flynn & Cannaliato (2025):
 
 ```
-omega = V2/R2 - (V1/R1) * (R1/R2)**1.5  # canonical Eq.6     [rad/Gyr]
+outer_term    = (V2 / R2)
+inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
+omega = omega_rad_gyr  # canonical Eq.6     [rad/Gyr]
 V_adj = V_obs − R × ω
 ```
 
@@ -75,7 +79,11 @@ for g in omega_ready:
     d = g['data']
     R1, V1 = d[0]['Rad'],  d[0]['Vobs']
     R2, V2 = d[-1]['Rad'], d[-1]['Vobs']
-    omega = V2/R2 - (V1/R1) * (R1/R2)**1.5
+    outer_term    = (V2 / R2)
+    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
+    omega = omega_rad_gyr
     print(f"{g['galaxy']:12s} omega={omega:+.2f} rad/Gyr")
 ```
 

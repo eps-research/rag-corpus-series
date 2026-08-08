@@ -205,7 +205,11 @@ This is the core EPS Research result. The omega kinematic correction is derived
 from boundary points only — no free parameters, no mass modeling:
 
     V_adj = V_obs - R * omega
-    omega = V2/R2 - (V1/R1) * (R1/R2)**1.5   # canonical Eq.6 [rad/Gyr]
+    outer_term    = (V2 / R2)
+    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
+    omega = omega_rad_gyr  # canonical Eq.6 [rad/Gyr]
 
 where (R1, V1) = innermost ring, (R2, V2) = outermost ring.
 Note: 1 rad/Gyr = 1.022 km/s/kpc.
@@ -239,7 +243,11 @@ Vbar = np.where(Vgas < 0,
 # Omega from boundary points
 R1, V1 = R[0],  Vobs[0]
 R2, V2 = R[-1], Vobs[-1]
-omega  = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
+outer_term    = (V2 / R2)
+inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
+omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
 V_adj  = Vobs - R * omega
 
 # Keplerian baseline
@@ -628,7 +636,11 @@ for g in corpus['galaxies']:
     R2, V2 = R[-1], V[-1]
     if R1 <= 0 or R2 <= 0 or V1 <= 0 or V2 <= 0:
         continue
-    omega = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
+    outer_term    = (V2 / R2)
+    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
+    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
     results.append({'galaxy': g['galaxy'], 'omega': omega,
                     'vmax': max(V), 'distance': g['distance_mpc']})
 
@@ -863,7 +875,11 @@ for g in corpus['galaxies']:
     R2, V2 = R[-1], V[-1]
     if R1<=0 or R2<=0 or V1<=0 or V2<=0:
         continue
-    omega = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
+    outer_term    = (V2 / R2)
+    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
+    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
     V_adj = V2 - R2 * omega
     last  = d[-1]
     Vgas  = last.get('Vgas', 0)
@@ -1044,7 +1060,11 @@ for g in corpus['galaxies']:
     if R1<=0 or R2<=0 or V1<=0 or V2<=0:
         continue
     # Omega and adjusted velocity
-    omega = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
+    outer_term    = (V2 / R2)
+    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
+    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
     V_adj = V - R * omega
     # Keplerian
     GM       = V2**2 * R2
@@ -1117,7 +1137,11 @@ for g in corpus['galaxies']:
     R2, V2 = R[-1], V[-1]
     if R1<=0 or R2<=0 or V1<=0 or V2<=0:
         continue
-    omega = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
+    outer_term    = (V2 / R2)
+    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
+    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
     results.append({'galaxy': g['galaxy'], 'omega': omega,
                     'R_max': R2, 'V_max': max(V)})
 
@@ -1322,7 +1346,11 @@ def compute_omega(R, Vobs):
     R2, V2 = R[-1], Vobs[-1]
     if R1<=0 or R2<=0:
         return None
-    return V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
+    outer_term    = (V2 / R2)
+    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+    omega_kms_kpc = outer_term - inner_term
+    omega_rad_gyr = omega_kms_kpc * 1.0227
+    return omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
 
 omega_nominal = compute_omega(R, Vobs)
 
@@ -1461,7 +1489,11 @@ Vbar = np.where(Vgas<0, -np.sqrt(Vgas**2+Vdisk**2+Vbul**2),
 
 R1, V1 = R[0],  Vobs[0]
 R2, V2 = R[-1], Vobs[-1]
-omega   = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
+outer_term    = (V2 / R2)
+inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
+omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
 V_adj   = Vobs - R * omega
 GM      = V2**2 * R2
 V_kep   = np.sqrt(GM / R)
@@ -1561,7 +1593,11 @@ for g in corpus['galaxies']:
     R2, V2 = R[-1], V[-1]
     if R1<=0 or R2<=0 or V1<=0 or V2<=0:
         continue
-    omega = V2/R2 - (V1/R1)*(R1/R2)**1.5  # Eq.6 corrected 2026-07-12: operator-precedence fix
+    outer_term    = (V2 / R2)
+    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
+    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
     V_adj = V - R * omega
     GM    = V2**2 * R2
     V_kep = np.sqrt(GM / R)

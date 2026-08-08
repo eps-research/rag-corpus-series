@@ -72,7 +72,10 @@ for g in rotators:
 
 # NOTE: Omega computation removed pending correction.
 # The canonical Eq. 6 from Flynn & Cannaliato (2025) is:
-#   omega = V2/R2 - (V1/R1) * (R1/R2)**1.5
+#   outer_term    = (V2 / R2)
+#   inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+#   omega_kms_kpc = outer_term - inner_term
+#   omega_rad_gyr = omega_kms_kpc * 1.0227
 # The (R1/R2)**1.5 factor multiplies ONLY the (V1/R1) term, not the
 # full difference. See CORRECTIONS.md for the corrected implementation.
 ```

@@ -115,7 +115,11 @@ problems were identified by external audit:
    does **not** match the canonical Equation 6 of Flynn & Cannaliato (2025):
 
    ```
-   omega = V2/R2 - (V1/R1) * (R1/R2)**1.5  # canonical Eq.6
+   outer_term    = (V2 / R2)
+   inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+   omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+   omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
+   omega = omega_rad_gyr  # canonical Eq.6
    ```
 
    The parenthesization difference changes the sign of the result for

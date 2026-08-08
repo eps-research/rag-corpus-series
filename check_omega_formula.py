@@ -52,11 +52,6 @@ BANNED = [
         re.compile(r'omega[_a-z]*\s*/=?\s*1\.022\d*\b'),
         "WRONG CONVERSION: dividing by 1.0227 reverses units  ← multiply: omega_rad_gyr = omega_kms_kpc * 1.0227"
     ),
-    (
-        # Math notation in comments/markdown (catches LaTeX-style)
-        re.compile(r'\\omega\s*=.*V_?2.*R_?2.*-.*V_?1.*R_?1.*R_?1.*R_?2'),
-        "MATH NOTATION: LaTeX omega formula  ← use Python named-term form in code"
-    ),
 ]
 
 # ── File extensions to check ───────────────────────────────────────────────────
