@@ -538,7 +538,7 @@ outer_term    = (V2 / R2)
 inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
 omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
 omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
+omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
 
 print(f"Innermost point: R = {R1:.2f} kpc,  V = {V1:.1f} km/s")
 print(f"Outermost point: R = {R2:.2f} kpc,  V = {V2:.1f} km/s")
@@ -546,7 +546,7 @@ print()
 print(f"Omega (ω) = {omega:.3f} rad/Gyr")
 print()
 print("Now we apply the correction to get the adjusted velocity:")
-V_adj = Vobs - R * omega
+V_adj = Vobs - R * omega_kms_kpc
 print("V_adjusted = V_observed - R × ω")"""),
 code("""# Compare the original curve with the corrected curve
 fig, ax = plt.subplots(figsize=(9, 5))
@@ -786,7 +786,7 @@ outer_term    = (V2 / R2)
 inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
 omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
 omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
+omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
 print(f"Step 3: Omega correction")
 print(f"  ω = V2/R2 - (V1/R1) × (R1/R2)^(3/2)  canonical Eq.6")
 print(f"  ω = ({V2/R2:.3f} - {V1/R1:.3f}) × ({R1/R2:.3f})^1.5")
@@ -801,7 +801,7 @@ print()
 print(f"Published value: ω = 4.69 rad/Gyr (Flynn & Cannaliato 2025)")
 
 # Apply correction
-V_adj = Vobs - R * omega
+V_adj = Vobs - R * omega_kms_kpc
 
 # Baryonic velocity
 Vgas  = np.array([p['Vgas']  for p in data])
@@ -857,8 +857,8 @@ outer_term    = (V2 / R2)
 inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
 omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
 omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
-V_adj=V-R*omega
+omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
+V_adj=V-R * omega_kms_kpc
 V_kep=np.sqrt(V2**2*R2/R)
 
 def rmse(pred, true):
@@ -940,7 +940,7 @@ for g in corpus['galaxies']:
     inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
     omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
     omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix; V_adj_R2=V2-R2*omega
+    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
     Vgas=d[-1].get('Vgas',0); Vdisk=d[-1].get('Vdisk',0); Vbul=d[-1].get('Vbul',0)
     Vbar_R2=np.sqrt(Vgas**2+Vdisk**2+Vbul**2)
     if Vbar_R2>0: gaps.append(V_adj_R2-Vbar_R2)
@@ -1143,7 +1143,7 @@ for g in corpus['galaxies']:
         inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
         omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
         omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-        omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
+        omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
         results.append({'galaxy':g['galaxy'],'omega':omega,'inc':float(g['inc_deg'])})
 inc=[r['inc'] for r in results]; omegas=[r['omega'] for r in results]
 corr=np.corrcoef(inc,omegas)[0,1]

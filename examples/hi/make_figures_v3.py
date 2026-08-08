@@ -79,7 +79,7 @@ Vbar = np.where(Vgas < 0,
                 -np.sqrt(Vgas**2 + Vdisk**2 + Vbul**2),
                  np.sqrt(Vgas**2 + Vdisk**2 + Vbul**2))
 omega = 4.6904
-V_adj = Vobs - R * omega
+V_adj = Vobs - R * omega_kms_kpc
 R1, V1 = R[0], Vobs[0]
 VKe = V1 * (R / R1) * np.sqrt((R1 / R)**3)
 

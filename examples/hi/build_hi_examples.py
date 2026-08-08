@@ -204,12 +204,12 @@ md(f"""# SPARC Example 03: The Omega Kinematic Correction (EPS Research)
 This is the core EPS Research result. The omega kinematic correction is derived
 from boundary points only — no free parameters, no mass modeling:
 
-    V_adj = V_obs - R * omega
+    V_adj = V_obs - R * omega_kms_kpc
     outer_term    = (V2 / R2)
     inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
     omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
     omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # canonical Eq.6 [rad/Gyr]
+    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
 
 where (R1, V1) = innermost ring, (R2, V2) = outermost ring.
 Note: 1 rad/Gyr = 1.022 km/s/kpc.
@@ -247,8 +247,8 @@ outer_term    = (V2 / R2)
 inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
 omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
 omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
-V_adj  = Vobs - R * omega
+omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
+V_adj  = Vobs - R * omega_kms_kpc
 
 # Keplerian baseline
 GM       = V2**2 * R2
@@ -640,7 +640,7 @@ for g in corpus['galaxies']:
     inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
     omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
     omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
+    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
     results.append({'galaxy': g['galaxy'], 'omega': omega,
                     'vmax': max(V), 'distance': g['distance_mpc']})
 
@@ -879,7 +879,7 @@ for g in corpus['galaxies']:
     inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
     omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
     omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
+    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
     V_adj = V2 - R2 * omega
     last  = d[-1]
     Vgas  = last.get('Vgas', 0)
@@ -1064,8 +1064,8 @@ for g in corpus['galaxies']:
     inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
     omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
     omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
-    V_adj = V - R * omega
+    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
+    V_adj = V - R * omega_kms_kpc
     # Keplerian
     GM       = V2**2 * R2
     V_kepler = np.sqrt(GM / R)
@@ -1141,7 +1141,7 @@ for g in corpus['galaxies']:
     inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
     omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
     omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
+    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
     results.append({'galaxy': g['galaxy'], 'omega': omega,
                     'R_max': R2, 'V_max': max(V)})
 
@@ -1493,8 +1493,8 @@ outer_term    = (V2 / R2)
 inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
 omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
 omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
-V_adj   = Vobs - R * omega
+omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
+V_adj   = Vobs - R * omega_kms_kpc
 GM      = V2**2 * R2
 V_kep   = np.sqrt(GM / R)
 
@@ -1597,8 +1597,8 @@ for g in corpus['galaxies']:
     inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
     omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
     omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
-    V_adj = V - R * omega
+    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
+    V_adj = V - R * omega_kms_kpc
     GM    = V2**2 * R2
     V_kep = np.sqrt(GM / R)
     Vgas  = np.array([p.get('Vgas', 0)  for p in d])
