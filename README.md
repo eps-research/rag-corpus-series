@@ -139,7 +139,7 @@ Z1 provides ALPINE survey morpho-kinematic data with per-ring 3DBarolo rotation 
 |--------|--------|--------|--------|----------|
 | HI v7.0 | SPARC | 175 | HI 21cm | ω = +7.13 km/s/kpc (retained) |
 | IntZ v1.0 | KROSS | 166 | Hα | ω withdrawn — template-derived; no boundary-ring data |
-| Z1 v1.0 | ALPINE | 8 | [CII] | ω recomputation in progress under canonical Eq. 6 |
+| Z1 v1.0 | ALPINE | 8 | [CII] | ω = +12.621 rad/Gyr median (all 8 positive) — corrected Aug 2026 |
 
 The z=0 omega result under the Flynn & Cannaliato (2025) prescription is confirmed. The previously reported cross-epoch sign reversal has been withdrawn due to a formula-implementation discrepancy and a data-provenance issue in the high-z values. See [CORRECTIONS.md](CORRECTIONS.md) for details.
 
