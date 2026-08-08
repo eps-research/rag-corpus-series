@@ -38,8 +38,8 @@ ZENODO_MD5 = {
     "omega_results_z1.csv": "95a77c2192dd2ea9b3438734bb7d0bf6",
     "fig_hz_nb3_eps_omega_bridge.png": "12634d7f7f0ad62e83e65abaa02bea08",
     # IntZ v2 — Zenodo 21841382
-    "intz_corpus_v1b.json": "6f1131c5c317abbada8b9477ef5bb275",
-    "intz_corpus_v1b.jsonl": "d9086fe3adb0adcd749f527b0c87d736",
+    "intz_corpus_v1b.json": "ebdcacc95805009423ff950b040da647",
+    "intz_corpus_v1b.jsonl": "0030a2d765c06c4382c1c1ba4418e5dd",
     "intz_corpus_v1b_flat.csv": "21804f6c3a6b9e6a394e60eb82eb8369",
 }
 
