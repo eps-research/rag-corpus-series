@@ -80,7 +80,7 @@ Under uniform application of Formula B:
 
 1. Named-term decomposition standardized across all notebooks and corpus generators (outer_term/inner_term form). A centralized `omega_eps()` function is planned but not yet implemented.
 2. Regression tests:
-   - M33 anchor test: outer_term=(119.6/37.3); inner_term=(22.73/0.24)*((0.24/37.3)**1.5); omega_kms_kpc=outer_term-inner_term must equal 5.093 ± 0.01
+   - M33 anchor test: R1,V1=0.24,37.3; R2,V2=22.73,119.6; outer_term=(V2/R2); inner_term=(V1/R1)*((R1/R2)**1.5); omega_kms_kpc=outer_term-inner_term must equal 5.093 ± 0.01
    - Wrong-parenthesization detection test: verifies Formula A ≠ Formula B
 3. CI check for disallowed formula patterns (`(V2/R2 - V1/R1) * (R1/R2)**1.5`).
 

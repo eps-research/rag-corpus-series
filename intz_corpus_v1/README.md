@@ -3,7 +3,7 @@
 **KROSS + KMOS³D Galaxy Kinematics at z~0.4–2.7**  
 EPS Research | David C. Flynn (ORCID: 0000-0002-2768-6650)  
 Part of the [EPS Research RAG Corpus Series](https://github.com/eps-research/rag-corpus-series)  
-Zenodo DOI: [10.5281/zenodo.20453189](https://doi.org/10.5281/zenodo.20453189)
+Zenodo DOI: [10.5281/zenodo.21841382](https://doi.org/10.5281/zenodo.21841382)
 
 ---
 
@@ -195,7 +195,7 @@ Tier-2 integrated-kinematics population.
 
 ```
 Flynn, D.C. (2026). EPS Research Intermediate-z Kinematic Corpus v1.0 (IntZ_v1).
-Zenodo. DOI: 10.5281/zenodo.20453189
+Zenodo. DOI: 10.5281/zenodo.21841382
 
 Harrison, C.M. et al. (2017). MNRAS, 467, 1965. [KROSS]
 Wisnioski, E. et al. (2019). ApJ, 886, 124. [KMOS3D]

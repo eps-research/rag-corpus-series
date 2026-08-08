@@ -12,7 +12,7 @@ ALMA [CII] 158μm morpho-kinematic data for 31 star-forming main-sequence galaxi
 
 | Resource | Link |
 |----------|------|
-| Zenodo deposit | [10.5281/zenodo.20369286](https://doi.org/10.5281/zenodo.20369286) |
+| Zenodo deposit | [10.5281/zenodo.21834678](https://doi.org/10.5281/zenodo.21834678) |
 | arXiv preprint | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) |
 
 ## Coverage
@@ -70,7 +70,7 @@ for g in rotators:
           f"R1={R1:.2f} kpc  V1={V1:.1f} km/s  "
           f"R2={R2:.2f} kpc  V2={V2:.1f} km/s")
 
-# NOTE: Omega computation removed pending correction.
+# NOTE: Omega computation uses canonical Eq.6; see CORRECTIONS.md for details.
 # The canonical Eq. 6 from Flynn & Cannaliato (2025) is:
 #   outer_term    = (V2 / R2)
 #   inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
@@ -94,7 +94,7 @@ for g in rotators:
 
 ```
 Flynn, D.C. (2026). High-z Kinematic Corpus Z1.
-Zenodo. DOI: 10.5281/zenodo.20369286
+Zenodo. DOI: 10.5281/zenodo.21834678
 
 Jones, G.C. et al. (2021). MNRAS, 507, 3540.
 DOI: 10.1093/mnras/stab2703
