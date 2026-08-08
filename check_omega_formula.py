@@ -44,7 +44,7 @@ BANNED = [
     ),
     (
         # Compact form — mathematically correct but banned by Sol 5.6 requirement
-        re.compile(r'V2\s*/\s*R2\s*-\s*\(\s*V1\s*/\s*R1\s*\)\s*\*\s*\(?\s*R1\s*/\s*R2\s*\)?\s*\*\*\s*1\.5'),
+        re.compile(r'V\w*\s*/\s*R\w*\s*-\s*\(\s*V\w*\s*/\s*R\w*\s*\)\s*\*\s*\(?\s*R\w*\s*/\s*R\w*\s*\)?\s*\*\*\s*1\.5'),
         "COMPACT FORM (banned): V2/R2 - (V1/R1) * (R1/R2)**1.5  ← use named-term form"
     ),
     (
