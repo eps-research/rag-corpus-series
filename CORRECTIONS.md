@@ -97,7 +97,7 @@ The formula discrepancy was identified by Dennis Mungai via an audit conducted w
 ## August 7, 2026 — Remediation Complete
 
 **Z1 omega recomputation:** All 8 tier-1 rotators recomputed under canonical
-Eq.6. All values positive (median +13.776 rad/Gyr, mean +18.099 rad/Gyr).
+Eq.6. All values positive (median +12.621 rad/Gyr, mean +18.099 rad/Gyr).
 Sign reversal confirmed as formula artifact. Corrected corpus published at
 Zenodo 10.5281/zenodo.21834678.
 
