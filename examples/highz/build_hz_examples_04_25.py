@@ -296,7 +296,7 @@ for r in results:
           f"{r['V2']:>8.2f} {r['omega']:>10.3f} {r['n_rings']:>4}")
 print('-'*60)
 print(f"Median omega: {np.median(omegas):.3f} rad/Gyr")
-print(f"All negative: {all(o < 0 for o in omegas)}")
+print(f"All positive: {all(o > 0 for o in omegas)}")
 print(f"\nCorrected (Flynn 2026): median = +12.621 rad/Gyr (all 8 positive; old -13.05 withdrawn)")
 print(f"SPARC z=0 mean: +7.06 rad/Gyr (Flynn & Cannaliato 2025)")"""),
 code("""fig, ax = plt.subplots(figsize=(8, 4))
@@ -940,7 +940,7 @@ for r in z1_results:
 
 ax.set_xlabel('Redshift z', fontsize=12)
 ax.set_ylabel(r'$\omega$ (rad/Gyr)', fontsize=12)
-ax.set_title('EPS Research Omega Trilogy: Sign Reversal Across Cosmic Time\\n'
+ax.set_title('EPS Research Omega Trilogy: Positive Across Cosmic Time (corrected)\n'
              'Flynn & Cannaliato (2025) + Flynn (2026) arXiv:2605.25339',
              fontsize=11)
 ax.legend(fontsize=8, loc='upper right')
@@ -1226,7 +1226,7 @@ for r in results:
           f"{r['vmax']:>7.1f} {r['n_rings']:>4}")
 print('-'*48)
 print(f"Median omega:    {np.median(omegas):.3f} rad/Gyr")
-print(f"All negative:    {all(o < 0 for o in omegas)}")
+print(f"All positive:    {all(o > 0 for o in omegas)}")
 print(f"\nCorrected result (Flynn 2026): median = +12.621 rad/Gyr (all 8 positive; old -13.05 withdrawn)")
 print(f"SPARC z=0 mean:  +7.06 ± 3.26 rad/Gyr (Flynn & Cannaliato 2025)")
 print(f"Dwarf z=0 med:   +9.94 rad/Gyr (Flynn 2026)")
@@ -1244,7 +1244,7 @@ axes[0].axhline(9.94,  color='#2ecc71', ls='--', lw=2, alpha=0.8,
 axes[0].axhline(0,     color='black',   ls='-',  lw=0.7, alpha=0.3)
 axes[0].set_xlabel('Redshift z', fontsize=11)
 axes[0].set_ylabel(r'$\omega$ (rad/Gyr)', fontsize=11)
-axes[0].set_title('Omega Sign Reversal', fontsize=10)
+axes[0].set_title('Omega Values (corrected: all positive)', fontsize=10)
 axes[0].legend(fontsize=7)
 
 axes[1].barh([r['galaxy'] for r in results], omegas,

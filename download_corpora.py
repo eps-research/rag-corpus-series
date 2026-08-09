@@ -66,10 +66,6 @@ CORPORA = {
         'files': [
             ('https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json',
              'high_z_kinematic_corpus_Z1.json'),
-            ('https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1_flat.csv',
-             'high_z_kinematic_corpus_Z1_flat.csv'),
-            ('https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.jsonl',
-             'high_z_kinematic_corpus_Z1.jsonl'),
         ],
         'dest': 'examples/highz/'
     }
