@@ -9,7 +9,7 @@ Usage:
     python3 build_hz_examples_04_25.py
 
 Flynn, D.C. (2026) EPS Research
-DOI: 10.5281/zenodo.20369286
+DOI: 10.5281/zenodo.21834678
 arXiv: 2605.25339
 """
 
@@ -30,7 +30,7 @@ def code(text):
     return {"cell_type": "code", "execution_count": None,
             "metadata": {}, "outputs": [], "source": text}
 
-NOTE = ("**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.20369286  \n"
+NOTE = ("**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.21834678  \n"
         "**arXiv:** 2605.25339  \n"
         "**Source:** Jones et al. (2021), MNRAS 507, 3540; Le Fevre et al. (2020)  \n"
         "**Dependencies:** Python 3, numpy, matplotlib")
@@ -1186,7 +1186,7 @@ Capstone example: the complete Z1 analysis workflow.
 5. Reproduce the key Z1 result from Flynn (2026)
 
 **Reference:** Flynn (2026) arXiv:2605.25339
-DOI: 10.5281/zenodo.20369286
+DOI: 10.5281/zenodo.21834678
 
 {NOTE}"""),
 code(LOAD_JSON),
@@ -1258,7 +1258,7 @@ axes[1].set_title('Per-Galaxy Omega', fontsize=10)
 axes[1].legend(fontsize=8)
 
 plt.suptitle('Z1 End-to-End Workflow — EPS Research\\n'
-             'Flynn (2026) arXiv:2605.25339 | DOI: 10.5281/zenodo.20369286',
+             'Flynn (2026) arXiv:2605.25339 | DOI: 10.5281/zenodo.21834678',
              fontsize=11)
 plt.tight_layout()
 plt.savefig('hz25_end_to_end.png', dpi=150, bbox_inches='tight')

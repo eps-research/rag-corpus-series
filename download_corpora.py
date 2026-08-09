@@ -95,14 +95,14 @@ def download_file(url, dest_path, force=False):
         print(f'  FAILED: {e}')
         return False
 
-def download_corpus(key):
+def download_corpus(key, force=False):
     corpus = CORPORA[key]
     print(f'\n{corpus["name"]}')
     print(f'DOI: {corpus["doi"]}')
     os.makedirs(corpus['dest'], exist_ok=True)
     for url, filename in corpus['files']:
         dest = os.path.join(corpus['dest'], filename)
-        download_file(url, dest, force=args.force)
+        download_file(url, dest, force=force)
 
 def main():
     parser = argparse.ArgumentParser(description='Download EPS Research corpora')
@@ -119,7 +119,7 @@ def main():
 
     if args.corpus == 'all':
         for key in CORPORA:
-            download_corpus(key)
+            download_corpus(key, force=args.force)
     else:
         download_corpus(args.corpus)
 
