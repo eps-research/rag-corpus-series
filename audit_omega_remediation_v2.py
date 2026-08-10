@@ -55,7 +55,7 @@ STALE_PATTERNS = {
     "sign_reversal_claim": re.compile(r"\b(?:robust|monotonic|kinematic)?\s*sign\s+reversal\b", re.I),
 }
 
-TEXT_SUFFIXES = {".py", ".md", ".txt", ".ipynb", ".json", ".jsonl", ".csv", ".yaml", ".yml", ".toml"}
+TEXT_SUFFIXES = {".py", ".md", ".txt", ".ipynb", ".json", ".jsonl", ".csv", ".yaml", ".yml", ".toml", ".tex"}
 
 def run(cmd):
     p = subprocess.run(cmd, cwd=ROOT, text=True, capture_output=True)
