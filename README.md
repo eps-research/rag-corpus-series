@@ -231,7 +231,7 @@ The MCP server (Silo 5 Stage 1) makes all five corpora queryable by any LLM toda
 | Redshift range | z = 0 to z ~ 2.7 (with z ~ 5 anchor) |
 | Zenodo deposits | 10 (5 corpora + platform + extractor v1.1.0 + MCP server + extractor v1.0.0 + FAISS indexes) |
 | arXiv papers | 4 published + 2 in prep |
-| Jupyter notebooks | 150 |
+| Jupyter notebooks | 149 |
 | License | CC BY 4.0 |
 
 ---
