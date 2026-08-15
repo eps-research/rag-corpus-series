@@ -246,6 +246,31 @@ EPS Research is an independent research organization conducting self-directed, c
 
 **Educational outreach** — The High-School Exploration Track makes the platform accessible to students, with friendly notebooks that require no prior astrophysics background.
 
+## Intended Use & FAIR² Compliance
+
+This section describes intended usage of the EPS Research corpora, consistent with FAIR² data-reuse guidance (fair2.ai) and the Frontiers Chief Editor's request for explicit reuse detail ahead of peer review.
+
+**Intended for:**
+
+- **Astrophysical research** — rotation-curve modeling, baryonic mass decomposition, globular-cluster dynamics, and cross-epoch kinematic analysis using the ω estimator (Flynn & Cannaliato 2025), subject to the per-corpus ω status table above.
+- **RAG / LLM-assisted workflows** — all five corpora are distributed as schema-harmonized JSON + flat CSV + RAG-ready JSONL, and are directly queryable by any MCP-compatible AI assistant via the live MCP server (seven tools: `list_corpora`, `list_objects`, `get_object`, `search_metadata`, `filter_objects`, `get_corpus_schema`, `semantic_search`) without requiring a local data download.
+- **Reproducible analysis** — every published result, including the corrected Z1 ω values, is reproducible from the 149 executable notebooks and the `download_corpora.py` reproducibility pipeline described above.
+- **Education and outreach** — the High-School Exploration Track (20 notebooks, ages 14–18) is designed for classroom or self-guided use with no prior astrophysics background.
+
+**Interpretation notes for reusers:**
+
+- IntZ v1.0 ω values are **withdrawn** (`omega_available = false`) pending independent boundary-ring data; all other IntZ fields (kinematic summaries, tracer, redshift) remain valid and usable. See [CORRECTIONS.md](CORRECTIONS.md).
+- The Z1 ω result (N = 8 Tier-1 rotators) is a small-sample result and should not be over-generalized to the full high-z population without accounting for the stated sample size.
+- The z = 0 SPARC ω result is peer-reviewed and unaffected by the August 2026 correction.
+
+**Not intended for:**
+
+- Treating withdrawn IntZ ω values as scientifically valid kinematic measurements.
+- Safety-critical, clinical, or non-scientific automated decision-making.
+- Redistribution without CC BY 4.0 attribution.
+
+**License:** All EPS corpora are released under **CC BY 4.0**, permitting reuse, adaptation, and redistribution with attribution. See [Citation](#citation) below for the requested citation targets.
+
 ---
 
 ## Citation
