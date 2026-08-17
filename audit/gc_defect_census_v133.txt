@@ -1,0 +1,75 @@
+=== GATE 1  parse vs authoritative re-parse ===
+manifest  : 3 tables verified against SHA256SUMS
+  P1: 157 clusters x 10 fields = 1570 values, all exact
+  P2: 157 clusters x 13 fields = 2041 values, all exact
+  P3: 157 clusters x 13 fields = 2041 values, all exact
+  GATE 1 PASS 
+
+=== GATE 2  defect census vs examples/gc/harris_gc_corpus_v1.3.3.json ===
+  reference version: 1.3.3  records: 174
+manifest  : 3 tables verified against SHA256SUMS
+  compared 6437 values across 157 clusters x 41 fields
+  records differing: 127
+
+  field                                  differing
+  structure.r_core_kpc                       114
+  structure.r_half_kpc                       113
+  structure.r_core_arcmin                     94
+  kinematics.sig_v_kms                        93
+  structure.king_concentration                93
+  structure.r_half_arcmin                     93
+  dynamics.log_t_rh_yr                        93
+  kinematics.sig_v_err                        86
+  structure.mu_v_central                      81
+  structure.log_rho0                          81
+  dynamics.log_t_rc_yr                        81
+  distances.x_kpc                             27
+  position.ra_hms                             26
+  distances.y_kpc                             26
+  position.dec_dms                            25
+  distances.r_gc_kpc                          24
+  distances.z_kpc                             24
+  distances.r_sun_kpc                         22
+  photometry.colors.vr                        20
+  photometry.colors.vi                        17
+  photometry.ellipticity                      15
+  kinematics.v_r_kms                          14
+  kinematics.v_r_err                          14
+  kinematics.v_lsr_kms                        13
+  photometry.colors.ub                        10
+  photometry.colors.bv                         9
+  flags.inner_galaxy                           7
+  photometry.v_hb                              5
+  photometry.dist_mod                          5
+  photometry.v_t                               5
+  alt_name                                     3
+  metallicity.feh                              3
+  metallicity.ebv                              3
+  photometry.m_v_t                             3
+  position.l_deg                               2
+  metallicity.feh_weight                       1
+  position.b_deg                               1
+
+  examples:
+    alt_name                           NGC 104      reference=         None  generator=     '47 Tuc'
+    alt_name                           Ton 2        reference=     'Pismis'  generator=  'Pismis 26'
+    alt_name                           Terzan 5     reference=     'Terzan'  generator=  'Terzan 11'
+    position.ra_hms                    NGC 104      reference=  '47:Tuc:00'  generator='00:24:05.67'
+    position.ra_hms                    NGC 1904     reference=   '79:05:24'  generator='05:24:11.09'
+    position.ra_hms                    NGC 4590     reference=   '68:12:39'  generator='12:39:27.98'
+    position.dec_dms                   NGC 104      reference='24:05.67:-72'  generator='-72:04:52.6'
+    position.dec_dms                   NGC 1904     reference='11.09:-24:31'  generator='-24:31:29.0'
+    position.dec_dms                   NGC 4590     reference='27.98:-26:44'  generator='-26:44:38.6'
+    structure.r_core_kpc               NGC 104      reference=        0.032  generator=       0.0005
+    structure.r_core_kpc               Whiting 1    reference=       0.0694  generator=       0.0022
+    structure.r_core_kpc               NGC 1261     reference=       0.0841  generator=       0.0017
+    structure.r_half_kpc               NGC 104      reference=       0.2821  generator=       0.0041
+    structure.r_half_kpc               Whiting 1    reference=         None  generator=       0.0019
+    structure.r_half_kpc               NGC 1261     reference=       0.0142  generator=       0.0032
+    flags.inner_galaxy                 NGC 104      reference=         True  generator=        False
+    flags.inner_galaxy                 NGC 6266     reference=        False  generator=         True
+    flags.inner_galaxy                 NGC 6273     reference=        False  generator=         True
+
+  CENSUS MODE -- differences are the expected defect scale, not a gate failure.
+
+RESULT: PASS

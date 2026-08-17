@@ -1,0 +1,17 @@
+Harris, W.E. 1996, AJ, 112, 1487 -- 2010 edition
+https://physics.mcmaster.ca/~harris/mwgc.dat
+
+mwgc_p1.dat  Part I   identifications, positions, distances   (157 rows)
+mwgc_p2.dat  Part II  metallicity and photometry              (157 rows)
+mwgc_p3.dat  Part III velocities and structural parameters    (157 rows)
+
+Strict fixed-width, right-aligned numerics, blank columns for missing values.
+Column offsets are declared in 01_build_harris.py (P1_SPEC / P2_SPEC / P3_SPEC)
+and must not be inferred by whitespace splitting: Harris leaves a column blank
+rather than writing a placeholder, so any token-based parse silently shifts
+every field to the right of a blank one position left.
+
+These files were extracted verbatim from the RAW dict literal embedded in the
+original 01_build_harris.py (deposited as build_scripts_v1.3.2.zip) by
+extract_harris_tables.py. Content is byte-identical to that literal apart from
+normalisation of leading/trailing blank lines and a terminating newline.
