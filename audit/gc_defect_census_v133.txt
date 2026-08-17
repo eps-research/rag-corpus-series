@@ -73,3 +73,33 @@ manifest  : 3 tables verified against SHA256SUMS
   CENSUS MODE -- differences are the expected defect scale, not a gate failure.
 
 RESULT: PASS
+manifest  : 3 tables verified against SHA256SUMS
+parsed    : P1=157  P2=157  P3=157
+roster    : all three parts match P1_IDS (157 clusters)
+arith     : K-form vs original grouping differ on 0 derived radii []
+
+--- NGC 104 (47 Tuc) spot check ---
+  alt_name     '47 Tuc'
+  ra_hms       '00:24:05.67'
+  dec_dms      '-72:04:52.6'
+  feh          -0.72
+  ebv          0.04
+  m_v_t        -9.42
+  ellipticity  0.09
+  sig_v_kms    11.0
+  king_c       2.07
+  core_coll    False
+  r_half_kpc   0.0041
+  log_rho0     4.88
+  log_t_rh     9.55
+
+core-collapsed        : 29  ['NGC 362', 'NGC 1904', 'NGC 5946', 'NGC 6256', 'NGC 6266', 'NGC 6284']...
+[Fe/H] range          : -2.37 to 0.00  (n=152)
+sig_v range           : 0.40 to 18.90  (n=62)
+alt_name == 'M'       : 0
+RA hour > 23          : 0
+inner galaxy (<3 kpc) : 44
+Sgr stream            : ['Whiting 1', 'NGC 6715', 'Terzan 7', 'Arp 2', 'Terzan 8', 'Pal 12']
+
+JSON: /tmp/b01/harris_gc_corpus_v1.json  (250.7 KB)
+CSV : /tmp/b01/harris_gc_corpus_v1_flat.csv  (31.1 KB)
