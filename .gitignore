@@ -30,3 +30,12 @@ quickstart_*.png
 papers/*.aux
 papers/*.out
 papers/*.log
+
+# Corpus data files are the point of this repository (see .gitignore history)
+!examples/**/*.json
+!examples/**/*.jsonl
+
+# Patch-script scaffolding — never deposit
+*.bak
+*.bak[0-9]
+*.orig
