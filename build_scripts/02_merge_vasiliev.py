@@ -260,12 +260,41 @@ print(f"Harris clusters with Gaia data: {n_matched}")
 
 # ── APPEND V21-ONLY NEW CLUSTERS ──────────────────────────────────────────────
 import math
+
+def equatorial_to_galactic(ra_deg, dec_deg):
+    """Convert ICRS/J2000 equatorial coordinates to Galactic l,b (degrees).
+
+    Uses the standard IAU J2000 pole and ascending-node constants.
+    Inputs are the published Vasiliev & Baumgardt (2021) RA/Dec values.
+    """
+    ra = math.radians(ra_deg)
+    dec = math.radians(dec_deg)
+    ra_ngp = math.radians(192.85948)
+    dec_ngp = math.radians(27.12825)
+    l_omega = math.radians(32.93192)
+
+    b = math.asin(
+        math.sin(dec) * math.sin(dec_ngp)
+        + math.cos(dec) * math.cos(dec_ngp) * math.cos(ra - ra_ngp)
+    )
+    y = (
+        math.sin(dec) * math.cos(dec_ngp)
+        - math.cos(dec) * math.sin(dec_ngp) * math.cos(ra - ra_ngp)
+    )
+    x = math.cos(dec) * math.sin(ra - ra_ngp)
+    l = (math.atan2(y, x) + l_omega) % (2.0 * math.pi)
+
+    return round(math.degrees(l), 4), round(math.degrees(b), 4)
+
+
 new_clusters = []
 for cid, d in sorted(v21_only.items()):
+    l_deg, b_deg = equatorial_to_galactic(d["ra_deg"], d["dec_deg"])
     rec = {
         "cluster_id": cid,
         "alt_name":   None,
-        "position":   {"ra_hms": None, "dec_dms": None, "l_deg": None, "b_deg": None},
+        "position":   {"ra_hms": None, "dec_dms": None,
+                       "l_deg": l_deg, "b_deg": b_deg},
         "distances":  {"r_sun_kpc": None, "r_gc_kpc": None,
                        "x_kpc": None, "y_kpc": None, "z_kpc": None},
         "metallicity":{"feh": None, "feh_weight": None, "ebv": None},
@@ -315,7 +344,7 @@ corpus["metadata"]["description"] = (
     "Harris (1996, 2010 edition) catalog of 157 Milky Way globular clusters "
     "merged with Vasiliev & Baumgardt (2021) Gaia EDR3 proper motions and parallaxes "
     "for 170 clusters. Version 1.1 adds a gaia_edr3 block to every cluster record "
-    "and appends 13 clusters present in V21 but not in the Harris (2010) catalog."
+    f"and appends {len(new_clusters)} clusters present in V21 but not in the Harris (2010) catalog."
 )
 corpus["metadata"]["n_harris"] = 157
 corpus["metadata"]["n_v21_only"] = len(new_clusters)

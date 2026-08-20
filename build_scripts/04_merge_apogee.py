@@ -185,14 +185,16 @@ print(f"Clusters matched to APOGEE: {n_matched}/72 expected")
 
 # ── UPDATE METADATA ───────────────────────────────────────────────────────────
 total = len(corpus["clusters"])
-corpus["metadata"]["version"]     = "1.3"
-corpus["metadata"]["title"]       = "Milky Way Globular Cluster Corpus v1.3"
+corpus["metadata"]["version"]     = "1.4.0"
+corpus["metadata"]["title"]       = "Milky Way Globular Cluster Corpus v1.4.0"
 corpus["metadata"]["n_clusters"]  = total
 corpus["metadata"]["description"] = (
     "Harris (1996, 2010 ed.) 157-cluster catalog merged with "
     "Vasiliev & Baumgardt (2021) Gaia EDR3 proper motions (v1.1), "
     "Baumgardt et al. (2023) N-body structural/orbital parameters (v1.2), "
-    "and Schiavon et al. (2024) APOGEE DR17 mean chemical abundances (v1.3). "
+    "and Schiavon et al. (2024) APOGEE DR17 mean chemical abundances. "
+    "Version 1.4.0 rebuilds Harris-derived fields from checksum-verified fixed-width "
+    "source tables using declared character offsets. "
     "Four independent surveys: photometry/structure (Harris), kinematics (Vasiliev), "
     "dynamics/orbits (Baumgardt), chemistry (APOGEE). "
     "174 clusters total; chemistry available for 72."
@@ -215,11 +217,65 @@ corpus["metadata"]["schema_notes"]["apogee_dr17"] = (
     "null in all fields = cluster not observed/identified in APOGEE DR17."
 )
 
-with open(OUT + "harris_gc_corpus_v1.3.json","w") as f:
+
+# ── RELEASE / FAIR² METADATA ──────────────────────────────────────────────────
+# v1.4.0 is produced directly by the checksum-verified 01→04 build chain.
+# Historical v1.3.x repair material is retained in separate audit sidecars,
+# never inside searchable current-data records.
+md = corpus["metadata"]
+
+md["corpus"] = "Milky Way Globular Cluster Corpus"
+md["creator"] = "David C. Flynn, EPS Research"
+md["orcid"] = "0000-0002-2768-6650"
+md["license"] = "CC BY 4.0"
+md["github"] = "https://github.com/eps-research/rag-corpus-series"
+md["last_modified"] = "2026-08-20"
+md["supersedes"] = "1.3.3"
+
+# Do NOT attach the previous version-specific Zenodo DOI to v1.4.0.
+# A v1.4.0 version DOI will be inserted only after the new deposit exists.
+md.pop("zenodo_doi", None)
+
+md["coordinate_frame"] = (
+    "distances.x/y/z_kpc are heliocentric Cartesian coordinates "
+    "(Sun at origin) from the Harris source fields. "
+    "baumgardt2023.x/y/z_kpc are Galactocentric and are not interchangeable "
+    "with distances.x/y/z_kpc."
+)
+
+md["notes"] = (
+    "v1.4.0 is a clean rebuild of all Harris-derived fields from the "
+    "checksum-verified Harris (1996, 2010 edition) fixed-width catalogue "
+    "snapshot using declared character offsets. It supersedes the v1.3.3 "
+    "patch-based repair path. Historical v1.3.x values and repair evidence "
+    "are retained separately in gc_v133_prior_audit.json and "
+    "gc_v140_change_manifest.json so stale values cannot be indexed or "
+    "returned as current data. Non-Harris Gaia EDR3, Baumgardt et al. (2023), "
+    "and APOGEE DR17 blocks are preserved through the merge chain. "
+    "The 17 Vasiliev-only clusters receive Galactic l/b coordinates "
+    "deterministically transformed from the published ICRS/J2000 RA/Dec; "
+    "relative to the prior rounded corpus values, the largest observed "
+    "coordinate difference is 0.0018 deg."
+)
+
+md["schema_notes"]["coordinate_frame"] = (
+    "distances.x_kpc/y_kpc/z_kpc are Harris heliocentric Cartesian "
+    "coordinates. baumgardt2023.x_kpc/y_kpc/z_kpc use the independent "
+    "Baumgardt Galactocentric frame."
+)
+
+md["schema_notes"]["vasiliev_only_position"] = (
+    "For the 17 clusters present in Vasiliev & Baumgardt (2021) but absent "
+    "from Harris, position.l_deg and position.b_deg are calculated from the "
+    "published ICRS/J2000 ra_deg and dec_deg using the standard IAU J2000 "
+    "equatorial-to-Galactic transformation."
+)
+
+with open(OUT + "harris_gc_corpus_v1.4.0.json","w") as f:
     json.dump(corpus, f, indent=2)
 
 # ── JSONL ─────────────────────────────────────────────────────────────────────
-with open(OUT + "harris_gc_corpus_v1.3.jsonl","w") as f:
+with open(OUT + "harris_gc_corpus_v1.4.0.jsonl","w") as f:
     for c in corpus["clusters"]:
         f.write(json.dumps(c) + "\n")
 
@@ -246,7 +302,7 @@ fields = [
     "a_mass_1e4_msun","a_r_jacobi_deg","a_n_members",
 ]
 
-with open(OUT + "harris_gc_corpus_v1.3_flat.csv","w",newline="") as f:
+with open(OUT + "harris_gc_corpus_v1.4.0_flat.csv","w",newline="") as f:
     w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
     w.writeheader()
     for c in corpus["clusters"]:
@@ -345,10 +401,10 @@ assert type(a["n_members"])==int
 print("Type audit passed")
 
 import os
-print(f"\nv1.3 complete:")
-print(f"  JSON:  {os.path.getsize(OUT + 'harris_gc_corpus_v1.3.json')/1024:.1f} KB")
-print(f"  JSONL: {os.path.getsize(OUT + 'harris_gc_corpus_v1.3.jsonl')/1024:.1f} KB")
-print(f"  CSV:   {os.path.getsize(OUT + 'harris_gc_corpus_v1.3_flat.csv')/1024:.1f} KB")
+print(f"\nv1.4.0 complete:")
+print(f"  JSON:  {os.path.getsize(OUT + 'harris_gc_corpus_v1.4.0.json')/1024:.1f} KB")
+print(f"  JSONL: {os.path.getsize(OUT + 'harris_gc_corpus_v1.4.0.jsonl')/1024:.1f} KB")
+print(f"  CSV:   {os.path.getsize(OUT + 'harris_gc_corpus_v1.4.0_flat.csv')/1024:.1f} KB")
 print(f"\nNGC 104 APOGEE: feh={a['feh_apogee']}, rv={a['rv_mean_kms']} km/s, n_members={a['n_members']}")
 
 # Final coverage summary

@@ -1,17 +1,65 @@
 {
   "metadata": {
-    "corpus": "Milky Way Globular Cluster Corpus",
+    "title": "Milky Way Globular Cluster Corpus v1.4.0",
+    "description": "Harris (1996, 2010 ed.) 157-cluster catalog merged with Vasiliev & Baumgardt (2021) Gaia EDR3 proper motions (v1.1), Baumgardt et al. (2023) N-body structural/orbital parameters (v1.2), and Schiavon et al. (2024) APOGEE DR17 mean chemical abundances. Version 1.4.0 rebuilds Harris-derived fields from checksum-verified fixed-width source tables using declared character offsets. Four independent surveys: photometry/structure (Harris), kinematics (Vasiliev), dynamics/orbits (Baumgardt), chemistry (APOGEE). 174 clusters total; chemistry available for 72.",
     "version": "1.4.0",
+    "n_clusters": 174,
+    "source": "Harris, W.E. 1996, AJ, 112, 1487 (2010 revision)",
+    "url": "https://physics.mcmaster.ca/~harris/mwgc.dat",
     "creator": "David C. Flynn, EPS Research",
     "orcid": "0000-0002-2768-6650",
+    "schema_notes": {
+      "parsing": "Harris is strict fixed-width with blank columns for missing values. All fields are read by declared character offset (P1_SPEC/P2_SPEC/P3_SPEC in 01_build_harris.py). Whitespace tokenisation is unsafe on this catalogue: it deletes blank columns and shifts every subsequent field left.",
+      "coordinate_frame": "distances.x_kpc/y_kpc/z_kpc are Harris heliocentric Cartesian coordinates. baumgardt2023.x_kpc/y_kpc/z_kpc use the independent Baumgardt Galactocentric frame.",
+      "r_half_kpc": "Derived: r_half_arcmin * r_sun_kpc * (pi/10800), rounded to 4 dp",
+      "r_core_kpc": "Derived: r_core_arcmin * r_sun_kpc * (pi/10800), rounded to 4 dp",
+      "inner_galaxy": "Flag: r_gc_kpc < 3.0 kpc",
+      "sgr_stream": "Sgr dSph stream members: NGC 6715, Terzan 7, Terzan 8, Arp 2, Pal 12, Whiting 1. Editorial assignment inherited from the v1.0 generator; citation pending.",
+      "core_collapsed": "c=confirmed core collapse, c:=probable core collapse (Harris notation)",
+      "feh_weight": "Number of independent [Fe/H] measurements averaged",
+      "log_t_rc_yr": "log10(core relaxation time / yr)",
+      "log_t_rh_yr": "log10(median half-light relaxation time / yr)",
+      "mu_v_central": "Central surface brightness (V mag/arcsec^2)",
+      "log_rho0": "log10(central luminosity density / Lsun pc^-3)",
+      "gaia_edr3": "Gaia EDR3 astrometry from Vasiliev & Baumgardt (2021) Table A1. mu_alpha_mas_yr is proper motion in RA * cos(dec). Errors include spatially correlated systematic floor (~0.011 mas parallax, ~0.026 mas/yr PM). parallax_mas has Lindegren et al. (2021) zero-point correction applied per-star. plummer_r0_arcmin is the Plummer scale radius used in the mixture model fit. n_members_gaia is the number of stars with good astrometry used in the fit. null in all gaia_edr3 fields = cluster not measurable by Gaia (e.g. 2MASS-GC01/02, GLIMPSE01/02).",
+      "baumgardt2023": "N-body fit parameters from Baumgardt et al. (2023) v4 database. Distances (r_sun_kpc, r_gc_kpc) are Baumgardt & Vasiliev (2021) values \u2014 more precise than Harris. Radii rc_pc/rhl_pc/rhm_pc/rt_pc are in parsecs (not arcmin). 3D space velocities U/V/W in km/s in Galactocentric frame. r_peri_kpc/r_apo_kpc are orbital pericenter/apocenter in Irrgang et al. (2013) potential. log_trh_yr = log10(half-mass relaxation time/yr). mf_slope = global IMF slope (Salpeter = -2.3). sigma0_kms = central 1D velocity dispersion. a_rot_kms/p_rot_pct = Sollima et al. (2019) rotation amplitude and detection probability. eta_c/eta_h = Trenti & van der Marel (2013) mass segregation parameters.",
+      "apogee_dr17": "Mean chemical abundances from APOGEE DR17 GC VAC (Schiavon et al. 2024). feh_apogee = mean [Fe/H] from ASPCAP; may differ from Harris feh by ~0.1 dex due to different methods (photometric vs spectroscopic). rv_mean_kms = mean radial velocity from APOGEE members. mass_1e4_msun = cluster mass in units of 10^4 solar masses (from Baumgardt & Vasiliev 2021). r_jacobi_deg = Jacobi (tidal) radius in degrees. n_members = number of likely+outlier candidate members in the VAC. null in all fields = cluster not observed/identified in APOGEE DR17.",
+      "vasiliev_only_position": "For the 17 clusters present in Vasiliev & Baumgardt (2021) but absent from Harris, position.l_deg and position.b_deg are calculated from the published ICRS/J2000 ra_deg and dec_deg using the standard IAU J2000 equatorial-to-Galactic transformation."
+    },
+    "n_harris": 157,
+    "n_v21_only": 17,
+    "sources": [
+      {
+        "label": "harris1996_2010",
+        "citation": "Harris, W.E. 1996, AJ, 112, 1487 (2010 revision)",
+        "url": "https://physics.mcmaster.ca/~harris/mwgc.dat"
+      },
+      {
+        "label": "vasiliev_baumgardt_2021",
+        "citation": "Vasiliev & Baumgardt 2021, MNRAS 505, 5978",
+        "doi": "10.1093/mnras/stab1475"
+      },
+      {
+        "label": "baumgardt2023_v4",
+        "citation": "Baumgardt et al. 2023 (v4 database, March 2023)",
+        "url": "https://people.smp.uq.edu.au/HolgerBaumgardt/globular/"
+      },
+      {
+        "label": "schiavon2024_apogee_dr17",
+        "citation": "Schiavon et al. 2024, MNRAS 528, 1393",
+        "doi": "10.1093/mnras/stad3419",
+        "arxiv": "2310.07764"
+      }
+    ],
+    "n_baumgardt_only": 0,
+    "n_apogee": 72,
+    "corpus": "Milky Way Globular Cluster Corpus",
     "license": "CC BY 4.0",
-    "n_clusters": 174,
-    "zenodo_doi": "10.5281/zenodo.19907766",
     "github": "https://github.com/eps-research/rag-corpus-series",
-    "notes": "v1.3.3 corrects two independent defects. (1) COLUMN SHIFT, 14 clusters: a fixed-width parse of Harris (1996, 2010 ed.) slipped one field on rows whose alt_name contains a space, so r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, and x_kpc held the Galactocentric distance. Ten of the 14 r_sun_kpc values were negative. r_sun_kpc and r_gc_kpc were rebuilt from each record's baumgardt2023 block; on 7 of the 14, APOGEE DR17 supplies an independent distance agreeing with the substituted value. The same parse truncated 23 alt_name values to 'M', now restored. (2) COORDINATE FRAME, 26 clusters: distances.x/y/z_kpc is heliocentric throughout this corpus (|xyz| equals r_sun_kpc on 157 of 174 records), but 12 records already carried Galactocentric values in that field in v1.3.1 and v1.3.2, and the defect-(1) repair initially introduced the same error on the 14. All 26 are now derived from each record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b) -- a formula that reproduces the stored values on 131 of 143 complete unaffected records. Nothing is copied from Baumgardt, so the frame and provenance are now uniform corpus-wide. Prior values are preserved per-record under distances._v132_shifted and distances._pre_frame_fix. VERIFICATION: position.l_deg/b_deg and the gaia_edr3 and apogee_dr17 blocks were audited against baumgardt2023 and show no elevated disagreement in the affected records relative to the unaffected ones. baumgardt2023.r_gc_kpc was independently confirmed by reconstructing it from r_sun/l/b at R0 = 8.178 kpc (mean residual 0.048 kpc, n=154). KNOWN LIMITATION: baumgardt2023.x/y/z_kpc uses the opposite x-axis sign convention (Sun at x = +R0) and is not interchangeable with distances.x/y/z_kpc; the baumgardt2023 block for Pal 13 also appears field-shifted and should not be used. SCOPE: 17 clusters lack r_sun_kpc, l_deg or b_deg entirely and were not modified. v1.3.2: Corrected l/b field swap in Harris position block for 14 clusters. Bug reported by Ziqian Hua (Nanjing University).",
-    "last_modified": "2026-08-16",
+    "last_modified": "2026-08-20",
     "supersedes": "1.3.3",
-    "coordinate_frame": "distances.x/y/z_kpc are heliocentric (Sun at origin), derived from r_sun_kpc, l_deg, b_deg. baumgardt2023.x/y/z_kpc are Galactocentric with Sun at x = +8.178 kpc; the two are NOT interchangeable."
+    "coordinate_frame": "distances.x/y/z_kpc are heliocentric Cartesian coordinates (Sun at origin) from the Harris source fields. baumgardt2023.x/y/z_kpc are Galactocentric and are not interchangeable with distances.x/y/z_kpc.",
+    "notes": "v1.4.0 is a clean rebuild of all Harris-derived fields from the checksum-verified Harris (1996, 2010 edition) fixed-width catalogue snapshot using declared character offsets. It supersedes the v1.3.3 patch-based repair path. Historical v1.3.x values and repair evidence are retained separately in gc_v133_prior_audit.json and gc_v140_change_manifest.json so stale values cannot be indexed or returned as current data. Non-Harris Gaia EDR3, Baumgardt et al. (2023), and APOGEE DR17 blocks are preserved through the merge chain. The 17 Vasiliev-only clusters receive Galactic l/b coordinates deterministically transformed from the published ICRS/J2000 RA/Dec; relative to the prior rounded corpus values, the largest observed coordinate difference is 0.0018 deg."
   },
   "clusters": [
     {
@@ -1788,9 +1836,7 @@
         "r_gc_kpc": 18.8,
         "x_kpc": -7.7,
         "y_kpc": -8.3,
-        "z_kpc": -6.3,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -6.3
       },
       "metallicity": {
         "feh": -1.6,
@@ -4224,9 +4270,7 @@
         "r_gc_kpc": 10.2,
         "x_kpc": 4.1,
         "y_kpc": -7.2,
-        "z_kpc": 6.0,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 6.0
       },
       "metallicity": {
         "feh": -2.23,
@@ -4578,9 +4622,7 @@
         "r_gc_kpc": 18.4,
         "x_kpc": 2.8,
         "y_kpc": -1.4,
-        "z_kpc": 17.6,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 17.6
       },
       "metallicity": {
         "feh": -2.1,
@@ -5120,9 +5162,7 @@
         "r_gc_kpc": 12.0,
         "x_kpc": 1.5,
         "y_kpc": 1.3,
-        "z_kpc": 10.0,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 10.0
       },
       "metallicity": {
         "feh": -1.5,
@@ -6874,9 +6914,7 @@
         "r_gc_kpc": 6.2,
         "x_kpc": 5.1,
         "y_kpc": 0.3,
-        "z_kpc": 5.5,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 5.5
       },
       "metallicity": {
         "feh": -1.29,
@@ -8077,9 +8115,7 @@
         "r_gc_kpc": 3.8,
         "x_kpc": 9.4,
         "y_kpc": -1.2,
-        "z_kpc": 3.3,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 3.3
       },
       "metallicity": {
         "feh": -1.75,
@@ -9487,9 +9523,7 @@
         "r_gc_kpc": 8.4,
         "x_kpc": 2.8,
         "y_kpc": 4.6,
-        "z_kpc": 4.7,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 4.7
       },
       "metallicity": {
         "feh": -1.53,
@@ -9849,9 +9883,7 @@
         "r_gc_kpc": 4.5,
         "x_kpc": 4.2,
         "y_kpc": 1.2,
-        "z_kpc": 2.1,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 2.1
       },
       "metallicity": {
         "feh": -1.37,
@@ -10375,10 +10407,7 @@
         "r_gc_kpc": 4.6,
         "x_kpc": 3.9,
         "y_kpc": 1.1,
-        "z_kpc": 1.7,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 1.7
       },
       "metallicity": {
         "feh": -1.56,
@@ -10902,9 +10931,7 @@
         "r_gc_kpc": 1.7,
         "x_kpc": 6.7,
         "y_kpc": -0.8,
-        "z_kpc": 0.9,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 0.9
       },
       "metallicity": {
         "feh": -1.18,
@@ -11076,9 +11103,7 @@
         "r_gc_kpc": 1.7,
         "x_kpc": 8.7,
         "y_kpc": -0.5,
-        "z_kpc": 1.4,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 1.4
       },
       "metallicity": {
         "feh": -1.74,
@@ -12142,10 +12167,7 @@
         "r_gc_kpc": 9.6,
         "x_kpc": 2.5,
         "y_kpc": 6.3,
-        "z_kpc": 4.7,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 4.7
       },
       "metallicity": {
         "feh": -2.31,
@@ -14945,9 +14967,7 @@
         "r_gc_kpc": 1.4,
         "x_kpc": 8.1,
         "y_kpc": -1.3,
-        "z_kpc": -0.5,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -0.5
       },
       "metallicity": {
         "feh": -0.7,
@@ -15307,10 +15327,7 @@
         "r_gc_kpc": 4.0,
         "x_kpc": 8.3,
         "y_kpc": 3.3,
-        "z_kpc": 2.4,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 2.4
       },
       "metallicity": {
         "feh": -1.28,
@@ -16366,10 +16383,7 @@
         "r_gc_kpc": 1.2,
         "x_kpc": 6.9,
         "y_kpc": 0.5,
-        "z_kpc": 0.2,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": 0.2
       },
       "metallicity": {
         "feh": -0.23,
@@ -21592,10 +21606,7 @@
         "r_gc_kpc": 2.7,
         "x_kpc": 5.4,
         "y_kpc": 0.7,
-        "z_kpc": -0.5,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -0.5
       },
       "metallicity": {
         "feh": -1.32,
@@ -21939,10 +21950,7 @@
         "r_gc_kpc": 1.7,
         "x_kpc": 8.6,
         "y_kpc": 0.3,
-        "z_kpc": -1.6,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -1.6
       },
       "metallicity": {
         "feh": -0.64,
@@ -22466,9 +22474,7 @@
         "r_gc_kpc": 4.9,
         "x_kpc": 3.2,
         "y_kpc": 0.6,
-        "z_kpc": -0.4,
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -0.4
       },
       "metallicity": {
         "feh": -1.7,
@@ -22820,10 +22826,7 @@
         "r_gc_kpc": 2.2,
         "x_kpc": 8.8,
         "y_kpc": 0.4,
-        "z_kpc": -2.0,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -2.0
       },
       "metallicity": {
         "feh": -1.62,
@@ -23321,10 +23324,7 @@
         "r_gc_kpc": 18.9,
         "x_kpc": 25.6,
         "y_kpc": 2.5,
-        "z_kpc": -6.5,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -6.5
       },
       "metallicity": {
         "feh": -1.49,
@@ -25092,10 +25092,7 @@
         "r_gc_kpc": 3.9,
         "x_kpc": 4.9,
         "y_kpc": 0.8,
-        "z_kpc": -2.1,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -2.1
       },
       "metallicity": {
         "feh": -1.94,
@@ -25619,10 +25616,7 @@
         "r_gc_kpc": 6.7,
         "x_kpc": 2.2,
         "y_kpc": 3.4,
-        "z_kpc": -0.3,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -0.3
       },
       "metallicity": {
         "feh": -0.78,
@@ -25802,10 +25796,7 @@
         "r_gc_kpc": 14.7,
         "x_kpc": 17.6,
         "y_kpc": 6.5,
-        "z_kpc": -9.1,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -9.1
       },
       "metallicity": {
         "feh": -1.29,
@@ -26149,10 +26140,7 @@
         "r_gc_kpc": 12.9,
         "x_kpc": 11.7,
         "y_kpc": 8.3,
-        "z_kpc": -9.2,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -9.2
       },
       "metallicity": {
         "feh": -1.42,
@@ -26496,10 +26484,7 @@
         "r_gc_kpc": 10.4,
         "x_kpc": 3.9,
         "y_kpc": 8.3,
-        "z_kpc": -4.8,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -4.8
       },
       "metallicity": {
         "feh": -2.37,
@@ -26859,10 +26844,7 @@
         "r_gc_kpc": 7.1,
         "x_kpc": 4.9,
         "y_kpc": 2.5,
-        "z_kpc": -5.9,
-        "provenance_note": "distances block repaired in v1.3.3. In v1.3.1/v1.3.2 a fixed-width parse of Harris (1996, 2010 ed.) shifted this block by one field on rows whose alt_name contains a space: r_sun_kpc held galactic latitude, r_gc_kpc held the heliocentric distance, x_kpc held the Galactocentric distance. Values here are from Baumgardt et al. 2023 (v4 database), NOT Harris 1996 -- a provenance difference from unaffected records in this corpus. Verified to use the same xyz sign convention as the Harris values it replaces.",
-        "frame": "heliocentric",
-        "frame_note": "x_kpc/y_kpc/z_kpc regenerated in v1.3.3 as heliocentric Cartesian coordinates derived from this record's own r_sun_kpc, position.l_deg and position.b_deg via x=r cos(b) cos(l), y=r cos(b) sin(l), z=r sin(b). The previous values were Galactocentric (Baumgardt et al. 2023 frame) stored in a heliocentric field, which is inconsistent with the 131 records where |xyz| equals r_sun_kpc. Prior values preserved under _pre_frame_fix."
+        "z_kpc": -5.9
       },
       "metallicity": {
         "feh": -2.27,
@@ -27542,8 +27524,8 @@
       "position": {
         "ra_hms": null,
         "dec_dms": null,
-        "l_deg": 303.171,
-        "b_deg": -4.307
+        "l_deg": 303.1706,
+        "b_deg": -4.3064
       },
       "distances": {
         "r_sun_kpc": null,
@@ -27875,8 +27857,8 @@
       "position": {
         "ra_hms": null,
         "dec_dms": null,
-        "l_deg": 274.809,
-        "b_deg": 47.848
+        "l_deg": 274.8072,
+        "b_deg": 47.8476
       },
       "distances": {
         "r_sun_kpc": null,
@@ -28209,7 +28191,7 @@
         "ra_hms": null,
         "dec_dms": null,
         "l_deg": 329.778,
-        "b_deg": -1.593
+        "b_deg": -1.5926
       },
       "distances": {
         "r_sun_kpc": null,
@@ -28380,8 +28362,8 @@
       "position": {
         "ra_hms": null,
         "dec_dms": null,
-        "l_deg": 349.217,
-        "b_deg": -3.292
+        "l_deg": 349.2169,
+        "b_deg": -3.2922
       },
       "distances": {
         "r_sun_kpc": null,
@@ -30009,8 +29991,8 @@
       "position": {
         "ra_hms": null,
         "dec_dms": null,
-        "l_deg": 5.267,
-        "b_deg": 0.78
+        "l_deg": 5.2672,
+        "b_deg": 0.7797
       },
       "distances": {
         "r_sun_kpc": null,

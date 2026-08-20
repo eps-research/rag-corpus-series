@@ -136,7 +136,7 @@ RAW_ORBITS = _load_table("baumgardt2023_orbits", 32, 32)
 #   log_rho_c, log_rho_hm, log_trh, log_mini, t_diss,
 #   mf_range_lo, mf_range_hi, mf_slope±err,
 #   sigma0, v_esc, eta_c, eta_h, a_rot±err, p_rot
-RAW_STRUCT = _load_table("baumgardt2023_structure", 32, 35)
+RAW_STRUCT = _load_table("baumgardt2023_structure", 34, 35)
 
 # ── ID MAP: Baumgardt name → Harris cluster_id ────────────────────────────────
 B_MAP = {
