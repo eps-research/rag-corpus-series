@@ -1,0 +1,8659 @@
+{
+  "metadata": {
+    "source_version": "1.3.3",
+    "corrected_version": "1.4.0",
+    "records_modified": 127,
+    "field_changes": 1360,
+    "granularity": "One-level corpus field paths; nested dictionary-valued fields are treated atomically to match rebuild change accounting."
+  },
+  "changes": [
+    {
+      "cluster_id": "NGC 104",
+      "field": "alt_name",
+      "old_value": null,
+      "new_value": "47 Tuc"
+    },
+    {
+      "cluster_id": "NGC 104",
+      "field": "flags.inner_galaxy",
+      "old_value": true,
+      "new_value": false
+    },
+    {
+      "cluster_id": "NGC 104",
+      "field": "position.dec_dms",
+      "old_value": "24:05.67:-72",
+      "new_value": "-72:04:52.6"
+    },
+    {
+      "cluster_id": "NGC 104",
+      "field": "position.ra_hms",
+      "old_value": "47:Tuc:00",
+      "new_value": "00:24:05.67"
+    },
+    {
+      "cluster_id": "NGC 104",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.032,
+      "new_value": 0.0005
+    },
+    {
+      "cluster_id": "NGC 104",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.2821,
+      "new_value": 0.0041
+    },
+    {
+      "cluster_id": "NGC 288",
+      "field": "photometry.ellipticity",
+      "old_value": 0.94,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Whiting 1",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 7.93
+    },
+    {
+      "cluster_id": "Whiting 1",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.25,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Whiting 1",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.55,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Whiting 1",
+      "field": "structure.king_concentration",
+      "old_value": 0.22,
+      "new_value": 0.55
+    },
+    {
+      "cluster_id": "Whiting 1",
+      "field": "structure.r_core_arcmin",
+      "old_value": 7.93,
+      "new_value": 0.25
+    },
+    {
+      "cluster_id": "Whiting 1",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0694,
+      "new_value": 0.0022
+    },
+    {
+      "cluster_id": "Whiting 1",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 0.22
+    },
+    {
+      "cluster_id": "Whiting 1",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0019
+    },
+    {
+      "cluster_id": "NGC 1261",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.59
+    },
+    {
+      "cluster_id": "NGC 1261",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.12
+    },
+    {
+      "cluster_id": "NGC 1261",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.35,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 1261",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.16,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 1261",
+      "field": "structure.king_concentration",
+      "old_value": 0.68,
+      "new_value": 1.16
+    },
+    {
+      "cluster_id": "NGC 1261",
+      "field": "structure.log_rho0",
+      "old_value": 9.12,
+      "new_value": 2.99
+    },
+    {
+      "cluster_id": "NGC 1261",
+      "field": "structure.mu_v_central",
+      "old_value": 8.59,
+      "new_value": 17.73
+    },
+    {
+      "cluster_id": "NGC 1261",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.73,
+      "new_value": 0.35
+    },
+    {
+      "cluster_id": "NGC 1261",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0841,
+      "new_value": 0.0017
+    },
+    {
+      "cluster_id": "NGC 1261",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.99,
+      "new_value": 0.68
+    },
+    {
+      "cluster_id": "NGC 1261",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0142,
+      "new_value": 0.0032
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 4.06
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 7.76
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.01,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.57,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.96,
+        "bv": 0.22,
+        "vr": null,
+        "vi": null
+      },
+      "new_value": {
+        "ub": null,
+        "bv": 0.96,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "structure.king_concentration",
+      "old_value": 0.46,
+      "new_value": 2.57
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "structure.log_rho0",
+      "old_value": 7.76,
+      "new_value": 3.51
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "structure.mu_v_central",
+      "old_value": 4.06,
+      "new_value": 20.93
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "structure.r_core_arcmin",
+      "old_value": 20.93,
+      "new_value": 0.01
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0676,
+      "new_value": 0.0
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.51,
+      "new_value": 0.46
+    },
+    {
+      "cluster_id": "Pal 1",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0113,
+      "new_value": 0.0015
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.96
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.61
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.17,
+      "new_value": null
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.36,
+      "new_value": null
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.72,
+        "bv": null,
+        "vr": null,
+        "vi": null
+      },
+      "new_value": {
+        "ub": null,
+        "bv": 0.72,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "photometry.ellipticity",
+      "old_value": 0.72,
+      "new_value": null
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "structure.king_concentration",
+      "old_value": 0.41,
+      "new_value": 1.36
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "structure.log_rho0",
+      "old_value": 9.61,
+      "new_value": 0.03
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "structure.mu_v_central",
+      "old_value": 8.96,
+      "new_value": 23.62
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "structure.r_core_arcmin",
+      "old_value": 23.62,
+      "new_value": 0.17
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.8472,
+      "new_value": 0.0061
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "structure.r_half_arcmin",
+      "old_value": 0.03,
+      "new_value": 0.41
+    },
+    {
+      "cluster_id": "AM 1",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0011,
+      "new_value": 0.0147
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.18
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.54
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.25,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.1,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.79,
+        "bv": null,
+        "vr": null,
+        "vi": null
+      },
+      "new_value": {
+        "ub": null,
+        "bv": 0.79,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "photometry.ellipticity",
+      "old_value": 0.79,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "structure.king_concentration",
+      "old_value": 0.46,
+      "new_value": 1.1
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "structure.log_rho0",
+      "old_value": 9.54,
+      "new_value": 0.38
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "structure.mu_v_central",
+      "old_value": 9.18,
+      "new_value": 22.81
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "structure.r_core_arcmin",
+      "old_value": 22.81,
+      "new_value": 0.25
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.5978,
+      "new_value": 0.0066
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "structure.r_half_arcmin",
+      "old_value": 0.38,
+      "new_value": 0.46
+    },
+    {
+      "cluster_id": "Eridanus",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.01,
+      "new_value": 0.0121
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.82
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.28
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.17,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.53,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 1.83,
+        "bv": 2.08,
+        "vr": 2.65,
+        "vi": 0.05
+      },
+      "new_value": {
+        "ub": 1.83,
+        "bv": 2.08,
+        "vr": null,
+        "vi": 2.65
+      }
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "structure.king_concentration",
+      "old_value": 0.5,
+      "new_value": 1.53
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "structure.log_rho0",
+      "old_value": 9.28,
+      "new_value": 4.06
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "structure.mu_v_central",
+      "old_value": 8.82,
+      "new_value": 19.06
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "structure.r_core_arcmin",
+      "old_value": 19.06,
+      "new_value": 0.17
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.1508,
+      "new_value": 0.0013
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.06,
+      "new_value": 0.5
+    },
+    {
+      "cluster_id": "Pal 2",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0321,
+      "new_value": 0.004
+    },
+    {
+      "cluster_id": "NGC 1904",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 15.9,
+        "y_kpc": -8.4,
+        "z_kpc": -6.4
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 1904",
+      "field": "distances.r_gc_kpc",
+      "old_value": 19.1,
+      "new_value": 18.8
+    },
+    {
+      "cluster_id": "NGC 1904",
+      "field": "distances.r_sun_kpc",
+      "old_value": 13.1,
+      "new_value": 12.9
+    },
+    {
+      "cluster_id": "NGC 1904",
+      "field": "distances.x_kpc",
+      "old_value": -7.75,
+      "new_value": -7.7
+    },
+    {
+      "cluster_id": "NGC 1904",
+      "field": "distances.y_kpc",
+      "old_value": -8.38,
+      "new_value": -8.3
+    },
+    {
+      "cluster_id": "NGC 1904",
+      "field": "distances.z_kpc",
+      "old_value": -6.42,
+      "new_value": -6.3
+    },
+    {
+      "cluster_id": "NGC 1904",
+      "field": "position.dec_dms",
+      "old_value": "11.09:-24:31",
+      "new_value": "-24:31:29.0"
+    },
+    {
+      "cluster_id": "NGC 1904",
+      "field": "position.ra_hms",
+      "old_value": "79:05:24",
+      "new_value": "05:24:11.09"
+    },
+    {
+      "cluster_id": "NGC 1904",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.0014,
+      "new_value": 0.0006
+    },
+    {
+      "cluster_id": "NGC 1904",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0055,
+      "new_value": 0.0024
+    },
+    {
+      "cluster_id": "NGC 2298",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.91
+    },
+    {
+      "cluster_id": "NGC 2298",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.84
+    },
+    {
+      "cluster_id": "NGC 2298",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.31,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 2298",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.38,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 2298",
+      "field": "structure.king_concentration",
+      "old_value": 0.98,
+      "new_value": 1.38
+    },
+    {
+      "cluster_id": "NGC 2298",
+      "field": "structure.log_rho0",
+      "old_value": 8.84,
+      "new_value": 2.9
+    },
+    {
+      "cluster_id": "NGC 2298",
+      "field": "structure.mu_v_central",
+      "old_value": 7.91,
+      "new_value": 18.9
+    },
+    {
+      "cluster_id": "NGC 2298",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.9,
+      "new_value": 0.31
+    },
+    {
+      "cluster_id": "NGC 2298",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0594,
+      "new_value": 0.001
+    },
+    {
+      "cluster_id": "NGC 2298",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.9,
+      "new_value": 0.98
+    },
+    {
+      "cluster_id": "NGC 2298",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0091,
+      "new_value": 0.0031
+    },
+    {
+      "cluster_id": "NGC 2419",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.07,
+        "bv": 0.66,
+        "vr": 1.05,
+        "vi": 0.03
+      },
+      "new_value": {
+        "ub": 0.07,
+        "bv": 0.66,
+        "vr": null,
+        "vi": 1.05
+      }
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 7.7
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 7.7,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 0.21,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.25,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "kinematics.v_r_kms",
+      "old_value": 0.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "metallicity.ebv",
+      "old_value": 18.6,
+      "new_value": 0.08
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "metallicity.feh",
+      "old_value": 0.0,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "photometry.dist_mod",
+      "old_value": 17.6,
+      "new_value": 17.95
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "photometry.m_v_t",
+      "old_value": null,
+      "new_value": -0.35
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "photometry.v_hb",
+      "old_value": 17.95,
+      "new_value": 18.6
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "photometry.v_t",
+      "old_value": -0.35,
+      "new_value": 17.6
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "structure.king_concentration",
+      "old_value": null,
+      "new_value": 0.5
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "structure.r_core_arcmin",
+      "old_value": null,
+      "new_value": 0.25
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "structure.r_core_kpc",
+      "old_value": null,
+      "new_value": 0.0025
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 0.21
+    },
+    {
+      "cluster_id": "Ko 2",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0021
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.93
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.8
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.84,
+      "new_value": null
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 23.1,
+      "new_value": null
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 2.1,
+      "new_value": null
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "kinematics.v_r_err",
+      "old_value": 1.87,
+      "new_value": null
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "kinematics.v_r_kms",
+      "old_value": 0.75,
+      "new_value": null
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "structure.king_concentration",
+      "old_value": 8.93,
+      "new_value": 0.75
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "structure.log_rho0",
+      "old_value": null,
+      "new_value": 0.84
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "structure.mu_v_central",
+      "old_value": null,
+      "new_value": 23.1
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "structure.r_core_arcmin",
+      "old_value": 8.8,
+      "new_value": 1.87
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0207,
+      "new_value": 0.0044
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 2.1
+    },
+    {
+      "cluster_id": "E 3",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0049
+    },
+    {
+      "cluster_id": "Pal 3",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.65
+    },
+    {
+      "cluster_id": "Pal 3",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.88
+    },
+    {
+      "cluster_id": "Pal 3",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.41,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 3",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.99,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 3",
+      "field": "structure.king_concentration",
+      "old_value": 0.65,
+      "new_value": 0.99
+    },
+    {
+      "cluster_id": "Pal 3",
+      "field": "structure.log_rho0",
+      "old_value": 9.88,
+      "new_value": 0.01
+    },
+    {
+      "cluster_id": "Pal 3",
+      "field": "structure.mu_v_central",
+      "old_value": 9.65,
+      "new_value": 23.26
+    },
+    {
+      "cluster_id": "Pal 3",
+      "field": "structure.r_core_arcmin",
+      "old_value": 23.26,
+      "new_value": 0.41
+    },
+    {
+      "cluster_id": "Pal 3",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.6259,
+      "new_value": 0.011
+    },
+    {
+      "cluster_id": "Pal 3",
+      "field": "structure.r_half_arcmin",
+      "old_value": 0.01,
+      "new_value": 0.65
+    },
+    {
+      "cluster_id": "Pal 3",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0003,
+      "new_value": 0.0175
+    },
+    {
+      "cluster_id": "Pal 4",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.72
+    },
+    {
+      "cluster_id": "Pal 4",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.42
+    },
+    {
+      "cluster_id": "Pal 4",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.33,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 4",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.93,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 4",
+      "field": "structure.king_concentration",
+      "old_value": 0.51,
+      "new_value": 0.93
+    },
+    {
+      "cluster_id": "Pal 4",
+      "field": "structure.log_rho0",
+      "old_value": 9.42,
+      "new_value": 0.11
+    },
+    {
+      "cluster_id": "Pal 4",
+      "field": "structure.mu_v_central",
+      "old_value": 9.72,
+      "new_value": 23.01
+    },
+    {
+      "cluster_id": "Pal 4",
+      "field": "structure.r_core_arcmin",
+      "old_value": 23.01,
+      "new_value": 0.33
+    },
+    {
+      "cluster_id": "Pal 4",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.7276,
+      "new_value": 0.0104
+    },
+    {
+      "cluster_id": "Pal 4",
+      "field": "structure.r_half_arcmin",
+      "old_value": 0.11,
+      "new_value": 0.51
+    },
+    {
+      "cluster_id": "Pal 4",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0035,
+      "new_value": 0.0161
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.62
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 8.62,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 0.26,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.33,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "kinematics.v_r_kms",
+      "old_value": 0.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "metallicity.ebv",
+      "old_value": 19.1,
+      "new_value": 0.01
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "metallicity.feh",
+      "old_value": 0.0,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "photometry.dist_mod",
+      "old_value": 17.1,
+      "new_value": 18.45
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "photometry.m_v_t",
+      "old_value": null,
+      "new_value": -1.35
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "photometry.v_hb",
+      "old_value": 18.45,
+      "new_value": 19.1
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "photometry.v_t",
+      "old_value": -1.35,
+      "new_value": 17.1
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "structure.king_concentration",
+      "old_value": null,
+      "new_value": 0.5
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "structure.r_core_arcmin",
+      "old_value": null,
+      "new_value": 0.33
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "structure.r_core_kpc",
+      "old_value": null,
+      "new_value": 0.0046
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 0.26
+    },
+    {
+      "cluster_id": "Ko 1",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0037
+    },
+    {
+      "cluster_id": "NGC 4372",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.88
+    },
+    {
+      "cluster_id": "NGC 4372",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.59
+    },
+    {
+      "cluster_id": "NGC 4372",
+      "field": "kinematics.sig_v_err",
+      "old_value": 1.75,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 4372",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.3,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 4372",
+      "field": "structure.king_concentration",
+      "old_value": 3.91,
+      "new_value": 1.3
+    },
+    {
+      "cluster_id": "NGC 4372",
+      "field": "structure.log_rho0",
+      "old_value": 9.59,
+      "new_value": 2.06
+    },
+    {
+      "cluster_id": "NGC 4372",
+      "field": "structure.mu_v_central",
+      "old_value": 8.88,
+      "new_value": 20.58
+    },
+    {
+      "cluster_id": "NGC 4372",
+      "field": "structure.r_core_arcmin",
+      "old_value": 20.58,
+      "new_value": 1.75
+    },
+    {
+      "cluster_id": "NGC 4372",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0347,
+      "new_value": 0.003
+    },
+    {
+      "cluster_id": "NGC 4372",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.06,
+      "new_value": 3.91
+    },
+    {
+      "cluster_id": "NGC 4372",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0035,
+      "new_value": 0.0066
+    },
+    {
+      "cluster_id": "Rup 106",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.41
+    },
+    {
+      "cluster_id": "Rup 106",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.34
+    },
+    {
+      "cluster_id": "Rup 106",
+      "field": "kinematics.sig_v_err",
+      "old_value": 1.0,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Rup 106",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.7,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Rup 106",
+      "field": "structure.king_concentration",
+      "old_value": 1.05,
+      "new_value": 0.7
+    },
+    {
+      "cluster_id": "Rup 106",
+      "field": "structure.log_rho0",
+      "old_value": 9.34,
+      "new_value": 1.1
+    },
+    {
+      "cluster_id": "Rup 106",
+      "field": "structure.mu_v_central",
+      "old_value": 9.41,
+      "new_value": 21.82
+    },
+    {
+      "cluster_id": "Rup 106",
+      "field": "structure.r_core_arcmin",
+      "old_value": 21.82,
+      "new_value": 1.0
+    },
+    {
+      "cluster_id": "Rup 106",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.1346,
+      "new_value": 0.0062
+    },
+    {
+      "cluster_id": "Rup 106",
+      "field": "structure.r_half_arcmin",
+      "old_value": 1.1,
+      "new_value": 1.05
+    },
+    {
+      "cluster_id": "Rup 106",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0068,
+      "new_value": 0.0065
+    },
+    {
+      "cluster_id": "NGC 4590",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 4.0,
+        "y_kpc": -7.3,
+        "z_kpc": 6.1
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 4590",
+      "field": "distances.r_gc_kpc",
+      "old_value": 10.4,
+      "new_value": 10.2
+    },
+    {
+      "cluster_id": "NGC 4590",
+      "field": "distances.r_sun_kpc",
+      "old_value": 10.4,
+      "new_value": 10.3
+    },
+    {
+      "cluster_id": "NGC 4590",
+      "field": "distances.x_kpc",
+      "old_value": 4.16,
+      "new_value": 4.1
+    },
+    {
+      "cluster_id": "NGC 4590",
+      "field": "distances.y_kpc",
+      "old_value": -7.31,
+      "new_value": -7.2
+    },
+    {
+      "cluster_id": "NGC 4590",
+      "field": "distances.z_kpc",
+      "old_value": 6.12,
+      "new_value": 6.0
+    },
+    {
+      "cluster_id": "NGC 4590",
+      "field": "position.dec_dms",
+      "old_value": "27.98:-26:44",
+      "new_value": "-26:44:38.6"
+    },
+    {
+      "cluster_id": "NGC 4590",
+      "field": "position.ra_hms",
+      "old_value": "68:12:39",
+      "new_value": "12:39:27.98"
+    },
+    {
+      "cluster_id": "NGC 4590",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0061,
+      "new_value": 0.0017
+    },
+    {
+      "cluster_id": "NGC 4590",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0158,
+      "new_value": 0.0045
+    },
+    {
+      "cluster_id": "NGC 4833",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.78
+    },
+    {
+      "cluster_id": "NGC 4833",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.42
+    },
+    {
+      "cluster_id": "NGC 4833",
+      "field": "kinematics.sig_v_err",
+      "old_value": 1.0,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 4833",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.25,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 4833",
+      "field": "structure.king_concentration",
+      "old_value": 2.41,
+      "new_value": 1.25
+    },
+    {
+      "cluster_id": "NGC 4833",
+      "field": "structure.log_rho0",
+      "old_value": 9.42,
+      "new_value": 3.0
+    },
+    {
+      "cluster_id": "NGC 4833",
+      "field": "structure.mu_v_central",
+      "old_value": 8.78,
+      "new_value": 18.48
+    },
+    {
+      "cluster_id": "NGC 4833",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.48,
+      "new_value": 1.0
+    },
+    {
+      "cluster_id": "NGC 4833",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0355,
+      "new_value": 0.0019
+    },
+    {
+      "cluster_id": "NGC 4833",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.0,
+      "new_value": 2.41
+    },
+    {
+      "cluster_id": "NGC 4833",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0058,
+      "new_value": 0.0046
+    },
+    {
+      "cluster_id": "NGC 5024",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 5.3,
+        "y_kpc": -1.5,
+        "z_kpc": 18.2
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 5024",
+      "field": "distances.r_gc_kpc",
+      "old_value": 19.0,
+      "new_value": 18.4
+    },
+    {
+      "cluster_id": "NGC 5024",
+      "field": "distances.r_sun_kpc",
+      "old_value": 18.5,
+      "new_value": 17.9
+    },
+    {
+      "cluster_id": "NGC 5024",
+      "field": "distances.x_kpc",
+      "old_value": 2.93,
+      "new_value": 2.8
+    },
+    {
+      "cluster_id": "NGC 5024",
+      "field": "distances.y_kpc",
+      "old_value": -1.5,
+      "new_value": -1.4
+    },
+    {
+      "cluster_id": "NGC 5024",
+      "field": "distances.z_kpc",
+      "old_value": 18.21,
+      "new_value": 17.6
+    },
+    {
+      "cluster_id": "NGC 5024",
+      "field": "position.dec_dms",
+      "old_value": "55.25:+18:10",
+      "new_value": "+18:10:05.4"
+    },
+    {
+      "cluster_id": "NGC 5024",
+      "field": "position.ra_hms",
+      "old_value": "53:13:12",
+      "new_value": "13:12:55.25"
+    },
+    {
+      "cluster_id": "NGC 5024",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0081,
+      "new_value": 0.0018
+    },
+    {
+      "cluster_id": "NGC 5024",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0304,
+      "new_value": 0.0068
+    },
+    {
+      "cluster_id": "NGC 5053",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.03,
+        "bv": 0.65,
+        "vr": 0.9,
+        "vi": 0.21
+      },
+      "new_value": {
+        "ub": 0.03,
+        "bv": 0.65,
+        "vr": null,
+        "vi": 0.9
+      }
+    },
+    {
+      "cluster_id": "NGC 5272",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 6.7,
+        "y_kpc": 1.3,
+        "z_kpc": 10.0
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 5272",
+      "field": "distances.r_gc_kpc",
+      "old_value": 12.1,
+      "new_value": 12.0
+    },
+    {
+      "cluster_id": "NGC 5272",
+      "field": "distances.x_kpc",
+      "old_value": 1.48,
+      "new_value": 1.5
+    },
+    {
+      "cluster_id": "NGC 5272",
+      "field": "distances.y_kpc",
+      "old_value": 1.34,
+      "new_value": 1.3
+    },
+    {
+      "cluster_id": "NGC 5272",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.09,
+        "bv": 0.69,
+        "vr": 0.93,
+        "vi": 0.04
+      },
+      "new_value": {
+        "ub": 0.09,
+        "bv": 0.69,
+        "vr": null,
+        "vi": 0.93
+      }
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.42
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.32
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "kinematics.sig_v_err",
+      "old_value": -0.05,
+      "new_value": null
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 24.75,
+      "new_value": null
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 0.43,
+      "new_value": null
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.41,
+      "new_value": null
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "kinematics.v_r_kms",
+      "old_value": 0.7,
+      "new_value": null
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "structure.king_concentration",
+      "old_value": 8.42,
+      "new_value": 0.7
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "structure.log_rho0",
+      "old_value": null,
+      "new_value": -0.05
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "structure.mu_v_central",
+      "old_value": null,
+      "new_value": 24.75
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "structure.r_core_arcmin",
+      "old_value": 8.32,
+      "new_value": 0.41
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0779,
+      "new_value": 0.0038
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 0.43
+    },
+    {
+      "cluster_id": "AM 4",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.004
+    },
+    {
+      "cluster_id": "NGC 5466",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.67,
+        "bv": 0.82,
+        "vr": 0.11,
+        "vi": null
+      },
+      "new_value": {
+        "ub": null,
+        "bv": 0.67,
+        "vr": null,
+        "vi": 0.82
+      }
+    },
+    {
+      "cluster_id": "NGC 5634",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.67
+    },
+    {
+      "cluster_id": "NGC 5634",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.54
+    },
+    {
+      "cluster_id": "NGC 5634",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.09,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 5634",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.07,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 5634",
+      "field": "structure.king_concentration",
+      "old_value": 0.86,
+      "new_value": 2.07
+    },
+    {
+      "cluster_id": "NGC 5634",
+      "field": "structure.log_rho0",
+      "old_value": 9.54,
+      "new_value": 3.63
+    },
+    {
+      "cluster_id": "NGC 5634",
+      "field": "structure.mu_v_central",
+      "old_value": 7.67,
+      "new_value": 17.2
+    },
+    {
+      "cluster_id": "NGC 5634",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.2,
+      "new_value": 0.09
+    },
+    {
+      "cluster_id": "NGC 5634",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.1261,
+      "new_value": 0.0007
+    },
+    {
+      "cluster_id": "NGC 5634",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.63,
+      "new_value": 0.86
+    },
+    {
+      "cluster_id": "NGC 5634",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0266,
+      "new_value": 0.0063
+    },
+    {
+      "cluster_id": "IC 4499",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.45,
+        "bv": 0.91,
+        "vr": 0.08,
+        "vi": null
+      },
+      "new_value": {
+        "ub": 0.45,
+        "bv": 0.91,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "NGC 5897",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.33
+    },
+    {
+      "cluster_id": "NGC 5897",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.57
+    },
+    {
+      "cluster_id": "NGC 5897",
+      "field": "kinematics.sig_v_err",
+      "old_value": 1.4,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 5897",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.86,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 5897",
+      "field": "structure.king_concentration",
+      "old_value": 2.06,
+      "new_value": 0.86
+    },
+    {
+      "cluster_id": "NGC 5897",
+      "field": "structure.log_rho0",
+      "old_value": 9.57,
+      "new_value": 1.53
+    },
+    {
+      "cluster_id": "NGC 5897",
+      "field": "structure.mu_v_central",
+      "old_value": 9.33,
+      "new_value": 20.53
+    },
+    {
+      "cluster_id": "NGC 5897",
+      "field": "structure.r_core_arcmin",
+      "old_value": 20.53,
+      "new_value": 1.4
+    },
+    {
+      "cluster_id": "NGC 5897",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0746,
+      "new_value": 0.0051
+    },
+    {
+      "cluster_id": "NGC 5897",
+      "field": "structure.r_half_arcmin",
+      "old_value": 1.53,
+      "new_value": 2.06
+    },
+    {
+      "cluster_id": "NGC 5897",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0056,
+      "new_value": 0.0075
+    },
+    {
+      "cluster_id": "NGC 5904",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 3.1,
+        "y_kpc": 0.3,
+        "z_kpc": 5.5
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 5904",
+      "field": "distances.r_gc_kpc",
+      "old_value": 6.3,
+      "new_value": 6.2
+    },
+    {
+      "cluster_id": "NGC 5904",
+      "field": "distances.x_kpc",
+      "old_value": 5.12,
+      "new_value": 5.1
+    },
+    {
+      "cluster_id": "NGC 5904",
+      "field": "distances.y_kpc",
+      "old_value": 0.35,
+      "new_value": 0.3
+    },
+    {
+      "cluster_id": "NGC 5904",
+      "field": "distances.z_kpc",
+      "old_value": 5.47,
+      "new_value": 5.5
+    },
+    {
+      "cluster_id": "NGC 5927",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.39
+    },
+    {
+      "cluster_id": "NGC 5927",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.94
+    },
+    {
+      "cluster_id": "NGC 5927",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.42,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 5927",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.6,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 5927",
+      "field": "structure.king_concentration",
+      "old_value": 1.1,
+      "new_value": 1.6
+    },
+    {
+      "cluster_id": "NGC 5927",
+      "field": "structure.log_rho0",
+      "old_value": 8.94,
+      "new_value": 4.09
+    },
+    {
+      "cluster_id": "NGC 5927",
+      "field": "structure.mu_v_central",
+      "old_value": 8.39,
+      "new_value": 16.91
+    },
+    {
+      "cluster_id": "NGC 5927",
+      "field": "structure.r_core_arcmin",
+      "old_value": 16.91,
+      "new_value": 0.42
+    },
+    {
+      "cluster_id": "NGC 5927",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0379,
+      "new_value": 0.0009
+    },
+    {
+      "cluster_id": "NGC 5927",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.09,
+      "new_value": 1.1
+    },
+    {
+      "cluster_id": "NGC 5927",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0092,
+      "new_value": 0.0025
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.14
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.79
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.97,
+      "new_value": null
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 23.36,
+      "new_value": null
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 0.9,
+      "new_value": null
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.9,
+      "new_value": null
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "kinematics.v_r_kms",
+      "old_value": 0.85,
+      "new_value": null
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "structure.king_concentration",
+      "old_value": 9.14,
+      "new_value": 0.85
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "structure.log_rho0",
+      "old_value": null,
+      "new_value": 0.97
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "structure.mu_v_central",
+      "old_value": null,
+      "new_value": 23.36
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "structure.r_core_arcmin",
+      "old_value": 8.79,
+      "new_value": 0.9
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0483,
+      "new_value": 0.0049
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 0.9
+    },
+    {
+      "cluster_id": "BH 176",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0049
+    },
+    {
+      "cluster_id": "NGC 5986",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.58
+    },
+    {
+      "cluster_id": "NGC 5986",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.18
+    },
+    {
+      "cluster_id": "NGC 5986",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.47,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 5986",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.23,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 5986",
+      "field": "structure.king_concentration",
+      "old_value": 0.98,
+      "new_value": 1.23
+    },
+    {
+      "cluster_id": "NGC 5986",
+      "field": "structure.log_rho0",
+      "old_value": 9.18,
+      "new_value": 3.41
+    },
+    {
+      "cluster_id": "NGC 5986",
+      "field": "structure.mu_v_central",
+      "old_value": 8.58,
+      "new_value": 17.67
+    },
+    {
+      "cluster_id": "NGC 5986",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.67,
+      "new_value": 0.47
+    },
+    {
+      "cluster_id": "NGC 5986",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0535,
+      "new_value": 0.0014
+    },
+    {
+      "cluster_id": "NGC 5986",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.41,
+      "new_value": 0.98
+    },
+    {
+      "cluster_id": "NGC 5986",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0103,
+      "new_value": 0.003
+    },
+    {
+      "cluster_id": "Lynga 7",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.83
+    },
+    {
+      "cluster_id": "Lynga 7",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.9,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Lynga 7",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.95,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Lynga 7",
+      "field": "structure.king_concentration",
+      "old_value": 1.2,
+      "new_value": 0.95
+    },
+    {
+      "cluster_id": "Lynga 7",
+      "field": "structure.r_core_arcmin",
+      "old_value": 8.83,
+      "new_value": 0.9
+    },
+    {
+      "cluster_id": "Lynga 7",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0205,
+      "new_value": 0.0021
+    },
+    {
+      "cluster_id": "Lynga 7",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 1.2
+    },
+    {
+      "cluster_id": "Lynga 7",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0028
+    },
+    {
+      "cluster_id": "NGC 6093",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": -1.5,
+        "y_kpc": -1.2,
+        "z_kpc": 3.4
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6093",
+      "field": "distances.r_gc_kpc",
+      "old_value": 4.0,
+      "new_value": 3.8
+    },
+    {
+      "cluster_id": "NGC 6093",
+      "field": "distances.r_sun_kpc",
+      "old_value": 10.3,
+      "new_value": 10.0
+    },
+    {
+      "cluster_id": "NGC 6093",
+      "field": "distances.x_kpc",
+      "old_value": 9.63,
+      "new_value": 9.4
+    },
+    {
+      "cluster_id": "NGC 6093",
+      "field": "distances.y_kpc",
+      "old_value": -1.24,
+      "new_value": -1.2
+    },
+    {
+      "cluster_id": "NGC 6093",
+      "field": "distances.z_kpc",
+      "old_value": 3.43,
+      "new_value": 3.3
+    },
+    {
+      "cluster_id": "NGC 6093",
+      "field": "position.dec_dms",
+      "old_value": "02.41:-22:58",
+      "new_value": "-22:58:33.9"
+    },
+    {
+      "cluster_id": "NGC 6093",
+      "field": "position.ra_hms",
+      "old_value": "80:16:17",
+      "new_value": "16:17:02.41"
+    },
+    {
+      "cluster_id": "NGC 6093",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0008,
+      "new_value": 0.0004
+    },
+    {
+      "cluster_id": "NGC 6093",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0035,
+      "new_value": 0.0018
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.21
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.22
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.97,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.8,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.06,
+        "bv": 0.68,
+        "vr": 0.5,
+        "vi": 0.05
+      },
+      "new_value": {
+        "ub": 0.06,
+        "bv": 0.68,
+        "vr": 0.5,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "structure.king_concentration",
+      "old_value": 1.05,
+      "new_value": 0.8
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "structure.log_rho0",
+      "old_value": 9.22,
+      "new_value": 1.65
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "structure.mu_v_central",
+      "old_value": 9.21,
+      "new_value": 20.29
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "structure.r_core_arcmin",
+      "old_value": 20.29,
+      "new_value": 0.97
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0909,
+      "new_value": 0.0043
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "structure.r_half_arcmin",
+      "old_value": 1.65,
+      "new_value": 1.05
+    },
+    {
+      "cluster_id": "NGC 6101",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0074,
+      "new_value": 0.0047
+    },
+    {
+      "cluster_id": "NGC 6144",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.78
+    },
+    {
+      "cluster_id": "NGC 6144",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.14
+    },
+    {
+      "cluster_id": "NGC 6144",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.94,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6144",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.55,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6144",
+      "field": "structure.king_concentration",
+      "old_value": 1.63,
+      "new_value": 1.55
+    },
+    {
+      "cluster_id": "NGC 6144",
+      "field": "structure.log_rho0",
+      "old_value": 9.14,
+      "new_value": 2.31
+    },
+    {
+      "cluster_id": "NGC 6144",
+      "field": "structure.mu_v_central",
+      "old_value": 8.78,
+      "new_value": 20.05
+    },
+    {
+      "cluster_id": "NGC 6144",
+      "field": "structure.r_core_arcmin",
+      "old_value": 20.05,
+      "new_value": 0.94
+    },
+    {
+      "cluster_id": "NGC 6144",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0519,
+      "new_value": 0.0024
+    },
+    {
+      "cluster_id": "NGC 6144",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.31,
+      "new_value": 1.63
+    },
+    {
+      "cluster_id": "NGC 6144",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.006,
+      "new_value": 0.0042
+    },
+    {
+      "cluster_id": "NGC 6139",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.66
+    },
+    {
+      "cluster_id": "NGC 6139",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.05
+    },
+    {
+      "cluster_id": "NGC 6139",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.15,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6139",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.86,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6139",
+      "field": "structure.king_concentration",
+      "old_value": 0.85,
+      "new_value": 1.86
+    },
+    {
+      "cluster_id": "NGC 6139",
+      "field": "structure.log_rho0",
+      "old_value": 9.05,
+      "new_value": 4.67
+    },
+    {
+      "cluster_id": "NGC 6139",
+      "field": "structure.mu_v_central",
+      "old_value": 7.66,
+      "new_value": 17.2
+    },
+    {
+      "cluster_id": "NGC 6139",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.2,
+      "new_value": 0.15
+    },
+    {
+      "cluster_id": "NGC 6139",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0505,
+      "new_value": 0.0004
+    },
+    {
+      "cluster_id": "NGC 6139",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.67,
+      "new_value": 0.85
+    },
+    {
+      "cluster_id": "NGC 6139",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0137,
+      "new_value": 0.0025
+    },
+    {
+      "cluster_id": "Terzan 3",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.79
+    },
+    {
+      "cluster_id": "Terzan 3",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.57
+    },
+    {
+      "cluster_id": "Terzan 3",
+      "field": "kinematics.sig_v_err",
+      "old_value": 1.18,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 3",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.7,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 3",
+      "field": "structure.king_concentration",
+      "old_value": 1.25,
+      "new_value": 0.7
+    },
+    {
+      "cluster_id": "Terzan 3",
+      "field": "structure.log_rho0",
+      "old_value": 8.57,
+      "new_value": 1.82
+    },
+    {
+      "cluster_id": "Terzan 3",
+      "field": "structure.mu_v_central",
+      "old_value": 8.79,
+      "new_value": 22.52
+    },
+    {
+      "cluster_id": "Terzan 3",
+      "field": "structure.r_core_arcmin",
+      "old_value": 22.52,
+      "new_value": 1.18
+    },
+    {
+      "cluster_id": "Terzan 3",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0537,
+      "new_value": 0.0028
+    },
+    {
+      "cluster_id": "Terzan 3",
+      "field": "structure.r_half_arcmin",
+      "old_value": 1.82,
+      "new_value": 1.25
+    },
+    {
+      "cluster_id": "Terzan 3",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0043,
+      "new_value": 0.003
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.07
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 7.87
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "kinematics.sig_v_err",
+      "old_value": 2.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 20.75,
+      "new_value": null
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 0.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "kinematics.v_r_kms",
+      "old_value": 1.0,
+      "new_value": null
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "structure.king_concentration",
+      "old_value": 8.07,
+      "new_value": 1.0
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "structure.log_rho0",
+      "old_value": null,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "structure.mu_v_central",
+      "old_value": null,
+      "new_value": 20.75
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "structure.r_core_arcmin",
+      "old_value": 7.87,
+      "new_value": 0.5
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.019,
+      "new_value": 0.0012
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 0.5
+    },
+    {
+      "cluster_id": "1636-283",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0012
+    },
+    {
+      "cluster_id": "NGC 6205",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 5.3,
+        "y_kpc": 4.8,
+        "z_kpc": 4.9
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6205",
+      "field": "distances.r_gc_kpc",
+      "old_value": 8.6,
+      "new_value": 8.4
+    },
+    {
+      "cluster_id": "NGC 6205",
+      "field": "distances.r_sun_kpc",
+      "old_value": 7.4,
+      "new_value": 7.1
+    },
+    {
+      "cluster_id": "NGC 6205",
+      "field": "distances.x_kpc",
+      "old_value": 2.88,
+      "new_value": 2.8
+    },
+    {
+      "cluster_id": "NGC 6205",
+      "field": "distances.y_kpc",
+      "old_value": 4.79,
+      "new_value": 4.6
+    },
+    {
+      "cluster_id": "NGC 6205",
+      "field": "distances.z_kpc",
+      "old_value": 4.85,
+      "new_value": 4.7
+    },
+    {
+      "cluster_id": "NGC 6205",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": -0.02,
+        "bv": 0.68,
+        "vr": 0.86,
+        "vi": 0.11
+      },
+      "new_value": {
+        "ub": -0.02,
+        "bv": 0.68,
+        "vr": null,
+        "vi": 0.86
+      }
+    },
+    {
+      "cluster_id": "NGC 6205",
+      "field": "position.dec_dms",
+      "old_value": "41.24:+36:27",
+      "new_value": "+36:27:35.5"
+    },
+    {
+      "cluster_id": "NGC 6205",
+      "field": "position.ra_hms",
+      "old_value": "13:16:41",
+      "new_value": "16:41:41.24"
+    },
+    {
+      "cluster_id": "NGC 6205",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0074,
+      "new_value": 0.0013
+    },
+    {
+      "cluster_id": "NGC 6205",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0201,
+      "new_value": 0.0035
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.3
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.15
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.12,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": -0.03,
+        "bv": 0.7,
+        "vr": 1.01,
+        "vi": 0.05
+      },
+      "new_value": {
+        "ub": -0.03,
+        "bv": 0.7,
+        "vr": null,
+        "vi": 1.01
+      }
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "structure.king_concentration",
+      "old_value": 0.36,
+      "new_value": 1.5
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "structure.log_rho0",
+      "old_value": 9.15,
+      "new_value": 3.54
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "structure.mu_v_central",
+      "old_value": 8.3,
+      "new_value": 16.77
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "structure.r_core_arcmin",
+      "old_value": 16.77,
+      "new_value": 0.12
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.1488,
+      "new_value": 0.0011
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.54,
+      "new_value": 0.36
+    },
+    {
+      "cluster_id": "NGC 6229",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0314,
+      "new_value": 0.0032
+    },
+    {
+      "cluster_id": "NGC 6218",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 3.8,
+        "y_kpc": 1.2,
+        "z_kpc": 2.3
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6218",
+      "field": "distances.r_gc_kpc",
+      "old_value": 4.6,
+      "new_value": 4.5
+    },
+    {
+      "cluster_id": "NGC 6218",
+      "field": "distances.r_sun_kpc",
+      "old_value": 5.1,
+      "new_value": 4.8
+    },
+    {
+      "cluster_id": "NGC 6218",
+      "field": "distances.x_kpc",
+      "old_value": 4.4,
+      "new_value": 4.2
+    },
+    {
+      "cluster_id": "NGC 6218",
+      "field": "distances.y_kpc",
+      "old_value": 1.24,
+      "new_value": 1.2
+    },
+    {
+      "cluster_id": "NGC 6218",
+      "field": "distances.z_kpc",
+      "old_value": 2.26,
+      "new_value": 2.1
+    },
+    {
+      "cluster_id": "NGC 6218",
+      "field": "position.dec_dms",
+      "old_value": "14.18:-01:56",
+      "new_value": "-01:56:54.7"
+    },
+    {
+      "cluster_id": "NGC 6218",
+      "field": "position.ra_hms",
+      "old_value": "12:16:47",
+      "new_value": "16:47:14.18"
+    },
+    {
+      "cluster_id": "NGC 6218",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.006,
+      "new_value": 0.0011
+    },
+    {
+      "cluster_id": "NGC 6218",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0135,
+      "new_value": 0.0025
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.11
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 8.11,
+      "new_value": null
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 0.34,
+      "new_value": null
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.39,
+      "new_value": null
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "kinematics.v_r_kms",
+      "old_value": 0.56,
+      "new_value": null
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "metallicity.ebv",
+      "old_value": 20.0,
+      "new_value": 1.42
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "metallicity.feh",
+      "old_value": 0.0,
+      "new_value": null
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "metallicity.feh_weight",
+      "old_value": 1,
+      "new_value": 0
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "photometry.dist_mod",
+      "old_value": 12.9,
+      "new_value": 19.35
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "photometry.m_v_t",
+      "old_value": null,
+      "new_value": -6.45
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "photometry.v_hb",
+      "old_value": 19.35,
+      "new_value": 20.0
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "photometry.v_t",
+      "old_value": -6.45,
+      "new_value": 12.9
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "structure.king_concentration",
+      "old_value": null,
+      "new_value": 0.56
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "structure.r_core_arcmin",
+      "old_value": null,
+      "new_value": 0.39
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "structure.r_core_kpc",
+      "old_value": null,
+      "new_value": 0.0011
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 0.34
+    },
+    {
+      "cluster_id": "FSR 1735",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.001
+    },
+    {
+      "cluster_id": "NGC 6235",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.08
+    },
+    {
+      "cluster_id": "NGC 6235",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.89
+    },
+    {
+      "cluster_id": "NGC 6235",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.33,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6235",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.53,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6235",
+      "field": "structure.king_concentration",
+      "old_value": 1.0,
+      "new_value": 1.53
+    },
+    {
+      "cluster_id": "NGC 6235",
+      "field": "structure.log_rho0",
+      "old_value": 8.89,
+      "new_value": 2.97
+    },
+    {
+      "cluster_id": "NGC 6235",
+      "field": "structure.mu_v_central",
+      "old_value": 8.08,
+      "new_value": 19.12
+    },
+    {
+      "cluster_id": "NGC 6235",
+      "field": "structure.r_core_arcmin",
+      "old_value": 19.12,
+      "new_value": 0.33
+    },
+    {
+      "cluster_id": "NGC 6235",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.064,
+      "new_value": 0.0011
+    },
+    {
+      "cluster_id": "NGC 6235",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.97,
+      "new_value": 1.0
+    },
+    {
+      "cluster_id": "NGC 6235",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0099,
+      "new_value": 0.0033
+    },
+    {
+      "cluster_id": "NGC 6254",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 3.68,
+        "y_kpc": 1.22,
+        "z_kpc": 1.99
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6254",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": 23.08,
+        "r_gc_kpc": 4.4,
+        "x_kpc": 4.6,
+        "y_kpc": 3.9,
+        "z_kpc": 1.1
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6254",
+      "field": "distances.r_gc_kpc",
+      "old_value": 4.35,
+      "new_value": 4.6
+    },
+    {
+      "cluster_id": "NGC 6254",
+      "field": "distances.r_sun_kpc",
+      "old_value": 5.07,
+      "new_value": 4.4
+    },
+    {
+      "cluster_id": "NGC 6254",
+      "field": "distances.x_kpc",
+      "old_value": 4.5,
+      "new_value": 3.9
+    },
+    {
+      "cluster_id": "NGC 6254",
+      "field": "distances.y_kpc",
+      "old_value": 1.22,
+      "new_value": 1.1
+    },
+    {
+      "cluster_id": "NGC 6254",
+      "field": "distances.z_kpc",
+      "old_value": 1.99,
+      "new_value": 1.7
+    },
+    {
+      "cluster_id": "NGC 6254",
+      "field": "position.dec_dms",
+      "old_value": "09.05:-04:06",
+      "new_value": "-04:06:01.1"
+    },
+    {
+      "cluster_id": "NGC 6254",
+      "field": "position.ra_hms",
+      "old_value": "10:16:57",
+      "new_value": "16:57:09.05"
+    },
+    {
+      "cluster_id": "NGC 6254",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0052,
+      "new_value": 0.001
+    },
+    {
+      "cluster_id": "NGC 6254",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0131,
+      "new_value": 0.0025
+    },
+    {
+      "cluster_id": "NGC 6256",
+      "field": "photometry.ellipticity",
+      "old_value": 1.69,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 15",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.99
+    },
+    {
+      "cluster_id": "Pal 15",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.72
+    },
+    {
+      "cluster_id": "Pal 15",
+      "field": "kinematics.sig_v_err",
+      "old_value": 1.2,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 15",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.6,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 15",
+      "field": "structure.king_concentration",
+      "old_value": 1.1,
+      "new_value": 0.6
+    },
+    {
+      "cluster_id": "Pal 15",
+      "field": "structure.log_rho0",
+      "old_value": 9.72,
+      "new_value": -0.25
+    },
+    {
+      "cluster_id": "Pal 15",
+      "field": "structure.mu_v_central",
+      "old_value": 9.99,
+      "new_value": 24.87
+    },
+    {
+      "cluster_id": "Pal 15",
+      "field": "structure.r_core_arcmin",
+      "old_value": 24.87,
+      "new_value": 1.2
+    },
+    {
+      "cluster_id": "Pal 15",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.3263,
+      "new_value": 0.0157
+    },
+    {
+      "cluster_id": "Pal 15",
+      "field": "structure.r_half_arcmin",
+      "old_value": -0.25,
+      "new_value": 1.1
+    },
+    {
+      "cluster_id": "Pal 15",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0033,
+      "new_value": 0.0144
+    },
+    {
+      "cluster_id": "NGC 6266",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 2.2,
+        "y_kpc": -0.7,
+        "z_kpc": 0.8
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6266",
+      "field": "distances.r_gc_kpc",
+      "old_value": 2.5,
+      "new_value": 1.7
+    },
+    {
+      "cluster_id": "NGC 6266",
+      "field": "distances.r_sun_kpc",
+      "old_value": 6.0,
+      "new_value": 6.8
+    },
+    {
+      "cluster_id": "NGC 6266",
+      "field": "distances.x_kpc",
+      "old_value": 5.91,
+      "new_value": 6.7
+    },
+    {
+      "cluster_id": "NGC 6266",
+      "field": "distances.y_kpc",
+      "old_value": -0.67,
+      "new_value": -0.8
+    },
+    {
+      "cluster_id": "NGC 6266",
+      "field": "distances.z_kpc",
+      "old_value": 0.76,
+      "new_value": 0.9
+    },
+    {
+      "cluster_id": "NGC 6266",
+      "field": "flags.inner_galaxy",
+      "old_value": false,
+      "new_value": true
+    },
+    {
+      "cluster_id": "NGC 6266",
+      "field": "position.dec_dms",
+      "old_value": "12.80:-30:06",
+      "new_value": "-30:06:49.4"
+    },
+    {
+      "cluster_id": "NGC 6266",
+      "field": "position.ra_hms",
+      "old_value": "62:17:01",
+      "new_value": "17:01:12.80"
+    },
+    {
+      "cluster_id": "NGC 6266",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0005,
+      "new_value": 0.0004
+    },
+    {
+      "cluster_id": "NGC 6266",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.002,
+      "new_value": 0.0018
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": -0.0,
+        "y_kpc": -0.5,
+        "z_kpc": 1.4
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "distances.r_gc_kpc",
+      "old_value": 1.4,
+      "new_value": 1.7
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "distances.r_sun_kpc",
+      "old_value": 8.3,
+      "new_value": 8.8
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "distances.x_kpc",
+      "old_value": 8.18,
+      "new_value": 8.7
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "distances.y_kpc",
+      "old_value": -0.45,
+      "new_value": -0.5
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "distances.z_kpc",
+      "old_value": 1.35,
+      "new_value": 1.4
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.52
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.38
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "flags.inner_galaxy",
+      "old_value": false,
+      "new_value": true
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.43,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.53,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "position.dec_dms",
+      "old_value": "37.80:-26:16",
+      "new_value": "-26:16:04.7"
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "position.ra_hms",
+      "old_value": "19:17:02",
+      "new_value": "17:02:37.80"
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "structure.king_concentration",
+      "old_value": 1.32,
+      "new_value": 1.53
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "structure.log_rho0",
+      "old_value": 9.38,
+      "new_value": 3.98
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "structure.mu_v_central",
+      "old_value": 8.52,
+      "new_value": 16.77
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "structure.r_core_arcmin",
+      "old_value": 16.77,
+      "new_value": 0.43
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0458,
+      "new_value": 0.0011
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.98,
+      "new_value": 1.32
+    },
+    {
+      "cluster_id": "NGC 6273",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0109,
+      "new_value": 0.0034
+    },
+    {
+      "cluster_id": "NGC 6287",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.06
+    },
+    {
+      "cluster_id": "NGC 6287",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.75
+    },
+    {
+      "cluster_id": "NGC 6287",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.29,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6287",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.38,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6287",
+      "field": "structure.king_concentration",
+      "old_value": 0.74,
+      "new_value": 1.38
+    },
+    {
+      "cluster_id": "NGC 6287",
+      "field": "structure.log_rho0",
+      "old_value": 8.75,
+      "new_value": 3.78
+    },
+    {
+      "cluster_id": "NGC 6287",
+      "field": "structure.mu_v_central",
+      "old_value": 8.06,
+      "new_value": 18.32
+    },
+    {
+      "cluster_id": "NGC 6287",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.32,
+      "new_value": 0.29
+    },
+    {
+      "cluster_id": "NGC 6287",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0501,
+      "new_value": 0.0008
+    },
+    {
+      "cluster_id": "NGC 6287",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.78,
+      "new_value": 0.74
+    },
+    {
+      "cluster_id": "NGC 6287",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0103,
+      "new_value": 0.002
+    },
+    {
+      "cluster_id": "NGC 6304",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.36
+    },
+    {
+      "cluster_id": "NGC 6304",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.85
+    },
+    {
+      "cluster_id": "NGC 6304",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.21,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6304",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.8,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6304",
+      "field": "structure.king_concentration",
+      "old_value": 1.42,
+      "new_value": 1.8
+    },
+    {
+      "cluster_id": "NGC 6304",
+      "field": "structure.log_rho0",
+      "old_value": 8.85,
+      "new_value": 4.49
+    },
+    {
+      "cluster_id": "NGC 6304",
+      "field": "structure.mu_v_central",
+      "old_value": 7.36,
+      "new_value": 17.2
+    },
+    {
+      "cluster_id": "NGC 6304",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.2,
+      "new_value": 0.21
+    },
+    {
+      "cluster_id": "NGC 6304",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0295,
+      "new_value": 0.0004
+    },
+    {
+      "cluster_id": "NGC 6304",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.49,
+      "new_value": 1.42
+    },
+    {
+      "cluster_id": "NGC 6304",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0077,
+      "new_value": 0.0024
+    },
+    {
+      "cluster_id": "NGC 6316",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.71
+    },
+    {
+      "cluster_id": "NGC 6316",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.89
+    },
+    {
+      "cluster_id": "NGC 6316",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.17,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6316",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.65,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6316",
+      "field": "structure.king_concentration",
+      "old_value": 0.65,
+      "new_value": 1.65
+    },
+    {
+      "cluster_id": "NGC 6316",
+      "field": "structure.log_rho0",
+      "old_value": 8.89,
+      "new_value": 4.23
+    },
+    {
+      "cluster_id": "NGC 6316",
+      "field": "structure.mu_v_central",
+      "old_value": 7.71,
+      "new_value": 17.44
+    },
+    {
+      "cluster_id": "NGC 6316",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.44,
+      "new_value": 0.17
+    },
+    {
+      "cluster_id": "NGC 6316",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0528,
+      "new_value": 0.0005
+    },
+    {
+      "cluster_id": "NGC 6316",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.23,
+      "new_value": 0.65
+    },
+    {
+      "cluster_id": "NGC 6316",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0128,
+      "new_value": 0.002
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 5.6,
+        "y_kpc": 6.48,
+        "z_kpc": 4.86
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": 34.86,
+        "r_gc_kpc": 8.3,
+        "x_kpc": 9.6,
+        "y_kpc": 2.5,
+        "z_kpc": 6.3
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "distances.r_gc_kpc",
+      "old_value": 9.85,
+      "new_value": 9.6
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "distances.r_sun_kpc",
+      "old_value": 8.5,
+      "new_value": 8.3
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "distances.x_kpc",
+      "old_value": 2.57,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "distances.y_kpc",
+      "old_value": 6.48,
+      "new_value": 6.3
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "distances.z_kpc",
+      "old_value": 4.86,
+      "new_value": 4.7
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.01,
+        "bv": 0.63,
+        "vr": 0.88,
+        "vi": 0.1
+      },
+      "new_value": {
+        "ub": 0.01,
+        "bv": 0.63,
+        "vr": null,
+        "vi": 0.88
+      }
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "position.dec_dms",
+      "old_value": "07.39:+43:08",
+      "new_value": "+43:08:09.4"
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "position.ra_hms",
+      "old_value": "92:17:17",
+      "new_value": "17:17:07.39"
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0026,
+      "new_value": 0.0006
+    },
+    {
+      "cluster_id": "NGC 6341",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0103,
+      "new_value": 0.0025
+    },
+    {
+      "cluster_id": "NGC 6325",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.85,
+        "bv": 1.66,
+        "vr": 2.15,
+        "vi": 0.12
+      },
+      "new_value": {
+        "ub": 0.85,
+        "bv": 1.66,
+        "vr": null,
+        "vi": 2.15
+      }
+    },
+    {
+      "cluster_id": "NGC 6333",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.36
+    },
+    {
+      "cluster_id": "NGC 6333",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.9
+    },
+    {
+      "cluster_id": "NGC 6333",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.45,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6333",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.25,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6333",
+      "field": "structure.king_concentration",
+      "old_value": 0.96,
+      "new_value": 1.25
+    },
+    {
+      "cluster_id": "NGC 6333",
+      "field": "structure.log_rho0",
+      "old_value": 8.9,
+      "new_value": 3.78
+    },
+    {
+      "cluster_id": "NGC 6333",
+      "field": "structure.mu_v_central",
+      "old_value": 8.36,
+      "new_value": 17.39
+    },
+    {
+      "cluster_id": "NGC 6333",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.39,
+      "new_value": 0.45
+    },
+    {
+      "cluster_id": "NGC 6333",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.04,
+      "new_value": 0.001
+    },
+    {
+      "cluster_id": "NGC 6333",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.78,
+      "new_value": 0.96
+    },
+    {
+      "cluster_id": "NGC 6333",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0087,
+      "new_value": 0.0022
+    },
+    {
+      "cluster_id": "NGC 6356",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.37
+    },
+    {
+      "cluster_id": "NGC 6356",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.3
+    },
+    {
+      "cluster_id": "NGC 6356",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.24,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6356",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.59,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6356",
+      "field": "structure.king_concentration",
+      "old_value": 0.81,
+      "new_value": 1.59
+    },
+    {
+      "cluster_id": "NGC 6356",
+      "field": "structure.log_rho0",
+      "old_value": 9.3,
+      "new_value": 3.78
+    },
+    {
+      "cluster_id": "NGC 6356",
+      "field": "structure.mu_v_central",
+      "old_value": 8.37,
+      "new_value": 17.02
+    },
+    {
+      "cluster_id": "NGC 6356",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.02,
+      "new_value": 0.24
+    },
+    {
+      "cluster_id": "NGC 6356",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0748,
+      "new_value": 0.0011
+    },
+    {
+      "cluster_id": "NGC 6356",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.78,
+      "new_value": 0.81
+    },
+    {
+      "cluster_id": "NGC 6356",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0166,
+      "new_value": 0.0036
+    },
+    {
+      "cluster_id": "NGC 6355",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 6.27
+    },
+    {
+      "cluster_id": "NGC 6355",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.96
+    },
+    {
+      "cluster_id": "NGC 6355",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.05,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6355",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6355",
+      "field": "structure.king_concentration",
+      "old_value": 0.88,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "NGC 6355",
+      "field": "structure.log_rho0",
+      "old_value": 8.96,
+      "new_value": 5.04
+    },
+    {
+      "cluster_id": "NGC 6355",
+      "field": "structure.mu_v_central",
+      "old_value": 6.27,
+      "new_value": 17.64
+    },
+    {
+      "cluster_id": "NGC 6355",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.64,
+      "new_value": 0.05
+    },
+    {
+      "cluster_id": "NGC 6355",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0472,
+      "new_value": 0.0001
+    },
+    {
+      "cluster_id": "NGC 6355",
+      "field": "structure.r_half_arcmin",
+      "old_value": 5.04,
+      "new_value": 0.88
+    },
+    {
+      "cluster_id": "NGC 6355",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0135,
+      "new_value": 0.0024
+    },
+    {
+      "cluster_id": "NGC 6352",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.46
+    },
+    {
+      "cluster_id": "NGC 6352",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.92
+    },
+    {
+      "cluster_id": "NGC 6352",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.83,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6352",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.1,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6352",
+      "field": "structure.king_concentration",
+      "old_value": 2.05,
+      "new_value": 1.1
+    },
+    {
+      "cluster_id": "NGC 6352",
+      "field": "structure.log_rho0",
+      "old_value": 8.92,
+      "new_value": 3.17
+    },
+    {
+      "cluster_id": "NGC 6352",
+      "field": "structure.mu_v_central",
+      "old_value": 8.46,
+      "new_value": 18.17
+    },
+    {
+      "cluster_id": "NGC 6352",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.17,
+      "new_value": 0.83
+    },
+    {
+      "cluster_id": "NGC 6352",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0296,
+      "new_value": 0.0014
+    },
+    {
+      "cluster_id": "NGC 6352",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.17,
+      "new_value": 2.05
+    },
+    {
+      "cluster_id": "NGC 6352",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0052,
+      "new_value": 0.0033
+    },
+    {
+      "cluster_id": "IC 1257",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.6
+    },
+    {
+      "cluster_id": "IC 1257",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.25,
+      "new_value": null
+    },
+    {
+      "cluster_id": "IC 1257",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.55,
+      "new_value": null
+    },
+    {
+      "cluster_id": "IC 1257",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 1.38,
+        "bv": 1.83,
+        "vr": null,
+        "vi": null
+      },
+      "new_value": {
+        "ub": null,
+        "bv": 1.38,
+        "vr": null,
+        "vi": 1.83
+      }
+    },
+    {
+      "cluster_id": "IC 1257",
+      "field": "photometry.ellipticity",
+      "old_value": 1.83,
+      "new_value": null
+    },
+    {
+      "cluster_id": "IC 1257",
+      "field": "structure.king_concentration",
+      "old_value": 1.4,
+      "new_value": 1.55
+    },
+    {
+      "cluster_id": "IC 1257",
+      "field": "structure.r_core_arcmin",
+      "old_value": 9.6,
+      "new_value": 0.25
+    },
+    {
+      "cluster_id": "IC 1257",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0698,
+      "new_value": 0.0018
+    },
+    {
+      "cluster_id": "IC 1257",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 1.4
+    },
+    {
+      "cluster_id": "IC 1257",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0102
+    },
+    {
+      "cluster_id": "Terzan 2",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 5.46
+    },
+    {
+      "cluster_id": "Terzan 2",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.82
+    },
+    {
+      "cluster_id": "Terzan 2",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.03,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 2",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 2",
+      "field": "structure.king_concentration",
+      "old_value": 1.52,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "Terzan 2",
+      "field": "structure.log_rho0",
+      "old_value": 8.82,
+      "new_value": 4.86
+    },
+    {
+      "cluster_id": "Terzan 2",
+      "field": "structure.mu_v_central",
+      "old_value": 5.46,
+      "new_value": 22.16
+    },
+    {
+      "cluster_id": "Terzan 2",
+      "field": "structure.r_core_arcmin",
+      "old_value": 22.16,
+      "new_value": 0.03
+    },
+    {
+      "cluster_id": "Terzan 2",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0483,
+      "new_value": 0.0001
+    },
+    {
+      "cluster_id": "Terzan 2",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.86,
+      "new_value": 1.52
+    },
+    {
+      "cluster_id": "Terzan 2",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0106,
+      "new_value": 0.0033
+    },
+    {
+      "cluster_id": "NGC 6366",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.97,
+        "bv": 1.44,
+        "vr": 0.16,
+        "vi": null
+      },
+      "new_value": {
+        "ub": 0.97,
+        "bv": 1.44,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "Terzan 4",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.7
+    },
+    {
+      "cluster_id": "Terzan 4",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.9,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 4",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.9,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 4",
+      "field": "structure.king_concentration",
+      "old_value": 1.85,
+      "new_value": 0.9
+    },
+    {
+      "cluster_id": "Terzan 4",
+      "field": "structure.r_core_arcmin",
+      "old_value": 8.7,
+      "new_value": 0.9
+    },
+    {
+      "cluster_id": "Terzan 4",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0182,
+      "new_value": 0.0019
+    },
+    {
+      "cluster_id": "Terzan 4",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 1.85
+    },
+    {
+      "cluster_id": "Terzan 4",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0039
+    },
+    {
+      "cluster_id": "HP 1",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 5.03
+    },
+    {
+      "cluster_id": "HP 1",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.44
+    },
+    {
+      "cluster_id": "HP 1",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.03,
+      "new_value": null
+    },
+    {
+      "cluster_id": "HP 1",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "HP 1",
+      "field": "structure.king_concentration",
+      "old_value": 3.1,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "HP 1",
+      "field": "structure.log_rho0",
+      "old_value": 9.44,
+      "new_value": 4.33
+    },
+    {
+      "cluster_id": "HP 1",
+      "field": "structure.mu_v_central",
+      "old_value": 5.03,
+      "new_value": 21.29
+    },
+    {
+      "cluster_id": "HP 1",
+      "field": "structure.r_core_arcmin",
+      "old_value": 21.29,
+      "new_value": 0.03
+    },
+    {
+      "cluster_id": "HP 1",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0508,
+      "new_value": 0.0001
+    },
+    {
+      "cluster_id": "HP 1",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.33,
+      "new_value": 3.1
+    },
+    {
+      "cluster_id": "HP 1",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0103,
+      "new_value": 0.0074
+    },
+    {
+      "cluster_id": "Liller 1",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 6.62
+    },
+    {
+      "cluster_id": "Liller 1",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 0.0
+    },
+    {
+      "cluster_id": "Liller 1",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.06,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Liller 1",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.3,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Liller 1",
+      "field": "structure.king_concentration",
+      "old_value": 24.0,
+      "new_value": 2.3
+    },
+    {
+      "cluster_id": "Liller 1",
+      "field": "structure.log_rho0",
+      "old_value": null,
+      "new_value": 5.28
+    },
+    {
+      "cluster_id": "Liller 1",
+      "field": "structure.mu_v_central",
+      "old_value": 0.0,
+      "new_value": 24.0
+    },
+    {
+      "cluster_id": "Liller 1",
+      "field": "structure.r_core_arcmin",
+      "old_value": 5.28,
+      "new_value": 0.06
+    },
+    {
+      "cluster_id": "Liller 1",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0126,
+      "new_value": 0.0001
+    },
+    {
+      "cluster_id": "Liller 1",
+      "field": "structure.r_half_arcmin",
+      "old_value": 6.62,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Liller 1",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0158,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.4
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.86
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.34,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.55,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 2.01,
+        "bv": null,
+        "vr": null,
+        "vi": null
+      },
+      "new_value": {
+        "ub": null,
+        "bv": 2.01,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "photometry.ellipticity",
+      "old_value": 2.01,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "structure.king_concentration",
+      "old_value": 0.74,
+      "new_value": 1.55
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "structure.log_rho0",
+      "old_value": 8.86,
+      "new_value": 3.73
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "structure.mu_v_central",
+      "old_value": 8.4,
+      "new_value": 19.89
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "structure.r_core_arcmin",
+      "old_value": 19.89,
+      "new_value": 0.34
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0631,
+      "new_value": 0.0011
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.73,
+      "new_value": 0.74
+    },
+    {
+      "cluster_id": "NGC 6380",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0118,
+      "new_value": 0.0023
+    },
+    {
+      "cluster_id": "Terzan 1",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 4.99
+    },
+    {
+      "cluster_id": "Terzan 1",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.12
+    },
+    {
+      "cluster_id": "Terzan 1",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.04,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 1",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 1",
+      "field": "structure.king_concentration",
+      "old_value": 3.82,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "Terzan 1",
+      "field": "structure.log_rho0",
+      "old_value": 9.12,
+      "new_value": 3.85
+    },
+    {
+      "cluster_id": "Terzan 1",
+      "field": "structure.mu_v_central",
+      "old_value": 4.99,
+      "new_value": 25.09
+    },
+    {
+      "cluster_id": "Terzan 1",
+      "field": "structure.r_core_arcmin",
+      "old_value": 25.09,
+      "new_value": 0.04
+    },
+    {
+      "cluster_id": "Terzan 1",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0489,
+      "new_value": 0.0001
+    },
+    {
+      "cluster_id": "Terzan 1",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.85,
+      "new_value": 3.82
+    },
+    {
+      "cluster_id": "Terzan 1",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0075,
+      "new_value": 0.0074
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "alt_name",
+      "old_value": "Pismis",
+      "new_value": "Pismis 26"
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 1.3,
+        "y_kpc": -1.1,
+        "z_kpc": -0.4
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "distances.r_gc_kpc",
+      "old_value": 1.8,
+      "new_value": 1.4
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "distances.r_sun_kpc",
+      "old_value": 7.0,
+      "new_value": 8.2
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "distances.x_kpc",
+      "old_value": 6.9,
+      "new_value": 8.1
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "distances.y_kpc",
+      "old_value": -1.12,
+      "new_value": -1.3
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "distances.z_kpc",
+      "old_value": -0.42,
+      "new_value": -0.5
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.23
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.82
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "flags.inner_galaxy",
+      "old_value": false,
+      "new_value": true
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.54,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.3,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "position.dec_dms",
+      "old_value": "10.5:-38:33",
+      "new_value": "-38:33:12"
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "position.l_deg",
+      "old_value": 350.79,
+      "new_value": 350.8
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "position.ra_hms",
+      "old_value": "26:17:36",
+      "new_value": "17:36:10.5"
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "structure.log_rho0",
+      "old_value": 8.82,
+      "new_value": 2.85
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "structure.mu_v_central",
+      "old_value": 8.23,
+      "new_value": 22.16
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "structure.r_core_arcmin",
+      "old_value": 22.16,
+      "new_value": 0.54
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.022,
+      "new_value": 0.0013
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.85,
+      "new_value": 1.3
+    },
+    {
+      "cluster_id": "Ton 2",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0028,
+      "new_value": 0.0031
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": -0.06,
+        "y_kpc": 3.21,
+        "z_kpc": 2.34
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": 14.81,
+        "r_gc_kpc": 9.3,
+        "x_kpc": 4.0,
+        "y_kpc": 8.3,
+        "z_kpc": 3.3
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "distances.r_gc_kpc",
+      "old_value": 3.97,
+      "new_value": 4.0
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "distances.r_sun_kpc",
+      "old_value": 9.14,
+      "new_value": 9.3
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "distances.x_kpc",
+      "old_value": 8.23,
+      "new_value": 8.3
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "distances.y_kpc",
+      "old_value": 3.21,
+      "new_value": 3.3
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "distances.z_kpc",
+      "old_value": 2.33,
+      "new_value": 2.4
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.06
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.39
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.79,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.99,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "position.b_deg",
+      "old_value": 14.8,
+      "new_value": 14.81
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "position.dec_dms",
+      "old_value": "36.10:-03:14",
+      "new_value": "-03:14:45.3"
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "position.ra_hms",
+      "old_value": "14:17:37",
+      "new_value": "17:37:36.10"
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "structure.king_concentration",
+      "old_value": 1.3,
+      "new_value": 0.99
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "structure.log_rho0",
+      "old_value": 9.39,
+      "new_value": 3.36
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "structure.mu_v_central",
+      "old_value": 9.06,
+      "new_value": 18.41
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.41,
+      "new_value": 0.79
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0793,
+      "new_value": 0.0021
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.36,
+      "new_value": 1.3
+    },
+    {
+      "cluster_id": "NGC 6402",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0145,
+      "new_value": 0.0035
+    },
+    {
+      "cluster_id": "NGC 6401",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.97
+    },
+    {
+      "cluster_id": "NGC 6401",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.53
+    },
+    {
+      "cluster_id": "NGC 6401",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.25,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6401",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.69,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6401",
+      "field": "structure.king_concentration",
+      "old_value": 1.91,
+      "new_value": 1.69
+    },
+    {
+      "cluster_id": "NGC 6401",
+      "field": "structure.log_rho0",
+      "old_value": 9.53,
+      "new_value": 3.79
+    },
+    {
+      "cluster_id": "NGC 6401",
+      "field": "structure.mu_v_central",
+      "old_value": 7.97,
+      "new_value": 18.7
+    },
+    {
+      "cluster_id": "NGC 6401",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.7,
+      "new_value": 0.25
+    },
+    {
+      "cluster_id": "NGC 6401",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0577,
+      "new_value": 0.0008
+    },
+    {
+      "cluster_id": "NGC 6401",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.79,
+      "new_value": 1.91
+    },
+    {
+      "cluster_id": "NGC 6401",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0117,
+      "new_value": 0.0059
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.34
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.64
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.66,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.1,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 2.83,
+        "bv": null,
+        "vr": null,
+        "vi": null
+      },
+      "new_value": {
+        "ub": null,
+        "bv": 2.83,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "photometry.ellipticity",
+      "old_value": 2.83,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "structure.king_concentration",
+      "old_value": 1.2,
+      "new_value": 1.1
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "structure.log_rho0",
+      "old_value": 8.64,
+      "new_value": 3.46
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "structure.mu_v_central",
+      "old_value": 8.34,
+      "new_value": 21.51
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "structure.r_core_arcmin",
+      "old_value": 21.51,
+      "new_value": 0.66
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0363,
+      "new_value": 0.0011
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.46,
+      "new_value": 1.2
+    },
+    {
+      "cluster_id": "Pal 6",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0058,
+      "new_value": 0.002
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.31
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.28
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.26,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.7,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.35,
+        "bv": 1.02,
+        "vr": 1.28,
+        "vi": 0.15
+      },
+      "new_value": {
+        "ub": 0.35,
+        "bv": 1.02,
+        "vr": null,
+        "vi": 1.28
+      }
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "structure.king_concentration",
+      "old_value": 0.92,
+      "new_value": 1.7
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "structure.log_rho0",
+      "old_value": 9.28,
+      "new_value": 2.47
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "structure.mu_v_central",
+      "old_value": 8.31,
+      "new_value": 20.09
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "structure.r_core_arcmin",
+      "old_value": 20.09,
+      "new_value": 0.26
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.1204,
+      "new_value": 0.0016
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.47,
+      "new_value": 0.92
+    },
+    {
+      "cluster_id": "NGC 6426",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0148,
+      "new_value": 0.0055
+    },
+    {
+      "cluster_id": "Djorg 1",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.71
+    },
+    {
+      "cluster_id": "Djorg 1",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 0.0
+    },
+    {
+      "cluster_id": "Djorg 1",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Djorg 1",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Djorg 1",
+      "field": "structure.king_concentration",
+      "old_value": 1.59,
+      "new_value": 1.5
+    },
+    {
+      "cluster_id": "Djorg 1",
+      "field": "structure.log_rho0",
+      "old_value": 0.0,
+      "new_value": 2.68
+    },
+    {
+      "cluster_id": "Djorg 1",
+      "field": "structure.mu_v_central",
+      "old_value": 8.71,
+      "new_value": 23.1
+    },
+    {
+      "cluster_id": "Djorg 1",
+      "field": "structure.r_core_arcmin",
+      "old_value": 23.1,
+      "new_value": 0.5
+    },
+    {
+      "cluster_id": "Djorg 1",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0921,
+      "new_value": 0.002
+    },
+    {
+      "cluster_id": "Djorg 1",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.68,
+      "new_value": 1.59
+    },
+    {
+      "cluster_id": "Djorg 1",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0107,
+      "new_value": 0.0063
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "alt_name",
+      "old_value": "Terzan",
+      "new_value": "Terzan 11"
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 1.58,
+        "y_kpc": 0.44,
+        "z_kpc": 0.19
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": 1.69,
+        "r_gc_kpc": 6.9,
+        "x_kpc": 1.2,
+        "y_kpc": 6.9,
+        "z_kpc": 0.5
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "distances.r_gc_kpc",
+      "old_value": 1.65,
+      "new_value": 1.2
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "distances.r_sun_kpc",
+      "old_value": 6.62,
+      "new_value": 6.9
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "distances.x_kpc",
+      "old_value": 6.6,
+      "new_value": 6.9
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "distances.y_kpc",
+      "old_value": 0.44,
+      "new_value": 0.5
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.57
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.53
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.16,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.62,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "photometry.ellipticity",
+      "old_value": 2.77,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "position.ra_hms",
+      "old_value": "17:48:04.8",
+      "new_value": "17:48:04.80"
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "structure.king_concentration",
+      "old_value": 0.72,
+      "new_value": 1.62
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "structure.log_rho0",
+      "old_value": 8.53,
+      "new_value": 5.14
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "structure.mu_v_central",
+      "old_value": 7.57,
+      "new_value": 21.08
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "structure.r_core_arcmin",
+      "old_value": 21.08,
+      "new_value": 0.16
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0104,
+      "new_value": 0.0003
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "structure.r_half_arcmin",
+      "old_value": 5.14,
+      "new_value": 0.72
+    },
+    {
+      "cluster_id": "Terzan 5",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0025,
+      "new_value": 0.0014
+    },
+    {
+      "cluster_id": "NGC 6440",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.6
+    },
+    {
+      "cluster_id": "NGC 6440",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.62
+    },
+    {
+      "cluster_id": "NGC 6440",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.14,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6440",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.62,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6440",
+      "field": "structure.king_concentration",
+      "old_value": 0.48,
+      "new_value": 1.62
+    },
+    {
+      "cluster_id": "NGC 6440",
+      "field": "structure.log_rho0",
+      "old_value": 8.62,
+      "new_value": 5.24
+    },
+    {
+      "cluster_id": "NGC 6440",
+      "field": "structure.mu_v_central",
+      "old_value": 7.6,
+      "new_value": 17.06
+    },
+    {
+      "cluster_id": "NGC 6440",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.06,
+      "new_value": 0.14
+    },
+    {
+      "cluster_id": "NGC 6440",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0422,
+      "new_value": 0.0003
+    },
+    {
+      "cluster_id": "NGC 6440",
+      "field": "structure.r_half_arcmin",
+      "old_value": 5.24,
+      "new_value": 0.48
+    },
+    {
+      "cluster_id": "NGC 6440",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.013,
+      "new_value": 0.0012
+    },
+    {
+      "cluster_id": "Terzan 6",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 6.46
+    },
+    {
+      "cluster_id": "Terzan 6",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.22
+    },
+    {
+      "cluster_id": "Terzan 6",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.05,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 6",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 6",
+      "field": "structure.king_concentration",
+      "old_value": 0.44,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "Terzan 6",
+      "field": "structure.log_rho0",
+      "old_value": 8.22,
+      "new_value": 5.83
+    },
+    {
+      "cluster_id": "Terzan 6",
+      "field": "structure.mu_v_central",
+      "old_value": 6.46,
+      "new_value": 20.76
+    },
+    {
+      "cluster_id": "Terzan 6",
+      "field": "structure.r_core_arcmin",
+      "old_value": 20.76,
+      "new_value": 0.05
+    },
+    {
+      "cluster_id": "Terzan 6",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0411,
+      "new_value": 0.0001
+    },
+    {
+      "cluster_id": "Terzan 6",
+      "field": "structure.r_half_arcmin",
+      "old_value": 5.83,
+      "new_value": 0.44
+    },
+    {
+      "cluster_id": "Terzan 6",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0115,
+      "new_value": 0.0009
+    },
+    {
+      "cluster_id": "NGC 6453",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 6.73
+    },
+    {
+      "cluster_id": "NGC 6453",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.52
+    },
+    {
+      "cluster_id": "NGC 6453",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.05,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6453",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6453",
+      "field": "structure.king_concentration",
+      "old_value": 0.44,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "NGC 6453",
+      "field": "structure.log_rho0",
+      "old_value": 8.52,
+      "new_value": 4.95
+    },
+    {
+      "cluster_id": "NGC 6453",
+      "field": "structure.mu_v_central",
+      "old_value": 6.73,
+      "new_value": 17.07
+    },
+    {
+      "cluster_id": "NGC 6453",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.07,
+      "new_value": 0.05
+    },
+    {
+      "cluster_id": "NGC 6453",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0576,
+      "new_value": 0.0002
+    },
+    {
+      "cluster_id": "NGC 6453",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.95,
+      "new_value": 0.44
+    },
+    {
+      "cluster_id": "NGC 6453",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0167,
+      "new_value": 0.0015
+    },
+    {
+      "cluster_id": "UKS 1",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.26
+    },
+    {
+      "cluster_id": "UKS 1",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 0.0
+    },
+    {
+      "cluster_id": "UKS 1",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.15,
+      "new_value": null
+    },
+    {
+      "cluster_id": "UKS 1",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.1,
+      "new_value": null
+    },
+    {
+      "cluster_id": "UKS 1",
+      "field": "structure.king_concentration",
+      "old_value": 25.52,
+      "new_value": 2.1
+    },
+    {
+      "cluster_id": "UKS 1",
+      "field": "structure.log_rho0",
+      "old_value": null,
+      "new_value": 4.41
+    },
+    {
+      "cluster_id": "UKS 1",
+      "field": "structure.mu_v_central",
+      "old_value": 0.0,
+      "new_value": 25.52
+    },
+    {
+      "cluster_id": "UKS 1",
+      "field": "structure.r_core_arcmin",
+      "old_value": 4.41,
+      "new_value": 0.15
+    },
+    {
+      "cluster_id": "UKS 1",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.01,
+      "new_value": 0.0003
+    },
+    {
+      "cluster_id": "UKS 1",
+      "field": "structure.r_half_arcmin",
+      "old_value": 7.26,
+      "new_value": null
+    },
+    {
+      "cluster_id": "UKS 1",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0165,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.94
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.04
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.95,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.7,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.45,
+        "bv": 0.98,
+        "vr": 0.16,
+        "vi": null
+      },
+      "new_value": {
+        "ub": 0.45,
+        "bv": 0.98,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "structure.king_concentration",
+      "old_value": 1.02,
+      "new_value": 0.7
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "structure.log_rho0",
+      "old_value": 9.04,
+      "new_value": 1.99
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "structure.mu_v_central",
+      "old_value": 8.94,
+      "new_value": 20.17
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "structure.r_core_arcmin",
+      "old_value": 20.17,
+      "new_value": 0.95
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0663,
+      "new_value": 0.0031
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "structure.r_half_arcmin",
+      "old_value": 1.99,
+      "new_value": 1.02
+    },
+    {
+      "cluster_id": "NGC 6496",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0065,
+      "new_value": 0.0034
+    },
+    {
+      "cluster_id": "Terzan 9",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 4.99
+    },
+    {
+      "cluster_id": "Terzan 9",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.0
+    },
+    {
+      "cluster_id": "Terzan 9",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.03,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 9",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 9",
+      "field": "structure.king_concentration",
+      "old_value": 0.78,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "Terzan 9",
+      "field": "structure.log_rho0",
+      "old_value": 8.0,
+      "new_value": 4.42
+    },
+    {
+      "cluster_id": "Terzan 9",
+      "field": "structure.mu_v_central",
+      "old_value": 4.99,
+      "new_value": 23.21
+    },
+    {
+      "cluster_id": "Terzan 9",
+      "field": "structure.r_core_arcmin",
+      "old_value": 23.21,
+      "new_value": 0.03
+    },
+    {
+      "cluster_id": "Terzan 9",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0479,
+      "new_value": 0.0001
+    },
+    {
+      "cluster_id": "Terzan 9",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.42,
+      "new_value": 0.78
+    },
+    {
+      "cluster_id": "Terzan 9",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0091,
+      "new_value": 0.0016
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.73
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 0.0
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "kinematics.sig_v_err",
+      "old_value": 3.85,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 19.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 1.05,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.33,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "kinematics.v_r_kms",
+      "old_value": 1.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "structure.king_concentration",
+      "old_value": 7.73,
+      "new_value": 1.5
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "structure.log_rho0",
+      "old_value": null,
+      "new_value": 3.85
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "structure.mu_v_central",
+      "old_value": null,
+      "new_value": 19.5
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "structure.r_core_arcmin",
+      "old_value": 0.0,
+      "new_value": 0.33
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "structure.r_core_kpc",
+      "old_value": null,
+      "new_value": 0.0006
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 1.05
+    },
+    {
+      "cluster_id": "Djorg 2",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0019
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 6.92
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.72
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.06,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.82,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.85,
+        "bv": 1.75,
+        "vr": 2.31,
+        "vi": 0.06
+      },
+      "new_value": {
+        "ub": 0.85,
+        "bv": 1.75,
+        "vr": null,
+        "vi": 2.31
+      }
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "structure.king_concentration",
+      "old_value": 0.5,
+      "new_value": 1.82
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "structure.log_rho0",
+      "old_value": 8.72,
+      "new_value": 5.29
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "structure.mu_v_central",
+      "old_value": 6.92,
+      "new_value": 17.56
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.56,
+      "new_value": 0.06
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0541,
+      "new_value": 0.0002
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "structure.r_half_arcmin",
+      "old_value": 5.29,
+      "new_value": 0.5
+    },
+    {
+      "cluster_id": "NGC 6517",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0163,
+      "new_value": 0.0015
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.34
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.74
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "kinematics.sig_v_err",
+      "old_value": 4.64,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 21.28,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 1.55,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.9,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "kinematics.v_r_kms",
+      "old_value": 0.75,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "structure.king_concentration",
+      "old_value": 9.34,
+      "new_value": 0.75
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "structure.log_rho0",
+      "old_value": null,
+      "new_value": 4.64
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "structure.mu_v_central",
+      "old_value": null,
+      "new_value": 21.28
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "structure.r_core_arcmin",
+      "old_value": 8.74,
+      "new_value": 0.9
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0147,
+      "new_value": 0.0015
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 1.55
+    },
+    {
+      "cluster_id": "Terzan 10",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0026
+    },
+    {
+      "cluster_id": "NGC 6535",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.29,
+        "bv": 0.94,
+        "vr": 0.08,
+        "vi": null
+      },
+      "new_value": {
+        "ub": 0.29,
+        "bv": 0.94,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "NGC 6528",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.28
+    },
+    {
+      "cluster_id": "NGC 6528",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.06
+    },
+    {
+      "cluster_id": "NGC 6528",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.13,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6528",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6528",
+      "field": "structure.king_concentration",
+      "old_value": 0.38,
+      "new_value": 1.5
+    },
+    {
+      "cluster_id": "NGC 6528",
+      "field": "structure.log_rho0",
+      "old_value": 8.06,
+      "new_value": 4.77
+    },
+    {
+      "cluster_id": "NGC 6528",
+      "field": "structure.mu_v_central",
+      "old_value": 7.28,
+      "new_value": 16.73
+    },
+    {
+      "cluster_id": "NGC 6528",
+      "field": "structure.r_core_arcmin",
+      "old_value": 16.73,
+      "new_value": 0.13
+    },
+    {
+      "cluster_id": "NGC 6528",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0384,
+      "new_value": 0.0003
+    },
+    {
+      "cluster_id": "NGC 6528",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.77,
+      "new_value": 0.38
+    },
+    {
+      "cluster_id": "NGC 6528",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.011,
+      "new_value": 0.0009
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.31
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.32
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.38,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.74,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 1.01,
+        "bv": 1.83,
+        "vr": 2.23,
+        "vi": 0.08
+      },
+      "new_value": {
+        "ub": 1.01,
+        "bv": 1.83,
+        "vr": null,
+        "vi": 2.23
+      }
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "structure.king_concentration",
+      "old_value": 1.7,
+      "new_value": 1.74
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "structure.log_rho0",
+      "old_value": 9.32,
+      "new_value": 4.15
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "structure.mu_v_central",
+      "old_value": 8.31,
+      "new_value": 18.58
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.58,
+      "new_value": 0.38
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0422,
+      "new_value": 0.0009
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.15,
+      "new_value": 1.7
+    },
+    {
+      "cluster_id": "NGC 6539",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0094,
+      "new_value": 0.0039
+    },
+    {
+      "cluster_id": "NGC 6540",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 5.4
+    },
+    {
+      "cluster_id": "NGC 6540",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 0.0
+    },
+    {
+      "cluster_id": "NGC 6540",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.03,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6540",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.5,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6540",
+      "field": "structure.king_concentration",
+      "old_value": 16.4,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "NGC 6540",
+      "field": "structure.log_rho0",
+      "old_value": null,
+      "new_value": 5.85
+    },
+    {
+      "cluster_id": "NGC 6540",
+      "field": "structure.mu_v_central",
+      "old_value": 0.0,
+      "new_value": 16.4
+    },
+    {
+      "cluster_id": "NGC 6540",
+      "field": "structure.r_core_arcmin",
+      "old_value": 5.85,
+      "new_value": 0.03
+    },
+    {
+      "cluster_id": "NGC 6540",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.009,
+      "new_value": 0.0
+    },
+    {
+      "cluster_id": "NGC 6540",
+      "field": "structure.r_half_arcmin",
+      "old_value": 5.4,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6540",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0083,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6544",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 5.35
+    },
+    {
+      "cluster_id": "NGC 6544",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.24
+    },
+    {
+      "cluster_id": "NGC 6544",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.05,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6544",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.63,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6544",
+      "field": "structure.king_concentration",
+      "old_value": 1.21,
+      "new_value": 1.63
+    },
+    {
+      "cluster_id": "NGC 6544",
+      "field": "structure.log_rho0",
+      "old_value": 8.24,
+      "new_value": 6.06
+    },
+    {
+      "cluster_id": "NGC 6544",
+      "field": "structure.mu_v_central",
+      "old_value": 5.35,
+      "new_value": 16.31
+    },
+    {
+      "cluster_id": "NGC 6544",
+      "field": "structure.r_core_arcmin",
+      "old_value": 16.31,
+      "new_value": 0.05
+    },
+    {
+      "cluster_id": "NGC 6544",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0142,
+      "new_value": 0.0
+    },
+    {
+      "cluster_id": "NGC 6544",
+      "field": "structure.r_half_arcmin",
+      "old_value": 6.06,
+      "new_value": 1.21
+    },
+    {
+      "cluster_id": "NGC 6544",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0053,
+      "new_value": 0.0011
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.43
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 8.43,
+      "new_value": null
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 1.65,
+      "new_value": null
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.85,
+      "new_value": null
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "kinematics.v_r_kms",
+      "old_value": 0.85,
+      "new_value": null
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "photometry.dist_mod",
+      "old_value": 27.74,
+      "new_value": 33.85
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "photometry.v_hb",
+      "old_value": 33.85,
+      "new_value": 34.5
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "photometry.v_t",
+      "old_value": null,
+      "new_value": 27.74
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "structure.king_concentration",
+      "old_value": null,
+      "new_value": 0.85
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "structure.r_core_arcmin",
+      "old_value": null,
+      "new_value": 0.85
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "structure.r_core_kpc",
+      "old_value": null,
+      "new_value": 0.0009
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 1.65
+    },
+    {
+      "cluster_id": "2MS-GC01",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0017
+    },
+    {
+      "cluster_id": "ESO-SC06",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.1
+    },
+    {
+      "cluster_id": "ESO-SC06",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 9.1,
+      "new_value": null
+    },
+    {
+      "cluster_id": "ESO-SC06",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 1.05,
+      "new_value": null
+    },
+    {
+      "cluster_id": "ESO-SC06",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.6,
+      "new_value": null
+    },
+    {
+      "cluster_id": "ESO-SC06",
+      "field": "kinematics.v_r_kms",
+      "old_value": 0.9,
+      "new_value": null
+    },
+    {
+      "cluster_id": "ESO-SC06",
+      "field": "structure.king_concentration",
+      "old_value": null,
+      "new_value": 0.9
+    },
+    {
+      "cluster_id": "ESO-SC06",
+      "field": "structure.r_core_arcmin",
+      "old_value": null,
+      "new_value": 0.6
+    },
+    {
+      "cluster_id": "ESO-SC06",
+      "field": "structure.r_core_kpc",
+      "old_value": null,
+      "new_value": 0.0037
+    },
+    {
+      "cluster_id": "ESO-SC06",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 1.05
+    },
+    {
+      "cluster_id": "ESO-SC06",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0065
+    },
+    {
+      "cluster_id": "NGC 6553",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.24
+    },
+    {
+      "cluster_id": "NGC 6553",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.72
+    },
+    {
+      "cluster_id": "NGC 6553",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.53,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6553",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.16,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6553",
+      "field": "structure.king_concentration",
+      "old_value": 1.03,
+      "new_value": 1.16
+    },
+    {
+      "cluster_id": "NGC 6553",
+      "field": "structure.log_rho0",
+      "old_value": 8.72,
+      "new_value": 3.84
+    },
+    {
+      "cluster_id": "NGC 6553",
+      "field": "structure.mu_v_central",
+      "old_value": 8.24,
+      "new_value": 18.17
+    },
+    {
+      "cluster_id": "NGC 6553",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.17,
+      "new_value": 0.53
+    },
+    {
+      "cluster_id": "NGC 6553",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0317,
+      "new_value": 0.0009
+    },
+    {
+      "cluster_id": "NGC 6553",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.84,
+      "new_value": 1.03
+    },
+    {
+      "cluster_id": "NGC 6553",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0067,
+      "new_value": 0.0018
+    },
+    {
+      "cluster_id": "2MS-GC02",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 7.72
+    },
+    {
+      "cluster_id": "2MS-GC02",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.55,
+      "new_value": null
+    },
+    {
+      "cluster_id": "2MS-GC02",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.95,
+      "new_value": null
+    },
+    {
+      "cluster_id": "2MS-GC02",
+      "field": "structure.king_concentration",
+      "old_value": 0.55,
+      "new_value": 0.95
+    },
+    {
+      "cluster_id": "2MS-GC02",
+      "field": "structure.r_core_arcmin",
+      "old_value": 7.72,
+      "new_value": 0.55
+    },
+    {
+      "cluster_id": "2MS-GC02",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.011,
+      "new_value": 0.0008
+    },
+    {
+      "cluster_id": "2MS-GC02",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 0.55
+    },
+    {
+      "cluster_id": "2MS-GC02",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0008
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.46
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.03
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "kinematics.sig_v_err",
+      "old_value": 1.01,
+      "new_value": null
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.33,
+      "new_value": null
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "photometry.ellipticity",
+      "old_value": 1.76,
+      "new_value": null
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "structure.king_concentration",
+      "old_value": 2.38,
+      "new_value": 1.33
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "structure.log_rho0",
+      "old_value": 9.03,
+      "new_value": 2.78
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "structure.mu_v_central",
+      "old_value": 8.46,
+      "new_value": 21.6
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "structure.r_core_arcmin",
+      "old_value": 21.6,
+      "new_value": 1.01
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0339,
+      "new_value": 0.0016
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.78,
+      "new_value": 2.38
+    },
+    {
+      "cluster_id": "IC 1276",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0044,
+      "new_value": 0.0037
+    },
+    {
+      "cluster_id": "Terzan 12",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.46
+    },
+    {
+      "cluster_id": "Terzan 12",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 7.78
+    },
+    {
+      "cluster_id": "Terzan 12",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.83,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 12",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.57,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 12",
+      "field": "structure.king_concentration",
+      "old_value": 0.75,
+      "new_value": 0.57
+    },
+    {
+      "cluster_id": "Terzan 12",
+      "field": "structure.log_rho0",
+      "old_value": 7.78,
+      "new_value": 3.4
+    },
+    {
+      "cluster_id": "Terzan 12",
+      "field": "structure.mu_v_central",
+      "old_value": 8.46,
+      "new_value": 23.75
+    },
+    {
+      "cluster_id": "Terzan 12",
+      "field": "structure.r_core_arcmin",
+      "old_value": 23.75,
+      "new_value": 0.83
+    },
+    {
+      "cluster_id": "Terzan 12",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0332,
+      "new_value": 0.0012
+    },
+    {
+      "cluster_id": "Terzan 12",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.4,
+      "new_value": 0.75
+    },
+    {
+      "cluster_id": "Terzan 12",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0047,
+      "new_value": 0.001
+    },
+    {
+      "cluster_id": "NGC 6569",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.38
+    },
+    {
+      "cluster_id": "NGC 6569",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.05
+    },
+    {
+      "cluster_id": "NGC 6569",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.35,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6569",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.31,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6569",
+      "field": "structure.king_concentration",
+      "old_value": 0.8,
+      "new_value": 1.31
+    },
+    {
+      "cluster_id": "NGC 6569",
+      "field": "structure.log_rho0",
+      "old_value": 9.05,
+      "new_value": 3.63
+    },
+    {
+      "cluster_id": "NGC 6569",
+      "field": "structure.mu_v_central",
+      "old_value": 8.38,
+      "new_value": 18.15
+    },
+    {
+      "cluster_id": "NGC 6569",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.15,
+      "new_value": 0.35
+    },
+    {
+      "cluster_id": "NGC 6569",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0575,
+      "new_value": 0.0011
+    },
+    {
+      "cluster_id": "NGC 6569",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.63,
+      "new_value": 0.8
+    },
+    {
+      "cluster_id": "NGC 6569",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0115,
+      "new_value": 0.0025
+    },
+    {
+      "cluster_id": "BH 261",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 7.8
+    },
+    {
+      "cluster_id": "BH 261",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 7.8,
+      "new_value": null
+    },
+    {
+      "cluster_id": "BH 261",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 0.55,
+      "new_value": null
+    },
+    {
+      "cluster_id": "BH 261",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.4,
+      "new_value": null
+    },
+    {
+      "cluster_id": "BH 261",
+      "field": "kinematics.v_r_kms",
+      "old_value": 1.0,
+      "new_value": null
+    },
+    {
+      "cluster_id": "BH 261",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.03,
+        "bv": null,
+        "vr": null,
+        "vi": null
+      },
+      "new_value": {
+        "ub": null,
+        "bv": null,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "BH 261",
+      "field": "structure.king_concentration",
+      "old_value": null,
+      "new_value": 1.0
+    },
+    {
+      "cluster_id": "BH 261",
+      "field": "structure.r_core_arcmin",
+      "old_value": null,
+      "new_value": 0.4
+    },
+    {
+      "cluster_id": "BH 261",
+      "field": "structure.r_core_kpc",
+      "old_value": null,
+      "new_value": 0.0008
+    },
+    {
+      "cluster_id": "BH 261",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 0.55
+    },
+    {
+      "cluster_id": "BH 261",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.001
+    },
+    {
+      "cluster_id": "GLIMPSE02",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.7,
+      "new_value": null
+    },
+    {
+      "cluster_id": "GLIMPSE02",
+      "field": "kinematics.v_r_kms",
+      "old_value": 1.33,
+      "new_value": null
+    },
+    {
+      "cluster_id": "GLIMPSE02",
+      "field": "structure.king_concentration",
+      "old_value": null,
+      "new_value": 1.33
+    },
+    {
+      "cluster_id": "GLIMPSE02",
+      "field": "structure.r_core_arcmin",
+      "old_value": null,
+      "new_value": 0.7
+    },
+    {
+      "cluster_id": "GLIMPSE02",
+      "field": "structure.r_core_kpc",
+      "old_value": null,
+      "new_value": 0.0011
+    },
+    {
+      "cluster_id": "NGC 6584",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.13
+    },
+    {
+      "cluster_id": "NGC 6584",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.02
+    },
+    {
+      "cluster_id": "NGC 6584",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.26,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6584",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.47,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6584",
+      "field": "structure.king_concentration",
+      "old_value": 0.73,
+      "new_value": 1.47
+    },
+    {
+      "cluster_id": "NGC 6584",
+      "field": "structure.log_rho0",
+      "old_value": 9.02,
+      "new_value": 3.33
+    },
+    {
+      "cluster_id": "NGC 6584",
+      "field": "structure.mu_v_central",
+      "old_value": 8.13,
+      "new_value": 17.63
+    },
+    {
+      "cluster_id": "NGC 6584",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.63,
+      "new_value": 0.26
+    },
+    {
+      "cluster_id": "NGC 6584",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0692,
+      "new_value": 0.001
+    },
+    {
+      "cluster_id": "NGC 6584",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.33,
+      "new_value": 0.73
+    },
+    {
+      "cluster_id": "NGC 6584",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0131,
+      "new_value": 0.0029
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 2.46,
+        "y_kpc": 0.67,
+        "z_kpc": -0.52
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": -5.58,
+        "r_gc_kpc": 5.5,
+        "x_kpc": 2.7,
+        "y_kpc": 5.4,
+        "z_kpc": 0.7
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "distances.r_gc_kpc",
+      "old_value": 2.69,
+      "new_value": 2.7
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "distances.r_sun_kpc",
+      "old_value": 5.43,
+      "new_value": 5.5
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "distances.x_kpc",
+      "old_value": 5.35,
+      "new_value": 5.4
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "distances.y_kpc",
+      "old_value": 0.73,
+      "new_value": 0.7
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "distances.z_kpc",
+      "old_value": -0.53,
+      "new_value": -0.5
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "flags.inner_galaxy",
+      "old_value": false,
+      "new_value": true
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "position.dec_dms",
+      "old_value": "32.81:-24:52",
+      "new_value": "-24:52:11.2"
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "position.ra_hms",
+      "old_value": "28:18:24",
+      "new_value": "18:24:32.81"
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.0004,
+      "new_value": 0.0004
+    },
+    {
+      "cluster_id": "NGC 6626",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0032,
+      "new_value": 0.0032
+    },
+    {
+      "cluster_id": "NGC 6638",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.83
+    },
+    {
+      "cluster_id": "NGC 6638",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.46
+    },
+    {
+      "cluster_id": "NGC 6638",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.22,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6638",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.33,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6638",
+      "field": "structure.king_concentration",
+      "old_value": 0.51,
+      "new_value": 1.33
+    },
+    {
+      "cluster_id": "NGC 6638",
+      "field": "structure.log_rho0",
+      "old_value": 8.46,
+      "new_value": 4.09
+    },
+    {
+      "cluster_id": "NGC 6638",
+      "field": "structure.mu_v_central",
+      "old_value": 7.83,
+      "new_value": 17.3
+    },
+    {
+      "cluster_id": "NGC 6638",
+      "field": "structure.r_core_arcmin",
+      "old_value": 17.3,
+      "new_value": 0.22
+    },
+    {
+      "cluster_id": "NGC 6638",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0473,
+      "new_value": 0.0006
+    },
+    {
+      "cluster_id": "NGC 6638",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.09,
+      "new_value": 0.51
+    },
+    {
+      "cluster_id": "NGC 6638",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0112,
+      "new_value": 0.0014
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": -0.89,
+        "y_kpc": 0.29,
+        "z_kpc": -1.58
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": -10.27,
+        "r_gc_kpc": 8.8,
+        "x_kpc": 1.7,
+        "y_kpc": 8.6,
+        "z_kpc": 0.3
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "distances.r_gc_kpc",
+      "old_value": 1.58,
+      "new_value": 1.7
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "distances.r_sun_kpc",
+      "old_value": 8.92,
+      "new_value": 8.8
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "distances.x_kpc",
+      "old_value": 8.77,
+      "new_value": 8.6
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "distances.y_kpc",
+      "old_value": 0.26,
+      "new_value": 0.3
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "distances.z_kpc",
+      "old_value": -1.59,
+      "new_value": -1.6
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.15
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.82
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "flags.inner_galaxy",
+      "old_value": false,
+      "new_value": true
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.33,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.38,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "position.dec_dms",
+      "old_value": "23.10:-32:20",
+      "new_value": "-32:20:53.1"
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "position.ra_hms",
+      "old_value": "69:18:31",
+      "new_value": "18:31:23.10"
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "structure.king_concentration",
+      "old_value": 0.84,
+      "new_value": 1.38
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "structure.log_rho0",
+      "old_value": 8.82,
+      "new_value": 3.84
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "structure.mu_v_central",
+      "old_value": 8.15,
+      "new_value": 16.82
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "structure.r_core_arcmin",
+      "old_value": 16.82,
+      "new_value": 0.33
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.0502,
+      "new_value": 0.0008
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.84,
+      "new_value": 0.84
+    },
+    {
+      "cluster_id": "NGC 6637",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0115,
+      "new_value": 0.0022
+    },
+    {
+      "cluster_id": "NGC 6642",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 6.95
+    },
+    {
+      "cluster_id": "NGC 6642",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.52
+    },
+    {
+      "cluster_id": "NGC 6642",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.1,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6642",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.99,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6642",
+      "field": "structure.king_concentration",
+      "old_value": 0.73,
+      "new_value": 1.99
+    },
+    {
+      "cluster_id": "NGC 6642",
+      "field": "structure.log_rho0",
+      "old_value": 8.52,
+      "new_value": 4.64
+    },
+    {
+      "cluster_id": "NGC 6642",
+      "field": "structure.mu_v_central",
+      "old_value": 6.95,
+      "new_value": 16.82
+    },
+    {
+      "cluster_id": "NGC 6642",
+      "field": "structure.r_core_arcmin",
+      "old_value": 16.82,
+      "new_value": 0.1
+    },
+    {
+      "cluster_id": "NGC 6642",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0396,
+      "new_value": 0.0002
+    },
+    {
+      "cluster_id": "NGC 6642",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.64,
+      "new_value": 0.73
+    },
+    {
+      "cluster_id": "NGC 6642",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0109,
+      "new_value": 0.0017
+    },
+    {
+      "cluster_id": "NGC 6652",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.05
+    },
+    {
+      "cluster_id": "NGC 6652",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.39
+    },
+    {
+      "cluster_id": "NGC 6652",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.1,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6652",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.8,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6652",
+      "field": "structure.king_concentration",
+      "old_value": 0.48,
+      "new_value": 1.8
+    },
+    {
+      "cluster_id": "NGC 6652",
+      "field": "structure.log_rho0",
+      "old_value": 8.39,
+      "new_value": 4.48
+    },
+    {
+      "cluster_id": "NGC 6652",
+      "field": "structure.mu_v_central",
+      "old_value": 7.05,
+      "new_value": 16.1
+    },
+    {
+      "cluster_id": "NGC 6652",
+      "field": "structure.r_core_arcmin",
+      "old_value": 16.1,
+      "new_value": 0.1
+    },
+    {
+      "cluster_id": "NGC 6652",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0468,
+      "new_value": 0.0003
+    },
+    {
+      "cluster_id": "NGC 6652",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.48,
+      "new_value": 0.48
+    },
+    {
+      "cluster_id": "NGC 6652",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.013,
+      "new_value": 0.0014
+    },
+    {
+      "cluster_id": "NGC 6656",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 4.9,
+        "y_kpc": 0.6,
+        "z_kpc": -0.4
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6656",
+      "field": "distances.r_gc_kpc",
+      "old_value": 5.0,
+      "new_value": 4.9
+    },
+    {
+      "cluster_id": "NGC 6656",
+      "field": "distances.x_kpc",
+      "old_value": 3.13,
+      "new_value": 3.2
+    },
+    {
+      "cluster_id": "NGC 6656",
+      "field": "distances.y_kpc",
+      "old_value": 0.54,
+      "new_value": 0.6
+    },
+    {
+      "cluster_id": "NGC 6656",
+      "field": "distances.z_kpc",
+      "old_value": -0.42,
+      "new_value": -0.4
+    },
+    {
+      "cluster_id": "NGC 6656",
+      "field": "position.dec_dms",
+      "old_value": "23.94:-23:54",
+      "new_value": "-23:54:17.1"
+    },
+    {
+      "cluster_id": "NGC 6656",
+      "field": "position.ra_hms",
+      "old_value": "22:18:36",
+      "new_value": "18:36:23.94"
+    },
+    {
+      "cluster_id": "NGC 6656",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.0029,
+      "new_value": 0.0012
+    },
+    {
+      "cluster_id": "NGC 6656",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0074,
+      "new_value": 0.0031
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.65
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.47
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.56,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.53,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "photometry.ellipticity",
+      "old_value": 1.22,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "structure.king_concentration",
+      "old_value": 0.58,
+      "new_value": 1.53
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "structure.log_rho0",
+      "old_value": 8.47,
+      "new_value": 2.34
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "structure.mu_v_central",
+      "old_value": 8.65,
+      "new_value": 20.0
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "structure.r_core_arcmin",
+      "old_value": 20.0,
+      "new_value": 0.56
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0745,
+      "new_value": 0.0021
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.34,
+      "new_value": 0.58
+    },
+    {
+      "cluster_id": "Pal 8",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0087,
+      "new_value": 0.0022
+    },
+    {
+      "cluster_id": "NGC 6681",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": -1.39,
+        "y_kpc": 0.41,
+        "z_kpc": -2.0
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6681",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": -12.51,
+        "r_gc_kpc": 9.0,
+        "x_kpc": 2.2,
+        "y_kpc": 8.8,
+        "z_kpc": 0.4
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6681",
+      "field": "distances.r_sun_kpc",
+      "old_value": 9.39,
+      "new_value": 9.0
+    },
+    {
+      "cluster_id": "NGC 6681",
+      "field": "distances.x_kpc",
+      "old_value": 9.16,
+      "new_value": 8.8
+    },
+    {
+      "cluster_id": "NGC 6681",
+      "field": "distances.y_kpc",
+      "old_value": 0.46,
+      "new_value": 0.4
+    },
+    {
+      "cluster_id": "NGC 6681",
+      "field": "distances.z_kpc",
+      "old_value": -2.03,
+      "new_value": -2.0
+    },
+    {
+      "cluster_id": "NGC 6681",
+      "field": "flags.inner_galaxy",
+      "old_value": false,
+      "new_value": true
+    },
+    {
+      "cluster_id": "NGC 6681",
+      "field": "position.dec_dms",
+      "old_value": "12.76:-32:17",
+      "new_value": "-32:17:31.6"
+    },
+    {
+      "cluster_id": "NGC 6681",
+      "field": "position.ra_hms",
+      "old_value": "70:18:43",
+      "new_value": "18:43:12.76"
+    },
+    {
+      "cluster_id": "NGC 6681",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.0001,
+      "new_value": 0.0001
+    },
+    {
+      "cluster_id": "NGC 6681",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0026,
+      "new_value": 0.0019
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 7.89
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 7.89,
+      "new_value": null
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "kinematics.v_lsr_kms",
+      "old_value": 0.65,
+      "new_value": null
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "kinematics.v_r_err",
+      "old_value": 0.59,
+      "new_value": null
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "kinematics.v_r_kms",
+      "old_value": 1.37,
+      "new_value": null
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "photometry.dist_mod",
+      "old_value": 22.24,
+      "new_value": 28.15
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "photometry.v_hb",
+      "old_value": 28.15,
+      "new_value": 28.8
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "photometry.v_t",
+      "old_value": null,
+      "new_value": 22.24
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "structure.king_concentration",
+      "old_value": null,
+      "new_value": 1.37
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "structure.r_core_arcmin",
+      "old_value": null,
+      "new_value": 0.59
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "structure.r_core_kpc",
+      "old_value": null,
+      "new_value": 0.0007
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "structure.r_half_arcmin",
+      "old_value": null,
+      "new_value": 0.65
+    },
+    {
+      "cluster_id": "GLIMPSE01",
+      "field": "structure.r_half_kpc",
+      "old_value": null,
+      "new_value": 0.0008
+    },
+    {
+      "cluster_id": "NGC 6715",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": -14.39,
+        "y_kpc": 2.5,
+        "z_kpc": -6.53
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6715",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": -14.09,
+        "r_gc_kpc": 26.5,
+        "x_kpc": 18.9,
+        "y_kpc": 25.6,
+        "z_kpc": 2.5
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6715",
+      "field": "distances.r_gc_kpc",
+      "old_value": 18.91,
+      "new_value": 18.9
+    },
+    {
+      "cluster_id": "NGC 6715",
+      "field": "distances.x_kpc",
+      "old_value": 25.58,
+      "new_value": 25.6
+    },
+    {
+      "cluster_id": "NGC 6715",
+      "field": "distances.y_kpc",
+      "old_value": 2.51,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "NGC 6715",
+      "field": "distances.z_kpc",
+      "old_value": -6.45,
+      "new_value": -6.5
+    },
+    {
+      "cluster_id": "NGC 6715",
+      "field": "position.dec_dms",
+      "old_value": "03.33:-30:28",
+      "new_value": "-30:28:47.5"
+    },
+    {
+      "cluster_id": "NGC 6715",
+      "field": "position.ra_hms",
+      "old_value": "54:18:55",
+      "new_value": "18:55:03.33"
+    },
+    {
+      "cluster_id": "NGC 6715",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.0004,
+      "new_value": 0.0007
+    },
+    {
+      "cluster_id": "NGC 6715",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0034,
+      "new_value": 0.0063
+    },
+    {
+      "cluster_id": "NGC 6717",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 6.52
+    },
+    {
+      "cluster_id": "NGC 6717",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.22
+    },
+    {
+      "cluster_id": "NGC 6717",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.08,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6717",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.07,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6717",
+      "field": "structure.king_concentration",
+      "old_value": 0.68,
+      "new_value": 2.07
+    },
+    {
+      "cluster_id": "NGC 6717",
+      "field": "structure.log_rho0",
+      "old_value": 8.22,
+      "new_value": 4.58
+    },
+    {
+      "cluster_id": "NGC 6717",
+      "field": "structure.mu_v_central",
+      "old_value": 6.52,
+      "new_value": 16.77
+    },
+    {
+      "cluster_id": "NGC 6717",
+      "field": "structure.r_core_arcmin",
+      "old_value": 16.77,
+      "new_value": 0.08
+    },
+    {
+      "cluster_id": "NGC 6717",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0346,
+      "new_value": 0.0002
+    },
+    {
+      "cluster_id": "NGC 6717",
+      "field": "structure.r_half_arcmin",
+      "old_value": 4.58,
+      "new_value": 0.68
+    },
+    {
+      "cluster_id": "NGC 6717",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0095,
+      "new_value": 0.0014
+    },
+    {
+      "cluster_id": "NGC 6723",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.79
+    },
+    {
+      "cluster_id": "NGC 6723",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.24
+    },
+    {
+      "cluster_id": "NGC 6723",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.83,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6723",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.11,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6723",
+      "field": "structure.king_concentration",
+      "old_value": 1.53,
+      "new_value": 1.11
+    },
+    {
+      "cluster_id": "NGC 6723",
+      "field": "structure.log_rho0",
+      "old_value": 9.24,
+      "new_value": 2.79
+    },
+    {
+      "cluster_id": "NGC 6723",
+      "field": "structure.mu_v_central",
+      "old_value": 8.79,
+      "new_value": 18.13
+    },
+    {
+      "cluster_id": "NGC 6723",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.13,
+      "new_value": 0.83
+    },
+    {
+      "cluster_id": "NGC 6723",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0459,
+      "new_value": 0.0021
+    },
+    {
+      "cluster_id": "NGC 6723",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.79,
+      "new_value": 1.53
+    },
+    {
+      "cluster_id": "NGC 6723",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0071,
+      "new_value": 0.0039
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.59
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.78
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.62,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.79,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "photometry.ellipticity",
+      "old_value": 2.14,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "structure.king_concentration",
+      "old_value": 1.1,
+      "new_value": 0.79
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "structure.log_rho0",
+      "old_value": 8.78,
+      "new_value": 3.3
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "structure.mu_v_central",
+      "old_value": 8.59,
+      "new_value": 21.88
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "structure.r_core_arcmin",
+      "old_value": 21.88,
+      "new_value": 0.62
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0503,
+      "new_value": 0.0014
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.3,
+      "new_value": 1.1
+    },
+    {
+      "cluster_id": "NGC 6749",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0076,
+      "new_value": 0.0025
+    },
+    {
+      "cluster_id": "NGC 6760",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 7.96
+    },
+    {
+      "cluster_id": "NGC 6760",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.01
+    },
+    {
+      "cluster_id": "NGC 6760",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.34,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6760",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.65,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6760",
+      "field": "structure.king_concentration",
+      "old_value": 1.27,
+      "new_value": 1.65
+    },
+    {
+      "cluster_id": "NGC 6760",
+      "field": "structure.log_rho0",
+      "old_value": 9.01,
+      "new_value": 3.89
+    },
+    {
+      "cluster_id": "NGC 6760",
+      "field": "structure.mu_v_central",
+      "old_value": 7.96,
+      "new_value": 18.66
+    },
+    {
+      "cluster_id": "NGC 6760",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.66,
+      "new_value": 0.34
+    },
+    {
+      "cluster_id": "NGC 6760",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0402,
+      "new_value": 0.0007
+    },
+    {
+      "cluster_id": "NGC 6760",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.89,
+      "new_value": 1.27
+    },
+    {
+      "cluster_id": "NGC 6760",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0084,
+      "new_value": 0.0027
+    },
+    {
+      "cluster_id": "NGC 6779",
+      "field": "distances.x_kpc",
+      "old_value": 4.4,
+      "new_value": 4.3
+    },
+    {
+      "cluster_id": "NGC 6779",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.15,
+        "bv": 0.86,
+        "vr": 1.16,
+        "vi": 0.03
+      },
+      "new_value": {
+        "ub": 0.15,
+        "bv": 0.86,
+        "vr": null,
+        "vi": 1.16
+      }
+    },
+    {
+      "cluster_id": "NGC 6779",
+      "field": "position.dec_dms",
+      "old_value": "35.57:+30:11",
+      "new_value": "+30:11:00.5"
+    },
+    {
+      "cluster_id": "NGC 6779",
+      "field": "position.ra_hms",
+      "old_value": "56:19:16",
+      "new_value": "19:16:35.57"
+    },
+    {
+      "cluster_id": "NGC 6779",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0011,
+      "new_value": 0.0012
+    },
+    {
+      "cluster_id": "NGC 6779",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0027,
+      "new_value": 0.003
+    },
+    {
+      "cluster_id": "Terzan 7",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.89
+    },
+    {
+      "cluster_id": "Terzan 7",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.96
+    },
+    {
+      "cluster_id": "Terzan 7",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.49,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 7",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.93,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 7",
+      "field": "structure.king_concentration",
+      "old_value": 0.77,
+      "new_value": 0.93
+    },
+    {
+      "cluster_id": "Terzan 7",
+      "field": "structure.log_rho0",
+      "old_value": 8.96,
+      "new_value": 1.63
+    },
+    {
+      "cluster_id": "Terzan 7",
+      "field": "structure.mu_v_central",
+      "old_value": 8.89,
+      "new_value": 20.66
+    },
+    {
+      "cluster_id": "Terzan 7",
+      "field": "structure.r_core_arcmin",
+      "old_value": 20.66,
+      "new_value": 0.49
+    },
+    {
+      "cluster_id": "Terzan 7",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.137,
+      "new_value": 0.0032
+    },
+    {
+      "cluster_id": "Terzan 7",
+      "field": "structure.r_half_arcmin",
+      "old_value": 1.63,
+      "new_value": 0.77
+    },
+    {
+      "cluster_id": "Terzan 7",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0108,
+      "new_value": 0.0051
+    },
+    {
+      "cluster_id": "Pal 10",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.69
+    },
+    {
+      "cluster_id": "Pal 10",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 8.37
+    },
+    {
+      "cluster_id": "Pal 10",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.81,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 10",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.58,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 10",
+      "field": "structure.king_concentration",
+      "old_value": 0.99,
+      "new_value": 0.58
+    },
+    {
+      "cluster_id": "Pal 10",
+      "field": "structure.log_rho0",
+      "old_value": 8.37,
+      "new_value": 3.51
+    },
+    {
+      "cluster_id": "Pal 10",
+      "field": "structure.mu_v_central",
+      "old_value": 8.69,
+      "new_value": 22.03
+    },
+    {
+      "cluster_id": "Pal 10",
+      "field": "structure.r_core_arcmin",
+      "old_value": 22.03,
+      "new_value": 0.81
+    },
+    {
+      "cluster_id": "Pal 10",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0378,
+      "new_value": 0.0014
+    },
+    {
+      "cluster_id": "Pal 10",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.51,
+      "new_value": 0.99
+    },
+    {
+      "cluster_id": "Pal 10",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.006,
+      "new_value": 0.0017
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.39
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.7
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "kinematics.sig_v_err",
+      "old_value": 1.19,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.88,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.86,
+        "bv": null,
+        "vr": null,
+        "vi": null
+      },
+      "new_value": {
+        "ub": null,
+        "bv": 0.86,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "photometry.ellipticity",
+      "old_value": 0.86,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "structure.king_concentration",
+      "old_value": 1.77,
+      "new_value": 0.88
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "structure.log_rho0",
+      "old_value": 9.7,
+      "new_value": -0.25
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "structure.mu_v_central",
+      "old_value": 9.39,
+      "new_value": 24.26
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "structure.r_core_arcmin",
+      "old_value": 24.26,
+      "new_value": 1.19
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.2018,
+      "new_value": 0.0099
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "structure.r_half_arcmin",
+      "old_value": -0.25,
+      "new_value": 1.77
+    },
+    {
+      "cluster_id": "Arp 2",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0021,
+      "new_value": 0.0147
+    },
+    {
+      "cluster_id": "NGC 6809",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 3.15,
+        "y_kpc": 0.76,
+        "z_kpc": -2.12
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6809",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": -23.27,
+        "r_gc_kpc": 5.4,
+        "x_kpc": 3.9,
+        "y_kpc": 4.9,
+        "z_kpc": 0.8
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6809",
+      "field": "distances.r_gc_kpc",
+      "old_value": 3.92,
+      "new_value": 3.9
+    },
+    {
+      "cluster_id": "NGC 6809",
+      "field": "distances.r_sun_kpc",
+      "old_value": 5.37,
+      "new_value": 5.4
+    },
+    {
+      "cluster_id": "NGC 6809",
+      "field": "distances.x_kpc",
+      "old_value": 4.88,
+      "new_value": 4.9
+    },
+    {
+      "cluster_id": "NGC 6809",
+      "field": "distances.y_kpc",
+      "old_value": 0.75,
+      "new_value": 0.8
+    },
+    {
+      "cluster_id": "NGC 6809",
+      "field": "distances.z_kpc",
+      "old_value": -2.12,
+      "new_value": -2.1
+    },
+    {
+      "cluster_id": "NGC 6809",
+      "field": "position.dec_dms",
+      "old_value": "59.71:-30:57",
+      "new_value": "-30:57:53.1"
+    },
+    {
+      "cluster_id": "NGC 6809",
+      "field": "position.ra_hms",
+      "old_value": "55:19:39",
+      "new_value": "19:39:59.71"
+    },
+    {
+      "cluster_id": "NGC 6809",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.0122,
+      "new_value": 0.0028
+    },
+    {
+      "cluster_id": "NGC 6809",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0192,
+      "new_value": 0.0044
+    },
+    {
+      "cluster_id": "Terzan 8",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.46
+    },
+    {
+      "cluster_id": "Terzan 8",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.21
+    },
+    {
+      "cluster_id": "Terzan 8",
+      "field": "kinematics.sig_v_err",
+      "old_value": 1.0,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 8",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.6,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Terzan 8",
+      "field": "structure.king_concentration",
+      "old_value": 0.95,
+      "new_value": 0.6
+    },
+    {
+      "cluster_id": "Terzan 8",
+      "field": "structure.log_rho0",
+      "old_value": 9.21,
+      "new_value": 0.53
+    },
+    {
+      "cluster_id": "Terzan 8",
+      "field": "structure.mu_v_central",
+      "old_value": 9.46,
+      "new_value": 22.82
+    },
+    {
+      "cluster_id": "Terzan 8",
+      "field": "structure.r_core_arcmin",
+      "old_value": 22.82,
+      "new_value": 1.0
+    },
+    {
+      "cluster_id": "Terzan 8",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.1746,
+      "new_value": 0.0077
+    },
+    {
+      "cluster_id": "Terzan 8",
+      "field": "structure.r_half_arcmin",
+      "old_value": 0.53,
+      "new_value": 0.95
+    },
+    {
+      "cluster_id": "Terzan 8",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0041,
+      "new_value": 0.0073
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 9.61
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.34
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "kinematics.sig_v_err",
+      "old_value": 1.19,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 0.57,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 1.27,
+        "bv": null,
+        "vr": null,
+        "vi": null
+      },
+      "new_value": {
+        "ub": null,
+        "bv": 1.27,
+        "vr": null,
+        "vi": null
+      }
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "photometry.ellipticity",
+      "old_value": 1.27,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "structure.king_concentration",
+      "old_value": 1.46,
+      "new_value": 0.57
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "structure.log_rho0",
+      "old_value": 9.34,
+      "new_value": 2.29
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "structure.mu_v_central",
+      "old_value": 9.61,
+      "new_value": 19.72
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "structure.r_core_arcmin",
+      "old_value": 19.72,
+      "new_value": 1.19
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.0769,
+      "new_value": 0.0046
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.29,
+      "new_value": 1.46
+    },
+    {
+      "cluster_id": "Pal 11",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0089,
+      "new_value": 0.0057
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 5.77,
+        "y_kpc": 4.76,
+        "z_kpc": -0.29
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": -4.56,
+        "r_gc_kpc": 4.0,
+        "x_kpc": 6.7,
+        "y_kpc": 2.2,
+        "z_kpc": 3.4
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "distances.r_gc_kpc",
+      "old_value": 6.74,
+      "new_value": 6.7
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "distances.r_sun_kpc",
+      "old_value": 4.01,
+      "new_value": 4.0
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "distances.x_kpc",
+      "old_value": 2.19,
+      "new_value": 2.2
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "distances.y_kpc",
+      "old_value": 3.34,
+      "new_value": 3.4
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "distances.z_kpc",
+      "old_value": -0.32,
+      "new_value": -0.3
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "position.dec_dms",
+      "old_value": "46.49:+18:46",
+      "new_value": "+18:46:45.1"
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "position.l_deg",
+      "old_value": 56.74,
+      "new_value": 56.75
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "position.ra_hms",
+      "old_value": "71:19:53",
+      "new_value": "19:53:46.49"
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.0008,
+      "new_value": 0.0007
+    },
+    {
+      "cluster_id": "NGC 6838",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0022,
+      "new_value": 0.0019
+    },
+    {
+      "cluster_id": "NGC 6864",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": -6.47,
+        "y_kpc": 6.56,
+        "z_kpc": -9.08
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6864",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": -25.75,
+        "r_gc_kpc": 20.9,
+        "x_kpc": 14.7,
+        "y_kpc": 17.6,
+        "z_kpc": 6.5
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6864",
+      "field": "distances.r_gc_kpc",
+      "old_value": 14.72,
+      "new_value": 14.7
+    },
+    {
+      "cluster_id": "NGC 6864",
+      "field": "distances.r_sun_kpc",
+      "old_value": 20.51,
+      "new_value": 20.9
+    },
+    {
+      "cluster_id": "NGC 6864",
+      "field": "distances.x_kpc",
+      "old_value": 17.33,
+      "new_value": 17.6
+    },
+    {
+      "cluster_id": "NGC 6864",
+      "field": "distances.y_kpc",
+      "old_value": 6.41,
+      "new_value": 6.5
+    },
+    {
+      "cluster_id": "NGC 6864",
+      "field": "distances.z_kpc",
+      "old_value": -8.91,
+      "new_value": -9.1
+    },
+    {
+      "cluster_id": "NGC 6864",
+      "field": "position.dec_dms",
+      "old_value": "04.69:-21:55",
+      "new_value": "-21:55:16.2"
+    },
+    {
+      "cluster_id": "NGC 6864",
+      "field": "position.ra_hms",
+      "old_value": "75:20:06",
+      "new_value": "20:06:04.69"
+    },
+    {
+      "cluster_id": "NGC 6864",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.0007,
+      "new_value": 0.0005
+    },
+    {
+      "cluster_id": "NGC 6864",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0034,
+      "new_value": 0.0028
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": -8.31,
+        "y_kpc": 8.28,
+        "z_kpc": -9.19
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": -32.68,
+        "r_gc_kpc": 17.0,
+        "x_kpc": 12.9,
+        "y_kpc": 11.7,
+        "z_kpc": 8.3
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "distances.r_sun_kpc",
+      "old_value": 16.71,
+      "new_value": 17.0
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "distances.x_kpc",
+      "old_value": 11.5,
+      "new_value": 11.7
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "distances.y_kpc",
+      "old_value": 8.1,
+      "new_value": 8.3
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "distances.z_kpc",
+      "old_value": -9.02,
+      "new_value": -9.2
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.72
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.23
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.46,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.21,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "position.dec_dms",
+      "old_value": "27.70:-12:32",
+      "new_value": "-12:32:14.3"
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "position.ra_hms",
+      "old_value": "72:20:53",
+      "new_value": "20:53:27.70"
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "structure.king_concentration",
+      "old_value": 0.93,
+      "new_value": 1.21
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "structure.log_rho0",
+      "old_value": 9.23,
+      "new_value": 2.38
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "structure.mu_v_central",
+      "old_value": 8.72,
+      "new_value": 19.02
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "structure.r_core_arcmin",
+      "old_value": 19.02,
+      "new_value": 0.46
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.1808,
+      "new_value": 0.0023
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.38,
+      "new_value": 0.93
+    },
+    {
+      "cluster_id": "NGC 6981",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0226,
+      "new_value": 0.0046
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 8.66
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.42
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.17,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 1.41,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.06,
+        "bv": 0.75,
+        "vr": 0.98,
+        "vi": 0.01
+      },
+      "new_value": {
+        "ub": 0.06,
+        "bv": 0.75,
+        "vr": null,
+        "vi": 0.98
+      }
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "structure.king_concentration",
+      "old_value": 0.44,
+      "new_value": 1.41
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "structure.log_rho0",
+      "old_value": 9.42,
+      "new_value": 2.58
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "structure.mu_v_central",
+      "old_value": 8.66,
+      "new_value": 18.62
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "structure.r_core_arcmin",
+      "old_value": 18.62,
+      "new_value": 0.17
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.2232,
+      "new_value": 0.002
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "structure.r_half_arcmin",
+      "old_value": 2.58,
+      "new_value": 0.44
+    },
+    {
+      "cluster_id": "NGC 7006",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0309,
+      "new_value": 0.0053
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 4.61,
+        "y_kpc": 8.29,
+        "z_kpc": -4.87
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": -27.31,
+        "r_gc_kpc": 10.4,
+        "x_kpc": 10.4,
+        "y_kpc": 3.9,
+        "z_kpc": 8.3
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "distances.r_gc_kpc",
+      "old_value": 10.39,
+      "new_value": 10.4
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "distances.r_sun_kpc",
+      "old_value": 10.73,
+      "new_value": 10.4
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "distances.x_kpc",
+      "old_value": 4.03,
+      "new_value": 3.9
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "distances.y_kpc",
+      "old_value": 8.64,
+      "new_value": 8.3
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "distances.z_kpc",
+      "old_value": -4.92,
+      "new_value": -4.8
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.06,
+        "bv": 0.68,
+        "vr": 0.85,
+        "vi": 0.05
+      },
+      "new_value": {
+        "ub": 0.06,
+        "bv": 0.68,
+        "vr": null,
+        "vi": 0.85
+      }
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "position.dec_dms",
+      "old_value": "58.33:+12:10",
+      "new_value": "+12:10:01.2"
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "position.ra_hms",
+      "old_value": "15:21:29",
+      "new_value": "21:29:58.33"
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.0011,
+      "new_value": 0.0004
+    },
+    {
+      "cluster_id": "NGC 7078",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.0079,
+      "new_value": 0.003
+    },
+    {
+      "cluster_id": "NGC 7099",
+      "field": "distances._pre_frame_fix",
+      "old_value": {
+        "x_kpc": 2.59,
+        "y_kpc": 2.49,
+        "z_kpc": -5.9
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 7099",
+      "field": "distances._v132_shifted",
+      "old_value": {
+        "r_sun_kpc": -46.84,
+        "r_gc_kpc": 8.1,
+        "x_kpc": 7.1,
+        "y_kpc": 4.9,
+        "z_kpc": 2.5
+      },
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 7099",
+      "field": "distances.r_gc_kpc",
+      "old_value": 7.06,
+      "new_value": 7.1
+    },
+    {
+      "cluster_id": "NGC 7099",
+      "field": "distances.r_sun_kpc",
+      "old_value": 8.48,
+      "new_value": 8.1
+    },
+    {
+      "cluster_id": "NGC 7099",
+      "field": "distances.x_kpc",
+      "old_value": 5.16,
+      "new_value": 4.9
+    },
+    {
+      "cluster_id": "NGC 7099",
+      "field": "distances.y_kpc",
+      "old_value": 2.65,
+      "new_value": 2.5
+    },
+    {
+      "cluster_id": "NGC 7099",
+      "field": "distances.z_kpc",
+      "old_value": -6.19,
+      "new_value": -5.9
+    },
+    {
+      "cluster_id": "NGC 7099",
+      "field": "position.dec_dms",
+      "old_value": "22.12:-23:10",
+      "new_value": "-23:10:47.5"
+    },
+    {
+      "cluster_id": "NGC 7099",
+      "field": "position.ra_hms",
+      "old_value": "30:21:40",
+      "new_value": "21:40:22.12"
+    },
+    {
+      "cluster_id": "NGC 7099",
+      "field": "structure.r_core_kpc",
+      "old_value": -0.0008,
+      "new_value": 0.0001
+    },
+    {
+      "cluster_id": "NGC 7099",
+      "field": "structure.r_half_kpc",
+      "old_value": -0.014,
+      "new_value": 0.0024
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "dynamics.log_t_rc_yr",
+      "old_value": null,
+      "new_value": 5.22
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "dynamics.log_t_rh_yr",
+      "old_value": null,
+      "new_value": 9.28
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "kinematics.sig_v_err",
+      "old_value": 0.02,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "kinematics.sig_v_kms",
+      "old_value": 2.98,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "photometry.ellipticity",
+      "old_value": 1.07,
+      "new_value": null
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "structure.king_concentration",
+      "old_value": 1.72,
+      "new_value": 2.98
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "structure.log_rho0",
+      "old_value": 9.28,
+      "new_value": 3.64
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "structure.mu_v_central",
+      "old_value": 5.22,
+      "new_value": 19.21
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "structure.r_core_arcmin",
+      "old_value": 19.21,
+      "new_value": 0.02
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "structure.r_core_kpc",
+      "old_value": 0.1062,
+      "new_value": 0.0001
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "structure.r_half_arcmin",
+      "old_value": 3.64,
+      "new_value": 1.72
+    },
+    {
+      "cluster_id": "Pal 12",
+      "field": "structure.r_half_kpc",
+      "old_value": 0.0201,
+      "new_value": 0.0095
+    },
+    {
+      "cluster_id": "Pal 13",
+      "field": "photometry.ellipticity",
+      "old_value": 0.76,
+      "new_value": null
+    },
+    {
+      "cluster_id": "NGC 7492",
+      "field": "photometry.colors",
+      "old_value": {
+        "ub": 0.23,
+        "bv": 0.42,
+        "vr": 0.24,
+        "vi": null
+      },
+      "new_value": {
+        "ub": 0.23,
+        "bv": 0.42,
+        "vr": null,
+        "vi": null
+      }
+    }
+  ]
+}
