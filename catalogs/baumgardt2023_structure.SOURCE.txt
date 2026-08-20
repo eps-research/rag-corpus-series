@@ -1,0 +1,4 @@
+Baumgardt et al. 2023 (v4 database, March 2023) -- structural parameters
+https://people.smp.uq.edu.au/HolgerBaumgardt/globular/parameter.html
+Ragged by design: columns 32-34 (a_rot, a_rot_err, p_rot) are present
+only where rotation is measured. 32/34/35 columns all occur.
