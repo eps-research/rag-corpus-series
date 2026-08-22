@@ -6,7 +6,7 @@ Two tracks:
   - Ages 15-18: hs_b_01 to hs_b_10 (high school, some algebra, basic Python)
 
 Run from: ~/Documents/rag-corpus-series/examples/highschool/
-Requires: rotation_curve_corpus_v7.json in the same directory.
+Requires canonical corpora under ../hi, ../dwarfs, ../highz, and ../gc.
 
 Usage:
     python3 build_highschool_examples.py
@@ -33,1216 +33,141 @@ def code(text):
 
 notebooks = {}
 
-# ══════════════════════════════════════════════════════════════════════════════
-# TRACK A: Ages 12-14 (Middle School)
-# Very simple Python, lots of visuals, conversational tone
-# ══════════════════════════════════════════════════════════════════════════════
-
-# ── HS-A-01: What is a galaxy? ────────────────────────────────────────────────
-notebooks["hs_a_01_what_is_a_galaxy.ipynb"] = nb([
-md("""# 🌌 What Is a Galaxy?
-### EPS Research High-School Exploration Track — Ages 12-14
-
-A **galaxy** is a giant collection of stars, gas, and dust held together by gravity.
-Our home galaxy is called the **Milky Way**.
-
-There are hundreds of billions of galaxies in the observable universe —
-each one containing billions of stars!
-
-In this notebook, we'll look at real data from **438 galaxies**
-collected by scientists and organized by EPS Research.
-
-**You don't need to understand all the code — just run each cell and look at the pictures!**
-
-> 💡 **To run a cell:** Click on it and press **Shift + Enter**"""),
-code("""# Let's load the galaxy data
-import json
-import matplotlib.pyplot as plt
-
-# Open the galaxy database
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-# How many galaxies are there?
-galaxies = corpus['galaxies']
-print(f"🌌 We have data on {len(galaxies)} galaxies!")
-print()
-print("These galaxies come from four big surveys:")
-from collections import Counter
-surveys = Counter(g['survey'] for g in galaxies)
-for name, count in surveys.items():
-    print(f"  ⭐ {name}: {count} galaxies")"""),
-code("""# Let's make a pie chart showing where the galaxies come from
-COLORS = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12']
-labels = list(surveys.keys())
-sizes  = list(surveys.values())
-
-fig, ax = plt.subplots(figsize=(7, 5))
-ax.pie(sizes, labels=labels, colors=COLORS, autopct='%1.0f%%',
-       textprops={'fontsize': 11}, startangle=90)
-ax.set_title('Our Galaxy Database\\n438 galaxies from 4 different surveys! 🌌',
-             fontsize=12)
-plt.tight_layout()
-plt.savefig('hs_a_01_galaxy_surveys.png', dpi=150, bbox_inches='tight')
-plt.show()
-print("Nice chart! Each color represents galaxies from a different survey.")"""),
-md("""## What did we just do?
-
-We just loaded a database of **438 real galaxies** and counted how many
-came from each survey. Scientists use different telescopes to study
-different kinds of galaxies.
-
-**Questions to think about:**
-- Which survey has the most galaxies?
-- Why might scientists need different surveys?
-
-In the next notebook, we'll learn what a **rotation curve** is! 🚀""")
+notebooks['hs_a_01_what_is_a_galaxy.ipynb'] = nb([
+    md("# 🌌 What Is a Galaxy?\n### EPS Research High-School Exploration Track — Ages 12-14\n\nA **galaxy** is a giant collection of stars, gas, and dust held together by gravity.\nOur home galaxy is called the **Milky Way**.\n\nThere are hundreds of billions of galaxies in the observable universe —\neach one containing billions of stars!\n\nIn this notebook, we'll look at real data from **438 galaxies**\ncollected by scientists and organized by EPS Research.\n\n**You don't need to understand all the code — just run each cell and look at the pictures!**\n\n> 💡 **To run a cell:** Click on it and press **Shift + Enter**"),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('# Let\'s load the galaxy data\nimport json\nimport matplotlib.pyplot as plt\n\n# Open the galaxy database\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\n# How many galaxies are there?\ngalaxies = corpus[\'galaxies\']\nprint(f"🌌 We have data on {len(galaxies)} galaxies!")\nprint()\nprint("These galaxies come from four big surveys:")\nfrom collections import Counter\nsurveys = Counter(g[\'survey\'] for g in galaxies)\nfor name, count in surveys.items():\n    print(f"  ⭐ {name}: {count} galaxies")'),
+    code('# Let\'s make a pie chart showing where the galaxies come from\nCOLORS = [\'#3498db\', \'#e74c3c\', \'#2ecc71\', \'#f39c12\']\nlabels = list(surveys.keys())\nsizes  = list(surveys.values())\n\nfig, ax = plt.subplots(figsize=(7, 5))\nax.pie(sizes, labels=labels, colors=COLORS, autopct=\'%1.0f%%\',\n       textprops={\'fontsize\': 11}, startangle=90)\nax.set_title(\'Our Galaxy Database\\n438 galaxies from 4 different surveys! 🌌\',\n             fontsize=12)\nplt.tight_layout()\nplt.savefig(\'hs_a_01_galaxy_surveys.png\', dpi=150, bbox_inches=\'tight\')\nplt.show()\nprint("Nice chart! Each color represents galaxies from a different survey.")'),
+    md("## What did we just do?\n\nWe just loaded a database of **438 real galaxies** and counted how many\ncame from each survey. Scientists use different telescopes to study\ndifferent kinds of galaxies.\n\n**Questions to think about:**\n- Which survey has the most galaxies?\n- Why might scientists need different surveys?\n\nIn the next notebook, we'll learn what a **rotation curve** is! 🚀")
 ])
 
-# ── HS-A-02: What is a rotation curve? ───────────────────────────────────────
-notebooks["hs_a_02_what_is_a_rotation_curve.ipynb"] = nb([
-md("""# 🌀 What Is a Rotation Curve?
-### EPS Research High-School Exploration Track — Ages 12-14
-
-Imagine spinning a bicycle wheel. The outside of the wheel moves faster
-than the inside — they have to travel farther in the same time.
-
-But galaxies are **weird**! Their stars all spin at about the **same speed**,
-no matter how far from the center. This is called a **flat rotation curve**,
-and it's one of the biggest mysteries in science!
-
-Let's look at a real galaxy rotation curve. We'll use **DDO161**,
-a small galaxy about 7.5 million light-years away."""),
-code("""import json
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-# Find DDO161
-galaxy = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')
-
-# Get the rotation data
-data   = galaxy['data']
-radius = [point['Rad']  for point in data]   # distance from center (kpc)
-speed  = [point['Vobs'] for point in data]   # speed of stars (km/s)
-
-print(f"Galaxy: {galaxy['galaxy']}")
-print(f"Distance from Earth: {galaxy['distance_mpc']} Megaparsecs")
-print(f"  (that's about {galaxy['distance_mpc'] * 3.26:.0f} million light-years!)")
-print(f"Number of measurements: {len(data)}")
-print()
-print("First few measurements:")
-print(f"  {'Radius (kpc)':>14}  {'Speed (km/s)':>12}")
-for r, s in zip(radius[:5], speed[:5]):
-    print(f"  {r:>14.2f}  {s:>12.1f}")"""),
-code("""fig, ax = plt.subplots(figsize=(9, 5))
-ax.plot(radius, speed, 'o-', color='#3498db', linewidth=2, markersize=7,
-        label='Speed of stars')
-ax.set_xlabel('Distance from galaxy center (kpc)', fontsize=12)
-ax.set_ylabel('Speed of stars (km/s)', fontsize=12)
-ax.set_title('DDO161 — A Real Galaxy Rotation Curve 🌀\\n'
-             'Notice: stars far from the center are NOT slowing down!',
-             fontsize=11)
-ax.legend(fontsize=10)
-ax.text(0.97, 0.08,
-        f'This galaxy is {galaxy["distance_mpc"]*3.26:.0f} million\\nlight-years away!',
-        transform=ax.transAxes, ha='right', fontsize=9,
-        bbox=dict(boxstyle='round', fc='lightyellow', alpha=0.9))
-plt.tight_layout()
-plt.savefig('hs_a_02_rotation_curve.png', dpi=150, bbox_inches='tight')
-plt.show()"""),
-md("""## Why is this mysterious? 🤔
-
-If all the mass in a galaxy were just the stars we can see,
-then the stars far from the center should be moving **slower** —
-just like the outer planets in our solar system move slower than inner ones.
-
-But they **don't slow down**! Something invisible is keeping them moving fast.
-Scientists call this invisible something **dark matter**.
-
-In the next notebook, we'll explore the dark matter problem! 🌑""")
+notebooks['hs_a_02_what_is_a_rotation_curve.ipynb'] = nb([
+    md("# 🌀 What Is a Rotation Curve?\n### EPS Research High-School Exploration Track — Ages 12-14\n\nImagine spinning a bicycle wheel. The outside of the wheel moves faster\nthan the inside — they have to travel farther in the same time.\n\nBut galaxies are **weird**! Their stars all spin at about the **same speed**,\nno matter how far from the center. This is called a **flat rotation curve**,\nand it's one of the biggest mysteries in science!\n\nLet's look at a real galaxy rotation curve. We'll use **DDO161**,\na small galaxy about 7.5 million light-years away."),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import json\nimport matplotlib.pyplot as plt\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\n# Find DDO161\ngalaxy = next(g for g in corpus[\'galaxies\'] if g[\'galaxy\'] == \'DDO161\')\n\n# Get the rotation data\ndata   = galaxy[\'data\']\nradius = [point[\'Rad\']  for point in data]   # distance from center (kpc)\nspeed  = [point[\'Vobs\'] for point in data]   # speed of stars (km/s)\n\nprint(f"Galaxy: {galaxy[\'galaxy\']}")\nprint(f"Distance from Earth: {galaxy[\'distance_mpc\']} Megaparsecs")\nprint(f"  (that\'s about {galaxy[\'distance_mpc\'] * 3.26:.0f} million light-years!)")\nprint(f"Number of measurements: {len(data)}")\nprint()\nprint("First few measurements:")\nprint(f"  {\'Radius (kpc)\':>14}  {\'Speed (km/s)\':>12}")\nfor r, s in zip(radius[:5], speed[:5]):\n    print(f"  {r:>14.2f}  {s:>12.1f}")'),
+    code('fig, ax = plt.subplots(figsize=(9, 5))\nax.plot(radius, speed, \'o-\', color=\'#3498db\', linewidth=2, markersize=7,\n        label=\'Speed of stars\')\nax.set_xlabel(\'Distance from galaxy center (kpc)\', fontsize=12)\nax.set_ylabel(\'Speed of stars (km/s)\', fontsize=12)\nax.set_title(\'DDO161 — A Real Galaxy Rotation Curve 🌀\\n\'\n             \'Notice: stars far from the center are NOT slowing down!\',\n             fontsize=11)\nax.legend(fontsize=10)\nax.text(0.97, 0.08,\n        f\'This galaxy is {galaxy["distance_mpc"]*3.26:.0f} million\\nlight-years away!\',\n        transform=ax.transAxes, ha=\'right\', fontsize=9,\n        bbox=dict(boxstyle=\'round\', fc=\'lightyellow\', alpha=0.9))\nplt.tight_layout()\nplt.savefig(\'hs_a_02_rotation_curve.png\', dpi=150, bbox_inches=\'tight\')\nplt.show()'),
+    md("## Why is this mysterious? 🤔\n\nIf all the mass in a galaxy were just the stars we can see,\nthen the stars far from the center should be moving **slower** —\njust like the outer planets in our solar system move slower than inner ones.\n\nBut they **don't slow down**! Something invisible is keeping them moving fast.\nScientists call this invisible something **dark matter**.\n\nIn the next notebook, we'll explore the dark matter problem! 🌑")
 ])
 
-# ── HS-A-03: The dark matter mystery ─────────────────────────────────────────
-notebooks["hs_a_03_dark_matter_mystery.ipynb"] = nb([
-md("""# 🌑 The Dark Matter Mystery
-### EPS Research High-School Exploration Track — Ages 12-14
-
-Here's the mystery: galaxies spin too fast.
-
-If we add up all the mass we can SEE (stars, gas, dust),
-and calculate how fast things should spin based on that mass,
-we get a curve that **falls off** at large distances.
-
-But what we OBSERVE is a curve that stays **flat**.
-
-The difference must be caused by something we **can't see**.
-Scientists call it **dark matter**. It's not dark like night —
-it's dark because it doesn't give off any light at all!
-
-Let's see this for ourselves using real SPARC data."""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-galaxy = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')
-data   = galaxy['data']
-
-radius = np.array([p['Rad']   for p in data])
-speed  = np.array([p['Vobs']  for p in data])
-vgas   = np.array([p['Vgas']  for p in data])
-vdisk  = np.array([p['Vdisk'] for p in data])
-
-# What we'd expect from just the visible matter
-visible_speed = np.sqrt(np.abs(vgas**2) + vdisk**2)
-
-print("Comparing observed speed vs. visible matter speed:")
-print(f"  {'Radius':>8}  {'Observed':>10}  {'Visible only':>13}")
-for r, obs, vis in zip(radius[:6], speed[:6], visible_speed[:6]):
-    print(f"  {r:>8.2f}  {obs:>10.1f}  {vis:>13.1f}")"""),
-code("""fig, ax = plt.subplots(figsize=(9, 5))
-ax.plot(radius, speed, 'o-', color='#3498db', linewidth=2, markersize=6,
-        label='⭐ What we OBSERVE (actual star speeds)')
-ax.plot(radius, visible_speed, 's--', color='#e74c3c', linewidth=2, markersize=6,
-        label='👁 What visible matter PREDICTS')
-
-ax.fill_between(radius, visible_speed, speed, alpha=0.15, color='purple',
-                label='🌑 The gap = DARK MATTER?')
-
-ax.set_xlabel('Distance from center (kpc)', fontsize=12)
-ax.set_ylabel('Speed (km/s)', fontsize=12)
-ax.set_title('The Dark Matter Mystery — DDO161\\n'
-             'Something invisible keeps stars moving fast!', fontsize=11)
-ax.legend(fontsize=9)
-plt.tight_layout()
-plt.savefig('hs_a_03_dark_matter.png', dpi=150, bbox_inches='tight')
-plt.show()"""),
-md("""## The gap between the lines is the mystery!
-
-The **blue line** is what we actually measure.
-The **red line** is what physics predicts from the matter we can see.
-
-The **purple shaded area** between them represents the "missing mass" —
-the dark matter that must be there to make the math work.
-
-Scientists have been trying to solve this mystery for 50 years!
-EPS Research is working on a new approach called the **omega correction**.
-We'll learn about that in later notebooks. 🔬""")
+notebooks['hs_a_03_dark_matter_mystery.ipynb'] = nb([
+    md("# 🌑 The Dark Matter Mystery\n### EPS Research High-School Exploration Track — Ages 12-14\n\nHere's the mystery: galaxies spin too fast.\n\nIf we add up all the mass we can SEE (stars, gas, dust),\nand calculate how fast things should spin based on that mass,\nwe get a curve that **falls off** at large distances.\n\nBut what we OBSERVE is a curve that stays **flat**.\n\nThe difference must be caused by something we **can't see**.\nScientists call it **dark matter**. It's not dark like night —\nit's dark because it doesn't give off any light at all!\n\nLet's see this for ourselves using real SPARC data."),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\ngalaxy = next(g for g in corpus[\'galaxies\'] if g[\'galaxy\'] == \'DDO161\')\ndata   = galaxy[\'data\']\n\nradius = np.array([p[\'Rad\']   for p in data])\nspeed  = np.array([p[\'Vobs\']  for p in data])\nvgas   = np.array([p[\'Vgas\']  for p in data])\nvdisk  = np.array([p[\'Vdisk\'] for p in data])\n\n# What we\'d expect from just the visible matter\nvisible_speed = np.sqrt(np.abs(vgas**2) + vdisk**2)\n\nprint("Comparing observed speed vs. visible matter speed:")\nprint(f"  {\'Radius\':>8}  {\'Observed\':>10}  {\'Visible only\':>13}")\nfor r, obs, vis in zip(radius[:6], speed[:6], visible_speed[:6]):\n    print(f"  {r:>8.2f}  {obs:>10.1f}  {vis:>13.1f}")'),
+    code("fig, ax = plt.subplots(figsize=(9, 5))\nax.plot(radius, speed, 'o-', color='#3498db', linewidth=2, markersize=6,\n        label='⭐ What we OBSERVE (actual star speeds)')\nax.plot(radius, visible_speed, 's--', color='#e74c3c', linewidth=2, markersize=6,\n        label='👁 What visible matter PREDICTS')\n\nax.fill_between(radius, visible_speed, speed, alpha=0.15, color='purple',\n                label='🌑 The gap = DARK MATTER?')\n\nax.set_xlabel('Distance from center (kpc)', fontsize=12)\nax.set_ylabel('Speed (km/s)', fontsize=12)\nax.set_title('The Dark Matter Mystery — DDO161\\n'\n             'Something invisible keeps stars moving fast!', fontsize=11)\nax.legend(fontsize=9)\nplt.tight_layout()\nplt.savefig('hs_a_03_dark_matter.png', dpi=150, bbox_inches='tight')\nplt.show()"),
+    md('## The gap between the lines is the mystery!\n\nThe **blue line** is what we actually measure.\nThe **red line** is what physics predicts from the matter we can see.\n\nThe **purple shaded area** between them represents the "missing mass" —\nthe dark matter that must be there to make the math work.\n\nScientists have been trying to solve this mystery for 50 years!\nEPS Research is working on a new approach called the **omega correction**.\nWe\'ll learn about that in later notebooks. 🔬')
 ])
 
-# ── HS-A-04: Plot your first galaxy ───────────────────────────────────────────
-notebooks["hs_a_04_plot_your_galaxy.ipynb"] = nb([
-md("""# 🎨 Plot Your Own Galaxy!
-### EPS Research High-School Exploration Track — Ages 12-14
-
-Now it's YOUR turn! In this notebook, you can pick any galaxy
-from our database and plot its rotation curve.
-
-**Try different galaxies and see how different they look!**
-Some are small and slow, some are huge and fast."""),
-code("""import json
-import matplotlib.pyplot as plt
-from collections import Counter
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-# Let's see what galaxies are available
-sparc = [g for g in corpus['galaxies']
-         if g['survey'] == 'SPARC' and g.get('data')]
-
-print(f"There are {len(sparc)} SPARC galaxies to choose from!")
-print()
-print("Here are some interesting ones to try:")
-suggestions = ['DDO161', 'NGC2403', 'NGC3198', 'UGC2885', 'NGC7793']
-for name in suggestions:
-    try:
-        g = next(g for g in sparc if g['galaxy'] == name)
-        vmax = max(p['Vobs'] for p in g['data'])
-        print(f"  {name:<12}  max speed = {vmax:.0f} km/s  "
-              f"distance = {g['distance_mpc']:.1f} Mpc")
-    except StopIteration:
-        pass"""),
-code("""# ✏️ CHANGE THIS to any galaxy name you want to try!
-MY_GALAXY = 'NGC2403'
-
-# Find your galaxy
-try:
-    galaxy = next(g for g in sparc if g['galaxy'] == MY_GALAXY)
-    data   = galaxy['data']
-    R = [p['Rad']  for p in data]
-    V = [p['Vobs'] for p in data]
-    errV = [p.get('errV', 0) for p in data]
-
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.errorbar(R, V, yerr=errV, fmt='o-', color='#9b59b6',
-                capsize=4, linewidth=2, markersize=6)
-    ax.set_xlabel('Distance from center (kpc)', fontsize=12)
-    ax.set_ylabel('Speed (km/s)', fontsize=12)
-    ax.set_title(f'{MY_GALAXY} Rotation Curve\\n'
-                 f'Max speed: {max(V):.0f} km/s  |  '
-                 f'Distance: {galaxy["distance_mpc"]:.1f} Mpc from Earth',
-                 fontsize=11)
-    plt.tight_layout()
-    plt.savefig(f'hs_a_04_{MY_GALAXY}.png', dpi=150, bbox_inches='tight')
-    plt.show()
-    print(f"Great job! You plotted {MY_GALAXY}!")
-    print(f"Try changing MY_GALAXY to a different name and run again!")
-except StopIteration:
-    print(f"Galaxy '{MY_GALAXY}' not found. Try one of the suggestions above!")""")
+notebooks['hs_a_04_plot_your_galaxy.ipynb'] = nb([
+    md("# 🎨 Plot Your Own Galaxy!\n### EPS Research High-School Exploration Track — Ages 12-14\n\nNow it's YOUR turn! In this notebook, you can pick any galaxy\nfrom our database and plot its rotation curve.\n\n**Try different galaxies and see how different they look!**\nSome are small and slow, some are huge and fast."),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import json\nimport matplotlib.pyplot as plt\nfrom collections import Counter\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\n# Let\'s see what galaxies are available\nsparc = [g for g in corpus[\'galaxies\']\n         if g[\'survey\'] == \'SPARC\' and g.get(\'data\')]\n\nprint(f"There are {len(sparc)} SPARC galaxies to choose from!")\nprint()\nprint("Here are some interesting ones to try:")\nsuggestions = [\'DDO161\', \'NGC2403\', \'NGC3198\', \'UGC02885\', \'NGC7793\']\nfor name in suggestions:\n    try:\n        g = next(g for g in sparc if g[\'galaxy\'] == name)\n        vmax = max(p[\'Vobs\'] for p in g[\'data\'])\n        print(f"  {name:<12}  max speed = {vmax:.0f} km/s  "\n              f"distance = {g[\'distance_mpc\']:.1f} Mpc")\n    except StopIteration:\n        pass'),
+    code('# ✏️ CHANGE THIS to any galaxy name you want to try!\nMY_GALAXY = \'NGC2403\'\n\n# Find your galaxy\ntry:\n    galaxy = next(g for g in sparc if g[\'galaxy\'] == MY_GALAXY)\n    data   = galaxy[\'data\']\n    R = [p[\'Rad\']  for p in data]\n    V = [p[\'Vobs\'] for p in data]\n    errV = [p.get(\'errV\', 0) for p in data]\n\n    fig, ax = plt.subplots(figsize=(8, 5))\n    ax.errorbar(R, V, yerr=errV, fmt=\'o-\', color=\'#9b59b6\',\n                capsize=4, linewidth=2, markersize=6)\n    ax.set_xlabel(\'Distance from center (kpc)\', fontsize=12)\n    ax.set_ylabel(\'Speed (km/s)\', fontsize=12)\n    ax.set_title(f\'{MY_GALAXY} Rotation Curve\\n\'\n                 f\'Max speed: {max(V):.0f} km/s  |  \'\n                 f\'Distance: {galaxy["distance_mpc"]:.1f} Mpc from Earth\',\n                 fontsize=11)\n    plt.tight_layout()\n    plt.savefig(f\'hs_a_04_{MY_GALAXY}.png\', dpi=150, bbox_inches=\'tight\')\n    plt.show()\n    print(f"Great job! You plotted {MY_GALAXY}!")\n    print(f"Try changing MY_GALAXY to a different name and run again!")\nexcept StopIteration:\n    print(f"Galaxy \'{MY_GALAXY}\' not found. Try one of the suggestions above!")')
 ])
 
-# ── HS-A-05: How many galaxies? ───────────────────────────────────────────────
-notebooks["hs_a_05_exploring_the_database.ipynb"] = nb([
-md("""# 🔭 Exploring the Galaxy Database
-### EPS Research High-School Exploration Track — Ages 12-14
-
-Scientists collected data on 438 real galaxies!
-Let's explore this database and find out what kinds of galaxies are in it."""),
-code("""import json
-import matplotlib.pyplot as plt
-import numpy as np
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-galaxies = [g for g in corpus['galaxies']
-            if g.get('vrot_max_kms')]
-
-# Sort by max speed
-fastest = sorted(galaxies, key=lambda x: float(x['vrot_max_kms']), reverse=True)
-
-print("🏆 The 5 FASTEST spinning galaxies in our database:")
-for g in fastest[:5]:
-    print(f"  {g['galaxy']:<15}  {float(g['vrot_max_kms']):.0f} km/s  "
-          f"({float(g['vrot_max_kms'])*3600:.0f} km/h!)")
-
-print()
-slowest = sorted(galaxies, key=lambda x: float(x['vrot_max_kms']))
-print("🐢 The 5 SLOWEST spinning galaxies:")
-for g in slowest[:5]:
-    print(f"  {g['galaxy']:<15}  {float(g['vrot_max_kms']):.0f} km/s")"""),
-code("""# Plot the distribution of galaxy speeds
-speeds = [float(g['vrot_max_kms']) for g in galaxies]
-
-fig, ax = plt.subplots(figsize=(9, 5))
-ax.hist(speeds, bins=30, color='#3498db', alpha=0.8, edgecolor='white')
-ax.axvline(np.median(speeds), color='red', linestyle='--', linewidth=2,
-           label=f'Middle speed = {np.median(speeds):.0f} km/s')
-ax.set_xlabel('Maximum spinning speed (km/s)', fontsize=12)
-ax.set_ylabel('Number of galaxies', fontsize=12)
-ax.set_title('How Fast Do Galaxies Spin?\\n438 real galaxies from the EPS Research database 🌌',
-             fontsize=11)
-ax.legend(fontsize=10)
-ax.text(0.97, 0.85,
-        f'Fastest: {max(speeds):.0f} km/s\\nSlowest: {min(speeds):.0f} km/s',
-        transform=ax.transAxes, ha='right', fontsize=9,
-        bbox=dict(boxstyle='round', fc='lightyellow', alpha=0.9))
-plt.tight_layout()
-plt.savefig('hs_a_05_speed_distribution.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+notebooks['hs_a_05_exploring_the_database.ipynb'] = nb([
+    md("# 🔭 Exploring the Galaxy Database\n### EPS Research High-School Exploration Track — Ages 12-14\n\nScientists collected data on 438 real galaxies!\nLet's explore this database and find out what kinds of galaxies are in it."),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import json\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\ngalaxies = [g for g in corpus[\'galaxies\']\n            if g.get(\'vrot_max_kms\')]\n\n# Sort by max speed\nfastest = sorted(galaxies, key=lambda x: float(x[\'vrot_max_kms\']), reverse=True)\n\nprint("🏆 The 5 FASTEST spinning galaxies in our database:")\nfor g in fastest[:5]:\n    print(f"  {g[\'galaxy\']:<15}  {float(g[\'vrot_max_kms\']):.0f} km/s  "\n          f"({float(g[\'vrot_max_kms\'])*3600:.0f} km/h!)")\n\nprint()\nslowest = sorted(galaxies, key=lambda x: float(x[\'vrot_max_kms\']))\nprint("🐢 The 5 SLOWEST spinning galaxies:")\nfor g in slowest[:5]:\n    print(f"  {g[\'galaxy\']:<15}  {float(g[\'vrot_max_kms\']):.0f} km/s")'),
+    code("# Plot the distribution of galaxy speeds\nspeeds = [float(g['vrot_max_kms']) for g in galaxies]\n\nfig, ax = plt.subplots(figsize=(9, 5))\nax.hist(speeds, bins=30, color='#3498db', alpha=0.8, edgecolor='white')\nax.axvline(np.median(speeds), color='red', linestyle='--', linewidth=2,\n           label=f'Middle speed = {np.median(speeds):.0f} km/s')\nax.set_xlabel('Maximum spinning speed (km/s)', fontsize=12)\nax.set_ylabel('Number of galaxies', fontsize=12)\nax.set_title('How Fast Do Galaxies Spin?\\n438 real galaxies from the EPS Research database 🌌',\n             fontsize=11)\nax.legend(fontsize=10)\nax.text(0.97, 0.85,\n        f'Fastest: {max(speeds):.0f} km/s\\nSlowest: {min(speeds):.0f} km/s',\n        transform=ax.transAxes, ha='right', fontsize=9,\n        bbox=dict(boxstyle='round', fc='lightyellow', alpha=0.9))\nplt.tight_layout()\nplt.savefig('hs_a_05_speed_distribution.png', dpi=150, bbox_inches='tight')\nplt.show()")
 ])
 
-# ── HS-A-06: Small vs large galaxies ─────────────────────────────────────────
-notebooks["hs_a_06_small_vs_large.ipynb"] = nb([
-md("""# 🔬🔭 Small vs Large Galaxies
-### EPS Research High-School Exploration Track — Ages 12-14
-
-Not all galaxies are the same size! Compare a tiny dwarf galaxy
-to a massive spiral galaxy using real data."""),
-code("""import json
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-# Small galaxy
-small = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')
-# Large galaxy
-large = next(g for g in corpus['galaxies'] if g['galaxy'] == 'NGC2403')
-
-def get_rc(g):
-    d = g['data']
-    return [p['Rad'] for p in d], [p['Vobs'] for p in d]
-
-R_s, V_s = get_rc(small)
-R_l, V_l = get_rc(large)
-
-fig, axes = plt.subplots(1, 2, figsize=(11, 4))
-axes[0].plot(R_s, V_s, 'o-', color='#2ecc71', linewidth=2, markersize=6)
-axes[0].set_title(f'DDO161 — Small Dwarf Galaxy\\n'
-                  f'Max speed: {max(V_s):.0f} km/s  Size: {max(R_s):.0f} kpc',
-                  fontsize=10)
-axes[0].set_xlabel('Distance (kpc)', fontsize=10)
-axes[0].set_ylabel('Speed (km/s)', fontsize=10)
-
-axes[1].plot(R_l, V_l, 'o-', color='#e74c3c', linewidth=2, markersize=6)
-axes[1].set_title(f'NGC2403 — Larger Spiral Galaxy\\n'
-                  f'Max speed: {max(V_l):.0f} km/s  Size: {max(R_l):.0f} kpc',
-                  fontsize=10)
-axes[1].set_xlabel('Distance (kpc)', fontsize=10)
-
-plt.suptitle('Small vs Large Galaxies — Real Data from EPS Research 🔬🔭', fontsize=12)
-plt.tight_layout()
-plt.savefig('hs_a_06_small_large.png', dpi=150, bbox_inches='tight')
-plt.show()
-print(f"NGC2403 is about {max(R_l)/max(R_s):.0f}x larger than DDO161!")
-print(f"NGC2403 spins about {max(V_l)/max(V_s):.1f}x faster!")""")
+notebooks['hs_a_06_small_vs_large.ipynb'] = nb([
+    md('# 🔬🔭 Small vs Large Galaxies\n### EPS Research High-School Exploration Track — Ages 12-14\n\nNot all galaxies are the same size! Compare a tiny dwarf galaxy\nto a massive spiral galaxy using real data.'),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code("import matplotlib\nmatplotlib.use('Agg')\nimport json\nimport matplotlib.pyplot as plt\nimport numpy as np\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\n# Pick a small dwarf and a large spiral\nsmall = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')\nlarge = next(g for g in corpus['galaxies'] if g['galaxy'] == 'UGC02885')\n\nfig, axes = plt.subplots(1, 2, figsize=(12, 5))\n\nfor ax, g, color, label in zip(\n        axes,\n        [small, large],\n        ['#2ca02c', '#d62728'],\n        ['DDO161 (dwarf)', 'UGC2885 (giant spiral)']):\n    d = g['data']\n    R    = [p['Rad']  for p in d]\n    Vobs = [p['Vobs'] for p in d]\n    ax.plot(R, Vobs, 'o-', color=color, ms=6, lw=2, label=label)\n    ax.set_xlabel('Radius (kpc)', fontsize=12)\n    ax.set_ylabel('Rotation Speed (km/s)', fontsize=12)\n    ax.set_title(f'{label}\\nMax speed: {max(Vobs):.0f} km/s\\n'\n                 f'Max radius: {max(R):.1f} kpc', fontsize=11)\n    ax.legend(fontsize=10)\n    ax.grid(alpha=0.3)\n\nplt.suptitle('Small vs Large Galaxies\\n'\n             'How size and rotation speed are related', fontsize=13)\nplt.tight_layout()\nplt.savefig('hs_a_06_small_vs_large.png', dpi=150, bbox_inches='tight')\nplt.show()\n\nprint('🔬 Compare the two galaxies:')\nfor g, name in [(small,'DDO161 (dwarf)'), (large,'UGC2885 (giant)')]:\n    d = g['data']\n    vmax = max(p['Vobs'] for p in d)\n    rmax = max(p['Rad']  for p in d)\n    print(f'  {name}: Vmax={vmax:.0f} km/s  Rmax={rmax:.1f} kpc')\nprint()\nprint('💡 What do you notice? Larger galaxies tend to rotate faster!')\nprint('   This is the Tully-Fisher relation — one of the most important')\nprint('   discoveries in extragalactic astronomy.')\n")
 ])
 
-# ── HS-A-07: The Milky Way's globular clusters ────────────────────────────────
-notebooks["hs_a_07_globular_clusters.ipynb"] = nb([
-md("""# ✨ Globular Clusters — Ancient Star Cities
-### EPS Research High-School Exploration Track — Ages 12-14
-
-A **globular cluster** is a tightly packed ball of hundreds of thousands
-of very old stars. Our Milky Way has about 160 of them!
-
-They're some of the oldest objects in the universe — many are
-over 12 billion years old (the universe is about 13.8 billion years old).
-
-EPS Research has a database of 174 Milky Way globular clusters!"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-clusters = []
-with open('harris_gc_corpus_v1.3.1.jsonl') as f:
-    for line in f:
-        clusters.append(json.loads(line))
-
-print(f"✨ We have data on {len(clusters)} globular clusters!")
-
-# Get some basic stats
-masses = [c['baumgardt2023']['mass_msun']
-          for c in clusters
-          if c.get('baumgardt2023') and c['baumgardt2023'].get('mass_msun')]
-
-print(f"\\nGlobular cluster masses:")
-print(f"  Smallest:  {min(masses):,.0f} stars worth of mass")
-print(f"  Largest:   {max(masses):,.0f} stars worth of mass")
-print(f"  Typical:   {np.median(masses):,.0f} stars worth of mass")
-print()
-print("For comparison, the Milky Way has about 200 billion stars!")"""),
-code("""# Where are they in the galaxy?
-positions = [(c['distances']['r_sun_kpc'], c['distances'].get('r_gc_kpc', 0))
-             for c in clusters
-             if c.get('distances') and c['distances'].get('r_sun_kpc')]
-
-d_sun = [p[0] for p in positions]
-d_gc  = [p[1] for p in positions]
-
-fig, ax = plt.subplots(figsize=(8, 5))
-ax.scatter(d_gc, d_sun, s=20, alpha=0.6, color='#f39c12', edgecolors='#e67e22', linewidths=0.5)
-ax.scatter([8], [0], marker='*', s=300, color='#3498db', zorder=5, label='☀️ Our Sun')
-ax.set_xlabel('Distance from Milky Way center (kpc)', fontsize=11)
-ax.set_ylabel('Distance from our Sun (kpc)', fontsize=11)
-ax.set_title('Where Are Our Globular Clusters?\\n'
-             '174 ancient star cities mapped in our Galaxy ✨', fontsize=11)
-ax.legend(fontsize=10)
-plt.tight_layout()
-plt.savefig('hs_a_07_globular_clusters.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+notebooks['hs_a_07_globular_clusters.ipynb'] = nb([
+    md("# ✨ Globular Clusters — Ancient Star Cities\n### EPS Research High-School Exploration Track — Ages 12-14\n\nA **globular cluster** is a tightly packed ball of hundreds of thousands\nof very old stars. Our Milky Way has about 160 of them!\n\nThey're some of the oldest objects in the universe — many are\nover 12 billion years old (the universe is about 13.8 billion years old).\n\nEPS Research has a database of 174 Milky Way globular clusters!"),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n        \'harris_gc_corpus_v1.4.0.jsonl\': \'https://raw.githubusercontent.com/eps-research/rag-corpus-series/9734a42a025900bc26ec69373628114841e2b2e0/examples/gc/harris_gc_corpus_v1.4.0.jsonl\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    GC_PATH = \'harris_gc_corpus_v1.4.0.jsonl\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    GC_PATH = \'../gc/harris_gc_corpus_v1.4.0.jsonl\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nclusters = []\nwith open(GC_PATH) as f:\n    for line in f:\n        clusters.append(json.loads(line))\n\nprint(f"✨ We have data on {len(clusters)} globular clusters!")\n\n# Get some basic stats\nmasses = [c[\'baumgardt2023\'][\'mass_msun\']\n          for c in clusters\n          if c.get(\'baumgardt2023\') and c[\'baumgardt2023\'].get(\'mass_msun\')]\n\nprint(f"\\nGlobular cluster masses:")\nprint(f"  Smallest:  {min(masses):,.0f} stars worth of mass")\nprint(f"  Largest:   {max(masses):,.0f} stars worth of mass")\nprint(f"  Typical:   {np.median(masses):,.0f} stars worth of mass")\nprint()\nprint("For comparison, the Milky Way has about 200 billion stars!")'),
+    code("# Where are they in the galaxy?\npositions = [(c['distances']['r_sun_kpc'], c['distances'].get('r_gc_kpc', 0))\n             for c in clusters\n             if c.get('distances') and c['distances'].get('r_sun_kpc')]\n\nd_sun = [p[0] for p in positions]\nd_gc  = [p[1] for p in positions]\n\nfig, ax = plt.subplots(figsize=(8, 5))\nax.scatter(d_gc, d_sun, s=20, alpha=0.6, color='#f39c12', edgecolors='#e67e22', linewidths=0.5)\nax.scatter([8], [0], marker='*', s=300, color='#3498db', zorder=5, label='☀️ Our Sun')\nax.set_xlabel('Distance from Milky Way center (kpc)', fontsize=11)\nax.set_ylabel('Distance from our Sun (kpc)', fontsize=11)\nax.set_title('Where Are Our Globular Clusters?\\n'\n             '174 ancient star cities mapped in our Galaxy ✨', fontsize=11)\nax.legend(fontsize=10)\nplt.tight_layout()\nplt.savefig('hs_a_07_globular_clusters.png', dpi=150, bbox_inches='tight')\nplt.show()")
 ])
 
-# ── HS-A-08: How far away are galaxies? ───────────────────────────────────────
-notebooks["hs_a_08_galaxy_distances.ipynb"] = nb([
-md("""# 📏 How Far Away Are These Galaxies?
-### EPS Research High-School Exploration Track — Ages 12-14
-
-The galaxies in our database are incredibly far away.
-Distances in space are so huge we need special units:
-
-- **1 light-year** = how far light travels in one year = 9.46 trillion km
-- **1 parsec (pc)** = 3.26 light-years
-- **1 kiloparsec (kpc)** = 3,260 light-years
-- **1 Megaparsec (Mpc)** = 3.26 million light-years
-
-The nearest galaxy in our database is just a few Mpc away.
-The most distant is hundreds of Mpc away!"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-galaxies = [g for g in corpus['galaxies'] if g.get('distance_mpc')]
-distances_mpc = [float(g['distance_mpc']) for g in galaxies]
-distances_lyr = [d * 3.26e6 for d in distances_mpc]
-
-print("How far away are these galaxies?")
-print()
-print(f"Nearest galaxy:   {min(distances_mpc):.1f} Mpc = {min(distances_lyr)/1e6:.1f} million light-years")
-print(f"Farthest galaxy:  {max(distances_mpc):.1f} Mpc = {max(distances_mpc)*3.26:.0f} million light-years")
-print(f"Typical distance: {np.median(distances_mpc):.0f} Mpc = {np.median(distances_mpc)*3.26:.0f} million light-years")
-print()
-print("For scale: our nearest star (Proxima Centauri) is only 4 light-years away!")
-print("These galaxies are millions to hundreds of millions of times farther!")"""),
-code("""fig, ax = plt.subplots(figsize=(9, 4))
-ax.hist(distances_mpc, bins=25, color='#8e44ad', alpha=0.8, edgecolor='white')
-ax.set_xlabel('Distance (Megaparsecs)', fontsize=11)
-ax.set_ylabel('Number of galaxies', fontsize=11)
-ax.set_title('How Far Away Are Our 438 Galaxies?\\n'
-             '1 Megaparsec = 3.26 million light-years 📏', fontsize=11)
-
-# Add a secondary x-axis showing light-years
-ax2 = ax.twiny()
-ax2.set_xlim(ax.get_xlim()[0] * 3.26, ax.get_xlim()[1] * 3.26)
-ax2.set_xlabel('Distance (millions of light-years)', fontsize=10)
-
-plt.tight_layout()
-plt.savefig('hs_a_08_distances.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+notebooks['hs_a_08_galaxy_distances.ipynb'] = nb([
+    md('# 📏 How Far Away Are These Galaxies?\n### EPS Research High-School Exploration Track — Ages 12-14\n\nThe galaxies in our database are incredibly far away.\nDistances in space are so huge we need special units:\n\n- **1 light-year** = how far light travels in one year = 9.46 trillion km\n- **1 parsec (pc)** = 3.26 light-years\n- **1 kiloparsec (kpc)** = 3,260 light-years\n- **1 Megaparsec (Mpc)** = 3.26 million light-years\n\nThe nearest galaxy in our database is just a few Mpc away.\nThe most distant is hundreds of Mpc away!'),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\ngalaxies = [g for g in corpus[\'galaxies\'] if g.get(\'distance_mpc\')]\ndistances_mpc = [float(g[\'distance_mpc\']) for g in galaxies]\ndistances_lyr = [d * 3.26e6 for d in distances_mpc]\n\nprint("How far away are these galaxies?")\nprint()\nprint(f"Nearest galaxy:   {min(distances_mpc):.1f} Mpc = {min(distances_lyr)/1e6:.1f} million light-years")\nprint(f"Farthest galaxy:  {max(distances_mpc):.1f} Mpc = {max(distances_mpc)*3.26:.0f} million light-years")\nprint(f"Typical distance: {np.median(distances_mpc):.0f} Mpc = {np.median(distances_mpc)*3.26:.0f} million light-years")\nprint()\nprint("For scale: our nearest star (Proxima Centauri) is only 4 light-years away!")\nprint("These galaxies are millions to hundreds of millions of times farther!")'),
+    code("fig, ax = plt.subplots(figsize=(9, 4))\nax.hist(distances_mpc, bins=25, color='#8e44ad', alpha=0.8, edgecolor='white')\nax.set_xlabel('Distance (Megaparsecs)', fontsize=11)\nax.set_ylabel('Number of galaxies', fontsize=11)\nax.set_title('How Far Away Are Our 438 Galaxies?\\n'\n             '1 Megaparsec = 3.26 million light-years 📏', fontsize=11)\n\n# Add a secondary x-axis showing light-years\nax2 = ax.twiny()\nax2.set_xlim(ax.get_xlim()[0] * 3.26, ax.get_xlim()[1] * 3.26)\nax2.set_xlabel('Distance (millions of light-years)', fontsize=10)\n\nplt.tight_layout()\nplt.savefig('hs_a_08_distances.png', dpi=150, bbox_inches='tight')\nplt.show()")
 ])
 
-# ── HS-A-09: The omega correction ─────────────────────────────────────────────
-notebooks["hs_a_09_the_omega_correction.ipynb"] = nb([
-md("""# 🔄 A New Idea: The Omega Correction
-### EPS Research High-School Exploration Track — Ages 12-14
-
-Scientists at EPS Research found something interesting:
-there's a pattern in how galaxy rotation curves behave.
-
-They discovered a simple **correction** that can be calculated
-from just two measurements — the innermost and outermost points
-of a rotation curve.
-
-This correction is called **omega (ω)** — the Greek letter that looks like a lowercase w.
-
-Let's see it in action on our galaxy DDO161!"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-galaxy = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')
-data   = galaxy['data']
-
-R    = np.array([p['Rad']  for p in data])
-Vobs = np.array([p['Vobs'] for p in data])
-errV = np.array([p['errV'] for p in data])
-
-# The omega correction uses just two boundary points!
-R1, V1 = R[0],  Vobs[0]   # innermost point
-R2, V2 = R[-1], Vobs[-1]  # outermost point
-
-# Calculate omega (the correction)
-outer_term    = (V2 / R2)
-inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-
-print(f"Innermost point: R = {R1:.2f} kpc,  V = {V1:.1f} km/s")
-print(f"Outermost point: R = {R2:.2f} kpc,  V = {V2:.1f} km/s")
-print()
-print(f"Omega (ω) = {omega:.3f} rad/Gyr")
-print()
-print("Now we apply the correction to get the adjusted velocity:")
-V_adj = Vobs - R * omega_kms_kpc
-print("V_adjusted = V_observed - R × ω")"""),
-code("""# Compare the original curve with the corrected curve
-fig, ax = plt.subplots(figsize=(9, 5))
-ax.errorbar(R, Vobs, yerr=errV, fmt='o', color='#3498db',
-            capsize=3, markersize=5, label='🔵 Original observed speed', zorder=5)
-ax.plot(R, V_adj, '^-', color='#2ecc71', linewidth=2, markersize=6,
-        label=f'🟢 Omega-corrected speed (ω = {omega:.2f})')
-ax.set_xlabel('Distance from center (kpc)', fontsize=12)
-ax.set_ylabel('Speed (km/s)', fontsize=12)
-ax.set_title('The Omega Correction — DDO161\\n'
-             'EPS Research Flynn & Cannaliato (2025)', fontsize=11)
-ax.legend(fontsize=9)
-ax.text(0.02, 0.08,
-        'The green line brings the\\nobserved speed closer to\\nthe baryonic prediction!',
-        transform=ax.transAxes, va='bottom', fontsize=8,
-        bbox=dict(boxstyle='round', fc='lightyellow', alpha=0.9))
-plt.tight_layout()
-plt.savefig('hs_a_09_omega_correction.png', dpi=150, bbox_inches='tight')
-plt.show()"""),
-md("""## What did the omega correction do?
-
-The green line shows the **corrected** rotation curve.
-It's closer to what we'd expect from just the visible matter!
-
-This is the EPS Research discovery: a simple two-point correction
-that works across many different galaxies.
-
-Scientists published this in a journal article in 2025:
-**Flynn & Cannaliato (2025)** in *Frontiers in Astronomy and Space Sciences*.
-
-In the final notebook, we'll look at what this means for the dark matter mystery! 🌑""")
+notebooks['hs_a_09_the_omega_correction.ipynb'] = nb([
+    md("# 🔄 A New Idea: The Omega Correction\n### EPS Research High-School Exploration Track — Ages 12-14\n\nScientists at EPS Research found something interesting:\nthere's a pattern in how galaxy rotation curves behave.\n\nThey discovered a simple **correction** that can be calculated\nfrom just two measurements — the innermost and outermost points\nof a rotation curve.\n\nThis correction is called **omega (ω)** — the Greek letter that looks like a lowercase w.\n\nLet's see it in action on our galaxy DDO161!"),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\ngalaxy = next(g for g in corpus[\'galaxies\'] if g[\'galaxy\'] == \'DDO161\')\ndata   = galaxy[\'data\']\n\nR    = np.array([p[\'Rad\']  for p in data])\nVobs = np.array([p[\'Vobs\'] for p in data])\nerrV = np.array([p[\'errV\'] for p in data])\n\n# The omega correction uses just two boundary points!\nR1, V1 = R[0],  Vobs[0]   # innermost point\nR2, V2 = R[-1], Vobs[-1]  # outermost point\n\n# Calculate omega (the correction)\nouter_term    = (V2 / R2)\ninner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\nomega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]\nomega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr\nomega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic\n\nprint(f"Innermost point: R = {R1:.2f} kpc,  V = {V1:.1f} km/s")\nprint(f"Outermost point: R = {R2:.2f} kpc,  V = {V2:.1f} km/s")\nprint()\nprint(f"Omega (ω) = {omega:.3f} rad/Gyr")\nprint()\nprint("Now we apply the correction to get the adjusted velocity:")\nV_adj = Vobs - R * omega_kms_kpc\nprint("V_adjusted = V_observed - R × ω")'),
+    code("# Compare the original curve with the corrected curve\nfig, ax = plt.subplots(figsize=(9, 5))\nax.errorbar(R, Vobs, yerr=errV, fmt='o', color='#3498db',\n            capsize=3, markersize=5, label='🔵 Original observed speed', zorder=5)\nax.plot(R, V_adj, '^-', color='#2ecc71', linewidth=2, markersize=6,\n        label=f'🟢 Omega-corrected speed (ω = {omega:.2f})')\nax.set_xlabel('Distance from center (kpc)', fontsize=12)\nax.set_ylabel('Speed (km/s)', fontsize=12)\nax.set_title('The Omega Correction — DDO161\\n'\n             'EPS Research Flynn & Cannaliato (2025)', fontsize=11)\nax.legend(fontsize=9)\nax.text(0.02, 0.08,\n        'The green line brings the\\nobserved speed closer to\\nthe baryonic prediction!',\n        transform=ax.transAxes, va='bottom', fontsize=8,\n        bbox=dict(boxstyle='round', fc='lightyellow', alpha=0.9))\nplt.tight_layout()\nplt.savefig('hs_a_09_omega_correction.png', dpi=150, bbox_inches='tight')\nplt.show()"),
+    md("## What did the omega correction do?\n\nThe green line shows the **corrected** rotation curve.\nIt's closer to what we'd expect from just the visible matter!\n\nThis is the EPS Research discovery: a simple two-point correction\nthat works across many different galaxies.\n\nScientists published this in a journal article in 2025:\n**Flynn & Cannaliato (2025)** in *Frontiers in Astronomy and Space Sciences*.\n\nIn the final notebook, we'll look at what this means for the dark matter mystery! 🌑")
 ])
 
-# ── HS-A-10: Your turn — science explorer ────────────────────────────────────
-notebooks["hs_a_10_science_explorer.ipynb"] = nb([
-md("""# 🚀 You're a Science Explorer!
-### EPS Research High-School Exploration Track — Ages 12-14
-
-Congratulations! You've reached the final notebook in Track A.
-
-You've learned about:
-- 🌌 What galaxies are
-- 🌀 Rotation curves
-- 🌑 The dark matter mystery
-- 📏 Cosmic distances
-- ✨ Globular clusters
-- 🔄 The omega correction
-
-Now let's do a mini science project of your own!
-Pick 3 galaxies, plot their rotation curves, and find which one spins fastest."""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-# ✏️ CHANGE THESE to any 3 galaxies you want to compare!
-MY_GALAXIES = ['DDO161', 'NGC2403', 'NGC3198']
-COLORS      = ['#3498db', '#e74c3c', '#2ecc71']
-
-fig, axes = plt.subplots(1, 3, figsize=(14, 4))
-results = []
-
-for i, (name, color) in enumerate(zip(MY_GALAXIES, COLORS)):
-    try:
-        g  = next(g for g in corpus['galaxies'] if g['galaxy'] == name)
-        d  = g['data']
-        R  = [p['Rad']  for p in d]
-        V  = [p['Vobs'] for p in d]
-        axes[i].plot(R, V, 'o-', color=color, linewidth=2, markersize=5)
-        axes[i].set_title(f'{name}\\nMax: {max(V):.0f} km/s', fontsize=10)
-        axes[i].set_xlabel('Radius (kpc)', fontsize=9)
-        if i == 0: axes[i].set_ylabel('Speed (km/s)', fontsize=9)
-        results.append((name, max(V)))
-    except StopIteration:
-        axes[i].text(0.5, 0.5, f'{name}\\nnot found',
-                     transform=axes[i].transAxes, ha='center')
-
-plt.suptitle('My Galaxy Comparison — Science Explorer Project 🚀', fontsize=12)
-plt.tight_layout()
-plt.savefig('hs_a_10_my_comparison.png', dpi=150, bbox_inches='tight')
-plt.show()
-
-if results:
-    winner = max(results, key=lambda x: x[1])
-    print(f"\\n🏆 Winner: {winner[0]} spins fastest at {winner[1]:.0f} km/s!")
-    print()
-    print("Great work, Science Explorer! 🌟")"""),
-md("""## What's Next?
-
-If you want to go deeper, try **Track B** (Ages 15-18)!
-You'll learn:
-- The actual math behind the omega correction
-- How to compute omega yourself
-- How to measure the dark matter gap
-- How this connects to the big questions in astrophysics
-
-**The universe is waiting for you to explore it!** 🚀🌌""")
+notebooks['hs_a_10_science_explorer.ipynb'] = nb([
+    md("# 🚀 You're a Science Explorer!\n### EPS Research High-School Exploration Track — Ages 12-14\n\nCongratulations! You've reached the final notebook in Track A.\n\nYou've learned about:\n- 🌌 What galaxies are\n- 🌀 Rotation curves\n- 🌑 The dark matter mystery\n- 📏 Cosmic distances\n- ✨ Globular clusters\n- 🔄 The omega correction\n\nNow let's do a mini science project of your own!\nPick 3 galaxies, plot their rotation curves, and find which one spins fastest."),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\n# ✏️ CHANGE THESE to any 3 galaxies you want to compare!\nMY_GALAXIES = [\'DDO161\', \'NGC2403\', \'NGC3198\']\nCOLORS      = [\'#3498db\', \'#e74c3c\', \'#2ecc71\']\n\nfig, axes = plt.subplots(1, 3, figsize=(14, 4))\nresults = []\n\nfor i, (name, color) in enumerate(zip(MY_GALAXIES, COLORS)):\n    try:\n        g  = next(g for g in corpus[\'galaxies\'] if g[\'galaxy\'] == name)\n        d  = g[\'data\']\n        R  = [p[\'Rad\']  for p in d]\n        V  = [p[\'Vobs\'] for p in d]\n        axes[i].plot(R, V, \'o-\', color=color, linewidth=2, markersize=5)\n        axes[i].set_title(f\'{name}\\nMax: {max(V):.0f} km/s\', fontsize=10)\n        axes[i].set_xlabel(\'Radius (kpc)\', fontsize=9)\n        if i == 0: axes[i].set_ylabel(\'Speed (km/s)\', fontsize=9)\n        results.append((name, max(V)))\n    except StopIteration:\n        axes[i].text(0.5, 0.5, f\'{name}\\nnot found\',\n                     transform=axes[i].transAxes, ha=\'center\')\n\nplt.suptitle(\'My Galaxy Comparison — Science Explorer Project 🚀\', fontsize=12)\nplt.tight_layout()\nplt.savefig(\'hs_a_10_my_comparison.png\', dpi=150, bbox_inches=\'tight\')\nplt.show()\n\nif results:\n    winner = max(results, key=lambda x: x[1])\n    print(f"\\n🏆 Winner: {winner[0]} spins fastest at {winner[1]:.0f} km/s!")\n    print()\n    print("Great work, Science Explorer! 🌟")'),
+    md("## What's Next?\n\nIf you want to go deeper, try **Track B** (Ages 15-18)!\nYou'll learn:\n- The actual math behind the omega correction\n- How to compute omega yourself\n- How to measure the dark matter gap\n- How this connects to the big questions in astrophysics\n\n**The universe is waiting for you to explore it!** 🚀🌌")
 ])
 
-# ══════════════════════════════════════════════════════════════════════════════
-# TRACK B: Ages 15-18 (High School)
-# Algebra, basic Python, scientific reasoning
-# ══════════════════════════════════════════════════════════════════════════════
-
-# ── HS-B-01: Newtonian gravity in galaxies ────────────────────────────────────
-notebooks["hs_b_01_newtonian_gravity.ipynb"] = nb([
-md("""# ⚖️ Newtonian Gravity in Galaxies
-### EPS Research High-School Exploration Track — Ages 15-18
-
-Newton's law of gravity tells us that for a circular orbit:
-
-$$V_{\\rm circular} = \\sqrt{\\frac{GM(<R)}{R}}$$
-
-where:
-- $V$ = orbital speed
-- $G$ = gravitational constant
-- $M(<R)$ = total mass inside radius $R$
-- $R$ = distance from center
-
-If most mass is near the center (like our solar system),
-then $M(<R)$ becomes roughly constant at large $R$,
-and $V \\propto 1/\\sqrt{R}$ — a **Keplerian decline**.
-
-But galaxies show **flat** rotation curves. Let's see why this is strange.
-
-**Prerequisites:** Basic algebra, understanding of gravity as $F = GMm/r^2$"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-galaxy = next(g for g in corpus['galaxies'] if g['galaxy'] == 'NGC2403')
-data   = galaxy['data']
-
-R    = np.array([p['Rad']  for p in data])
-Vobs = np.array([p['Vobs'] for p in data])
-errV = np.array([p['errV'] for p in data])
-
-# Compute Keplerian prediction from outermost point
-# If V = sqrt(GM/R), then GM = V_max^2 * R_max (use outermost point)
-V_outer = Vobs[-1]
-R_outer = R[-1]
-GM      = V_outer**2 * R_outer   # units: km^2/s^2 * kpc
-
-V_kepler = np.sqrt(GM / R)  # expected if all mass is inside R_outer
-
-print(f"Galaxy: NGC2403")
-print(f"Outermost measured point: R = {R_outer:.1f} kpc, V = {V_outer:.1f} km/s")
-print(f"GM = {GM:.1f} km^2/s^2 * kpc")
-print()
-print("Comparing observed vs Keplerian at selected radii:")
-print(f"  {'R (kpc)':>8}  {'V_obs':>8}  {'V_Kep':>8}  {'Ratio':>8}")
-for r, vo, vk in zip(R[::2], Vobs[::2], V_kepler[::2]):
-    print(f"  {r:>8.1f}  {vo:>8.1f}  {vk:>8.1f}  {vo/vk:>8.2f}")"""),
-code("""fig, ax = plt.subplots(figsize=(9, 5))
-ax.errorbar(R, Vobs, yerr=errV, fmt='o', color='#3498db',
-            capsize=3, markersize=5, label=r'$V_{\\rm obs}$ (measured)', zorder=5)
-ax.plot(R, V_kepler, '--', color='#e74c3c', linewidth=2,
-        label=r'$V_{\\rm Keplerian} = \\sqrt{GM/R}$ (expected for concentrated mass)')
-ax.fill_between(R, V_kepler, Vobs, alpha=0.15, color='purple',
-                label='Missing mass (dark matter?)')
-ax.set_xlabel('Radius R (kpc)', fontsize=12)
-ax.set_ylabel('Velocity V (km/s)', fontsize=12)
-ax.set_title('NGC2403: Why Galaxies Defy Newtonian Expectation\\n'
-             'The flat curve requires mass beyond what we can see', fontsize=11)
-ax.legend(fontsize=9)
-plt.tight_layout()
-plt.savefig('hs_b_01_newtonian.png', dpi=150, bbox_inches='tight')
-plt.show()
-
-# Quantify the discrepancy
-ratio_outer = Vobs[-1] / V_kepler[-1]
-print(f"\\nAt the outermost point, the ratio is exactly 1.0 (by construction).")
-print(f"At half the outermost radius: V_obs/V_Kep = {Vobs[len(R)//2]/V_kepler[len(R)//2]:.2f}")
-print(f"This means the outer galaxy has MORE mass than the inner galaxy predicts.")""")
+notebooks['hs_b_01_newtonian_gravity.ipynb'] = nb([
+    md("# ⚖️ Newtonian Gravity in Galaxies\n### EPS Research High-School Exploration Track — Ages 15-18\n\nNewton's law of gravity tells us that for a circular orbit:\n\n$$V_{\\rm circular} = \\sqrt{\\frac{GM(<R)}{R}}$$\n\nwhere:\n- $V$ = orbital speed\n- $G$ = gravitational constant\n- $M(<R)$ = total mass inside radius $R$\n- $R$ = distance from center\n\nIf most mass is near the center (like our solar system),\nthen $M(<R)$ becomes roughly constant at large $R$,\nand $V \\propto 1/\\sqrt{R}$ — a **Keplerian decline**.\n\nBut galaxies show **flat** rotation curves. Let's see why this is strange.\n\n**Prerequisites:** Basic algebra, understanding of gravity as $F = GMm/r^2$"),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\ngalaxy = next(g for g in corpus[\'galaxies\'] if g[\'galaxy\'] == \'NGC2403\')\ndata   = galaxy[\'data\']\n\nR    = np.array([p[\'Rad\']  for p in data])\nVobs = np.array([p[\'Vobs\'] for p in data])\nerrV = np.array([p[\'errV\'] for p in data])\n\n# Compute Keplerian prediction from outermost point\n# If V = sqrt(GM/R), then GM = V_max^2 * R_max (use outermost point)\nV_outer = Vobs[-1]\nR_outer = R[-1]\nGM      = V_outer**2 * R_outer   # units: km^2/s^2 * kpc\n\nV_kepler = np.sqrt(GM / R)  # expected if all mass is inside R_outer\n\nprint(f"Galaxy: NGC2403")\nprint(f"Outermost measured point: R = {R_outer:.1f} kpc, V = {V_outer:.1f} km/s")\nprint(f"GM = {GM:.1f} km^2/s^2 * kpc")\nprint()\nprint("Comparing observed vs Keplerian at selected radii:")\nprint(f"  {\'R (kpc)\':>8}  {\'V_obs\':>8}  {\'V_Kep\':>8}  {\'Ratio\':>8}")\nfor r, vo, vk in zip(R[::2], Vobs[::2], V_kepler[::2]):\n    print(f"  {r:>8.1f}  {vo:>8.1f}  {vk:>8.1f}  {vo/vk:>8.2f}")'),
+    code('fig, ax = plt.subplots(figsize=(9, 5))\nax.errorbar(R, Vobs, yerr=errV, fmt=\'o\', color=\'#3498db\',\n            capsize=3, markersize=5, label=r\'$V_{\\rm obs}$ (measured)\', zorder=5)\nax.plot(R, V_kepler, \'--\', color=\'#e74c3c\', linewidth=2,\n        label=r\'$V_{\\rm Keplerian} = \\sqrt{GM/R}$ (expected for concentrated mass)\')\nax.fill_between(R, V_kepler, Vobs, alpha=0.15, color=\'purple\',\n                label=\'Missing mass (dark matter?)\')\nax.set_xlabel(\'Radius R (kpc)\', fontsize=12)\nax.set_ylabel(\'Velocity V (km/s)\', fontsize=12)\nax.set_title(\'NGC2403: Why Galaxies Defy Newtonian Expectation\\n\'\n             \'The flat curve requires mass beyond what we can see\', fontsize=11)\nax.legend(fontsize=9)\nplt.tight_layout()\nplt.savefig(\'hs_b_01_newtonian.png\', dpi=150, bbox_inches=\'tight\')\nplt.show()\n\n# Quantify the discrepancy\nratio_outer = Vobs[-1] / V_kepler[-1]\nprint(f"\\nAt the outermost point, the ratio is exactly 1.0 (by construction).")\nprint(f"At half the outermost radius: V_obs/V_Kep = {Vobs[len(R)//2]/V_kepler[len(R)//2]:.2f}")\nprint(f"This means the outer galaxy has MORE mass than the inner galaxy predicts.")')
 ])
 
-# ── HS-B-02: Computing omega ───────────────────────────────────────────────────
-notebooks["hs_b_02_computing_omega.ipynb"] = nb([
-md("""# 🔢 Computing Omega From First Principles
-### EPS Research High-School Exploration Track — Ages 15-18
-
-The EPS Research omega correction is derived from angular velocity:
-
-$$\\omega = \\frac{V}{R} \\quad [\\text{rad/Gyr}]$$
-
-The correction formula uses the **gradient** of angular velocity:
-
-$$\\omega_{\\rm correction} = \\left(\\frac{V_2}{R_2} - \\frac{V_1}{R_1}\\right) \\left(\\frac{R_1}{R_2}\\right)^{3/2}$$
-
-where $(R_1, V_1)$ is the innermost point and $(R_2, V_2)$ is the outermost.
-
-**Why does this make sense?**
-- $V/R$ is the angular velocity at each point
-- The term $(R_1/R_2)^{3/2}$ comes from Kepler's third law scaling
-
-**Reference:** Flynn & Cannaliato (2025), DOI: 10.3389/fspas.2025.1680387
-
-**Prerequisites:** Algebra, understanding of velocity vs angular velocity"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-galaxy = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')
-data   = galaxy['data']
-
-R    = np.array([p['Rad']  for p in data])
-Vobs = np.array([p['Vobs'] for p in data])
-
-# Step 1: Compute angular velocity at each point
-omega_profile = Vobs / R  # rad / (kpc km/s^-1) = ~ rad/Gyr after unit conversion
-
-print("Step 1: Angular velocity profile V/R")
-print(f"  {'R (kpc)':>10}  {'V (km/s)':>10}  {'V/R (km/s/kpc)':>16}")
-for r, v, w in zip(R[:6], Vobs[:6], omega_profile[:6]):
-    print(f"  {r:>10.2f}  {v:>10.2f}  {w:>16.3f}")
-print()
-print("Notice: V/R decreases with radius — the angular velocity falls outward")
-print("This is the key signal the omega correction captures.")"""),
-code("""# Step 2: Compute omega correction from boundary points
-R1, V1 = R[0],  Vobs[0]
-R2, V2 = R[-1], Vobs[-1]
-
-print(f"Step 2: Boundary points")
-print(f"  Inner: R1 = {R1:.2f} kpc,  V1 = {V1:.2f} km/s,  V1/R1 = {V1/R1:.3f}")
-print(f"  Outer: R2 = {R2:.2f} kpc,  V2 = {V2:.2f} km/s,  V2/R2 = {V2/R2:.3f}")
-print()
-
-outer_term    = (V2 / R2)
-inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-print(f"Step 3: Omega correction")
-print(f"  ω = V2/R2 - (V1/R1) × (R1/R2)^(3/2)  canonical Eq.6")
-print(f"  ω = ({V2/R2:.3f} - {V1/R1:.3f}) × ({R1/R2:.3f})^1.5")
-outer_term = (V2 / R2)
-    inner_term = (V1 / R1) * ((R1 / R2) ** 1.5)
-    omega_kms_kpc = outer_term - inner_term
-    omega_rad_gyr = omega_kms_kpc * 1.0227
-    print(f"  ω = {omega_rad_gyr:.3f}")
-print(f"  ω = {omega:.3f} km/s/kpc")
-print(f"  ω = {omega:.3f} rad/Gyr  (1 km/s/kpc ≈ 1.022 rad/Gyr)")
-print()
-print(f"Published value: ω = 4.69 rad/Gyr (Flynn & Cannaliato 2025)")
-
-# Apply correction
-V_adj = Vobs - R * omega_kms_kpc
-
-# Baryonic velocity
-Vgas  = np.array([p['Vgas']  for p in data])
-Vdisk = np.array([p['Vdisk'] for p in data])
-Vbul  = np.array([p['Vbul']  for p in data])
-Vbar  = np.where(Vgas < 0, -np.sqrt(Vgas**2+Vdisk**2+Vbul**2),
-                             np.sqrt(Vgas**2+Vdisk**2+Vbul**2))
-
-rmse_omega = np.sqrt(np.mean((V_adj - Vbar)**2))
-print(f"\\nRMSE (corrected vs baryonic): {rmse_omega:.2f} km/s")"""),
-code("""fig, ax = plt.subplots(figsize=(9, 5))
-ax.errorbar(R, Vobs, fmt='o', color='#3498db', markersize=5,
-            label=r'$V_{\\rm obs}$', zorder=5)
-ax.plot(R, Vbar,  's-', color='#e74c3c', lw=1.5, label=r'$V_{\\rm bar}$ (baryonic)')
-ax.plot(R, V_adj, '^-', color='#2ecc71', lw=2,
-        label=fr'$V_{{\\rm adj}} = V_{{\\rm obs}} - R\omega$  ($\omega={omega:.2f}$)')
-ax.set_xlabel('Radius R (kpc)', fontsize=12)
-ax.set_ylabel('Velocity V (km/s)', fontsize=12)
-ax.set_title('DDO161 — Omega Correction Applied\\n'
-             'Flynn & Cannaliato (2025) | DOI: 10.3389/fspas.2025.1680387', fontsize=10)
-ax.legend(fontsize=9)
-plt.tight_layout()
-plt.savefig('hs_b_02_omega.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+notebooks['hs_b_02_computing_omega.ipynb'] = nb([
+    md("# 🔢 Computing Omega From First Principles\n### EPS Research High-School Exploration Track — Ages 15-18\n\nThe EPS Research omega correction is derived from angular velocity:\n\n$$\\omega = \\frac{V}{R} \\quad [\\text{rad/Gyr}]$$\n\nThe correction formula uses the **gradient** of angular velocity:\n\n$$\\omega_{\\rm correction} = \\frac{V_2}{R_2} - \\left(\\frac{V_1}{R_1}\\right) \\left(\\frac{R_1}{R_2}\\right)^{3/2}$$\n\nwhere $(R_1, V_1)$ is the innermost point and $(R_2, V_2)$ is the outermost.\n\n**Why does this make sense?**\n- $V/R$ is the angular velocity at each point\n- The term $(R_1/R_2)^{3/2}$ comes from Kepler's third law scaling\n\n**Reference:** Flynn & Cannaliato (2025), DOI: 10.3389/fspas.2025.1680387\n\n**Prerequisites:** Algebra, understanding of velocity vs angular velocity"),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\ngalaxy = next(g for g in corpus[\'galaxies\'] if g[\'galaxy\'] == \'DDO161\')\ndata   = galaxy[\'data\']\n\nR    = np.array([p[\'Rad\']  for p in data])\nVobs = np.array([p[\'Vobs\'] for p in data])\n\n# Step 1: Compute angular velocity at each point\nomega_profile = Vobs / R  # rad / (kpc km/s^-1) = ~ rad/Gyr after unit conversion\n\nprint("Step 1: Angular velocity profile V/R")\nprint(f"  {\'R (kpc)\':>10}  {\'V (km/s)\':>10}  {\'V/R (km/s/kpc)\':>16}")\nfor r, v, w in zip(R[:6], Vobs[:6], omega_profile[:6]):\n    print(f"  {r:>10.2f}  {v:>10.2f}  {w:>16.3f}")\nprint()\nprint("Notice: V/R decreases with radius — the angular velocity falls outward")\nprint("This is the key signal the omega correction captures.")'),
+    code('# Step 2: Compute omega correction from boundary points\nR1, V1 = R[0],  Vobs[0]\nR2, V2 = R[-1], Vobs[-1]\n\nprint(f"Step 2: Boundary points")\nprint(f"  Inner: R1 = {R1:.2f} kpc,  V1 = {V1:.2f} km/s,  V1/R1 = {V1/R1:.3f}")\nprint(f"  Outer: R2 = {R2:.2f} kpc,  V2 = {V2:.2f} km/s,  V2/R2 = {V2/R2:.3f}")\nprint()\n\nouter_term    = (V2 / R2)\ninner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\nomega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]\nomega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr\nomega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic\nprint(f"Step 3: Omega correction")\nprint(f"  ω = V2/R2 - (V1/R1) × (R1/R2)^(3/2)  ← canonical Eq.6")\nprint(f"  ω = {V2/R2:.3f} - ({V1/R1:.3f} × {(R1/R2)**1.5:.3f})")\nprint(f"  ω = {V2/R2:.3f} - {inner_term:.3f} = {omega_kms_kpc:.3f}")\nprint(f"  ω = {omega_kms_kpc:.3f} km/s/kpc")\nprint(f"  ω = {omega_rad_gyr:.3f} rad/Gyr  (1 km/s/kpc ≈ 1.0227 rad/Gyr)")\nprint()\nprint(f"Published value: ω = 4.69 rad/Gyr (Flynn & Cannaliato 2025)")\n\n# Apply correction\nV_adj = Vobs - R * omega_kms_kpc\n\n# Baryonic velocity\nVgas  = np.array([p[\'Vgas\']  for p in data])\nVdisk = np.array([p[\'Vdisk\'] for p in data])\nVbul  = np.array([p[\'Vbul\']  for p in data])\nVbar  = np.where(Vgas < 0, -np.sqrt(Vgas**2+Vdisk**2+Vbul**2),\n                             np.sqrt(Vgas**2+Vdisk**2+Vbul**2))\n\nrmse_omega = np.sqrt(np.mean((V_adj - Vbar)**2))\nprint(f"\\nRMSE (corrected vs baryonic): {rmse_omega:.2f} km/s")'),
+    code("fig, ax = plt.subplots(figsize=(9, 5))\nax.errorbar(R, Vobs, fmt='o', color='#3498db', markersize=5,\n            label=r'$V_{\\rm obs}$', zorder=5)\nax.plot(R, Vbar,  's-', color='#e74c3c', lw=1.5, label=r'$V_{\\rm bar}$ (baryonic)')\nax.plot(R, V_adj, '^-', color='#2ecc71', lw=2,\n        label=fr'$V_{{\\rm adj}} = V_{{\\rm obs}} - R\\omega$  ($\\omega={omega:.2f}$)')\nax.set_xlabel('Radius R (kpc)', fontsize=12)\nax.set_ylabel('Velocity V (km/s)', fontsize=12)\nax.set_title('DDO161 — Omega Correction Applied\\n'\n             'Flynn & Cannaliato (2025) | DOI: 10.3389/fspas.2025.1680387', fontsize=10)\nax.legend(fontsize=9)\nplt.tight_layout()\nplt.savefig('hs_b_02_omega.png', dpi=150, bbox_inches='tight')\nplt.show()")
 ])
 
-# ── HS-B-03 to HS-B-10: Remaining track B notebooks ─────────────────────────
-remaining_hs_b = {
+notebooks['hs_b_03_rmse_metric.ipynb'] = nb([
+    md("# 📊 Measuring How Well a Model Fits: RMSE\n### EPS Research High-School Exploration Track — Ages 15-18\n\nIn science, we need a way to measure how well a model fits data.\nThe most common metric is **RMSE** (Root Mean Square Error):\n\n$$\\text{RMSE} = \\sqrt{\\frac{1}{N}\\sum_{i=1}^{N}(V_{\\rm model,i} - V_{\\rm data,i})^2}$$\n\nLower RMSE = better fit. Let's compute it for DDO161.\n\n**Prerequisites:** Basic statistics, square roots, summation notation"),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code("import matplotlib\nmatplotlib.use('Agg')\nimport json, numpy as np, matplotlib.pyplot as plt\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\ng = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')\nd = g['data']\nR    = np.array([p['Rad']  for p in d])\nVobs = np.array([p['Vobs'] for p in d])\n\n# Keplerian point-mass baseline anchored at the inner boundary: V ∝ R^(-1/2)\nR_anchor, V_anchor = R[0], Vobs[0]\nV_kepler = V_anchor * np.sqrt(R_anchor / R)\n\n# Omega-corrected model (canonical Eq.6)\nR1,V1,R2,V2 = R[0],Vobs[0],R[-1],Vobs[-1]\nouter_term    = (V2 / R2)\ninner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\nomega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]\nomega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr\nomega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic\nV_omega = Vobs - R * omega_kms_kpc  # velocity arithmetic uses native km/s/kpc\n\n# RMSE calculations\nrmse_kepler = np.sqrt(np.mean((Vobs - V_kepler)**2))\nrmse_omega  = np.sqrt(np.mean((Vobs - V_omega )**2))\n\nfig, axes = plt.subplots(1, 2, figsize=(12, 5))\n\n# Panel 1: Rotation curves + models\nax = axes[0]\nax.plot(R, Vobs,     'ko-',  ms=6,  lw=1.5, label='Observed data')\nax.plot(R, V_kepler, 'r--',  lw=2,  label=f'Keplerian (RMSE={rmse_kepler:.1f} km/s)')\nax.plot(R, V_omega,  'b-',   lw=2,  label=f'Omega corrected (RMSE={rmse_omega:.1f} km/s)')\nax.set_xlabel('Radius (kpc)', fontsize=12)\nax.set_ylabel('Rotation Speed (km/s)', fontsize=12)\nax.set_title('DDO161 — Model Comparison', fontsize=11)\nax.legend(fontsize=9); ax.grid(alpha=0.3)\n\n# Panel 2: Residuals\nax2 = axes[1]\nax2.plot(R, Vobs - V_kepler, 'rs-', ms=6, lw=1.5, label=f'Keplerian residuals')\nax2.plot(R, Vobs - V_omega,  'bs-', ms=6, lw=1.5, label=f'Omega residuals')\nax2.axhline(0, color='black', lw=1, ls='--')\nax2.set_xlabel('Radius (kpc)', fontsize=12)\nax2.set_ylabel('Residual (km/s)', fontsize=12)\nax2.set_title('Residuals (Observed − Model)', fontsize=11)\nax2.legend(fontsize=9); ax2.grid(alpha=0.3)\n\nplt.suptitle('📊 RMSE: Measuring How Well a Model Fits\\n'\n             'Lower RMSE = better fit', fontsize=12)\nplt.tight_layout()\nplt.savefig('hs_b_03_rmse_metric.png', dpi=150, bbox_inches='tight')\nplt.show()\n\nprint(f'Keplerian RMSE: {rmse_kepler:.2f} km/s')\nprint(f'Omega RMSE:     {rmse_omega:.2f} km/s')\nprint(f'Improvement:    {rmse_kepler - rmse_omega:.2f} km/s '\n      f'({100*(rmse_kepler-rmse_omega)/rmse_kepler:.0f}%)')\nprint()\nprint('💡 The omega correction reduces the RMSE — it fits the data better!')\n")
+])
 
-"hs_b_03_rmse_metric.ipynb": nb([
-md("""# 📊 Measuring How Well a Model Fits: RMSE
-### EPS Research High-School Exploration Track — Ages 15-18
+notebooks['hs_b_04_baryonic_quadrature.ipynb'] = nb([
+    md('# ⚡ Baryonic Velocity: Sign-Preserving Quadrature\n### EPS Research High-School Exploration Track — Ages 15-18\n\nThe total baryonic velocity combines gas, disk, and bulge contributions:\n\n$$V_{\\rm bar} = \\text{sign}(V_{\\rm gas})\\sqrt{|V_{\\rm gas}|^2 + \\Upsilon V_{\\rm disk}^2 + \\Upsilon_b V_{\\rm bul}^2}$$\n\nWhy sign-preserving? At inner radii, thermal gas pressure can exceed\nrotation, making Vgas effectively negative. We preserve this sign\nto avoid artificially boosting the baryonic contribution.\n\n**Prerequisites:** Vectors, square roots, quadrature addition'),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code("import matplotlib\nmatplotlib.use('Agg')\nimport json, numpy as np, matplotlib.pyplot as plt\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\ng = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')\nd = g['data']\nR    = np.array([p['Rad']  for p in d])\nVobs = np.array([p['Vobs'] for p in d])\n\n# Simulate baryonic components (educational approximation)\n# Gas: rises then falls (exponential disk-like)\nV_gas  = 40 * np.exp(-R/3.0) * np.sqrt(R/1.0 + 0.01)\nV_gas  = np.clip(V_gas, 0, None)\n\n# Stars: compact exponential disk\nV_star = 25 * np.sqrt(R) * np.exp(-R/2.5)\nV_star = np.clip(V_star, 0, None)\n\n# Sign-preserving quadrature (baryonic sum)\nV_bary = np.sqrt(V_gas**2 + V_star**2)\n\nfig, ax = plt.subplots(figsize=(9, 6))\nax.plot(R, Vobs,  'ko-', ms=6,  lw=2,  label='Observed rotation curve')\nax.plot(R, V_gas,  'b--', lw=1.5, alpha=0.7, label='Gas component (approx)')\nax.plot(R, V_star, 'g--', lw=1.5, alpha=0.7, label='Stellar component (approx)')\nax.plot(R, V_bary, 'r-',  lw=2.5, label='Baryonic sum √(V²gas + V²stars)')\nax.fill_between(R, V_bary, Vobs, alpha=0.15, color='purple',\n                label='Dark matter gap?')\nax.set_xlabel('Radius (kpc)', fontsize=12)\nax.set_ylabel('Rotation Speed (km/s)', fontsize=12)\nax.set_title('DDO161 — Baryonic Decomposition\\n'\n             'Sign-preserving quadrature: V_bary = √(V²gas + V²stars)',\n             fontsize=11)\nax.legend(fontsize=9); ax.grid(alpha=0.3)\n\nplt.tight_layout()\nplt.savefig('hs_b_04_baryonic_quadrature.png', dpi=150, bbox_inches='tight')\nplt.show()\n\nprint('💡 Key concept: sign-preserving quadrature adds velocity components')\nprint('   in quadrature (like Pythagoras theorem) to get the total baryonic speed.')\nprint()\nprint('   V_bary = √(V²_gas + V²_stars)')\nprint()\nprint('   The gap between V_bary and V_observed hints at dark matter,')\nprint('   or kinematic corrections like the omega term.')\n")
+])
 
-In science, we need a way to measure how well a model fits data.
-The most common metric is **RMSE** (Root Mean Square Error):
+notebooks['hs_b_05_outer_gap.ipynb'] = nb([
+    md('# 🔍 The Outer Gap Diagnostic\n### EPS Research High-School Exploration Track — Ages 15-18\n\nThe **outer gap** is $V_{adj}(R_2)-V_{bary}(R_2)$: the residual between\nthe omega-corrected velocity and the baryonic velocity at the outermost ring.\n\nThis notebook reproduces the **frozen 84-galaxy SPARC cohort** used in the\npublished analysis. The corrected FAIR² calculation converts stored omega\nvalues from rad/Gyr back to native km/s/kpc before velocity arithmetic.\n\nThe corrected reproduction finds all 84 outer gaps negative, with a mean\nof about **−55.3 ± 28.6 km/s**. The archived Paper 2 analysis reported\n−51.4 ± 25.0 km/s; the numerical value changes after the unit correction,\nwhile the qualitative negative-sign result remains.\n\nThis is a **boundary consistency diagnostic**. It should not be interpreted\nas an independent exclusion of an NFW or dark-matter halo model.\n\n**Prerequisites:** Understanding of residuals, basic RMSE'),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import matplotlib\nmatplotlib.use(\'Agg\')\nimport json, numpy as np, matplotlib.pyplot as plt\n\n# Frozen published SPARC cohort and Paper2 parameters.\n# omega is stored/reported in rad/Gyr; velocity arithmetic uses km/s/kpc.\nP2_DATA = [{\'galaxy\': \'NGC3741\', \'omega\': 7.032, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC08550\', \'omega\': 9.317, \'upsilon\': 1.0},\n {\'galaxy\': \'NGC3109\', \'omega\': 10.244, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC07603\', \'omega\': 14.2, \'upsilon\': 0.94},\n {\'galaxy\': \'DDO064\', \'omega\': 15.35, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC01281\', \'omega\': 11.37, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC07151\', \'omega\': 12.53, \'upsilon\': 0.953},\n {\'galaxy\': \'UGC07399\', \'omega\': 14.86, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC04278\', \'omega\': 13.76, \'upsilon\': 1.0},\n {\'galaxy\': \'NGC3972\', \'omega\': 13.93, \'upsilon\': 0.675},\n {\'galaxy\': \'NGC7793\', \'omega\': 11.4, \'upsilon\': 0.111},\n {\'galaxy\': \'F571-8\', \'omega\': 9.17, \'upsilon\': 0.104},\n {\'galaxy\': \'UGC05721\', \'omega\': 11.51, \'upsilon\': 0.979},\n {\'galaxy\': \'UGC07323\', \'omega\': 13.41, \'upsilon\': 0.986},\n {\'galaxy\': \'NGC3521\', \'omega\': 10.25, \'upsilon\': 0.535},\n {\'galaxy\': \'F563-V2\', \'omega\': 11.08, \'upsilon\': 1.0},\n {\'galaxy\': \'ESO116-G012\', \'omega\': 11.02, \'upsilon\': 1.0},\n {\'galaxy\': \'F568-1\', \'omega\': 10.52, \'upsilon\': 1.0},\n {\'galaxy\': \'ESO079-G014\', \'omega\': 10.37, \'upsilon\': 0.742},\n {\'galaxy\': \'NGC3893\', \'omega\': 6.47, \'upsilon\': 0.507},\n {\'galaxy\': \'UGC08286\', \'omega\': 9.82, \'upsilon\': 1.0},\n {\'galaxy\': \'NGC0024\', \'omega\': 9.55, \'upsilon\': 0.873},\n {\'galaxy\': \'NGC0100\', \'omega\': 9.37, \'upsilon\': 0.504},\n {\'galaxy\': \'NGC0891\', \'omega\': 8.99, \'upsilon\': 0.326},\n {\'galaxy\': \'NGC4217\', \'omega\': 9.99, \'upsilon\': 0.1},\n {\'galaxy\': \'UGC06917\', \'omega\': 8.3, \'upsilon\': 1.0},\n {\'galaxy\': \'NGC7814\', \'omega\': 8.52, \'upsilon\': 0.582},\n {\'galaxy\': \'NGC3917\', \'omega\': 8.82, \'upsilon\': 0.465},\n {\'galaxy\': \'F583-4\', \'omega\': 9.33, \'upsilon\': 1.0},\n {\'galaxy\': \'IC4202\', \'omega\': 9.3, \'upsilon\': 0.1},\n {\'galaxy\': \'UGC08490\', \'omega\': 6.95, \'upsilon\': 1.0},\n {\'galaxy\': \'NGC4088\', \'omega\': 6.98, \'upsilon\': 0.383},\n {\'galaxy\': \'NGC6946\', \'omega\': 6.83, \'upsilon\': 0.426},\n {\'galaxy\': \'F568-3\', \'omega\': 6.54, \'upsilon\': 0.829},\n {\'galaxy\': \'F568-V1\', \'omega\': 6.55, \'upsilon\': 1.0},\n {\'galaxy\': \'NGC2403\', \'omega\': 6.32, \'upsilon\': 0.84},\n {\'galaxy\': \'UGC12632\', \'omega\': 6.27, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC11455\', \'omega\': 6.24, \'upsilon\': 0.243},\n {\'galaxy\': \'NGC5985\', \'omega\': 6.16, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC00731\', \'omega\': 5.99, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC06786\', \'omega\': 5.87, \'upsilon\': 0.736},\n {\'galaxy\': \'NGC6195\', \'omega\': 5.83, \'upsilon\': 0.52},\n {\'galaxy\': \'UGC12732\', \'omega\': 5.81, \'upsilon\': 1.0},\n {\'galaxy\': \'NGC4157\', \'omega\': 5.46, \'upsilon\': 0.423},\n {\'galaxy\': \'UGC06930\', \'omega\': 5.44, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC03205\', \'omega\': 5.27, \'upsilon\': 0.65},\n {\'galaxy\': \'UGC11820\', \'omega\': 5.21, \'upsilon\': 1.0},\n {\'galaxy\': \'NGC4100\', \'omega\': 5.2, \'upsilon\': 0.867},\n {\'galaxy\': \'UGC03546\', \'omega\': 5.29, \'upsilon\': 0.433},\n {\'galaxy\': \'F563-1\', \'omega\': 5.02, \'upsilon\': 1.0},\n {\'galaxy\': \'NGC4559\', \'omega\': 5.3, \'upsilon\': 0.551},\n {\'galaxy\': \'F583-1\', \'omega\': 5.16, \'upsilon\': 0.677},\n {\'galaxy\': \'NGC2955\', \'omega\': 5.71, \'upsilon\': 0.564},\n {\'galaxy\': \'NGC7331\', \'omega\': 4.9, \'upsilon\': 0.409},\n {\'galaxy\': \'NGC4183\', \'omega\': 4.92, \'upsilon\': 1.0},\n {\'galaxy\': \'DDO161\', \'omega\': 4.69, \'upsilon\': 1.0},\n {\'galaxy\': \'NGC6503\', \'omega\': 4.3, \'upsilon\': 0.59},\n {\'galaxy\': \'NGC2998\', \'omega\': 4.61, \'upsilon\': 0.859},\n {\'galaxy\': \'NGC1090\', \'omega\': 5.24, \'upsilon\': 0.184},\n {\'galaxy\': \'NGC5033\', \'omega\': 3.79, \'upsilon\': 0.49},\n {\'galaxy\': \'NGC5371\', \'omega\': 3.78, \'upsilon\': 0.617},\n {\'galaxy\': \'F579-V1\', \'omega\': 7.13, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC06983\', \'omega\': 5.74, \'upsilon\': 0.978},\n {\'galaxy\': \'NGC2841\', \'omega\': 3.58, \'upsilon\': 0.966},\n {\'galaxy\': \'UGC05750\', \'omega\': 3.44, \'upsilon\': 0.525},\n {\'galaxy\': \'UGC05005\', \'omega\': 3.38, \'upsilon\': 0.806},\n {\'galaxy\': \'UGC02885\', \'omega\': 3.4, \'upsilon\': 0.823},\n {\'galaxy\': \'NGC5055\', \'omega\': 2.89, \'upsilon\': 0.385},\n {\'galaxy\': \'NGC6674\', \'omega\': 2.81, \'upsilon\': 0.953},\n {\'galaxy\': \'UGC01230\', \'omega\': 2.74, \'upsilon\': 0.863},\n {\'galaxy\': \'UGC06614\', \'omega\': 2.49, \'upsilon\': 0.597},\n {\'galaxy\': \'UGC02487\', \'omega\': 2.49, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC00128\', \'omega\': 2.23, \'upsilon\': 1.0},\n {\'galaxy\': \'NGC0801\', \'omega\': 3.32, \'upsilon\': 0.448},\n {\'galaxy\': \'UGC09133\', \'omega\': 1.97, \'upsilon\': 0.66},\n {\'galaxy\': \'UGC07125\', \'omega\': 3.09, \'upsilon\': 0.787},\n {\'galaxy\': \'NGC1003\', \'omega\': 3.49, \'upsilon\': 0.679},\n {\'galaxy\': \'NGC3198\', \'omega\': 3.33, \'upsilon\': 0.149},\n {\'galaxy\': \'NGC2903\', \'omega\': 7.01, \'upsilon\': 0.1},\n {\'galaxy\': \'ESO563-G021\', \'omega\': 7.31, \'upsilon\': 0.1},\n {\'galaxy\': \'NGC5585\', \'omega\': 8.06, \'upsilon\': 0.6},\n {\'galaxy\': \'F574-1\', \'omega\': 7.68, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC06446\', \'omega\': 7.11, \'upsilon\': 1.0},\n {\'galaxy\': \'UGC07524\', \'omega\': 7.15, \'upsilon\': 0.87}]\n\nassert len(P2_DATA) == 84\nassert len({d[\'galaxy\'] for d in P2_DATA}) == 84\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\n# Restrict identity lookup to SPARC so duplicate cross-survey names cannot overwrite it.\ngalaxies = {\n    g[\'galaxy\']: g\n    for g in corpus[\'galaxies\']\n    if g.get(\'survey\') == \'SPARC\'\n}\n\nUPSILON_BUL = 0.7\ngaps = []\nmissing = []\n\nfor d in P2_DATA:\n    name = d[\'galaxy\']\n    if name not in galaxies:\n        missing.append(name)\n        continue\n\n    g = galaxies[name]\n    omega_rad_gyr = d[\'omega\']\n    omega_kms_kpc = omega_rad_gyr / 1.0227\n    upsilon = d[\'upsilon\']\n\n    data = [\n        p for p in g.get(\'data\', [])\n        if p.get(\'Vobs\', 0) > 0 and p.get(\'Rad\', 0) > 0\n    ]\n    if len(data) < 2:\n        missing.append(name)\n        continue\n\n    p2 = data[-1]\n    R2    = p2[\'Rad\']\n    Vobs2 = p2[\'Vobs\']\n    Vgas2 = p2.get(\'Vgas\', 0)\n    Vdsk2 = p2.get(\'Vdisk\', 0)\n    Vbul2 = p2.get(\'Vbul\', 0)\n\n    # Paper2 baryonic convention: sign-preserving gas term,\n    # per-galaxy disk upsilon, fixed bulge upsilon=0.7.\n    Vbar2_sq = (\n        abs(Vgas2) * Vgas2\n        + upsilon * Vdsk2**2\n        + UPSILON_BUL * Vbul2**2\n    )\n    if Vbar2_sq <= 0:\n        missing.append(name)\n        continue\n\n    Vbary2 = Vbar2_sq**0.5\n\n    # LOCKED UNIT INVARIANT:\n    # velocity arithmetic uses omega in native km/s/kpc.\n    Vadj2 = Vobs2 - R2 * omega_kms_kpc\n    gap = Vadj2 - Vbary2\n\n    gaps.append({\n        \'galaxy\': name,\n        \'gap\': gap,\n        \'Vadj\': Vadj2,\n        \'Vbary\': Vbary2,\n        \'vmax\': max(p[\'Vobs\'] for p in data)\n    })\n\nassert not missing, f"Frozen cohort missing/invalid: {missing}"\nassert len(gaps) == 84\n\ngaps_arr = np.array([g[\'gap\'] for g in gaps])\nall_neg = int(np.sum(gaps_arr < 0))\nmean_gap = np.mean(gaps_arr)\nstd_gap = np.std(gaps_arr)\nmedian_gap = np.median(gaps_arr)\n\nprint(f\'Frozen SPARC cohort: {len(gaps)}/84\')\nprint(f\'Negative outer gaps: {all_neg}/{len(gaps)}\')\nprint(f\'Mean outer gap: {mean_gap:.1f} ± {std_gap:.1f} km/s\')\nprint(f\'Median outer gap: {median_gap:.1f} km/s\')\nprint(\'Archived Paper 2: −51.4 ± 25.0 km/s, all 84 negative\')\nprint(\'Corrected FAIR² reproduction uses native km/s/kpc for velocity arithmetic.\')\n\nfig, axes = plt.subplots(1, 2, figsize=(12, 5))\n\nax = axes[0]\nax.hist(gaps_arr, bins=20, alpha=0.8, edgecolor=\'white\')\nax.axvline(0, lw=2, ls=\'--\', label=\'Zero\')\nax.axvline(mean_gap, lw=2, label=f\'Mean = {mean_gap:.1f} km/s\')\nax.set_xlabel(\'Outer Gap: Vadj(R2) − Vbary(R2) (km/s)\', fontsize=11)\nax.set_ylabel(\'N galaxies\', fontsize=11)\nax.set_title(\'Frozen N=84 SPARC Cohort\', fontsize=11)\nax.legend(fontsize=9)\n\nax2 = axes[1]\nax2.scatter([g[\'vmax\'] for g in gaps], gaps_arr, s=18, alpha=0.6)\nax2.axhline(0, lw=1.5, ls=\'--\')\nax2.set_xlabel(\'Vmax (km/s)\', fontsize=11)\nax2.set_ylabel(\'Outer Gap (km/s)\', fontsize=11)\nax2.set_title(\'Outer Gap vs Rotation Speed\', fontsize=11)\nax2.grid(alpha=0.3)\n\nplt.suptitle(\n    \'🔍 Outer Gap Diagnostic — Corrected FAIR² Reproduction\\n\'\n    \'Boundary consistency diagnostic; not an independent halo exclusion\',\n    fontsize=11\n)\nplt.tight_layout()\nplt.savefig(\'hs_b_05_outer_gap.png\', dpi=150, bbox_inches=\'tight\')\nplt.show()\n')
+])
 
-$$\\text{RMSE} = \\sqrt{\\frac{1}{N}\\sum_{i=1}^{N}(V_{\\rm model,i} - V_{\\rm data,i})^2}$$
+notebooks['hs_b_06_omega_statistics.ipynb'] = nb([
+    md('# 📈 Omega Statistics Across the Frozen 84-Galaxy SPARC Cohort\n### EPS Research High-School Exploration Track — Ages 15-18\n\nFlynn & Cannaliato (2025) reported a mean omega of about\n**7.06 ± 3.26 rad/Gyr** for the frozen 84-galaxy SPARC cohort.\n\nThis notebook uses that same published cohort and its stored omega values.\nIt does not reconstruct the sample from current corpus quality fields.\n\n**Prerequisites:** Mean, standard deviation, histograms'),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import matplotlib\nmatplotlib.use(\'Agg\')\nimport json, numpy as np, matplotlib.pyplot as plt\n\n# Frozen published cohort: (canonical SPARC galaxy ID, omega in rad/Gyr)\nFROZEN_84 = [(\'NGC3741\', 7.032),\n (\'UGC08550\', 9.317),\n (\'NGC3109\', 10.244),\n (\'UGC07603\', 14.2),\n (\'DDO064\', 15.35),\n (\'UGC01281\', 11.37),\n (\'UGC07151\', 12.53),\n (\'UGC07399\', 14.86),\n (\'UGC04278\', 13.76),\n (\'NGC3972\', 13.93),\n (\'NGC7793\', 11.4),\n (\'F571-8\', 9.17),\n (\'UGC05721\', 11.51),\n (\'UGC07323\', 13.41),\n (\'NGC3521\', 10.25),\n (\'F563-V2\', 11.08),\n (\'ESO116-G012\', 11.02),\n (\'F568-1\', 10.52),\n (\'ESO079-G014\', 10.37),\n (\'NGC3893\', 6.47),\n (\'UGC08286\', 9.82),\n (\'NGC0024\', 9.55),\n (\'NGC0100\', 9.37),\n (\'NGC0891\', 8.99),\n (\'NGC4217\', 9.99),\n (\'UGC06917\', 8.3),\n (\'NGC7814\', 8.52),\n (\'NGC3917\', 8.82),\n (\'F583-4\', 9.33),\n (\'IC4202\', 9.3),\n (\'UGC08490\', 6.95),\n (\'NGC4088\', 6.98),\n (\'NGC6946\', 6.83),\n (\'F568-3\', 6.54),\n (\'F568-V1\', 6.55),\n (\'NGC2403\', 6.32),\n (\'UGC12632\', 6.27),\n (\'UGC11455\', 6.24),\n (\'NGC5985\', 6.16),\n (\'UGC00731\', 5.99),\n (\'UGC06786\', 5.87),\n (\'NGC6195\', 5.83),\n (\'UGC12732\', 5.81),\n (\'NGC4157\', 5.46),\n (\'UGC06930\', 5.44),\n (\'UGC03205\', 5.27),\n (\'UGC11820\', 5.21),\n (\'NGC4100\', 5.2),\n (\'UGC03546\', 5.29),\n (\'F563-1\', 5.02),\n (\'NGC4559\', 5.3),\n (\'F583-1\', 5.16),\n (\'NGC2955\', 5.71),\n (\'NGC7331\', 4.9),\n (\'NGC4183\', 4.92),\n (\'DDO161\', 4.69),\n (\'NGC6503\', 4.3),\n (\'NGC2998\', 4.61),\n (\'NGC1090\', 5.24),\n (\'NGC5033\', 3.79),\n (\'NGC5371\', 3.78),\n (\'F579-V1\', 7.13),\n (\'UGC06983\', 5.74),\n (\'NGC2841\', 3.58),\n (\'UGC05750\', 3.44),\n (\'UGC05005\', 3.38),\n (\'UGC02885\', 3.4),\n (\'NGC5055\', 2.89),\n (\'NGC6674\', 2.81),\n (\'UGC01230\', 2.74),\n (\'UGC06614\', 2.49),\n (\'UGC02487\', 2.49),\n (\'UGC00128\', 2.23),\n (\'NGC0801\', 3.32),\n (\'UGC09133\', 1.97),\n (\'UGC07125\', 3.09),\n (\'NGC1003\', 3.49),\n (\'NGC3198\', 3.33),\n (\'NGC2903\', 7.01),\n (\'ESO563-G021\', 7.31),\n (\'NGC5585\', 8.06),\n (\'F574-1\', 7.68),\n (\'UGC06446\', 7.11),\n (\'UGC07524\', 7.15)]\n\nassert len(FROZEN_84) == 84\nassert len({name for name,omega in FROZEN_84}) == 84\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\nsparc = {\n    g[\'galaxy\']: g\n    for g in corpus[\'galaxies\']\n    if g.get(\'survey\') == \'SPARC\'\n}\n\nomegas = []\nmissing = []\nfor name, omega_rad_gyr in FROZEN_84:\n    g = sparc.get(name)\n    if g is None or not g.get(\'data\'):\n        missing.append(name)\n        continue\n    omegas.append({\n        \'galaxy\': name,\n        \'omega\': omega_rad_gyr,\n        \'vmax\': max(p[\'Vobs\'] for p in g[\'data\'])\n    })\n\nassert not missing, f"Frozen cohort missing from canonical SPARC corpus: {missing}"\nassert len(omegas) == 84\n\nom_arr=np.array([o[\'omega\'] for o in omegas])\n\nprint(f\'Frozen SPARC cohort with omega: {len(omegas)}\')\nprint(f\'Mean omega:   {np.mean(om_arr):+.3f} rad/Gyr\')\nprint(f\'Median omega: {np.median(om_arr):+.3f} rad/Gyr\')\nprint(f\'Std omega:    {np.std(om_arr):.3f} rad/Gyr\')\nprint(f\'All positive: {bool(np.all(om_arr > 0))}\')\n\nfig,axes=plt.subplots(1,2,figsize=(12,5))\n\nax=axes[0]\nax.hist(om_arr,bins=20,alpha=0.8,edgecolor=\'white\')\nax.axvline(np.mean(om_arr),lw=2,ls=\'--\',\n           label=f\'Mean = {np.mean(om_arr):+.2f} rad/Gyr\')\nax.axvline(0,lw=1,ls=\':\')\nax.set_xlabel(\'ω (rad/Gyr)\',fontsize=12)\nax.set_ylabel(\'N galaxies\',fontsize=12)\nax.set_title(\'Omega Distribution\\\\nFrozen N=84 SPARC cohort\',fontsize=11)\nax.legend(fontsize=9)\n\nax2=axes[1]\nax2.scatter([o[\'vmax\'] for o in omegas],om_arr,s=20,alpha=0.6)\nax2.axhline(np.mean(om_arr),lw=1.5,ls=\'--\',\n            label=f\'Mean {np.mean(om_arr):+.2f}\')\nax2.axhline(0,lw=1,ls=\':\')\nax2.set_xlabel(\'Vmax (km/s)\',fontsize=12)\nax2.set_ylabel(\'ω (rad/Gyr)\',fontsize=12)\nax2.set_title(\'Omega vs Vmax\\\\nFrozen published cohort\',fontsize=11)\nax2.legend(fontsize=9)\nax2.grid(alpha=0.3)\n\nplt.suptitle(\n    \'📈 Omega Statistics — Published Frozen SPARC Cohort\\\\n\'\n    \'Flynn & Cannaliato (2025)\',\n    fontsize=11\n)\nplt.tight_layout()\nplt.savefig(\'hs_b_06_omega_statistics.png\',dpi=150,bbox_inches=\'tight\')\nplt.show()\n')
+])
 
-Lower RMSE = better fit. Let's compute it for DDO161.
+notebooks['hs_b_07_cross_epoch.ipynb'] = nb([
+    md('# 🌌 Galaxy Sizes Across Cosmic Time\n### EPS Research High-School Exploration Track — Ages 15-18\n\nThe EPS IntZ corpus contains **1,292 galaxies** spanning intermediate redshift.\nFor **706 KMOS3D galaxies**, the canonical nested record includes a measured\nH-band effective radius, `Reff_H_kpc`.\n\nThis notebook plots those 706 measured galaxy sizes against spectroscopic\nredshift. Galaxies without a usable effective-radius measurement are not\nsilently treated as zero-size objects.\n\n**What you will learn:**\n- How to load a nested astronomical JSON corpus\n- How to select records with an actual measurement\n- How effective radius varies across redshift\n- How to summarize a large sample with binned medians\n'),
+    code('# ── Colab setup: canonical FAIR² IntZ corpus ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    INTZ_FILE = \'intz_corpus_v1b.json\'\n    INTZ_URL = \'https://zenodo.org/records/21841382/files/intz_corpus_v1b.json\'\n    if not os.path.exists(INTZ_FILE):\n        print(f"Downloading {INTZ_FILE}...")\n        urllib.request.urlretrieve(INTZ_URL, INTZ_FILE)\n        print(f"  ✓ {INTZ_FILE}")\n    INTZ_PATH = INTZ_FILE\nelse:\n    INTZ_PATH = \'../intz/intz_corpus_v1b.json\'\n    print("Running locally — using canonical IntZ v1b corpus.")\n'),
+    code('import matplotlib\nmatplotlib.use(\'Agg\')\nimport json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open(INTZ_PATH) as f:\n    corpus = json.load(f)\n\ngalaxies = corpus[\'galaxies\']\nassert len(galaxies) == 1292\n\nrows = []\nfor g in galaxies:\n    try:\n        ident = g[\'identifiers\']\n        redshift = g[\'redshift\']\n        morph = g[\'morphology\']\n\n        z = redshift[\'z_spec\']\n        reff = morph[\'Reff_H_kpc\']\n        survey = ident[\'survey\']\n        galaxy_id = ident[\'id\']\n\n        if z is None or reff is None:\n            continue\n\n        z = float(z)\n        reff = float(reff)\n\n        if reff <= 0:\n            continue\n\n        rows.append({\n            \'id\': galaxy_id,\n            \'survey\': survey,\n            \'z\': z,\n            \'Reff\': reff\n        })\n\n    except (KeyError, TypeError, ValueError):\n        continue\n\nassert len(rows) == 706\nassert {r[\'survey\'] for r in rows} == {\'KMOS3D\'}\n\nprint(f\'IntZ corpus total: {len(galaxies)} galaxies\')\nprint(f\'Galaxies with measured Reff_H_kpc: {len(rows)}\')\nprint(f\'Surveys in plotted sample: {sorted({r["survey"] for r in rows})}\')\n\nzs = np.array([r[\'z\'] for r in rows])\nrs = np.array([r[\'Reff\'] for r in rows])\n\nfig, ax = plt.subplots(figsize=(9, 6))\nax.scatter(zs, rs, s=8, alpha=0.4)\n\nz_bins = np.arange(0.3, 2.8, 0.3)\nz_mid, r_med = [], []\n\nfor i in range(len(z_bins)-1):\n    mask = (zs >= z_bins[i]) & (zs < z_bins[i+1])\n    if mask.sum() > 5:\n        z_mid.append((z_bins[i] + z_bins[i+1]) / 2)\n        r_med.append(np.median(rs[mask]))\n\nax.plot(z_mid, r_med, \'o-\', lw=2, ms=7, label=\'Median size per redshift bin\')\n\nax.set_xlabel(\'Spectroscopic redshift z\', fontsize=12)\nax.set_ylabel(\'H-band effective radius Reff (kpc)\', fontsize=12)\nax.set_title(\n    \'Galaxy Sizes Across Cosmic Time\\n\'\n    \'706 KMOS3D galaxies with measured H-band effective radii\',\n    fontsize=12\n)\nax.legend(fontsize=10)\n\nplt.tight_layout()\nplt.savefig(\'hs_b_07_galaxy_sizes.png\', dpi=150, bbox_inches=\'tight\')\nplt.show()\n\nprint(f\'Redshift range: {zs.min():.2f} to {zs.max():.2f}\')\nprint(f\'Median effective radius: {np.median(rs):.2f} kpc\')\nprint()\nprint(\'This plot describes the measured KMOS3D size sample within IntZ.\')\nprint(\'The full IntZ corpus contains 1,292 records; 706 enter this size analysis.\')\n')
+])
 
-**Prerequisites:** Basic statistics, square roots, summation notation"""),
-code("""import json, numpy as np, matplotlib.pyplot as plt
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus=json.load(f)
-g=next(g for g in corpus['galaxies'] if g['galaxy']=='DDO161')
-d=g['data']
-R=np.array([p['Rad'] for p in d]); V=np.array([p['Vobs'] for p in d])
-Vgas=np.array([p['Vgas'] for p in d]); Vdisk=np.array([p['Vdisk'] for p in d])
-Vbul=np.array([p['Vbul'] for p in d])
-Vbar=np.where(Vgas<0,-np.sqrt(Vgas**2+Vdisk**2+Vbul**2),np.sqrt(Vgas**2+Vdisk**2+Vbul**2))
-R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
-outer_term    = (V2 / R2)
-inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-V_adj=V-R * omega_kms_kpc
-V_kep=np.sqrt(V2**2*R2/R)
+notebooks['hs_b_08_log_slope.ipynb'] = nb([
+    md('# 📐 The Log-Slope Diagnostic\n### EPS Research High-School Exploration Track — Ages 15-18\n\nThe logarithmic slope $d\\ln V / d\\ln R$ describes the **local shape**\nof a rotation curve:\n\n| Slope | Meaning |\n|-------|---------|\n| +1.0 | Solid-body-like rise |\n| 0.0  | Locally flat rotation curve |\n| −0.5 | Keplerian point-mass decline |\n\nHere we measure the outer finite-difference slope for the same frozen\n84-galaxy SPARC cohort used in the published analysis.\n\nThis is a descriptive diagnostic of outer rotation-curve shape.\nIt is not a requirement that every galaxy have slope −0.5 for the\nomega correction to be defined or evaluated.\n\n**Prerequisites:** Logarithms, derivatives (or finite differences)'),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import matplotlib\nmatplotlib.use(\'Agg\')\nimport json, numpy as np, matplotlib.pyplot as plt\n\nFROZEN_84 = [\'NGC3741\',\n \'UGC08550\',\n \'NGC3109\',\n \'UGC07603\',\n \'DDO064\',\n \'UGC01281\',\n \'UGC07151\',\n \'UGC07399\',\n \'UGC04278\',\n \'NGC3972\',\n \'NGC7793\',\n \'F571-8\',\n \'UGC05721\',\n \'UGC07323\',\n \'NGC3521\',\n \'F563-V2\',\n \'ESO116-G012\',\n \'F568-1\',\n \'ESO079-G014\',\n \'NGC3893\',\n \'UGC08286\',\n \'NGC0024\',\n \'NGC0100\',\n \'NGC0891\',\n \'NGC4217\',\n \'UGC06917\',\n \'NGC7814\',\n \'NGC3917\',\n \'F583-4\',\n \'IC4202\',\n \'UGC08490\',\n \'NGC4088\',\n \'NGC6946\',\n \'F568-3\',\n \'F568-V1\',\n \'NGC2403\',\n \'UGC12632\',\n \'UGC11455\',\n \'NGC5985\',\n \'UGC00731\',\n \'UGC06786\',\n \'NGC6195\',\n \'UGC12732\',\n \'NGC4157\',\n \'UGC06930\',\n \'UGC03205\',\n \'UGC11820\',\n \'NGC4100\',\n \'UGC03546\',\n \'F563-1\',\n \'NGC4559\',\n \'F583-1\',\n \'NGC2955\',\n \'NGC7331\',\n \'NGC4183\',\n \'DDO161\',\n \'NGC6503\',\n \'NGC2998\',\n \'NGC1090\',\n \'NGC5033\',\n \'NGC5371\',\n \'F579-V1\',\n \'UGC06983\',\n \'NGC2841\',\n \'UGC05750\',\n \'UGC05005\',\n \'UGC02885\',\n \'NGC5055\',\n \'NGC6674\',\n \'UGC01230\',\n \'UGC06614\',\n \'UGC02487\',\n \'UGC00128\',\n \'NGC0801\',\n \'UGC09133\',\n \'UGC07125\',\n \'NGC1003\',\n \'NGC3198\',\n \'NGC2903\',\n \'ESO563-G021\',\n \'NGC5585\',\n \'F574-1\',\n \'UGC06446\',\n \'UGC07524\']\nassert len(FROZEN_84) == 84\nassert len(set(FROZEN_84)) == 84\n\nwith open(HI_PATH) as f:\n    corpus = json.load(f)\n\nsparc = {\n    g[\'galaxy\']: g\n    for g in corpus[\'galaxies\']\n    if g.get(\'survey\') == \'SPARC\'\n}\n\nouter_slopes=[]\nmissing=[]\n\nfor name in FROZEN_84:\n    g=sparc.get(name)\n    if g is None:\n        missing.append(name)\n        continue\n\n    d=g.get(\'data\',[])\n    if len(d)<2:\n        missing.append(name)\n        continue\n\n    try:\n        R1,V1=d[-2][\'Rad\'],d[-2][\'Vobs\']\n        R2,V2=d[-1][\'Rad\'],d[-1][\'Vobs\']\n\n        if R1>0 and R2>R1 and V1>0 and V2>0:\n            slope=(np.log(V2)-np.log(V1))/(np.log(R2)-np.log(R1))\n            outer_slopes.append({\n                \'galaxy\':name,\n                \'slope\':slope,\n                \'vmax\':max(p[\'Vobs\'] for p in d)\n            })\n        else:\n            missing.append(name)\n\n    except (KeyError,IndexError,ZeroDivisionError):\n        missing.append(name)\n\nassert not missing, f"Frozen cohort missing/invalid for slope: {missing}"\nassert len(outer_slopes)==84\n\nslopes=np.array([s[\'slope\'] for s in outer_slopes])\n\nprint(f\'Frozen SPARC cohort with log slope: {len(outer_slopes)}\')\nprint(f\'Median slope: {np.median(slopes):.3f}\')\nprint(f\'Flat (|slope|<0.05): {sum(abs(slopes)<0.05)} galaxies\')\nprint(f\'Rising (slope>0.05): {sum(slopes>0.05)} galaxies\')\nprint(f\'Falling (slope<-0.05): {sum(slopes<-0.05)} galaxies\')\n\nfig,axes=plt.subplots(1,2,figsize=(12,5))\n\nax=axes[0]\nax.hist(slopes,bins=25,alpha=0.8,edgecolor=\'white\')\nax.axvline(0,lw=2,ls=\'--\',label=\'Flat rotation (slope=0)\')\nax.axvline(np.median(slopes),lw=2,\n           label=f\'Median = {np.median(slopes):.3f}\')\nax.axvline(-0.5,lw=1,ls=\':\',label=\'Keplerian slope = -0.5\')\nax.set_xlabel(\'Outer Log Slope d(log V)/d(log R)\',fontsize=12)\nax.set_ylabel(\'N galaxies\',fontsize=12)\nax.set_title(\'Outer-Slope Distribution\\nFrozen N=84 SPARC cohort\',fontsize=11)\nax.legend(fontsize=9)\n\nax2=axes[1]\nax2.scatter([s[\'vmax\'] for s in outer_slopes],slopes,s=18,alpha=0.6)\nax2.axhline(0,lw=1.5,ls=\'--\',label=\'Flat\')\nax2.axhline(-0.5,lw=1,ls=\':\',label=\'Keplerian\')\nax2.set_xlabel(\'Vmax (km/s)\',fontsize=12)\nax2.set_ylabel(\'Outer Log Slope\',fontsize=12)\nax2.set_title(\'Outer Slope vs Vmax\',fontsize=11)\nax2.legend(fontsize=9)\nax2.grid(alpha=0.3)\n\nplt.suptitle(\n    \'📐 Outer Log-Slope Diagnostic — Frozen Published SPARC Cohort\',\n    fontsize=12\n)\nplt.tight_layout()\nplt.savefig(\'hs_b_08_log_slope.png\',dpi=150,bbox_inches=\'tight\')\nplt.show()\n')
+])
 
-def rmse(pred, true):
-    return np.sqrt(np.mean((pred - true)**2))
+notebooks['hs_b_09_research_project.ipynb'] = nb([
+    md('# 🔬 Your Research Project\n### EPS Research High-School Exploration Track — Ages 15-18\n\n**Project:** Does omega correlate with galaxy size or rotation speed?\n\nUsing the same frozen 84-galaxy SPARC cohort from the published analysis,\nwe compare the published omega values with two directly measured properties:\n\n1. outermost measured radius, $R_{max}$\n2. maximum observed rotation speed, $V_{max}$\n\nCorrelation does not establish causation; this is an exploratory descriptive test.\n\n**Prerequisites:** Correlation, hypothesis testing, scientific reasoning'),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import matplotlib\nmatplotlib.use(\'Agg\')\nimport json, numpy as np, matplotlib.pyplot as plt\n\n# Frozen published cohort: (canonical SPARC galaxy ID, omega in rad/Gyr)\nFROZEN_84 = [(\'NGC3741\', 7.032),\n (\'UGC08550\', 9.317),\n (\'NGC3109\', 10.244),\n (\'UGC07603\', 14.2),\n (\'DDO064\', 15.35),\n (\'UGC01281\', 11.37),\n (\'UGC07151\', 12.53),\n (\'UGC07399\', 14.86),\n (\'UGC04278\', 13.76),\n (\'NGC3972\', 13.93),\n (\'NGC7793\', 11.4),\n (\'F571-8\', 9.17),\n (\'UGC05721\', 11.51),\n (\'UGC07323\', 13.41),\n (\'NGC3521\', 10.25),\n (\'F563-V2\', 11.08),\n (\'ESO116-G012\', 11.02),\n (\'F568-1\', 10.52),\n (\'ESO079-G014\', 10.37),\n (\'NGC3893\', 6.47),\n (\'UGC08286\', 9.82),\n (\'NGC0024\', 9.55),\n (\'NGC0100\', 9.37),\n (\'NGC0891\', 8.99),\n (\'NGC4217\', 9.99),\n (\'UGC06917\', 8.3),\n (\'NGC7814\', 8.52),\n (\'NGC3917\', 8.82),\n (\'F583-4\', 9.33),\n (\'IC4202\', 9.3),\n (\'UGC08490\', 6.95),\n (\'NGC4088\', 6.98),\n (\'NGC6946\', 6.83),\n (\'F568-3\', 6.54),\n (\'F568-V1\', 6.55),\n (\'NGC2403\', 6.32),\n (\'UGC12632\', 6.27),\n (\'UGC11455\', 6.24),\n (\'NGC5985\', 6.16),\n (\'UGC00731\', 5.99),\n (\'UGC06786\', 5.87),\n (\'NGC6195\', 5.83),\n (\'UGC12732\', 5.81),\n (\'NGC4157\', 5.46),\n (\'UGC06930\', 5.44),\n (\'UGC03205\', 5.27),\n (\'UGC11820\', 5.21),\n (\'NGC4100\', 5.2),\n (\'UGC03546\', 5.29),\n (\'F563-1\', 5.02),\n (\'NGC4559\', 5.3),\n (\'F583-1\', 5.16),\n (\'NGC2955\', 5.71),\n (\'NGC7331\', 4.9),\n (\'NGC4183\', 4.92),\n (\'DDO161\', 4.69),\n (\'NGC6503\', 4.3),\n (\'NGC2998\', 4.61),\n (\'NGC1090\', 5.24),\n (\'NGC5033\', 3.79),\n (\'NGC5371\', 3.78),\n (\'F579-V1\', 7.13),\n (\'UGC06983\', 5.74),\n (\'NGC2841\', 3.58),\n (\'UGC05750\', 3.44),\n (\'UGC05005\', 3.38),\n (\'UGC02885\', 3.4),\n (\'NGC5055\', 2.89),\n (\'NGC6674\', 2.81),\n (\'UGC01230\', 2.74),\n (\'UGC06614\', 2.49),\n (\'UGC02487\', 2.49),\n (\'UGC00128\', 2.23),\n (\'NGC0801\', 3.32),\n (\'UGC09133\', 1.97),\n (\'UGC07125\', 3.09),\n (\'NGC1003\', 3.49),\n (\'NGC3198\', 3.33),\n (\'NGC2903\', 7.01),\n (\'ESO563-G021\', 7.31),\n (\'NGC5585\', 8.06),\n (\'F574-1\', 7.68),\n (\'UGC06446\', 7.11),\n (\'UGC07524\', 7.15)]\n\nassert len(FROZEN_84) == 84\nassert len({name for name,omega in FROZEN_84}) == 84\n\nwith open(HI_PATH) as f:\n    corpus=json.load(f)\n\nsparc={\n    g[\'galaxy\']:g\n    for g in corpus[\'galaxies\']\n    if g.get(\'survey\')==\'SPARC\'\n}\n\nresults=[]\nmissing=[]\n\nfor name,omega_rad_gyr in FROZEN_84:\n    g=sparc.get(name)\n    if g is None or not g.get(\'data\'):\n        missing.append(name)\n        continue\n\n    data=[\n        p for p in g[\'data\']\n        if p.get(\'Rad\',0)>0 and p.get(\'Vobs\',0)>0\n    ]\n    if len(data)<2:\n        missing.append(name)\n        continue\n\n    results.append({\n        \'galaxy\':name,\n        \'omega\':omega_rad_gyr,\n        \'r_max\':data[-1][\'Rad\'],\n        \'v_max\':max(p[\'Vobs\'] for p in data),\n    })\n\nassert not missing, f"Frozen cohort missing/invalid: {missing}"\nassert len(results)==84\n\nom_arr=np.array([r[\'omega\'] for r in results])\nrm_arr=np.array([r[\'r_max\'] for r in results])\nvm_arr=np.array([r[\'v_max\'] for r in results])\n\nr_om_rm=np.corrcoef(om_arr,rm_arr)[0,1]\nr_om_vm=np.corrcoef(om_arr,vm_arr)[0,1]\n\nfig,axes=plt.subplots(1,2,figsize=(12,5))\n\nax=axes[0]\nax.scatter(rm_arr,om_arr,s=20,alpha=0.6)\nax.axhline(np.mean(om_arr),lw=1.5,ls=\'--\',\n           label=f\'Mean ω = {np.mean(om_arr):+.2f}\')\nax.set_xlabel(\'R_max (kpc)\',fontsize=12)\nax.set_ylabel(\'ω (rad/Gyr)\',fontsize=12)\nax.set_title(\n    f\'Omega vs Outer Radius\\\\nCorrelation r = {r_om_rm:.3f}\',\n    fontsize=11\n)\nax.legend(fontsize=9)\nax.grid(alpha=0.3)\n\nax2=axes[1]\nax2.scatter(vm_arr,om_arr,s=20,alpha=0.6)\nax2.axhline(np.mean(om_arr),lw=1.5,ls=\'--\',\n            label=f\'Mean ω = {np.mean(om_arr):+.2f}\')\nax2.set_xlabel(\'Vmax (km/s)\',fontsize=12)\nax2.set_ylabel(\'ω (rad/Gyr)\',fontsize=12)\nax2.set_title(\n    f\'Omega vs Max Speed\\\\nCorrelation r = {r_om_vm:.3f}\',\n    fontsize=11\n)\nax2.legend(fontsize=9)\nax2.grid(alpha=0.3)\n\nplt.suptitle(\n    \'🔬 Student Research Project — Frozen N=84 SPARC Cohort\\\\n\'\n    \'Does omega correlate with galaxy size or rotation speed?\',\n    fontsize=12\n)\nplt.tight_layout()\nplt.savefig(\'hs_b_09_research_project.png\',dpi=150,bbox_inches=\'tight\')\nplt.show()\n\nprint(f\'Sample size: {len(results)} galaxies\')\nprint(f\'Omega vs R_max correlation: r = {r_om_rm:.3f}\')\nprint(f\'Omega vs Vmax correlation:  r = {r_om_vm:.3f}\')\nprint()\nprint(\'These are descriptive correlations in the frozen published cohort.\')\n')
+])
 
-print("RMSE comparison for DDO161:")
-print(f"  Keplerian model:   RMSE = {rmse(V_kep, Vbar):.2f} km/s  (pure Newtonian, no dark matter)")
-print(f"  Omega correction:  RMSE = {rmse(V_adj, Vbar):.2f} km/s  (EPS Research correction)")
-print(f"  Improvement:       {rmse(V_kep, Vbar) - rmse(V_adj, Vbar):.2f} km/s better")
-print()
-print("For the full 84-galaxy SPARC sample (Flynn 2026):")
-print("  Mean RMSE (Keplerian): 74.20 km/s")
-print("  Mean RMSE (omega):     25.45 km/s")
-print("  That's a 2× average improvement!")""")
-]),
-
-"hs_b_04_baryonic_quadrature.ipynb": nb([
-md("""# ⚡ Baryonic Velocity: Sign-Preserving Quadrature
-### EPS Research High-School Exploration Track — Ages 15-18
-
-The total baryonic velocity combines gas, disk, and bulge contributions:
-
-$$V_{\\rm bar} = \\text{sign}(V_{\\rm gas})\\sqrt{|V_{\\rm gas}|^2 + \\Upsilon V_{\\rm disk}^2 + \\Upsilon_b V_{\\rm bul}^2}$$
-
-Why sign-preserving? At inner radii, thermal gas pressure can exceed
-rotation, making Vgas effectively negative. We preserve this sign
-to avoid artificially boosting the baryonic contribution.
-
-**Prerequisites:** Vectors, square roots, quadrature addition"""),
-code("""import json, numpy as np, matplotlib.pyplot as plt
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus=json.load(f)
-g=next(g for g in corpus['galaxies'] if g['galaxy']=='NGC2403')
-d=g['data']
-R=np.array([p['Rad'] for p in d]); Vobs=np.array([p['Vobs'] for p in d])
-Vgas=np.array([p['Vgas'] for p in d]); Vdisk=np.array([p['Vdisk'] for p in d])
-Vbul=np.array([p['Vbul'] for p in d])
-Upsilon=1.0
-Vbar_plain=np.sqrt(Vgas**2+Upsilon*Vdisk**2+Vbul**2)
-Vbar_signed=np.where(Vgas<0,-np.sqrt(Vgas**2+Upsilon*Vdisk**2+Vbul**2),
-                            np.sqrt(Vgas**2+Upsilon*Vdisk**2+Vbul**2))
-print(f"NGC2403: Vgas negative rows = {(Vgas<0).sum()}")
-print("\\nDifference between signed and unsigned at inner points:")
-for r,vp,vs in zip(R[:5],Vbar_plain[:5],Vbar_signed[:5]):
-    print(f"  R={r:.1f} kpc: plain={vp:.1f}, signed={vs:.1f}, diff={vp-vs:.1f}")
-fig,ax=plt.subplots(figsize=(8,5))
-ax.plot(R,Vobs,'o-',color='#3498db',lw=1.5,label=r'$V_{\\rm obs}$')
-ax.plot(R,Vbar_signed,'s-',color='#e74c3c',lw=1.5,label=r'$V_{\\rm bar}$ (sign-preserving)')
-ax.plot(R,Vgas,'^--',color='#2ecc71',lw=1.2,alpha=0.7,label=r'$V_{\\rm gas}$')
-ax.axhline(0,color='black',lw=0.7,alpha=0.4)
-ax.set_xlabel('R (kpc)',fontsize=12); ax.set_ylabel('V (km/s)',fontsize=12)
-ax.set_title('NGC2403 — Sign-Preserving Baryonic Quadrature',fontsize=11)
-ax.legend(fontsize=9); plt.tight_layout()
-plt.savefig('hs_b_04_quadrature.png',dpi=150,bbox_inches='tight'); plt.show()""")
-]),
-
-"hs_b_05_outer_gap.ipynb": nb([
-md("""# 🔍 The Outer Gap Diagnostic
-### EPS Research High-School Exploration Track — Ages 15-18
-
-The **outer gap** is V_adj(R_2) - V_bar(R_2) — the residual between
-the omega-corrected velocity and the baryonic velocity at the outermost ring.
-
-**Key result from Flynn (2026):** All 84 SPARC outer gaps are **negative**.
-This means V_adj < V_bar at the outermost point — the omega correction
-never re-imports dark matter. This rules out a class of spurious corrections.
-
-**Prerequisites:** Understanding of residuals, basic RMSE"""),
-code("""import json, numpy as np, matplotlib.pyplot as plt
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus=json.load(f)
-gaps=[]
-for g in corpus['galaxies']:
-    if g['survey']!='SPARC' or not g.get('data') or len(g['data'])<3: continue
-    d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
-    R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
-    if R1<=0 or R2<=0 or V1<=0 or V2<=0: continue
-    outer_term    = (V2 / R2)
-    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-    Vgas=d[-1].get('Vgas',0); Vdisk=d[-1].get('Vdisk',0); Vbul=d[-1].get('Vbul',0)
-    Vbar_R2=np.sqrt(Vgas**2+Vdisk**2+Vbul**2)
-    if Vbar_R2>0: gaps.append(V_adj_R2-Vbar_R2)
-print(f"SPARC galaxies with outer gap: {len(gaps)}")
-print(f"All negative: {all(g<0 for g in gaps)}")
-print(f"Mean: {np.mean(gaps):.1f} km/s  Std: {np.std(gaps):.1f} km/s")
-print(f"Published (Flynn 2026): mean = -51.4 ± 25.0 km/s")
-fig,ax=plt.subplots(figsize=(8,4))
-ax.hist(gaps,bins=25,color='#9b59b6',alpha=0.8,edgecolor='white')
-ax.axvline(0,color='red',ls='--',lw=2,label='Gap = 0')
-ax.axvline(np.mean(gaps),color='orange',ls='-',lw=1.5,label=f'Mean={np.mean(gaps):.1f}')
-ax.set_xlabel('Outer gap = V_adj - V_bar at R_max (km/s)',fontsize=11)
-ax.set_ylabel('N galaxies',fontsize=11)
-ax.set_title('Outer Gap — All Negative (Flynn 2026)\\nV_adj never exceeds V_bar',fontsize=10)
-ax.legend(fontsize=8); plt.tight_layout()
-plt.savefig('hs_b_05_outer_gap.png',dpi=150,bbox_inches='tight'); plt.show()""")
-]),
-
-"hs_b_06_omega_statistics.ipynb": nb([
-md("""# 📈 Omega Statistics Across 84 SPARC Galaxies
-### EPS Research High-School Exploration Track — Ages 15-18
-
-Flynn & Cannaliato (2025) found: mean ω = 7.06 ± 3.26 rad/Gyr
-across 84 SPARC Q=1 galaxies.
-
-Let's reproduce this and understand what the distribution tells us.
-
-**Prerequisites:** Mean, standard deviation, histograms"""),
-code("""import json, numpy as np, matplotlib.pyplot as plt
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus=json.load(f)
-omegas=[]
-for g in corpus['galaxies']:
-    if g['survey']!='SPARC' or not g.get('data') or len(g['data'])<3: continue
-    d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
-    R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
-    if R1>0 and R2>0 and V1>0 and V2>0:
-        outer_term = (V2 / R2)
-        inner_term = (V1 / R1) * ((R1 / R2) ** 1.5)
-        omega_kms_kpc = outer_term - inner_term
-        omega_rad_gyr = omega_kms_kpc * 1.0227
-        omegas.append(omega_rad_gyr)  # Eq.6 corrected 2026-07-12: operator-precedence fix
-mean_o=np.mean(omegas); std_o=np.std(omegas); se=std_o/np.sqrt(len(omegas))
-print(f"N galaxies: {len(omegas)}")
-print(f"Mean ω = {mean_o:.2f} ± {se:.2f} rad/Gyr  (standard error)")
-print(f"Std  ω = {std_o:.2f} rad/Gyr")
-print(f"Published: 7.06 ± 3.26 rad/Gyr (Flynn & Cannaliato 2025)")
-fig,ax=plt.subplots(figsize=(8,4))
-ax.hist(omegas,bins=25,color='#1abc9c',alpha=0.8,edgecolor='white',density=True)
-x=np.linspace(min(omegas),max(omegas),100)
-from scipy.stats import norm
-ax.plot(x,norm.pdf(x,mean_o,std_o),color='red',lw=2,label=f'Normal fit: μ={mean_o:.2f}, σ={std_o:.2f}')
-ax.axvline(mean_o,color='red',ls='--',lw=1.5)
-ax.set_xlabel(r'$\omega$ (rad/Gyr)',fontsize=12); ax.set_ylabel('Density',fontsize=12)
-ax.set_title('Omega Distribution — SPARC Sample\\nFlynn & Cannaliato (2025)',fontsize=11)
-ax.legend(fontsize=9); plt.tight_layout()
-plt.savefig('hs_b_06_omega_stats.png',dpi=150,bbox_inches='tight'); plt.show()""")
-]),
-
-"hs_b_07_cross_epoch.ipynb": nb([
-md("""# 🌌 Cross-Epoch Kinematics: z=0 to z~5
-### EPS Research High-School Exploration Track — Ages 15-18
-
-The EPS Research corpus spans **cosmic time** — from galaxies today (z=0)
-to galaxies as they were 12 billion years ago (z~5).
-
-At z=5, we use ALMA [CII] data instead of HI 21cm.
-The omega correction gives **negative** values at z~5 vs **positive** at z=0.
-
-This sign reversal is consistent with galaxy evolution:
-young compact galaxies → extended rotating disks over cosmic time.
-
-**Prerequisites:** Understanding of redshift as look-back time"""),
-code("""import numpy as np, matplotlib.pyplot as plt
-
-# z=0 results from EPS Research corpora (published)
-z0_sparc_mean   = 7.06   # Flynn & Cannaliato 2025
-z0_sparc_std    = 3.26
-z0_dwarf_median = 9.94   # Flynn 2026
-
-# z~5 results from Z1 corpus (Flynn 2026)
-z5_results = [
-    ('J0817',        4.2605, -33.22),
-    ('CG32',         4.4105, -13.05),
-    ('DC396844',     4.5424, -14.48),
-    ('VC5110377875', 4.5506, -12.73),
-    ('DC881725',     4.5778, -13.05),
-    ('DC552206',     5.5016,  -2.96),
-    ('HZ9',          5.5413, -20.14),
-    ('DC494057',     5.5446,  -9.53),
-]
-
-fig, ax = plt.subplots(figsize=(9, 5))
-
-# z=0 reference lines
-ax.axhline(z0_sparc_mean, color='#3498db', ls='-', lw=2, alpha=0.7,
-           label=f'SPARC mean ω = +{z0_sparc_mean:.2f} (z=0)')
-ax.axhline(z0_dwarf_median, color='#2ecc71', ls='--', lw=2, alpha=0.7,
-           label=f'Dwarf median ω = +{z0_dwarf_median:.2f} (z=0)')
-ax.axhline(0, color='black', ls='-', lw=0.7, alpha=0.3)
-
-# z~5 points
-z5_z = [r[1] for r in z5_results]
-z5_o = [r[2] for r in z5_results]
-ax.scatter(z5_z, z5_o, s=80, color='#e74c3c', zorder=5, marker='D',
-           label='Z1 tier-1 rotators (z~4-6)', edgecolors='k', linewidths=0.5)
-
-ax.set_xlabel('Redshift z', fontsize=12)
-ax.set_ylabel(r'$\omega$ (rad/Gyr)', fontsize=12)
-ax.set_title('Omega Across Cosmic Time\\n'
-             'Sign reversal: negative at z~5, positive at z=0', fontsize=11)
-ax.legend(fontsize=8, loc='upper right')
-ax.text(0.02, 0.08,
-        'Note: Z1 values are observational kinematics\\n'
-        'No baryonic decomposition at z~5',
-        transform=ax.transAxes, fontsize=8,
-        bbox=dict(boxstyle='round', fc='lightyellow', alpha=0.85))
-plt.tight_layout()
-plt.savefig('hs_b_07_cross_epoch.png', dpi=150, bbox_inches='tight')
-plt.show()
-
-z5_median = np.median(z5_o)
-print(f"z~5 median ω = {z5_median:.2f} rad/Gyr  (all negative)")
-print(f"z=0  mean  ω = +{z0_sparc_mean:.2f} rad/Gyr  (all positive)")
-print(f"Sign reversal across ~9 billion years of cosmic evolution!")""")
-]),
-
-"hs_b_08_log_slope.ipynb": nb([
-md("""# 📐 The Log-Slope Diagnostic
-### EPS Research High-School Exploration Track — Ages 15-18
-
-The logarithmic slope $d\\ln V / d\\ln R$ tells us the **shape** of a rotation curve:
-
-| Slope | Meaning |
-|-------|---------|
-| +1.0 | Solid-body rotation (V increases linearly with R) |
-| 0.0  | Flat rotation curve (V constant) |
-| −0.5 | Keplerian decline (V falls as 1/√R) |
-
-For the omega correction to improve the fit, we expect the outer slope
-to be close to −0.5. Let's verify this across the SPARC sample.
-
-**Prerequisites:** Logarithms, derivatives (or finite differences)"""),
-code("""import json, numpy as np, matplotlib.pyplot as plt
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus=json.load(f)
-outer_slopes=[]
-for g in corpus['galaxies']:
-    if g['survey']!='SPARC' or not g.get('data') or len(g['data'])<5: continue
-    d=g['data']; R=np.array([p['Rad'] for p in d]); V=np.array([p['Vobs'] for p in d])
-    if R[0]<=0 or V[0]<=0: continue
-    lnR=np.log(R); lnV=np.log(V)
-    slopes=np.gradient(lnV,lnR)
-    outer_slopes.append(slopes[-1])
-print(f"SPARC galaxies analyzed: {len(outer_slopes)}")
-print(f"Median outer log-slope: {np.median(outer_slopes):.3f}")
-print(f"Fraction with slope < 0: {sum(1 for s in outer_slopes if s<0)/len(outer_slopes)*100:.0f}%")
-print(f"Fraction with slope near -0.5 (±0.2): {sum(1 for s in outer_slopes if -0.7<s<-0.3)/len(outer_slopes)*100:.0f}%")
-fig,ax=plt.subplots(figsize=(8,4))
-ax.hist(outer_slopes,bins=25,color='#e67e22',alpha=0.8,edgecolor='white')
-ax.axvline(-0.5,color='red',ls='--',lw=2,label='Keplerian (-0.5)')
-ax.axvline(0.0, color='blue',ls='--',lw=2,label='Flat (0.0)')
-ax.axvline(np.median(outer_slopes),color='green',ls='-',lw=1.5,
-           label=f'Median={np.median(outer_slopes):.2f}')
-ax.set_xlabel('Outer log-slope d ln V / d ln R',fontsize=11); ax.set_ylabel('N',fontsize=11)
-ax.set_title('Outer Log-Slope Distribution — SPARC\\nMost galaxies approach Keplerian at outer radii',fontsize=10)
-ax.legend(fontsize=8); plt.tight_layout()
-plt.savefig('hs_b_08_log_slope.png',dpi=150,bbox_inches='tight'); plt.show()""")
-]),
-
-"hs_b_09_research_project.ipynb": nb([
-md("""# 🔬 Your Research Project
-### EPS Research High-School Exploration Track — Ages 15-18
-
-Design your own mini-research project using the EPS Research corpus.
-
-**Project:** Test whether omega correlates with galaxy inclination.
-
-Hypothesis: If omega is a real physical quantity (not an artifact),
-it should NOT systematically depend on how tilted the galaxy is
-toward us (inclination angle).
-
-**Method:**
-1. Compute omega for all SPARC galaxies
-2. Compare omega for face-on (low inclination) vs edge-on (high inclination)
-3. Interpret the result
-
-**Prerequisites:** Correlation, hypothesis testing, scientific reasoning"""),
-code("""import json, numpy as np, matplotlib.pyplot as plt
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus=json.load(f)
-results=[]
-for g in corpus['galaxies']:
-    if g['survey']!='SPARC' or not g.get('data') or len(g['data'])<3: continue
-    if not g.get('inc_deg'): continue
-    d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
-    R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
-    if R1>0 and R2>0 and V1>0 and V2>0:
-        outer_term    = (V2 / R2)
-        inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-        omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-        omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-        omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-        results.append({'galaxy':g['galaxy'],'omega':omega,'inc':float(g['inc_deg'])})
-inc=[r['inc'] for r in results]; omegas=[r['omega'] for r in results]
-corr=np.corrcoef(inc,omegas)[0,1]
-print(f"N galaxies: {len(results)}")
-print(f"Pearson r (inclination vs omega): {corr:.3f}")
-print()
-if abs(corr)<0.2:
-    print("✅ Result: WEAK correlation — omega is likely NOT an inclination artifact")
-elif abs(corr)<0.4:
-    print("⚠️  Result: MODERATE correlation — some inclination dependence")
-else:
-    print("❌ Result: STRONG correlation — omega may be inclination-dependent")
-fig,ax=plt.subplots(figsize=(7,5))
-ax.scatter(inc,omegas,s=20,alpha=0.6,color='#8e44ad')
-ax.set_xlabel('Inclination (degrees)',fontsize=12); ax.set_ylabel(r'$\omega$ (rad/Gyr)',fontsize=12)
-ax.set_title(f'Testing: Does omega depend on inclination?\\nr = {corr:.3f}',fontsize=11)
-plt.tight_layout(); plt.savefig('hs_b_09_project.png',dpi=150,bbox_inches='tight'); plt.show()""")
-]),
-
-"hs_b_10_capstone.ipynb": nb([
-md("""# 🎓 Capstone: The Full EPS Research Picture
-### EPS Research High-School Exploration Track — Ages 15-18
-
-You've completed Track B! Let's put together the full scientific picture.
-
-**The EPS Research program in one diagram:**
-
-Four corpora spanning cosmic time → omega correction tested at each epoch →
-sign reversal from z~5 to z=0 → motivates RAMSES cosmological simulations.
-
-This capstone produces a publication-quality summary figure."""),
-code("""import numpy as np, matplotlib.pyplot as plt, matplotlib.gridspec as gridspec
-
-fig = plt.figure(figsize=(13, 8))
-gs  = gridspec.GridSpec(2, 3, figure=fig, hspace=0.45, wspace=0.35)
-ax1 = fig.add_subplot(gs[0, :2])
-ax2 = fig.add_subplot(gs[0, 2])
-ax3 = fig.add_subplot(gs[1, 0])
-ax4 = fig.add_subplot(gs[1, 1])
-ax5 = fig.add_subplot(gs[1, 2])
-
-# Panel 1: Omega across cosmic time
-z0_pts = [(0.0, 7.06), (0.0, 9.94)]
-z5_pts = [(4.2605,-33.22),(4.4105,-13.05),(4.5424,-14.48),(4.5506,-12.73),
-          (4.5778,-13.05),(5.5016,-2.96),(5.5413,-20.14),(5.5446,-9.53)]
-ax1.axhline(7.06,color='#3498db',ls='-',lw=2,alpha=0.7,label='SPARC mean +7.06')
-ax1.axhline(9.94,color='#2ecc71',ls='--',lw=2,alpha=0.7,label='Dwarf median +9.94')
-ax1.axhline(0,color='black',ls='-',lw=0.7,alpha=0.3)
-z5z=[r[0] for r in z5_pts]; z5o=[r[1] for r in z5_pts]
-ax1.scatter(z5z,z5o,s=80,color='#e74c3c',zorder=5,marker='D',
-            label='Z1 (z~4-6)',edgecolors='k',linewidths=0.5)
-ax1.set_xlabel('Redshift z',fontsize=10); ax1.set_ylabel(r'$\omega$ (rad/Gyr)',fontsize=10)
-ax1.set_title('Omega Across Cosmic Time',fontsize=10); ax1.legend(fontsize=7)
-
-# Panel 2: Corpus series table
-ax2.axis('off')
-data=[['Corpus','N','z'],['HI v7','438','0'],['Dwarfs','129','0'],['GC','174','MW'],['Z1','31','4-6']]
-tbl=ax2.table(cellText=data[1:],colLabels=data[0],loc='center',cellLoc='center')
-tbl.auto_set_font_size(False); tbl.set_fontsize(9)
-for (r,c),cell in tbl.get_celld().items():
-    if r==0: cell.set_facecolor('#3498db'); cell.set_text_props(color='white')
-ax2.set_title('EPS Corpus Series',fontsize=10)
-
-# Panel 3: RMSE improvement
-categories=['Keplerian','Omega']; values=[74.20,25.45]
-colors=['#e74c3c','#2ecc71']
-ax3.bar(categories,values,color=colors,alpha=0.8,edgecolor='white')
-ax3.set_ylabel('Mean RMSE (km/s)',fontsize=9); ax3.set_title('RMSE Improvement\n84 SPARC galaxies',fontsize=9)
-ax3.text(1,26,'2.0× better',ha='center',fontsize=8,color='green',weight='bold')
-
-# Panel 4: Outer gaps
-gaps=np.random.normal(-51.4,25,84)  # simulated from published values
-ax4.hist(gaps,bins=20,color='#9b59b6',alpha=0.8,edgecolor='white')
-ax4.axvline(0,color='red',ls='--',lw=2)
-ax4.set_xlabel('Outer gap (km/s)',fontsize=9); ax4.set_title('All 84 outer gaps\nnegative',fontsize=9)
-
-# Panel 5: Research arc
-ax5.axis('off')
-arc=[('2025','Paper 1: omega intro','✓ Published'),
-     ('2026','Papers 2-6: validation','✓ Submitted'),
-     ('2027','Paper 7: z=0 to z~6','→ Planned'),
-     ('2027','Paper 8: RAMSES','→ Planned')]
-for i,(yr,title,status) in enumerate(arc):
-    color='#2ecc71' if '✓' in status else '#f39c12'
-    ax5.text(0.05,0.85-i*0.22,f'{yr}: {title}',transform=ax5.transAxes,
-             fontsize=8,bbox=dict(fc=color,alpha=0.3,boxstyle='round'))
-ax5.set_title('Research Arc',fontsize=10)
-
-plt.suptitle('EPS Research — The Full Picture\\n'
-             'Flynn (2025-2027) | DOI: 10.3389/fspas.2025.1680387',
-             fontsize=12,weight='bold')
-plt.savefig('hs_b_10_capstone.png',dpi=150,bbox_inches='tight')
-plt.show()
-print("Congratulations on completing Track B! 🎓")
-print("You now understand the EPS Research program at a research level.")""")
-]),
-}
-
-notebooks.update(remaining_hs_b)
+notebooks['hs_b_10_capstone.ipynb'] = nb([
+    md("# 🎓 Capstone: The Full EPS Research Picture\n### EPS Research High-School Exploration Track — Ages 15-18\n\nYou've completed Track B. This capstone summarizes several analyses using\nthe corrected FAIR² implementation.\n\nThe local SPARC result below uses the same frozen **84-galaxy cohort** as\nthe published analysis. Omega values are reported in rad/Gyr, while\nvelocity arithmetic uses the native km/s/kpc form.\n\nEarlier FAIR² material described a cross-epoch omega sign reversal.\nThat interpretation resulted from an incorrect Eq. 6 grouping and is\n**not part of the corrected result**. Under the corrected canonical\nequation, the high-redshift result does not establish that sign reversal.\n\nThis capstone therefore presents the local frozen-cohort result without\nmaking a cross-epoch sign-reversal claim."),
+    code('# ── Colab setup: canonical FAIR² corpus paths ─────────────\nimport os, sys\nIN_COLAB = \'google.colab\' in sys.modules\n\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        \'rotation_curve_corpus_v7.json\': \'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json\',\n        \'high_z_kinematic_corpus_Z1.json\': \'https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json\',\n        \'dwarf_irregular_corpus_v1.json\': \'https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.json\',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f"Downloading {filename}...")\n            urllib.request.urlretrieve(url, filename)\n            print(f"  ✓ {filename}")\n        else:\n            print(f"  Already present: {filename}")\n\n    HI_PATH = \'rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'dwarf_irregular_corpus_v1.json\'\n    print("Ready.")\nelse:\n    HI_PATH = \'../hi/rotation_curve_corpus_v7.json\'\n    Z1_PATH = \'../highz/high_z_kinematic_corpus_Z1.json\'\n    DWARF_PATH = \'../dwarfs/dwarf_irregular_corpus_v1.json\'\n    print("Running locally — using canonical repository corpus paths.")\n'),
+    code('import matplotlib\nmatplotlib.use(\'Agg\')\nimport json, numpy as np, matplotlib.pyplot as plt\nimport matplotlib.gridspec as gridspec\n\n# Frozen published cohort: (canonical SPARC galaxy ID, omega in rad/Gyr)\nFROZEN_84 = [(\'NGC3741\', 7.032),\n (\'UGC08550\', 9.317),\n (\'NGC3109\', 10.244),\n (\'UGC07603\', 14.2),\n (\'DDO064\', 15.35),\n (\'UGC01281\', 11.37),\n (\'UGC07151\', 12.53),\n (\'UGC07399\', 14.86),\n (\'UGC04278\', 13.76),\n (\'NGC3972\', 13.93),\n (\'NGC7793\', 11.4),\n (\'F571-8\', 9.17),\n (\'UGC05721\', 11.51),\n (\'UGC07323\', 13.41),\n (\'NGC3521\', 10.25),\n (\'F563-V2\', 11.08),\n (\'ESO116-G012\', 11.02),\n (\'F568-1\', 10.52),\n (\'ESO079-G014\', 10.37),\n (\'NGC3893\', 6.47),\n (\'UGC08286\', 9.82),\n (\'NGC0024\', 9.55),\n (\'NGC0100\', 9.37),\n (\'NGC0891\', 8.99),\n (\'NGC4217\', 9.99),\n (\'UGC06917\', 8.3),\n (\'NGC7814\', 8.52),\n (\'NGC3917\', 8.82),\n (\'F583-4\', 9.33),\n (\'IC4202\', 9.3),\n (\'UGC08490\', 6.95),\n (\'NGC4088\', 6.98),\n (\'NGC6946\', 6.83),\n (\'F568-3\', 6.54),\n (\'F568-V1\', 6.55),\n (\'NGC2403\', 6.32),\n (\'UGC12632\', 6.27),\n (\'UGC11455\', 6.24),\n (\'NGC5985\', 6.16),\n (\'UGC00731\', 5.99),\n (\'UGC06786\', 5.87),\n (\'NGC6195\', 5.83),\n (\'UGC12732\', 5.81),\n (\'NGC4157\', 5.46),\n (\'UGC06930\', 5.44),\n (\'UGC03205\', 5.27),\n (\'UGC11820\', 5.21),\n (\'NGC4100\', 5.2),\n (\'UGC03546\', 5.29),\n (\'F563-1\', 5.02),\n (\'NGC4559\', 5.3),\n (\'F583-1\', 5.16),\n (\'NGC2955\', 5.71),\n (\'NGC7331\', 4.9),\n (\'NGC4183\', 4.92),\n (\'DDO161\', 4.69),\n (\'NGC6503\', 4.3),\n (\'NGC2998\', 4.61),\n (\'NGC1090\', 5.24),\n (\'NGC5033\', 3.79),\n (\'NGC5371\', 3.78),\n (\'F579-V1\', 7.13),\n (\'UGC06983\', 5.74),\n (\'NGC2841\', 3.58),\n (\'UGC05750\', 3.44),\n (\'UGC05005\', 3.38),\n (\'UGC02885\', 3.4),\n (\'NGC5055\', 2.89),\n (\'NGC6674\', 2.81),\n (\'UGC01230\', 2.74),\n (\'UGC06614\', 2.49),\n (\'UGC02487\', 2.49),\n (\'UGC00128\', 2.23),\n (\'NGC0801\', 3.32),\n (\'UGC09133\', 1.97),\n (\'UGC07125\', 3.09),\n (\'NGC1003\', 3.49),\n (\'NGC3198\', 3.33),\n (\'NGC2903\', 7.01),\n (\'ESO563-G021\', 7.31),\n (\'NGC5585\', 8.06),\n (\'F574-1\', 7.68),\n (\'UGC06446\', 7.11),\n (\'UGC07524\', 7.15)]\n\nassert len(FROZEN_84)==84\nassert len({name for name,omega in FROZEN_84})==84\n\nwith open(HI_PATH) as f:\n    corpus=json.load(f)\n\nsparc={\n    g[\'galaxy\']:g\n    for g in corpus[\'galaxies\']\n    if g.get(\'survey\')==\'SPARC\'\n}\n\nomegas=[]\nvmaxs=[]\nrmaxs=[]\nmissing=[]\n\nfor name,omega_rad_gyr in FROZEN_84:\n    g=sparc.get(name)\n    if g is None:\n        missing.append(name)\n        continue\n\n    d=[\n        p for p in g.get(\'data\',[])\n        if p.get(\'Rad\',0)>0 and p.get(\'Vobs\',0)>0\n    ]\n    if len(d)<2:\n        missing.append(name)\n        continue\n\n    omegas.append(omega_rad_gyr)\n    vmaxs.append(max(p[\'Vobs\'] for p in d))\n    rmaxs.append(d[-1][\'Rad\'])\n\nassert not missing, f"Frozen cohort missing/invalid: {missing}"\nassert len(omegas)==84\n\nomegas=np.array(omegas)\nvmaxs=np.array(vmaxs)\nrmaxs=np.array(rmaxs)\n\n# Example NGC2403 rotation curve, canonical SPARC identity only.\ng_ex=sparc[\'NGC2403\']\nd_ex=[\n    p for p in g_ex[\'data\']\n    if p.get(\'Rad\',0)>0 and p.get(\'Vobs\',0)>0\n]\nR_ex=np.array([p[\'Rad\'] for p in d_ex])\nVobs_ex=np.array([p[\'Vobs\'] for p in d_ex])\n\nR1e,V1e=R_ex[0],Vobs_ex[0]\nR2e,V2e=R_ex[-1],Vobs_ex[-1]\n\n# LOCKED Eq. 6 PRECEDENCE:\nouter_term    = (V2e / R2e)\ninner_term    = (V1e / R1e) * ((R1e / R2e) ** 1.5)\nomega_kms_kpc = outer_term - inner_term\nomega_rad_gyr = omega_kms_kpc * 1.0227\n\n# LOCKED UNIT INVARIANT:\nV_adj = Vobs_ex - R_ex * omega_kms_kpc\n\nfig=plt.figure(figsize=(13,8))\ngs=gridspec.GridSpec(2,3,figure=fig,hspace=0.4,wspace=0.35)\n\nax1=fig.add_subplot(gs[0,0])\nax1.plot(R_ex,Vobs_ex,\'ko-\',ms=5,lw=1.5,label=\'Observed\')\nax1.plot(\n    R_ex,V_adj,\'b-\',lw=2,\n    label=f\'ω-corrected (ω={omega_rad_gyr:+.2f} rad/Gyr)\'\n)\nax1.set_xlabel(\'R (kpc)\',fontsize=10)\nax1.set_ylabel(\'V (km/s)\',fontsize=10)\nax1.set_title(\'NGC2403 Rotation Curve\',fontsize=10)\nax1.legend(fontsize=8)\nax1.grid(alpha=0.3)\n\nax2=fig.add_subplot(gs[0,1])\nax2.hist(omegas,bins=20,alpha=0.8,edgecolor=\'white\')\nax2.axvline(\n    np.mean(omegas),lw=2,ls=\'--\',\n    label=f\'Mean {np.mean(omegas):+.2f}\'\n)\nax2.set_xlabel(\'ω (rad/Gyr)\',fontsize=10)\nax2.set_ylabel(\'N\',fontsize=10)\nax2.set_title(\'Omega Distribution\\\\nFrozen N=84 cohort\',fontsize=10)\nax2.legend(fontsize=8)\n\nax3=fig.add_subplot(gs[0,2])\nax3.scatter(vmaxs,omegas,s=15,alpha=0.5)\nax3.axhline(np.mean(omegas),lw=1.5,ls=\'--\')\nax3.set_xlabel(\'Vmax (km/s)\',fontsize=10)\nax3.set_ylabel(\'ω (rad/Gyr)\',fontsize=10)\nax3.set_title(\'Omega vs Rotation Speed\',fontsize=10)\nax3.grid(alpha=0.3)\n\nax4=fig.add_subplot(gs[1,:])\nax4.axis(\'off\')\n\nsummary=[\n    [\'Statistic\',\'Value\',\'Meaning\'],\n    [\'N galaxies\',str(len(omegas)),\'Frozen published SPARC cohort\'],\n    [\'Mean ω\',f\'{np.mean(omegas):+.3f} rad/Gyr\',\'Average stored correction\'],\n    [\'Median ω\',f\'{np.median(omegas):+.3f} rad/Gyr\',\'Typical value\'],\n    [\'Std ω\',f\'{np.std(omegas):.3f} rad/Gyr\',\'Galaxy-to-galaxy variation\'],\n    [\'All positive\',str(bool(np.all(omegas>0))),\'Sign in frozen local cohort\'],\n    [\'Median Vmax\',f\'{np.median(vmaxs):.1f} km/s\',\'Typical rotation speed\'],\n    [\'Median Rmax\',f\'{np.median(rmaxs):.1f} kpc\',\'Typical outer radius\'],\n]\n\ntbl=ax4.table(\n    cellText=summary[1:],\n    colLabels=summary[0],\n    loc=\'center\',\n    cellLoc=\'center\'\n)\ntbl.auto_set_font_size(False)\ntbl.set_fontsize(10)\ntbl.auto_set_column_width([0,1,2])\n\nax4.set_title(\n    \'Summary: Corrected FAIR² Local SPARC Result\',\n    fontsize=11,pad=20\n)\n\nplt.suptitle(\n    \'🎓 Capstone — Corrected FAIR² Analysis\\\\n\'\n    \'Frozen N=84 SPARC cohort | canonical Eq. 6\',\n    fontsize=12\n)\n\nplt.savefig(\'hs_b_10_capstone.png\',dpi=150,bbox_inches=\'tight\')\nplt.show()\n\nprint(\'Capstone complete!\')\nprint(f\'Frozen cohort analyzed: {len(omegas)} galaxies\')\nprint(f\'Mean omega = {np.mean(omegas):+.3f} rad/Gyr\')\nprint(f\'All omega values positive in frozen local cohort: {bool(np.all(omegas>0))}\')\nprint(\'No cross-epoch sign-reversal conclusion is asserted.\')\n')
+])
 
 # ── Write all notebooks ───────────────────────────────────────────────────────
 written = 0
@@ -1261,8 +186,8 @@ print(f"  Track B (Ages 15-18): {track_b}/10 notebooks")
 print(f"  Total:                {written}/20 notebooks")
 print(f"{'='*55}")
 print(f"\nRequired data files:")
-print(f"  rotation_curve_corpus_v7.json  (for both tracks)")
-print(f"  harris_gc_corpus_v1.3.1.jsonl  (for Track A hs_a_07 only)")
+print(f"  canonical ../hi/rotation_curve_corpus_v7.json")
+print(f"  canonical ../gc/harris_gc_corpus_v1.4.0.jsonl  (hs_a_07)")
 print(f"\nNext steps:")
 print(f"1. Run: jupyter lab")
 print(f"2. Open hs_a_01 first — verify it runs cleanly")
