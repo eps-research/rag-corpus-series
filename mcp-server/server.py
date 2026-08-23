@@ -2,13 +2,14 @@
 EPS Research Astro-RAG Platform – True MCP Server v2.0
 =======================================================
 Rebuilt using the official Anthropic MCP Python SDK (FastMCP).
-Implements true MCP protocol with SSE transport and JSON-RPC 2.0.
+Implements true MCP protocol with Streamable HTTP transport and JSON-RPC 2.0.
 
-Endpoints (provided by FastMCP):
-  GET  /sse          – SSE stream (MCP client connects here)
-  POST /messages/    – JSON-RPC message handler
-  GET  /mcp          – Streamable HTTP transport (alternative)
+Endpoints:
+  GET/POST /mcp      – Streamable HTTP MCP transport
+
+Custom routes when running this FastMCP application directly:
   GET  /             – Health check / server info
+  GET  /hint         – Browser UI ID-format hints
 
 Five EPS Research corpora served:
   v7:    Unified HI Rotation Curve Corpus v7.0    (438 galaxies,   z~0)
@@ -58,7 +59,7 @@ CORPORA = {
         "redshift_range": "z ~ 0",
         "tracer": "HI 21cm",
         "zenodo_doi": "10.5281/zenodo.20695697",
-        "jsonl_url": "https://zenodo.org/records/20695697/files/rotation_curve_corpus_v7.jsonl",
+        "data_url": "https://zenodo.org/records/20695697/files/rotation_curve_corpus_v7.jsonl",
         "id_field": "galaxy",
         "status": "published",
     },
@@ -70,7 +71,7 @@ CORPORA = {
         "redshift_range": "z ~ 0",
         "tracer": "HI 21cm",
         "zenodo_doi": "10.5281/zenodo.20320362",
-        "jsonl_url": "https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.jsonl",
+        "data_url": "https://zenodo.org/records/20320362/files/dwarf_irregular_corpus_v1.jsonl",
         "id_field": "galaxy",
         "status": "published",
     },
@@ -82,7 +83,7 @@ CORPORA = {
         "redshift_range": "z = 0 (Milky Way)",
         "tracer": "Multi-survey",
         "zenodo_doi": "10.5281/zenodo.19907766",
-        "jsonl_url": "https://zenodo.org/records/19907766/files/harris_gc_corpus_v1.3.1.jsonl",
+        "data_url": "https://zenodo.org/records/19907766/files/harris_gc_corpus_v1.3.1.jsonl",
         "id_field": "cluster_id",
         "status": "published",
     },
@@ -93,8 +94,8 @@ CORPORA = {
         "object_type": "galaxy",
         "redshift_range": "z = 0.38-2.68",
         "tracer": "Hα / [O III]",
-        "zenodo_doi": "10.5281/zenodo.20453189",
-        "jsonl_url": "https://zenodo.org/records/20453189/files/intz_corpus_v1b.jsonl",
+        "zenodo_doi": "10.5281/zenodo.21841382",
+        "data_url": "https://zenodo.org/records/21841382/files/intz_corpus_v1b.jsonl",
         "id_field": "name",
         "status": "published",
     },
@@ -105,8 +106,8 @@ CORPORA = {
         "object_type": "galaxy",
         "redshift_range": "z = 4.26-5.68",
         "tracer": "ALMA [CII] 158μm",
-        "zenodo_doi": "10.5281/zenodo.20369286",
-        "jsonl_url": "https://zenodo.org/records/20369286/files/high_z_kinematic_corpus_Z1.jsonl",
+        "zenodo_doi": "10.5281/zenodo.21834678",
+        "data_url": "https://zenodo.org/records/21834678/files/high_z_kinematic_corpus_Z1.json",
         "id_field": "galaxy",
         "status": "published",
     },
@@ -194,12 +195,32 @@ def _norm_contains(haystack: str, needle_norm: str) -> bool:
 
 async def fetch_corpus(corpus_key: str) -> list[dict]:
     meta = CORPORA[corpus_key]
-    url  = meta["jsonl_url"]
+    url  = meta["data_url"]
     logger.info(f"Fetching corpus '{corpus_key}' from {url}")
     async with httpx.AsyncClient(timeout=90.0, follow_redirects=True) as client:
         r = await client.get(url)
         r.raise_for_status()
-    records = [json.loads(line) for line in r.text.splitlines() if line.strip()]
+    text = r.text.strip()
+
+    # Accept wrapped JSON, JSON arrays, single JSON objects, or JSONL.
+    # A JSONL file also begins with "{", so format cannot be inferred
+    # from the first character alone.
+    try:
+        payload = json.loads(text)
+    except json.JSONDecodeError:
+        records = [
+            json.loads(line)
+            for line in text.splitlines()
+            if line.strip()
+        ]
+    else:
+        if isinstance(payload, dict) and isinstance(payload.get("galaxies"), list):
+            records = payload["galaxies"]
+        elif isinstance(payload, list):
+            records = payload
+        else:
+            records = [payload]
+
     logger.info(f"Corpus '{corpus_key}' loaded: {len(records)} records")
     return records
 
@@ -539,8 +560,7 @@ async def health_route(request: Request) -> JSONResponse:
         "name":        "eps-astro-rag-mcp",
         "version":     "2.2.0",
         "sdk":         "mcp (FastMCP)",
-        "transport":   "SSE + Streamable HTTP",
-        "sse_url":     "/sse",
+        "transport":   "Streamable HTTP",
         "mcp_url":     "/mcp",
         "corpora":     {k: len(CORPORA_CACHE.get(k, [])) for k in CORPORA},
         "platform":    "https://github.com/eps-research/rag-corpus-series",
