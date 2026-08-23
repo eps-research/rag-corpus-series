@@ -18,7 +18,18 @@ import os
 
 # ── Notebook builder helpers ──────────────────────────────────────────────────
 
+COLAB_SETUP = "# ── Colab setup: auto-download corpus from Zenodo ─────────────\nimport os, sys\nIN_COLAB = 'google.colab' in sys.modules\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        'rotation_curve_corpus_v7.json': 'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f\"Downloading {filename}...\")\n            urllib.request.urlretrieve(url, filename)\n            print(f\"  ✓ {filename}\")\n        else:\n            print(f\"  Already present: {filename}\")\n    print(\"Ready.\")\nelse:\n    print(\"Running locally — corpus files loaded from working directory.\")\n"
+COLAB_SETUP_EX19 = "# ── Colab setup: auto-download corpus from Zenodo ─────────────\nimport os, sys\nIN_COLAB = 'google.colab' in sys.modules\nif IN_COLAB:\n    import urllib.request\n    CORPORA = {\n        'rotation_curve_corpus_v7.json':\n            'https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json',\n    }\n    for filename, url in CORPORA.items():\n        if not os.path.exists(filename):\n            print(f\"Downloading {filename}...\")\n            urllib.request.urlretrieve(url, filename)\n            print(f\"  ✓ {filename}\")\n        else:\n            print(f\"  Already present: {filename}\")\n    print(\"Ready.\")\nelse:\n    print(\"Running locally — corpus files loaded from working directory.\")"
+
 def nb(cells):
+    setup = {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": COLAB_SETUP
+    }
+    cells = [cells[0], setup] + cells[1:]
     return {
         "cells": cells,
         "metadata": {
@@ -197,95 +208,9 @@ plt.show()""")
 
 # ── EX03: Omega correction (EPS flagship) ─────────────────────────────────────
 notebooks["ex03_omega_correction_ddo161.ipynb"] = nb([
-md(f"""# SPARC Example 03: The Omega Kinematic Correction (EPS Research)
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-This is the core EPS Research result. The omega kinematic correction is derived
-from boundary points only — no free parameters, no mass modeling:
-
-    V_adj = V_obs - R * omega_kms_kpc
-    outer_term    = (V2 / R2)
-    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-
-where (R1, V1) = innermost ring, (R2, V2) = outermost ring.
-Note: 1 rad/Gyr = 1.022 km/s/kpc.
-
-**Published result:** omega = 4.69 rad/Gyr for DDO161
-**Reference:** Flynn & Cannaliato (2025), DOI: 10.3389/fspas.2025.1680387
-
-{CORPUS_NOTE}"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-g = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')
-d = g['data']
-
-R     = np.array([p['Rad']   for p in d])
-Vobs  = np.array([p['Vobs']  for p in d])
-errV  = np.array([p['errV']  for p in d])
-Vgas  = np.array([p['Vgas']  for p in d])
-Vdisk = np.array([p['Vdisk'] for p in d])
-Vbul  = np.array([p['Vbul']  for p in d])
-
-# Baryonic velocity
-Vbar = np.where(Vgas < 0,
-                -np.sqrt(Vgas**2 + Vdisk**2 + Vbul**2),
-                 np.sqrt(Vgas**2 + Vdisk**2 + Vbul**2))
-
-# Omega from boundary points
-R1, V1 = R[0],  Vobs[0]
-R2, V2 = R[-1], Vobs[-1]
-outer_term    = (V2 / R2)
-inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-V_adj  = Vobs - R * omega_kms_kpc
-
-# Keplerian baseline
-GM       = V2**2 * R2
-V_kepler = np.sqrt(GM / R)
-
-# RMSE
-rmse_omega  = np.sqrt(np.mean((V_adj  - Vbar)**2))
-rmse_kepler = np.sqrt(np.mean((V_kepler - Vbar)**2))
-
-print(f"Computed omega  = {omega:.3f} rad/Gyr")
-print(f"Published omega = 4.69 rad/Gyr (Flynn & Cannaliato 2025)")
-print(f"RMSE (omega vs Vbar):   {rmse_omega:.2f} km/s")
-print(f"RMSE (Kepler vs Vbar):  {rmse_kepler:.2f} km/s")
-print(f"Improvement:            {rmse_kepler - rmse_omega:.2f} km/s")"""),
-code("""fig, ax = plt.subplots(figsize=(9, 5))
-ax.errorbar(R, Vobs, yerr=errV, fmt='o', color='#1f77b4',
-            capsize=4, markersize=6, label=r'$V_{\\rm obs}$ (SPARC)', zorder=5)
-ax.plot(R, Vbar,     's-', color='#d62728', linewidth=1.5,
-        label=r'$V_{\\rm bar}$ ($\\Upsilon=1$)')
-ax.plot(R, V_adj,    '^-', color='#2ca02c', linewidth=1.8,
-        label=fr'$V_{{\\rm obs}} - R\\omega$  ($\\omega={omega:.2f}$ rad/Gyr)')
-ax.plot(R, V_kepler, '--', color='#ff7f0e', linewidth=1.2,
-        label='Keplerian baseline')
-ax.set_xlabel('Radius (kpc)', fontsize=12)
-ax.set_ylabel('Velocity (km/s)', fontsize=12)
-ax.set_title('DDO161 — Omega Kinematic Correction\\n'
-             'Flynn & Cannaliato (2025) | DOI: 10.3389/fspas.2025.1680387', fontsize=10)
-ax.legend(fontsize=9)
-ax.set_xlim(0, R.max() * 1.15)
-ax.set_ylim(0, Vobs.max() * 1.35)
-ax.text(0.97, 0.08,
-        f'RMSE omega: {rmse_omega:.1f} km/s\\nRMSE Kepler: {rmse_kepler:.1f} km/s',
-        transform=ax.transAxes, ha='right', va='bottom', fontsize=9,
-        bbox=dict(boxstyle='round,pad=0.3', fc='white', alpha=0.8))
-plt.tight_layout()
-plt.savefig('ex03_ddo161_omega.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# SPARC Example 03: The Omega Kinematic Correction (EPS Research)\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nThis is the core EPS Research result. The omega kinematic correction is derived\nfrom boundary points only — no free parameters, no mass modeling:\n\n    V_adj = V_obs - R * omega_kms_kpc\n    outer_term    = (V2 / R2)\n    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\n    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]\n    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr\n\nwhere (R1, V1) = innermost ring, (R2, V2) = outermost ring.\nNote: 1 km/s/kpc = 1.0227 rad/Gyr.\n\n**Published result:** omega = 4.69 rad/Gyr for DDO161\n**Reference:** Flynn & Cannaliato (2025), DOI: 10.3389/fspas.2025.1680387\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open('rotation_curve_corpus_v7.json') as f:\n    corpus = json.load(f)\n\ng = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')\nd = g['data']\n\nR     = np.array([p['Rad']   for p in d])\nVobs  = np.array([p['Vobs']  for p in d])\nerrV  = np.array([p['errV']  for p in d])\nVgas  = np.array([p['Vgas']  for p in d])\nVdisk = np.array([p['Vdisk'] for p in d])\nVbul  = np.array([p['Vbul']  for p in d])\n\n# Baryonic velocity\nVbar = np.where(Vgas < 0,\n                -np.sqrt(Vgas**2 + Vdisk**2 + Vbul**2),\n                 np.sqrt(Vgas**2 + Vdisk**2 + Vbul**2))\n\n# Omega from boundary points\nR1, V1 = R[0],  Vobs[0]\nR2, V2 = R[-1], Vobs[-1]\nouter_term    = (V2 / R2)\ninner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\nomega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]\nomega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr\nomega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic\nV_adj  = Vobs - R * omega_kms_kpc\n\n# Keplerian baseline\nGM       = V2**2 * R2\nV_kepler = np.sqrt(GM / R)\n\n# RMSE\nrmse_omega  = np.sqrt(np.mean((V_adj  - Vbar)**2))\nrmse_kepler = np.sqrt(np.mean((V_kepler - Vbar)**2))\n\nprint(f\"Computed omega  = {omega:.3f} rad/Gyr\")\nprint(f\"Published omega = 4.69 rad/Gyr (Flynn & Cannaliato 2025)\")\nprint(f\"RMSE (omega vs Vbar):   {rmse_omega:.2f} km/s\")\nprint(f\"RMSE (Kepler vs Vbar):  {rmse_kepler:.2f} km/s\")\nprint(f\"Improvement:            {rmse_kepler - rmse_omega:.2f} km/s\")"),
+    code("fig, ax = plt.subplots(figsize=(9, 5))\nax.errorbar(R, Vobs, yerr=errV, fmt='o', color='#1f77b4',\n            capsize=4, markersize=6, label=r'$V_{\\rm obs}$ (SPARC)', zorder=5)\nax.plot(R, Vbar,     's-', color='#d62728', linewidth=1.5,\n        label=r'$V_{\\rm bar}$ ($\\Upsilon=1$)')\nax.plot(R, V_adj,    '^-', color='#2ca02c', linewidth=1.8,\n        label=fr'$V_{{\\rm obs}} - R\\omega$  ($\\omega={omega:.2f}$ rad/Gyr)')\nax.plot(R, V_kepler, '--', color='#ff7f0e', linewidth=1.2,\n        label='Keplerian baseline')\nax.set_xlabel('Radius (kpc)', fontsize=12)\nax.set_ylabel('Velocity (km/s)', fontsize=12)\nax.set_title('DDO161 — Omega Kinematic Correction\\n'\n             'Flynn & Cannaliato (2025) | DOI: 10.3389/fspas.2025.1680387', fontsize=10)\nax.legend(fontsize=9)\nax.set_xlim(0, R.max() * 1.15)\nax.set_ylim(0, Vobs.max() * 1.35)\nax.text(0.97, 0.08,\n        f'RMSE omega: {rmse_omega:.1f} km/s\\nRMSE Kepler: {rmse_kepler:.1f} km/s',\n        transform=ax.transAxes, ha='right', va='bottom', fontsize=9,\n        bbox=dict(boxstyle='round,pad=0.3', fc='white', alpha=0.8))\nplt.tight_layout()\nplt.savefig('ex03_ddo161_omega.png', dpi=150, bbox_inches='tight')\nplt.show()")
 ])
 
 # ── EX04: WALLABY Tier 2 ──────────────────────────────────────────────────────
@@ -421,262 +346,33 @@ plt.show()""")
 
 # ── EX06: Vrot distribution ───────────────────────────────────────────────────
 notebooks["ex06_vrot_distribution.ipynb"] = nb([
-md(f"""# SPARC Example 06: Peak Rotation Velocity Distribution
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-Peak rotation velocity Vrot_max traces total galaxy mass.
-This stacked histogram spans the full dynamic range —
-from ~10 km/s dwarf irregulars to ~350 km/s massive spirals.
-
-{CORPUS_NOTE}"""),
-code("""import csv
-import numpy as np
-import matplotlib.pyplot as plt
-
-rows = []
-with open('rotation_curve_corpus_v7_flat.csv') as f:
-    for r in csv.DictReader(f):
-        if r['vrot_max_kms']:
-            rows.append(r)
-
-COLORS = {'SPARC':'#1f77b4','THINGS':'#ff7f0e',
-          'LITTLE_THINGS':'#2ca02c','WALLABY':'#d62728'}
-bins = np.arange(0, 360, 20)
-
-fig, ax = plt.subplots(figsize=(9, 5))
-bottom = np.zeros(len(bins) - 1)
-for survey, color in COLORS.items():
-    vals = [float(r['vrot_max_kms']) for r in rows if r['survey'] == survey]
-    counts, _ = np.histogram(vals, bins=bins)
-    ax.bar(bins[:-1], counts, width=19, bottom=bottom, color=color,
-           label=f'{survey} ({len(vals)})', alpha=0.85, align='edge')
-    bottom += counts
-
-ax.set_xlabel(r'$V_{\\rm rot,max}$ (km/s)', fontsize=12)
-ax.set_ylabel('N galaxies', fontsize=12)
-ax.set_title('Peak Rotation Velocity Distribution\\n'
-             'EPS Research Unified HI Corpus v7.0 (N=438)', fontsize=11)
-ax.legend(fontsize=9)
-plt.tight_layout()
-plt.savefig('ex06_vrot_distribution.png', dpi=150, bbox_inches='tight')
-plt.show()
-
-all_vmax = [float(r['vrot_max_kms']) for r in rows]
-print(f"Total galaxies with Vrot_max: {len(all_vmax)}")
-print(f"Range: {min(all_vmax):.1f} -- {max(all_vmax):.1f} km/s")
-print(f"Median: {np.median(all_vmax):.1f} km/s")""")
+    md("# SPARC Example 06: Peak Rotation Velocity Distribution\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nPeak rotation velocity Vrot_max traces total galaxy mass.\nThis stacked histogram spans the full dynamic range —\nfrom ~10 km/s dwarf irregulars to ~350 km/s massive spirals.\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import csv\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\n\nrows = []\nwith open('rotation_curve_corpus_v7_flat.csv') as f:\n    for r in csv.DictReader(f):\n        try:\n            rows.append({'survey': r['survey'],\n                         'vmax': float(r['vrot_max_kms']),\n                         'tier': int(r['quality_tier'])})\n        except (ValueError, KeyError):\n            pass\n\nSURVEYS = ['SPARC', 'THINGS', 'LITTLE_THINGS', 'WALLABY']\nCOLORS  = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']\nbins = np.arange(0, 380, 20)\n\nfig, axes = plt.subplots(1, 2, figsize=(12, 5))\n\n# Panel 1: stacked histogram\nax = axes[0]\ndata = [[r['vmax'] for r in rows if r['survey']==s] for s in SURVEYS]\nax.hist(data, bins=bins, stacked=True, color=COLORS,\n        label=[f'{s} (N={len(d)})' for s, d in zip(SURVEYS, data)],\n        edgecolor='white', linewidth=0.5)\nax.set_xlabel('Peak Rotation Velocity Vmax (km/s)', fontsize=12)\nax.set_ylabel('N galaxies', fontsize=12)\nax.set_title('Vmax Distribution by Survey\\nUnified HI Corpus v7.0', fontsize=11)\nax.legend(fontsize=9)\n\n# Panel 2: CDF by survey\nax2 = axes[1]\nfor s, color in zip(SURVEYS, COLORS):\n    v = sorted(r['vmax'] for r in rows if r['survey']==s)\n    if v:\n        ax2.plot(v, np.linspace(0, 1, len(v)), color=color, lw=2, label=s)\nax2.set_xlabel('Vmax (km/s)', fontsize=12)\nax2.set_ylabel('Cumulative fraction', fontsize=12)\nax2.set_title('Vmax CDF by Survey', fontsize=11)\nax2.legend(fontsize=9)\nax2.grid(alpha=0.3)\n\nplt.suptitle(f'HI Corpus v7.0 — Peak Velocity Distribution (N={len(rows)} galaxies)',\n             fontsize=11)\nplt.tight_layout()\nplt.savefig('ex06_vrot_distribution.png', dpi=150, bbox_inches='tight')\nplt.show()\n\nfor s in SURVEYS:\n    v = [r['vmax'] for r in rows if r['survey']==s]\n    if v:\n        print(f'{s:15s}: N={len(v):3d}  median={np.median(v):.1f}  '\n              f'mean={np.mean(v):.1f}  max={max(v):.1f} km/s')\n")
 ])
 
 # ── EX07: Rmax vs Vmax parameter space ────────────────────────────────────────
 notebooks["ex07_rmax_vmax_parameter_space.ipynb"] = nb([
-md(f"""# SPARC Example 07: Rmax vs Vrot Parameter Space
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-The Rmax vs Vrot_max diagram shows the full dynamic range:
-from ~3 kpc dwarf irregulars to ~100 kpc massive spirals.
-Colored by quality tier (Tier 1 = hand-curated, Tier 2 = automated).
-
-{CORPUS_NOTE}"""),
-code("""import csv
-import numpy as np
-import matplotlib.pyplot as plt
-
-rows = []
-with open('rotation_curve_corpus_v7_flat.csv') as f:
-    for r in csv.DictReader(f):
-        if r['r_max_kpc'] and r['vrot_max_kms']:
-            rows.append(r)
-
-r_max = np.array([float(r['r_max_kpc'])    for r in rows])
-v_max = np.array([float(r['vrot_max_kms']) for r in rows])
-tier  = np.array([int(r['quality_tier'])   for r in rows])
-
-fig, ax = plt.subplots(figsize=(8, 6))
-ax.scatter(r_max[tier==1], v_max[tier==1], s=18, alpha=0.7,
-           color='#2166ac', label=f'Tier 1 — {(tier==1).sum()} galaxies')
-ax.scatter(r_max[tier==2], v_max[tier==2], s=18, alpha=0.5,
-           color='#b2182b', marker='^',
-           label=f'Tier 2 — {(tier==2).sum()} galaxies')
-ax.set_xlabel(r'$R_{\\rm max}$ (kpc)', fontsize=12)
-ax.set_ylabel(r'$V_{\\rm rot,max}$ (km/s)', fontsize=12)
-ax.set_title('Parameter Space — EPS Research Unified HI Corpus v7.0\\n'
-             'From dwarf irregulars (~3 kpc) to massive spirals (~100 kpc)',
-             fontsize=10)
-ax.legend(fontsize=9)
-plt.tight_layout()
-plt.savefig('ex07_parameter_space.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# SPARC Example 07: Rmax vs Vrot Parameter Space\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nThe Rmax vs Vrot_max diagram shows the full dynamic range:\nfrom ~3 kpc dwarf irregulars to ~100 kpc massive spirals.\nColored by quality tier (Tier 1 = hand-curated, Tier 2 = automated).\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import csv\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\n\nrows = []\nwith open('rotation_curve_corpus_v7_flat.csv') as f:\n    for r in csv.DictReader(f):\n        try:\n            rows.append({\n                'survey': r['survey'],\n                'r_max': float(r['r_max_kpc']),\n                'v_max': float(r['vrot_max_kms']),\n                'tier':  int(r['quality_tier']),\n            })\n        except (ValueError, KeyError):\n            pass\n\nSURVEYS = ['SPARC', 'THINGS', 'LITTLE_THINGS', 'WALLABY']\nCOLORS  = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']\nMARKERS = ['o', 's', '^', 'D']\n\nfig, axes = plt.subplots(1, 2, figsize=(12, 5))\n\n# Panel 1: Rmax vs Vmax coloured by survey\nax = axes[0]\nfor s, c, m in zip(SURVEYS, COLORS, MARKERS):\n    sub = [r for r in rows if r['survey']==s]\n    ax.scatter([r['r_max'] for r in sub], [r['v_max'] for r in sub],\n               s=15, alpha=0.5, color=c, marker=m, label=f'{s} (N={len(sub)})')\nax.set_xlabel('R_max (kpc)', fontsize=12)\nax.set_ylabel('Vmax (km/s)', fontsize=12)\nax.set_title('Parameter Space: R_max vs Vmax\\nAll surveys', fontsize=11)\nax.legend(fontsize=8)\n\n# Panel 2: Tier-1 only with log axes\nax2 = axes[1]\nt1 = [r for r in rows if r['tier']==1]\nfor s, c, m in zip(SURVEYS, COLORS, MARKERS):\n    sub = [r for r in t1 if r['survey']==s]\n    if sub:\n        ax2.scatter([r['r_max'] for r in sub], [r['v_max'] for r in sub],\n                    s=20, alpha=0.6, color=c, marker=m, label=s)\nax2.set_xscale('log'); ax2.set_yscale('log')\nax2.set_xlabel('R_max (kpc) [log]', fontsize=12)\nax2.set_ylabel('Vmax (km/s) [log]', fontsize=12)\nax2.set_title('Tier-1 Only — Log Scale', fontsize=11)\nax2.legend(fontsize=8)\nax2.grid(alpha=0.3, which='both')\n\nplt.suptitle('HI Corpus v7.0 — Rotation Curve Parameter Space', fontsize=11)\nplt.tight_layout()\nplt.savefig('ex07_rmax_vmax_parameter_space.png', dpi=150, bbox_inches='tight')\nplt.show()\nprint(f'Total galaxies: {len(rows)}  Tier-1: {len(t1)}')\nprint(f'R_max range: {min(r[\"r_max\"] for r in rows):.1f} — '\n      f'{max(r[\"r_max\"] for r in rows):.1f} kpc')\nprint(f'Vmax range:  {min(r[\"v_max\"] for r in rows):.1f} — '\n      f'{max(r[\"v_max\"] for r in rows):.1f} km/s')\n")
 ])
 
 # ── EX08: Hubble type vs Vmax ─────────────────────────────────────────────────
 notebooks["ex08_hubble_type_vmax.ipynb"] = nb([
-md(f"""# SPARC Example 08: Hubble Type vs Peak Velocity
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-SPARC includes Hubble morphological type (0=S0 to 11=Irr/BCD).
-Galaxy morphology correlates with peak rotation velocity —
-earlier types (S0, Sa) rotate faster; late irregulars rotate slowly.
-
-{CORPUS_NOTE}"""),
-code("""import csv
-import numpy as np
-import matplotlib.pyplot as plt
-from collections import defaultdict
-
-rows = []
-with open('rotation_curve_corpus_v7_flat.csv') as f:
-    for r in csv.DictReader(f):
-        if r['survey']=='SPARC' and r['hubble_type'] and r['vrot_max_kms']:
-            rows.append(r)
-
-type_labels = {0:'S0',1:'Sa',2:'Sab',3:'Sb',4:'Sbc',5:'Sc',
-               6:'Scd',7:'Sd',8:'Sdm',9:'Sm',10:'Im',11:'BCD'}
-
-by_type = defaultdict(list)
-for r in rows:
-    t = int(float(r['hubble_type']))
-    by_type[t].append(float(r['vrot_max_kms']))
-
-types   = sorted(by_type.keys())
-medians = [np.median(by_type[t]) for t in types]
-counts  = [len(by_type[t]) for t in types]
-xlabels = [type_labels.get(t, str(t)) for t in types]
-
-fig, ax = plt.subplots(figsize=(10, 5))
-bars = ax.bar(xlabels, medians, color='#2166ac', alpha=0.8, edgecolor='white')
-for i, (m, n) in enumerate(zip(medians, counts)):
-    ax.text(i, m + 2, f'n={n}', ha='center', fontsize=7)
-ax.set_xlabel('Hubble Type', fontsize=12)
-ax.set_ylabel(r'Median $V_{\\rm rot,max}$ (km/s)', fontsize=12)
-ax.set_title('Hubble Type vs Peak Rotation Velocity\\n'
-             'SPARC (175 galaxies) — EPS Research Corpus v7.0', fontsize=11)
-plt.tight_layout()
-plt.savefig('ex08_hubble_type_vmax.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# SPARC Example 08: Hubble Type vs Peak Velocity\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nSPARC includes Hubble morphological type (0=S0 to 11=Irr/BCD).\nGalaxy morphology correlates with peak rotation velocity —\nearlier types (S0, Sa) rotate faster; late irregulars rotate slowly.\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import csv\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom collections import defaultdict\n\nrows = []\nwith open('rotation_curve_corpus_v7_flat.csv') as f:\n    for r in csv.DictReader(f):\n        try:\n            if r['survey']=='SPARC' and r['hubble_type'] and r['vrot_max_kms']:\n                rows.append({\n                    'type': int(float(r['hubble_type'])),\n                    'vmax': float(r['vrot_max_kms']),\n                })\n        except (ValueError, KeyError):\n            pass\n\nTYPE_LABELS = {0:'S0',1:'Sa',2:'Sab',3:'Sb',4:'Sbc',\n               5:'Sc',6:'Scd',7:'Sd',8:'Sdm',9:'Sm',10:'Im'}\n\nby_type = defaultdict(list)\nfor r in rows:\n    by_type[r['type']].append(r['vmax'])\n\ntypes = sorted(by_type.keys())\nmedians = [np.median(by_type[t]) for t in types]\nq25 = [np.percentile(by_type[t], 25) for t in types]\nq75 = [np.percentile(by_type[t], 75) for t in types]\nlabels = [TYPE_LABELS.get(t, str(t)) for t in types]\ncounts = [len(by_type[t]) for t in types]\n\nfig, axes = plt.subplots(1, 2, figsize=(12, 5))\n\n# Panel 1: Median Vmax by Hubble type\nax = axes[0]\nx = np.arange(len(types))\nax.bar(x, medians, color='#1f77b4', alpha=0.8, edgecolor='white')\nax.errorbar(x, medians,\n            yerr=[np.array(medians)-np.array(q25),\n                  np.array(q75)-np.array(medians)],\n            fmt='none', color='black', capsize=4)\nax.set_xticks(x)\nax.set_xticklabels([f'{l}\\n(N={c})' for l,c in zip(labels,counts)], fontsize=9)\nax.set_ylabel('Median Vmax (km/s)', fontsize=12)\nax.set_title('Vmax by Hubble Type\\nSPARC sample (median ± IQR)', fontsize=11)\n\n# Panel 2: Boxplot\nax2 = axes[1]\nax2.boxplot([by_type[t] for t in types], labels=labels,\n            patch_artist=True,\n            boxprops=dict(facecolor='#aec7e8', alpha=0.7))\nax2.set_xlabel('Hubble Type', fontsize=12)\nax2.set_ylabel('Vmax (km/s)', fontsize=12)\nax2.set_title('Vmax Distribution by Hubble Type', fontsize=11)\n\nplt.suptitle('HI Corpus v7.0 — Morphology vs Kinematics (SPARC)', fontsize=11)\nplt.tight_layout()\nplt.savefig('ex08_hubble_type_vmax.png', dpi=150, bbox_inches='tight')\nplt.show()\nfor t, l, m, c in zip(types, labels, medians, counts):\n    print(f'{l:5s} (N={c:3d}): median Vmax = {m:.1f} km/s')\n")
 ])
 
 # ── EX09: Multi-galaxy comparison ─────────────────────────────────────────────
 notebooks["ex09_multi_galaxy_comparison.ipynb"] = nb([
-md(f"""# SPARC Example 09: Multi-Galaxy Rotation Curve Comparison
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-Compare rotation curves across the full SPARC mass range:
-- DDO161: dwarf irregular, Vmax~67 km/s
-- NGC2403: intermediate spiral, Vmax~130 km/s  
-- UGC2885: massive spiral (one of the largest known), Vmax~300 km/s
-
-All three loaded from a single JSON file in under 15 lines of Python.
-
-{CORPUS_NOTE}"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-targets = ['DDO161', 'NGC2403', 'UGC2885']
-colors  = ['#2166ac', '#4dac26', '#d6604d']
-
-fig, ax = plt.subplots(figsize=(9, 5))
-for name, color in zip(targets, colors):
-    try:
-        g = next(g for g in corpus['galaxies'] if g['galaxy'] == name)
-        d = g['data']
-        R    = [p['Rad']  for p in d]
-        Vobs = [p['Vobs'] for p in d]
-        ax.plot(R, Vobs, 'o-', color=color, linewidth=1.5, markersize=4,
-                label=f'{name}  Vmax={max(Vobs):.0f} km/s  D={g["distance_mpc"]} Mpc')
-    except StopIteration:
-        print(f"Galaxy {name} not found — check galaxy name in corpus")
-
-ax.set_xlabel('Radius (kpc)', fontsize=12)
-ax.set_ylabel(r'$V_{\\rm obs}$ (km/s)', fontsize=12)
-ax.set_title('Rotation Curves Across the Mass Range\\n'
-             'EPS Research Unified HI Corpus v7.0', fontsize=11)
-ax.legend(fontsize=9)
-plt.tight_layout()
-plt.savefig('ex09_multi_galaxy.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# SPARC Example 09: Multi-Galaxy Rotation Curve Comparison\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nCompare rotation curves across the full SPARC mass range:\n- DDO161: dwarf irregular, Vmax~67 km/s\n- NGC2403: intermediate spiral, Vmax~130 km/s  \n- UGC2885: massive spiral (one of the largest known), Vmax~300 km/s\n\nAll three loaded from a single JSON file in under 15 lines of Python.\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import json\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\n\nwith open('rotation_curve_corpus_v7.json') as f:\n    corpus = json.load(f)\n\ntargets = ['DDO161', 'NGC2403', 'UGC2885']\ncolors  = ['#2166ac', '#4dac26', '#d6604d']\n\nfig, axes = plt.subplots(1, 3, figsize=(14, 5))\n\nfor ax, name, color in zip(axes, targets, colors):\n    try:\n        g = next(g for g in corpus['galaxies'] if g['galaxy'] == name)\n        d = g['data']\n        R    = [p['Rad']  for p in d]\n        Vobs = [p['Vobs'] for p in d]\n        ax.plot(R, Vobs, 'o-', color=color, ms=5, lw=1.5,\n                label=f'{name}')\n        ax.set_xlabel('Radius (kpc)', fontsize=11)\n        ax.set_ylabel('Vrot (km/s)', fontsize=11)\n        ax.set_title(f'{name}\\nD={g.get(\"distance_mpc\",\"?\"):.1f} Mpc  '\n                     f'Survey={g.get(\"survey\",\"?\")}', fontsize=10)\n        ax.legend(fontsize=9)\n        ax.grid(alpha=0.3)\n        # Omega annotation\n        if len(d) >= 2:\n            R1,V1 = R[0], Vobs[0]\n            R2,V2 = R[-1], Vobs[-1]\n            if R1>0 and R2>0:\n                outer_term    = (V2 / R2)\n                inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\n                omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]\n                omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr\n                om = omega_rad_gyr\n                ax.annotate(f'ω={om:+.2f} rad/Gyr',\n                            xy=(0.05,0.92), xycoords='axes fraction',\n                            fontsize=9, color=color)\n    except StopIteration:\n        ax.text(0.5, 0.5, f'{name}\\nnot found',\n                ha='center', va='center', transform=ax.transAxes)\n\nplt.suptitle('HI Corpus v7.0 — Multi-Galaxy Rotation Curve Comparison\\n'\n             'Flynn & Cannaliato (2025) Eq.6 omega annotation', fontsize=11)\nplt.tight_layout()\nplt.savefig('ex09_multi_galaxy_comparison.png', dpi=150, bbox_inches='tight')\nplt.show()\nprint('Displayed:', targets)\n")
 ])
 
 # ── EX10: Omega across SPARC ──────────────────────────────────────────────────
 notebooks["ex10_omega_84_sparc.ipynb"] = nb([
-md(f"""# SPARC Example 10: Omega Across the SPARC Sample
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-This example computes omega for all SPARC galaxies with sufficient data
-and reproduces the key result from Flynn & Cannaliato (2025):
-mean omega = 7.06 ± 3.26 rad/Gyr across 84 Q=1 galaxies.
-
-**Reference:** Flynn, D.C. & Cannaliato, J. (2025).
-DOI: 10.3389/fspas.2025.1680387
-
-{CORPUS_NOTE}"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-results = []
-for g in corpus['galaxies']:
-    if g['survey'] != 'SPARC' or not g.get('data') or len(g['data']) < 3:
-        continue
-    d  = g['data']
-    R  = [p['Rad']  for p in d]
-    V  = [p['Vobs'] for p in d]
-    R1, V1 = R[0],  V[0]
-    R2, V2 = R[-1], V[-1]
-    if R1 <= 0 or R2 <= 0 or V1 <= 0 or V2 <= 0:
-        continue
-    outer_term    = (V2 / R2)
-    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-    results.append({'galaxy': g['galaxy'], 'omega': omega,
-                    'vmax': max(V), 'distance': g['distance_mpc']})
-
-omegas = [r['omega'] for r in results]
-print(f"Galaxies computed:  {len(results)}")
-print(f"Mean omega:         {np.mean(omegas):.2f} rad/Gyr")
-print(f"Std omega:          {np.std(omegas):.2f} rad/Gyr")
-print(f"Median omega:       {np.median(omegas):.2f} rad/Gyr")
-print(f"\\nPublished result (Flynn & Cannaliato 2025): 7.06 ± 3.26 rad/Gyr")"""),
-code("""fig, axes = plt.subplots(1, 2, figsize=(11, 4))
-
-axes[0].hist(omegas, bins=30, color='#2166ac', alpha=0.8, edgecolor='white')
-axes[0].axvline(np.mean(omegas), color='red', linestyle='--', linewidth=1.5,
-                label=f'Mean = {np.mean(omegas):.2f} rad/Gyr')
-axes[0].axvline(7.06, color='orange', linestyle=':', linewidth=1.5,
-                label='Published: 7.06 rad/Gyr')
-axes[0].set_xlabel(r'$\\omega$ (rad/Gyr)', fontsize=11)
-axes[0].set_ylabel('N galaxies', fontsize=11)
-axes[0].set_title('Omega Distribution — SPARC Sample', fontsize=10)
-axes[0].legend(fontsize=8)
-
-axes[1].scatter([r['vmax'] for r in results], omegas,
-                s=20, alpha=0.6, color='#2166ac')
-axes[1].axhline(np.mean(omegas), color='red', linestyle='--', linewidth=1,
-                label=f'Mean = {np.mean(omegas):.2f}')
-axes[1].set_xlabel(r'$V_{\\rm max}$ (km/s)', fontsize=11)
-axes[1].set_ylabel(r'$\\omega$ (rad/Gyr)', fontsize=11)
-axes[1].set_title(r'$\\omega$ vs Peak Velocity', fontsize=10)
-axes[1].legend(fontsize=8)
-
-plt.suptitle('Omega Kinematic Correction — EPS Research SPARC Sample\\n'
-             'Flynn & Cannaliato (2025) | DOI: 10.3389/fspas.2025.1680387',
-             fontsize=10)
-plt.tight_layout()
-plt.savefig('ex10_omega_sparc.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# SPARC Example 10: Omega Across the SPARC Sample\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nThis example computes omega for all SPARC galaxies with sufficient data\nand reproduces the key result from Flynn & Cannaliato (2025):\nmean omega = 7.06 ± 3.26 rad/Gyr across 84 Q=1 galaxies.\n\n**Reference:** Flynn, D.C. & Cannaliato, J. (2025).\nDOI: 10.3389/fspas.2025.1680387\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open('rotation_curve_corpus_v7.json') as f:\n    corpus = json.load(f)\n\nresults = []\nfor g in corpus['galaxies']:\n    if g['survey'] != 'SPARC' or not g.get('data') or len(g['data']) < 3:\n        continue\n    d  = g['data']\n    R  = [p['Rad']  for p in d]\n    V  = [p['Vobs'] for p in d]\n    R1, V1 = R[0],  V[0]\n    R2, V2 = R[-1], V[-1]\n    if R1 <= 0 or R2 <= 0 or V1 <= 0 or V2 <= 0:\n        continue\n    outer_term    = (V2 / R2)\n    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\n    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]\n    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr\n    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix\n    results.append({'galaxy': g['galaxy'], 'omega': omega,\n                    'vmax': max(V), 'distance': g['distance_mpc']})\n\nomegas = [r['omega'] for r in results]\nprint(f\"Galaxies computed:  {len(results)}\")\nprint(f\"Mean omega:         {np.mean(omegas):.2f} rad/Gyr\")\nprint(f\"Std omega:          {np.std(omegas):.2f} rad/Gyr\")\nprint(f\"Median omega:       {np.median(omegas):.2f} rad/Gyr\")\nprint(f\"\\nPublished result (Flynn & Cannaliato 2025): 7.06 ± 3.26 rad/Gyr\")"),
+    code("fig, axes = plt.subplots(1, 2, figsize=(11, 4))\n\naxes[0].hist(omegas, bins=30, color='#2166ac', alpha=0.8, edgecolor='white')\naxes[0].axvline(np.mean(omegas), color='red', linestyle='--', linewidth=1.5,\n                label=f'Mean = {np.mean(omegas):.2f} rad/Gyr')\naxes[0].axvline(7.06, color='orange', linestyle=':', linewidth=1.5,\n                label='Published: 7.06 rad/Gyr')\naxes[0].set_xlabel(r'$\\omega$ (rad/Gyr)', fontsize=11)\naxes[0].set_ylabel('N galaxies', fontsize=11)\naxes[0].set_title('Omega Distribution — SPARC Sample', fontsize=10)\naxes[0].legend(fontsize=8)\n\naxes[1].scatter([r['vmax'] for r in results], omegas,\n                s=20, alpha=0.6, color='#2166ac')\naxes[1].axhline(np.mean(omegas), color='red', linestyle='--', linewidth=1,\n                label=f'Mean = {np.mean(omegas):.2f}')\naxes[1].set_xlabel(r'$V_{\\rm max}$ (km/s)', fontsize=11)\naxes[1].set_ylabel(r'$\\omega$ (rad/Gyr)', fontsize=11)\naxes[1].set_title(r'$\\omega$ vs Peak Velocity', fontsize=10)\naxes[1].legend(fontsize=8)\n\nplt.suptitle('Omega Kinematic Correction — EPS Research SPARC Sample\\n'\n             'Flynn & Cannaliato (2025) | DOI: 10.3389/fspas.2025.1680387',\n             fontsize=10)\nplt.tight_layout()\nplt.savefig('ex10_omega_sparc.png', dpi=150, bbox_inches='tight')\nplt.show()")
 ])
 
 # ── EX11: THINGS vs SPARC overlap ─────────────────────────────────────────────
@@ -847,73 +543,9 @@ plt.show()""")
 
 # ── EX14: Outer gap all SPARC ─────────────────────────────────────────────────
 notebooks["ex14_outer_gap_distribution.ipynb"] = nb([
-md(f"""# SPARC Example 14: Outer Gap Distribution — All SPARC Galaxies
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-The outer gap is V_adj(R2) - V_bary(R2) — the residual between the
-omega-corrected velocity and baryonic velocity at the outermost ring.
-A key result of Flynn (2026): all 84 outer gaps are negative,
-meaning V_adj always falls below V_bary, ruling out dark-matter re-importation.
-
-{CORPUS_NOTE}"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-results = []
-for g in corpus['galaxies']:
-    if g['survey'] != 'SPARC' or not g.get('data') or len(g['data']) < 3:
-        continue
-    d  = g['data']
-    R  = [p['Rad']  for p in d]
-    V  = [p['Vobs'] for p in d]
-    R1, V1 = R[0],  V[0]
-    R2, V2 = R[-1], V[-1]
-    if R1<=0 or R2<=0 or V1<=0 or V2<=0:
-        continue
-    outer_term    = (V2 / R2)
-    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-    V_adj = V2 - R2 * omega
-    last  = d[-1]
-    Vgas  = last.get('Vgas', 0)
-    Vdisk = last.get('Vdisk', 0)
-    Vbul  = last.get('Vbul', 0)
-    Vbar_sq = Vgas**2 + Vdisk**2 + Vbul**2
-    if Vbar_sq <= 0:
-        continue
-    Vbar = np.sqrt(Vbar_sq)
-    gap  = V_adj - Vbar
-    results.append({'galaxy': g['galaxy'], 'gap': gap,
-                    'omega': omega, 'Vbar': Vbar})
-
-gaps = [r['gap'] for r in results]
-print(f"Galaxies with outer gap: {len(gaps)}")
-print(f"All negative: {all(g < 0 for g in gaps)}")
-print(f"Mean gap: {np.mean(gaps):.1f} km/s")
-print(f"Std gap:  {np.std(gaps):.1f} km/s")
-print(f"\\nPublished (Flynn 2026): mean = -51.4 ± 25.0 km/s, all 84 negative")"""),
-code("""fig, ax = plt.subplots(figsize=(8, 5))
-ax.hist(gaps, bins=25, color='#2166ac', alpha=0.8, edgecolor='white')
-ax.axvline(0, color='red', linestyle='--', linewidth=1.5,
-           label='Gap = 0 boundary')
-ax.axvline(np.mean(gaps), color='orange', linestyle='-', linewidth=1.5,
-           label=f'Mean = {np.mean(gaps):.1f} km/s')
-ax.set_xlabel(r'$V_{\\rm adj}(R_2) - V_{\\rm bar}(R_2)$ (km/s)', fontsize=11)
-ax.set_ylabel('N galaxies', fontsize=11)
-ax.set_title('Outer Gap Distribution — SPARC\\n'
-             'All negative: V_adj < V_bar at outermost ring (Flynn 2026)',
-             fontsize=10)
-ax.legend(fontsize=9)
-plt.tight_layout()
-plt.savefig('ex14_outer_gap.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# SPARC Example 14: Outer Gap Distribution — All SPARC Galaxies\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nThe outer gap is V_adj(R2) - V_bary(R2) — the residual between the\nomega-corrected velocity and baryonic velocity at the outermost ring.\nThis notebook evaluates the outer-gap diagnostic across the SPARC sample in\nUnified HI Corpus v7.0. The sign is a boundary-consistency diagnostic only;\nit does not by itself rule out a mass component.\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open('rotation_curve_corpus_v7.json') as f:\n    corpus = json.load(f)\n\nresults = []\nfor g in corpus['galaxies']:\n    if g['survey'] != 'SPARC' or not g.get('data') or len(g['data']) < 3:\n        continue\n    d  = g['data']\n    R  = [p['Rad']  for p in d]\n    V  = [p['Vobs'] for p in d]\n    R1, V1 = R[0],  V[0]\n    R2, V2 = R[-1], V[-1]\n    if R1<=0 or R2<=0 or V1<=0 or V2<=0:\n        continue\n    outer_term    = (V2 / R2)\n    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\n    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]\n    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr\n    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix\n    V_adj = V2 - R2 * omega_kms_kpc\n    last  = d[-1]\n    Vgas  = last.get('Vgas', 0)\n    Vdisk = last.get('Vdisk', 0)\n    Vbul  = last.get('Vbul', 0)\n    Vbar_sq = Vgas**2 + Vdisk**2 + Vbul**2\n    if Vbar_sq <= 0:\n        continue\n    Vbar = np.sqrt(Vbar_sq)\n    gap  = V_adj - Vbar\n    results.append({'galaxy': g['galaxy'], 'gap': gap,\n                    'omega': omega, 'Vbar': Vbar})\n\ngaps = [r['gap'] for r in results]\nprint(f\"Galaxies with outer gap: {len(gaps)}\")\nprint(f\"All negative: {all(g < 0 for g in gaps)}\")\nprint(f\"Mean gap: {np.mean(gaps):.1f} km/s\")\nprint(f\"Std gap:  {np.std(gaps):.1f} km/s\")\nprint(f\"\\nPublished (Flynn 2026): mean = -51.4 ± 25.0 km/s, all 84 negative\")"),
+    code("fig, ax = plt.subplots(figsize=(8, 5))\nax.hist(gaps, bins=25, color='#2166ac', alpha=0.8, edgecolor='white')\nax.axvline(0, color='red', linestyle='--', linewidth=1.5,\n           label='Gap = 0 boundary')\nax.axvline(np.mean(gaps), color='orange', linestyle='-', linewidth=1.5,\n           label=f'Mean = {np.mean(gaps):.1f} km/s')\nax.set_xlabel(r'$V_{\\rm adj}(R_2) - V_{\\rm bar}(R_2)$ (km/s)', fontsize=11)\nax.set_ylabel('N galaxies', fontsize=11)\nax.set_title('Outer Gap Distribution — SPARC\\n'\n             'All negative: V_adj < V_bar at outermost ring (Flynn 2026)',\n             fontsize=10)\nax.legend(fontsize=9)\nplt.tight_layout()\nplt.savefig('ex14_outer_gap.png', dpi=150, bbox_inches='tight')\nplt.show()")
 ])
 
 # ── EX15: Log slope ───────────────────────────────────────────────────────────
@@ -978,52 +610,8 @@ plt.show()""")
 
 # ── EX16: Enclosed mass profile ───────────────────────────────────────────────
 notebooks["ex16_enclosed_mass.ipynb"] = nb([
-md(f"""# SPARC Example 16: Enclosed Mass Profile M(<R)
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-From the rotation curve we can compute the enclosed mass:
-
-    M(<R) = V_obs^2 * R / G
-
-where G = 4.301e-3 pc Msun^-1 (km/s)^2.
-This gives total mass (baryons + dark matter) as a function of radius.
-
-{CORPUS_NOTE}"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-# G in units of kpc Msun^-1 (km/s)^2
-G_kpc = 4.301e-3 * 1e-3  # kpc Msun^-1 (km/s)^2
-
-targets = ['DDO161', 'NGC2403', 'UGC2885']
-colors  = ['#2166ac', '#4dac26', '#d6604d']
-
-fig, ax = plt.subplots(figsize=(8, 5))
-for name, color in zip(targets, colors):
-    try:
-        g = next(g for g in corpus['galaxies'] if g['galaxy'] == name)
-        d = g['data']
-        R    = np.array([p['Rad']  for p in d])
-        Vobs = np.array([p['Vobs'] for p in d])
-        M    = Vobs**2 * R / G_kpc
-        ax.plot(R, np.log10(M), 'o-', color=color, linewidth=1.5, markersize=4,
-                label=f'{name}  log M_max={np.log10(M[-1]):.2f}')
-    except StopIteration:
-        print(f"{name} not found")
-
-ax.set_xlabel('Radius (kpc)', fontsize=12)
-ax.set_ylabel(r'log$_{10}$ $M(<R)$ ($M_\\odot$)', fontsize=12)
-ax.set_title('Enclosed Mass Profile M(<R) = V^2 R / G\\n'
-             'EPS Research Unified HI Corpus v7.0', fontsize=11)
-ax.legend(fontsize=9)
-plt.tight_layout()
-plt.savefig('ex16_enclosed_mass.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# SPARC Example 16: Enclosed Mass Profile M(<R)\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nFrom the rotation curve we can compute the enclosed mass:\n\n    M(<R) = V_obs^2 * R / G\n\nwhere G = 4.301e-3 pc Msun^-1 (km/s)^2.\nThis gives total mass (baryons + dark matter) as a function of radius.\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import json\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\n\nwith open('rotation_curve_corpus_v7.json') as f:\n    corpus = json.load(f)\n\n# G in kpc (km/s)^2 Msun^-1\nG_kpc = 4.301e-3 * 1e-3\n\ntargets = ['DDO161', 'NGC2403', 'UGC2885']\ncolors  = ['#2166ac', '#4dac26', '#d6604d']\n\nfig, axes = plt.subplots(1, 2, figsize=(12, 5))\n\n# Panel 1: Enclosed mass profiles\nax = axes[0]\nfor name, color in zip(targets, colors):\n    try:\n        g = next(g for g in corpus['galaxies'] if g['galaxy'] == name)\n        d = g['data']\n        R    = np.array([p['Rad']  for p in d])\n        Vobs = np.array([p['Vobs'] for p in d])\n        M_enc = Vobs**2 * R / G_kpc  # solar masses\n        ax.plot(R, np.log10(M_enc), 'o-', color=color,\n                ms=5, lw=1.5, label=name)\n    except StopIteration:\n        pass\n\nax.set_xlabel('Radius (kpc)', fontsize=12)\nax.set_ylabel(r'log $M_{enc}$ ($M_\\odot$)', fontsize=12)\nax.set_title('Enclosed Mass Profiles\\nM(R) = V²R/G', fontsize=11)\nax.legend(fontsize=9)\nax.grid(alpha=0.3)\n\n# Panel 2: Normalized profiles\nax2 = axes[1]\nfor name, color in zip(targets, colors):\n    try:\n        g = next(g for g in corpus['galaxies'] if g['galaxy'] == name)\n        d = g['data']\n        R    = np.array([p['Rad']  for p in d])\n        Vobs = np.array([p['Vobs'] for p in d])\n        M_enc = Vobs**2 * R / G_kpc\n        ax2.plot(R/R[-1], M_enc/M_enc[-1], 'o-', color=color,\n                 ms=5, lw=1.5, label=name)\n    except StopIteration:\n        pass\n\nax2.set_xlabel(r'R / R$_{max}$', fontsize=12)\nax2.set_ylabel(r'M$_{enc}$ / M$_{enc,max}$', fontsize=12)\nax2.set_title('Normalized Enclosed Mass\\n(concentration comparison)', fontsize=11)\nax2.legend(fontsize=9)\nax2.grid(alpha=0.3)\n\nplt.suptitle('HI Corpus v7.0 — Enclosed Mass Profiles', fontsize=11)\nplt.tight_layout()\nplt.savefig('ex16_enclosed_mass.png', dpi=150, bbox_inches='tight')\nplt.show()\n")
 ])
 
 # ── EX17: RMSE improvement over 84 galaxies ───────────────────────────────────
@@ -1110,261 +698,34 @@ plt.show()""")
 
 # ── EX18: Omega vs HI radius correlation ──────────────────────────────────────
 notebooks["ex18_omega_vs_rmax.ipynb"] = nb([
-md(f"""# SPARC Example 18: Omega vs Galaxy Size
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-Does omega correlate with galaxy size (R_max)?
-This tests whether omega is a geometric artifact of the
-boundary point selection or a genuine kinematic property.
-
-{CORPUS_NOTE}"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-results = []
-for g in corpus['galaxies']:
-    if g['survey'] != 'SPARC' or not g.get('data') or len(g['data']) < 3:
-        continue
-    d  = g['data']
-    R  = [p['Rad']  for p in d]
-    V  = [p['Vobs'] for p in d]
-    R1, V1 = R[0],  V[0]
-    R2, V2 = R[-1], V[-1]
-    if R1<=0 or R2<=0 or V1<=0 or V2<=0:
-        continue
-    outer_term    = (V2 / R2)
-    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-    results.append({'galaxy': g['galaxy'], 'omega': omega,
-                    'R_max': R2, 'V_max': max(V)})
-
-R_max  = [r['R_max']  for r in results]
-omegas = [r['omega']  for r in results]
-corr   = np.corrcoef(R_max, omegas)[0, 1]
-print(f"N galaxies: {len(results)}")
-print(f"Pearson r (omega vs R_max): {corr:.3f}")
-print(f"Interpretation: {'weak' if abs(corr)<0.3 else 'moderate' if abs(corr)<0.6 else 'strong'} correlation")"""),
-code("""fig, axes = plt.subplots(1, 2, figsize=(11, 4))
-
-axes[0].scatter(R_max, omegas, s=18, alpha=0.6, color='#2166ac')
-axes[0].set_xlabel(r'$R_{\\rm max}$ (kpc)', fontsize=11)
-axes[0].set_ylabel(r'$\\omega$ (rad/Gyr)', fontsize=11)
-axes[0].set_title(f'Omega vs R_max (r={corr:.2f})', fontsize=10)
-
-V_max  = [r['V_max']  for r in results]
-corr2  = np.corrcoef(V_max, omegas)[0, 1]
-axes[1].scatter(V_max, omegas, s=18, alpha=0.6, color='#d62728')
-axes[1].set_xlabel(r'$V_{\\rm max}$ (km/s)', fontsize=11)
-axes[1].set_ylabel(r'$\\omega$ (rad/Gyr)', fontsize=11)
-axes[1].set_title(f'Omega vs V_max (r={corr2:.2f})', fontsize=10)
-
-plt.suptitle('Omega Correlations — EPS Research SPARC Sample\\n'
-             'Testing whether omega is a geometric artifact', fontsize=10)
-plt.tight_layout()
-plt.savefig('ex18_omega_correlations.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# SPARC Example 18: Omega vs Galaxy Size\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nDoes omega correlate with galaxy size (R_max)?\nThis tests whether omega is a geometric artifact of the\nboundary point selection or a genuine kinematic property.\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open('rotation_curve_corpus_v7.json') as f:\n    corpus = json.load(f)\n\nresults = []\nfor g in corpus['galaxies']:\n    if g['survey'] != 'SPARC' or not g.get('data') or len(g['data']) < 3:\n        continue\n    d  = g['data']\n    R  = [p['Rad']  for p in d]\n    V  = [p['Vobs'] for p in d]\n    R1, V1 = R[0],  V[0]\n    R2, V2 = R[-1], V[-1]\n    if R1<=0 or R2<=0 or V1<=0 or V2<=0:\n        continue\n    outer_term    = (V2 / R2)\n    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\n    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]\n    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr\n    omega = omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix\n    results.append({'galaxy': g['galaxy'], 'omega': omega,\n                    'R_max': R2, 'V_max': max(V)})\n\nR_max  = [r['R_max']  for r in results]\nomegas = [r['omega']  for r in results]\ncorr   = np.corrcoef(R_max, omegas)[0, 1]\nprint(f\"N galaxies: {len(results)}\")\nprint(f\"Pearson r (omega vs R_max): {corr:.3f}\")\nprint(f\"Interpretation: {'weak' if abs(corr)<0.3 else 'moderate' if abs(corr)<0.6 else 'strong'} correlation\")"),
+    code("fig, axes = plt.subplots(1, 2, figsize=(11, 4))\n\naxes[0].scatter(R_max, omegas, s=18, alpha=0.6, color='#2166ac')\naxes[0].set_xlabel(r'$R_{\\rm max}$ (kpc)', fontsize=11)\naxes[0].set_ylabel(r'$\\omega$ (rad/Gyr)', fontsize=11)\naxes[0].set_title(f'Omega vs R_max (r={corr:.2f})', fontsize=10)\n\nV_max  = [r['V_max']  for r in results]\ncorr2  = np.corrcoef(V_max, omegas)[0, 1]\naxes[1].scatter(V_max, omegas, s=18, alpha=0.6, color='#d62728')\naxes[1].set_xlabel(r'$V_{\\rm max}$ (km/s)', fontsize=11)\naxes[1].set_ylabel(r'$\\omega$ (rad/Gyr)', fontsize=11)\naxes[1].set_title(f'Omega vs V_max (r={corr2:.2f})', fontsize=10)\n\nplt.suptitle('Omega Correlations — EPS Research SPARC Sample\\n'\n             'Testing whether omega is a geometric artifact', fontsize=10)\nplt.tight_layout()\nplt.savefig('ex18_omega_correlations.png', dpi=150, bbox_inches='tight')\nplt.show()")
 ])
 
 # ── EX19: Baryonic Tully-Fisher ───────────────────────────────────────────────
 notebooks["ex19_baryonic_tully_fisher.ipynb"] = nb([
-md(f"""# SPARC Example 19: Baryonic Tully-Fisher Relation
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-The Baryonic Tully-Fisher Relation (BTFR) relates total baryonic mass
-to peak rotation velocity: M_bar ∝ V^4.
-SPARC is one of the definitive datasets for this relation.
-
-We estimate M_bar ≈ M_HI * 1.33 (helium correction) here as a proxy
-since full stellar masses are not in the corpus for all galaxies.
-
-{CORPUS_NOTE}"""),
-code("""import csv
-import numpy as np
-import matplotlib.pyplot as plt
-
-rows = []
-with open('rotation_curve_corpus_v7_flat.csv') as f:
-    for r in csv.DictReader(f):
-        rows.append(r)
-
-# Use LITTLE THINGS which has r0p3 data
-lt = [r for r in rows if r['survey']=='LITTLE_THINGS'
-      and r['vrot_max_kms'] and r.get('v0p3_kms') and r['v0p3_kms']]
-
-vmax = np.array([float(r['v0p3_kms'])     for r in lt])
-# Use r_max as proxy for size
-rmax = np.array([float(r['r_max_kpc'])    for r in lt])
-
-print(f"LITTLE THINGS galaxies with v0.3: {len(lt)}")
-print(f"v0.3 range: {vmax.min():.1f} -- {vmax.max():.1f} km/s")
-print(f"\\nNote: v0.3 is velocity at radius where log slope = 0.3")
-print(f"This is the LITTLE THINGS characteristic velocity parameter")
-print(f"from Oh et al. (2015), Table 1")"""),
-code("""fig, ax = plt.subplots(figsize=(7, 5))
-ax.scatter(np.log10(vmax), rmax, s=40, color='#2ca02c', alpha=0.8)
-for r, rv, rm in zip(lt[:8], np.log10(vmax[:8]), rmax[:8]):
-    ax.annotate(r['galaxy'], (rv, rm),
-                textcoords='offset points', xytext=(4, 3), fontsize=7)
-ax.set_xlabel(r'log$_{10}$ $V_{0.3}$ (km/s)', fontsize=12)
-ax.set_ylabel(r'$R_{\\rm max}$ (kpc)', fontsize=12)
-ax.set_title('LITTLE THINGS: Velocity vs Size\\n'
-             'EPS Research Corpus v7.0 | v0.3 from Oh et al. (2015)', fontsize=10)
-plt.tight_layout()
-plt.savefig('ex19_btfr_proxy.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# Example 19: Baryonic Tully–Fisher Relation (Four Surveys)\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nThe Baryonic Tully–Fisher Relation (BTFR) is a tight empirical scaling law\nrelating a galaxy's total baryonic mass to its asymptotic rotation velocity:\n\n$$M_{\\\\rm bar} \\\\propto V_{\\\\rm flat}^4$$\n\nThis notebook demonstrates BTFR retrieval across all four surveys in the\nunified corpus: **SPARC**, **THINGS**, **LITTLE THINGS**, and **WALLABY DR2**.\n\n**Mass estimation:**\n- **SPARC:** $M_{\\\\rm bar}$ computed from the rotation-curve decomposition at the\n  outermost measured ring: $M_{\\\\rm gas} = 1.33\\\\,V_{\\\\rm gas}^2 R/G$ (HI + He correction),\n  $M_{\\\\rm star} = \\\\Upsilon_{\\\\rm disk}\\\\,V_{\\\\rm disk}^2 R/G$, $M_{\\\\rm bul} = V_{\\\\rm bul}^2 R/G$.\n- **THINGS / LITTLE THINGS / WALLABY:** $V_{\\\\rm flat}$ from `vrot_max_kms`;\n  $M_{\\\\rm bar}$ estimated via the McGaugh (2012) BTFR calibration\n  ($\\\\log M_{\\\\rm bar} = 4\\\\log V_{\\\\rm flat} + \\\\log 47$) as a cross-survey consistency check.\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv`\nand `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer.\nThe CSV contains every kinematic parameter published by Lelli et al. (2016)\nincluding per-galaxy inclination, distance uncertainties, mass-to-light ratios,\nand rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas,\nVdisk, Vbul, errV at every radial point.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**References:** McGaugh et al. (2000), ApJ 533, L99; McGaugh (2012), AJ 143, 40;\nLelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, json (standard library only)"),
+    code("import json\nimport numpy as np\n\n# ── Load corpus ────────────────────────────────────────────────\nwith open('rotation_curve_corpus_v7.json') as f:\n    corpus = json.load(f)\n\ngalaxies = corpus['galaxies']\nprint(f\"Total galaxies in corpus: {len(galaxies)}\")\n\n# ── Constants ──────────────────────────────────────────────────\n# G in units: kpc (km/s)^2 Msun^-1\nG_KPC = 4.302e-6\n\n# ── SPARC: compute M_bar from rotation-curve decomposition ─────\ndef sparc_mbar(g):\n    \"\"\"\n    Estimate M_bar and V_flat from the outermost rotation-curve ring.\n    Returns (log10(M_bar/Msun), V_flat [km/s]) or (None, None).\n    \"\"\"\n    m2l = g.get('m2l_disk')\n    if not m2l or not g.get('data'):\n        return None, None\n    m2l = float(m2l)\n    ring = g['data'][-1]          # outermost ring\n    R    = ring.get('Rad')\n    Vgas = ring.get('Vgas', 0)\n    Vdisk = ring.get('Vdisk', 0)\n    Vbul  = ring.get('Vbul',  0)\n    Vobs  = ring.get('Vobs')\n    if not R or not Vobs:\n        return None, None\n    R, Vgas, Vdisk, Vbul, Vobs = (\n        float(R), float(Vgas), float(Vdisk), float(Vbul), float(Vobs))\n    Mgas  = 1.33 * max(Vgas,  0)**2 * R / G_KPC   # HI + He\n    Mstar = m2l  * Vdisk**2          * R / G_KPC   # stellar disk\n    Mbul  =        Vbul**2           * R / G_KPC   # bulge\n    Mbar  = Mgas + Mstar + Mbul\n    if Mbar <= 0:\n        return None, None\n    return np.log10(Mbar), Vobs\n\ndef get_vmax(g):\n    \"\"\"Return V_flat from summary field or max(Vrot) over rings.\"\"\"\n    v = g.get('vrot_max_kms') or g.get('Vobs_max_kms')\n    if v:\n        try: return float(v)\n        except: pass\n    if g.get('data'):\n        vcol = 'Vrot' if 'Vrot' in (g.get('columns') or {}) else 'Vobs'\n        vals = [float(r[vcol]) for r in g['data'] if r.get(vcol)]\n        if vals:\n            return max(vals)\n    return None\n\n# ── Collect per-survey data points ────────────────────────────\nresults = {s: [] for s in ('SPARC', 'THINGS', 'LITTLE_THINGS', 'WALLABY')}\n\nfor g in galaxies:\n    survey = g.get('survey')\n    if survey not in results:\n        continue\n    if survey == 'SPARC':\n        logM, V = sparc_mbar(g)\n        if logM is not None and V > 0:\n            results['SPARC'].append((V, logM))\n    else:\n        vmax = get_vmax(g)\n        if not vmax or vmax <= 0:\n            continue\n        # McGaugh (2012) calibration: log M_bar = 4 log V + log(47)\n        logM = 4.0 * np.log10(vmax) + np.log10(47.0)\n        results[survey].append((vmax, logM))\n\nfor survey, pts in results.items():\n    print(f\"  {survey:<15}: {len(pts):>3} galaxies\")"),
+    code("import matplotlib.pyplot as plt\n\n# ── Style ──────────────────────────────────────────────────────\nCOLORS  = {'SPARC':'#1f77b4', 'THINGS':'#ff7f0e',\n           'LITTLE_THINGS':'#2ca02c', 'WALLABY':'#d62728'}\nMARKERS = {'SPARC':'o', 'THINGS':'s', 'LITTLE_THINGS':'^', 'WALLABY':'D'}\nLABELS  = {\n    'SPARC':         'SPARC — $M_{\\\\rm bar}$ from decomposition',\n    'THINGS':        'THINGS — $V^4$ proxy',\n    'LITTLE_THINGS': 'LITTLE THINGS — $V^4$ proxy',\n    'WALLABY':       'WALLABY DR2 — $V^4$ proxy',\n}\n\nfig, ax = plt.subplots(figsize=(8, 6))\n\nfor survey in ('SPARC', 'THINGS', 'LITTLE_THINGS', 'WALLABY'):\n    pts = results[survey]\n    if not pts:\n        continue\n    vs, ms = zip(*pts)\n    label = f\"{LABELS[survey]} (n={len(pts)})\"\n    ax.scatter(np.log10(vs), ms,\n               s=25, alpha=0.7, edgecolors='none',\n               color=COLORS[survey], marker=MARKERS[survey],\n               label=label)\n\n# McGaugh (2012) reference BTFR\nv_ref = np.logspace(0.8, 2.7, 200)\nax.plot(np.log10(v_ref), 4*np.log10(v_ref) + np.log10(47),\n        'k--', lw=1.2, alpha=0.55, label='McGaugh (2012) calibration')\n\nax.set_xlabel(r'$\\log_{10}\\,V_{\\rm flat}$ (km s$^{-1}$)', fontsize=13)\nax.set_ylabel(r'$\\log_{10}\\,M_{\\rm bar}$ ($M_\\odot$)',    fontsize=13)\nax.set_title(\n    'Baryonic Tully–Fisher Relation\\n'\n    'Unified HI Corpus v7.0 — SPARC · THINGS · LITTLE THINGS · WALLABY DR2',\n    fontsize=11)\nax.legend(fontsize=9, framealpha=0.9)\nax.set_xlim(0.9, 2.8)\nax.set_ylim(6.5, 12.5)\nax.grid(True, alpha=0.2)\n\nplt.tight_layout()\nplt.savefig('ex19_btfr_four_surveys.png', dpi=150, bbox_inches='tight')\nplt.show()\nprint(\"Saved: ex19_btfr_four_surveys.png\")")
 ])
 
 # ── EX20: SPARC galaxy gallery ────────────────────────────────────────────────
 notebooks["ex20_rotation_curve_gallery.ipynb"] = nb([
-md(f"""# SPARC Example 20: Rotation Curve Gallery
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-A gallery of 12 SPARC rotation curves illustrating the full diversity
-of shapes found across galaxy types — from rising solid-body curves
-in dwarfs to declining Keplerian-like profiles in massive spirals.
-
-{CORPUS_NOTE}"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-# Select 12 SPARC galaxies spanning the Vmax range
-sparc = [g for g in corpus['galaxies']
-         if g['survey']=='SPARC' and g.get('data') and len(g['data'])>=5]
-sparc_sorted = sorted(sparc, key=lambda x: max(p['Vobs'] for p in x['data']))
-n = len(sparc_sorted)
-indices = [int(i*n/12) for i in range(12)]
-selected = [sparc_sorted[i] for i in indices]
-
-fig, axes = plt.subplots(3, 4, figsize=(14, 9))
-axes = axes.flatten()
-
-for i, g in enumerate(selected):
-    d    = g['data']
-    R    = [p['Rad']  for p in d]
-    Vobs = [p['Vobs'] for p in d]
-    axes[i].plot(R, Vobs, 'o-', color='#1f77b4', linewidth=1.2, markersize=3)
-    axes[i].set_title(f"{g['galaxy']}\\nVmax={max(Vobs):.0f} km/s", fontsize=8)
-    axes[i].set_xlabel('R (kpc)', fontsize=7)
-    axes[i].set_ylabel('V (km/s)', fontsize=7)
-    axes[i].tick_params(labelsize=7)
-
-plt.suptitle('SPARC Rotation Curve Gallery — EPS Research Corpus v7.0\\n'
-             '12 galaxies spanning full Vmax range', fontsize=11)
-plt.tight_layout()
-plt.savefig('ex20_gallery.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# SPARC Example 20: Rotation Curve Gallery\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nA gallery of 12 SPARC rotation curves illustrating the full diversity\nof shapes found across galaxy types — from rising solid-body curves\nin dwarfs to declining Keplerian-like profiles in massive spirals.\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import json\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\n\nwith open('rotation_curve_corpus_v7.json') as f:\n    corpus = json.load(f)\n\nsparc = [g for g in corpus['galaxies']\n         if g.get('survey')=='SPARC' and g.get('data') and len(g['data'])>=5]\nsparc_sorted = sorted(sparc, key=lambda x: max(p['Vobs'] for p in x['data']))\nn = len(sparc_sorted)\nindices = [int(i*n/12) for i in range(12)]\nselected = [sparc_sorted[i] for i in indices]\n\nfig, axes = plt.subplots(3, 4, figsize=(14, 10))\naxes = axes.flatten()\n\nfor ax, g in zip(axes, selected):\n    d = g['data']\n    R    = [p['Rad']  for p in d]\n    Vobs = [p['Vobs'] for p in d]\n    vmax = max(Vobs)\n    # color by Vmax\n    c = plt.cm.plasma(vmax / 300)\n    ax.plot(R, Vobs, 'o-', color=c, ms=3, lw=1.2)\n    ax.set_title(f\"{g['galaxy']}\\nVmax={vmax:.0f} km/s\", fontsize=8)\n    ax.set_xlabel('R (kpc)', fontsize=7)\n    ax.set_ylabel('Vrot (km/s)', fontsize=7)\n    ax.tick_params(labelsize=7)\n    ax.grid(alpha=0.3)\n\nplt.suptitle('HI Corpus v7.0 — SPARC Rotation Curve Gallery\\n'\n             '12 galaxies spanning the full Vmax range', fontsize=12)\nplt.tight_layout()\nplt.savefig('ex20_rotation_curve_gallery.png', dpi=150, bbox_inches='tight')\nplt.show()\nprint('Gallery galaxies:')\nfor g in selected:\n    vmax = max(p['Vobs'] for p in g['data'])\n    print(f\"  {g['galaxy']:<15} Vmax={vmax:.1f} km/s  N_rings={len(g['data'])}\")\n")
 ])
 
 # ── EX21: SPARC query by property ─────────────────────────────────────────────
 notebooks["ex21_query_by_property.ipynb"] = nb([
-md(f"""# SPARC Example 21: Querying the Corpus by Property
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-The flat CSV enables fast filtering by any galaxy property.
-This example demonstrates practical query patterns researchers use:
-- Find the largest galaxies
-- Find galaxies with strong gas content
-- Find galaxies with many data points (best-sampled RCs)
-- Find galaxies by Hubble type
-
-{CORPUS_NOTE}"""),
-code("""import csv
-import numpy as np
-
-rows = []
-with open('rotation_curve_corpus_v7_flat.csv') as f:
-    for r in csv.DictReader(f):
-        rows.append(r)
-
-# Query 1: Largest galaxies by R_max
-sparc = [r for r in rows if r['survey']=='SPARC' and r['r_max_kpc']]
-largest = sorted(sparc, key=lambda x: float(x['r_max_kpc']), reverse=True)[:5]
-print("Top 5 largest SPARC galaxies by R_max:")
-for r in largest:
-    print(f"  {r['galaxy']:<15} R_max={float(r['r_max_kpc']):.1f} kpc  "
-          f"Vmax={r['vrot_max_kms']} km/s")
-
-# Query 2: Most data points
-best = sorted([r for r in sparc if r['n_points']],
-              key=lambda x: int(float(x['n_points'])), reverse=True)[:5]
-print("\\nTop 5 best-sampled SPARC rotation curves:")
-for r in best:
-    print(f"  {r['galaxy']:<15} N={int(float(r['n_points']))} points")
-
-# Query 3: Galaxies with negative Vgas rows (strong gas term)
-gas_rich = [r for r in sparc if r.get('vgas_negative_rows')
-            and float(r['vgas_negative_rows']) > 3]
-print(f"\\nSPARC galaxies with >3 negative Vgas rows (strong gas term): {len(gas_rich)}")
-for r in gas_rich[:5]:
-    print(f"  {r['galaxy']:<15} neg_Vgas_rows={r['vgas_negative_rows']}")""")
+    md("# SPARC Example 21: Querying the Corpus by Property\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nThe flat CSV enables fast filtering by any galaxy property.\nThis example demonstrates practical query patterns researchers use:\n- Find the largest galaxies\n- Find galaxies with strong gas content\n- Find galaxies with many data points (best-sampled RCs)\n- Find galaxies by Hubble type\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import csv\nimport numpy as np\n\nrows = []\nwith open('rotation_curve_corpus_v7_flat.csv') as f:\n    for r in csv.DictReader(f):\n        rows.append(r)\n\ndef fv(r, k):\n    try: return float(r[k])\n    except: return None\n\n# Query 1: Top 5 largest SPARC galaxies by R_max\nsparc = [r for r in rows if r['survey']=='SPARC' and fv(r,'r_max_kpc')]\nlargest = sorted(sparc, key=lambda x: fv(x,'r_max_kpc'), reverse=True)[:5]\nprint('Top 5 largest SPARC galaxies by R_max:')\nfor r in largest:\n    print(f\"  {r['galaxy']:<15} R_max={fv(r,'r_max_kpc'):.1f} kpc  \"\n          f\"Vmax={fv(r,'vrot_max_kms'):.1f} km/s\")\n\n# Query 2: Fastest rotators\nfastest = sorted(sparc, key=lambda x: fv(x,'vrot_max_kms') or 0, reverse=True)[:5]\nprint('\\nTop 5 fastest SPARC rotators:')\nfor r in fastest:\n    print(f\"  {r['galaxy']:<15} Vmax={fv(r,'vrot_max_kms'):.1f} km/s  \"\n          f\"R_max={fv(r,'r_max_kpc'):.1f} kpc\")\n\n# Query 3: Slowest rotators (dwarfs)\nslowest = sorted([r for r in sparc if fv(r,'vrot_max_kms') and fv(r,'vrot_max_kms')>0],\n                  key=lambda x: fv(x,'vrot_max_kms'))[:5]\nprint('\\nTop 5 slowest SPARC rotators (dwarfs):')\nfor r in slowest:\n    print(f\"  {r['galaxy']:<15} Vmax={fv(r,'vrot_max_kms'):.1f} km/s  \"\n          f\"R_max={fv(r,'r_max_kpc'):.1f} kpc\")\n\n# Query 4: WALLABY Tier-2 galaxies with Vmax > 200\nwallaby_fast = [r for r in rows\n                if r['survey']=='WALLABY'\n                and r['quality_tier']=='2'\n                and fv(r,'vrot_max_kms') and fv(r,'vrot_max_kms') > 200]\nprint(f'\\nWALLABY Tier-2 galaxies with Vmax > 200 km/s: {len(wallaby_fast)}')\n\n# Summary stats\nprint('\\n--- Corpus summary ---')\nfor survey in ['SPARC','THINGS','LITTLE_THINGS','WALLABY']:\n    sub = [r for r in rows if r['survey']==survey]\n    vmaxs = [fv(r,'vrot_max_kms') for r in sub if fv(r,'vrot_max_kms')]\n    print(f'{survey:15s}: N={len(sub):4d}  '\n          f'median Vmax={np.median(vmaxs):.1f} km/s' if vmaxs else f'{survey}: N={len(sub)}')\n")
 ])
 
 # ── EX22: Distance uncertainty effects ────────────────────────────────────────
 notebooks["ex22_distance_uncertainty.ipynb"] = nb([
-md(f"""# SPARC Example 22: Distance Uncertainty and Its Effect on Omega
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-SPARC distance uncertainties (e_distance_mpc) are published by Lelli et al. (2016).
-Since R_kpc = R_arcsec * D_Mpc, distance uncertainty propagates into
-the radius scale and therefore omega.
-
-This example quantifies how much omega changes with ±1σ distance.
-
-{CORPUS_NOTE}"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-g = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')
-d = g['data']
-D      = g['distance_mpc']
-e_D    = g.get('e_distance_mpc', D * 0.1)
-
-R    = np.array([p['Rad']  for p in d])
-Vobs = np.array([p['Vobs'] for p in d])
-
-def compute_omega(R, Vobs):
-    R1, V1 = R[0],  Vobs[0]
-    R2, V2 = R[-1], Vobs[-1]
-    if R1<=0 or R2<=0:
-        return None
-    outer_term    = (V2 / R2)
-    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-    omega_kms_kpc = outer_term - inner_term
-    omega_rad_gyr = omega_kms_kpc * 1.0227
-    return omega_rad_gyr  # Eq.6 corrected 2026-07-12: operator-precedence fix
-
-omega_nominal = compute_omega(R, Vobs)
-
-# Scale radii by distance
-omega_plus  = compute_omega(R * (D + e_D) / D, Vobs)
-omega_minus = compute_omega(R * (D - e_D) / D, Vobs)
-
-print(f"DDO161:")
-print(f"  Distance:      {D:.2f} ± {e_D:.2f} Mpc")
-print(f"  Omega nominal: {omega_nominal:.3f} rad/Gyr")
-print(f"  Omega D+1σ:    {omega_plus:.3f} rad/Gyr")
-print(f"  Omega D-1σ:    {omega_minus:.3f} rad/Gyr")
-print(f"  Delta omega:   ±{(omega_plus - omega_minus)/2:.3f} rad/Gyr")
-print(f"  Fractional:    {abs(omega_plus-omega_minus)/(2*omega_nominal)*100:.1f}%")""")
+    md("# SPARC Example 22: Distance Uncertainty and Its Effect on Omega\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nSPARC distance uncertainties (e_distance_mpc) are published by Lelli et al. (2016).\nSince R_kpc = R_arcsec * D_Mpc, distance uncertainty propagates into\nthe radius scale and therefore omega.\n\nThis example quantifies how much omega changes with ±1σ distance.\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import json\nimport numpy as np\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\n\nwith open('rotation_curve_corpus_v7.json') as f:\n    corpus = json.load(f)\n\ng   = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')\nd   = g['data']\nD   = g.get('distance_mpc', 3.4)\ne_D = g.get('e_distance_mpc', D * 0.1)\n\nR    = np.array([p['Rad']  for p in d])\nVobs = np.array([p['Vobs'] for p in d])\n\ndef compute_omega(R, Vobs):\n    R1, V1 = R[0],  Vobs[0]\n    R2, V2 = R[-1], Vobs[-1]\n    if R1 <= 0 or R2 <= 0:\n        return None\n    outer_term    = (V2 / R2)\n    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\n    omega_kms_kpc = outer_term - inner_term\n    omega_rad_gyr = omega_kms_kpc * 1.0227\n    return omega_rad_gyr\n\nomega_central = compute_omega(R, Vobs)\n\n# Monte Carlo distance uncertainty\nn_mc = 5000\nnp.random.seed(42)\nD_samples = np.random.normal(D, e_D, n_mc)\nomega_samples = []\nfor D_s in D_samples:\n    scale = D_s / D\n    R_s = R * scale\n    omega_s = compute_omega(R_s, Vobs)\n    if omega_s is not None:\n        omega_samples.append(omega_s)\n\nomega_samples = np.array(omega_samples)\nomega_std = np.std(omega_samples)\n\nfig, axes = plt.subplots(1, 2, figsize=(11, 5))\n\n# Panel 1: Monte Carlo omega distribution\nax = axes[0]\nax.hist(omega_samples, bins=40, color='#1f77b4', alpha=0.8, edgecolor='white')\nax.axvline(omega_central, color='red', lw=2, ls='--',\n           label=f'Central: {omega_central:.3f} rad/Gyr')\nax.axvline(omega_central - omega_std, color='orange', lw=1.5, ls=':')\nax.axvline(omega_central + omega_std, color='orange', lw=1.5, ls=':',\n           label=f'±1σ: {omega_std:.3f} rad/Gyr')\nax.set_xlabel('ω (rad/Gyr)', fontsize=12)\nax.set_ylabel('N MC samples', fontsize=12)\nax.set_title(f'DDO161 Omega — Distance Uncertainty\\n'\n             f'D = {D:.2f} ± {e_D:.2f} Mpc  (N={n_mc} MC)', fontsize=11)\nax.legend(fontsize=9)\n\n# Panel 2: Omega vs distance scaling\nax2 = axes[1]\nD_range = np.linspace(D - 3*e_D, D + 3*e_D, 100)\nomega_range = [compute_omega(R * d/D, Vobs) for d in D_range]\nax2.plot(D_range, omega_range, 'b-', lw=2)\nax2.axvline(D, color='black', lw=1, ls='--', alpha=0.5, label=f'D={D:.2f} Mpc')\nax2.axhspan(omega_central - omega_std, omega_central + omega_std,\n            alpha=0.2, color='orange', label='±1σ range')\nax2.set_xlabel('Distance (Mpc)', fontsize=12)\nax2.set_ylabel('ω (rad/Gyr)', fontsize=12)\nax2.set_title('Omega Sensitivity to Distance\\nDDO161', fontsize=11)\nax2.legend(fontsize=9)\nax2.grid(alpha=0.3)\n\nplt.suptitle('HI Corpus v7.0 — Distance Uncertainty Analysis\\n'\n             'Canonical Eq.6: ω = V₂/R₂ − (V₁/R₁)(R₁/R₂)^1.5', fontsize=11)\nplt.tight_layout()\nplt.savefig('ex22_distance_uncertainty.png', dpi=150, bbox_inches='tight')\nplt.show()\n\nprint(f'DDO161 omega:  {omega_central:+.4f} rad/Gyr')\nprint(f'Distance uncertainty: ±{e_D:.2f} Mpc ({100*e_D/D:.0f}%)')\nprint(f'Omega uncertainty:    ±{omega_std:.4f} rad/Gyr ({100*omega_std/abs(omega_central):.1f}%)')\n")
 ])
 
 # ── EX23: Cross-survey schema demo ────────────────────────────────────────────
@@ -1453,237 +814,27 @@ plt.show()""")
 
 # ── EX24: SPARC RAG single-galaxy report ──────────────────────────────────────
 notebooks["ex24_single_galaxy_report.ipynb"] = nb([
-md(f"""# SPARC Example 24: Single Galaxy Full Report
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-A complete kinematic report for a single SPARC galaxy:
-all metadata, rotation curve, baryonic decomposition, omega correction,
-and RMSE diagnostics — from a single JSON load.
-
-This is the kind of output a RAG system would generate
-in response to: "Give me a full kinematic analysis of NGC 2403."
-
-{CORPUS_NOTE}"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-GALAXY = 'NGC2403'  # Change to any SPARC galaxy
-g = next(g for g in corpus['galaxies'] if g['galaxy'] == GALAXY)
-d = g['data']
-
-R     = np.array([p['Rad']   for p in d])
-Vobs  = np.array([p['Vobs']  for p in d])
-errV  = np.array([p['errV']  for p in d])
-Vgas  = np.array([p['Vgas']  for p in d])
-Vdisk = np.array([p['Vdisk'] for p in d])
-Vbul  = np.array([p['Vbul']  for p in d])
-
-Vbar = np.where(Vgas<0, -np.sqrt(Vgas**2+Vdisk**2+Vbul**2),
-                         np.sqrt(Vgas**2+Vdisk**2+Vbul**2))
-
-R1, V1 = R[0],  Vobs[0]
-R2, V2 = R[-1], Vobs[-1]
-outer_term    = (V2 / R2)
-inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-V_adj   = Vobs - R * omega_kms_kpc
-GM      = V2**2 * R2
-V_kep   = np.sqrt(GM / R)
-
-rmse_omega  = np.sqrt(np.mean((V_adj - Vbar)**2))
-rmse_kepler = np.sqrt(np.mean((V_kep  - Vbar)**2))
-outer_gap   = (V2 - R2*omega) - np.sqrt(Vgas[-1]**2+Vdisk[-1]**2+Vbul[-1]**2)
-
-print(f"=== {GALAXY} — EPS Research Full Kinematic Report ===")
-print(f"Survey:        {g['survey']} Tier {g['quality_tier']}")
-print(f"Distance:      {g['distance_mpc']} ± {g.get('e_distance_mpc','?')} Mpc")
-print(f"Inclination:   {g['inc_deg']} ± {g.get('e_inc_deg','?')} deg")
-print(f"N rings:       {g['n_points']}")
-print(f"R range:       {R.min():.2f} -- {R.max():.2f} kpc")
-print(f"Vmax:          {Vobs.max():.1f} km/s")
-print(f"Omega:         {omega:.3f} rad/Gyr")
-print(f"RMSE omega:    {rmse_omega:.2f} km/s")
-print(f"RMSE Kepler:   {rmse_kepler:.2f} km/s")
-print(f"Outer gap:     {outer_gap:.2f} km/s ({'negative ✓' if outer_gap<0 else 'positive'})")"""),
-code("""fig = plt.figure(figsize=(11, 7))
-gs  = gridspec.GridSpec(2, 2, figure=fig, hspace=0.35, wspace=0.3)
-ax1 = fig.add_subplot(gs[0, :])
-ax2 = fig.add_subplot(gs[1, 0])
-ax3 = fig.add_subplot(gs[1, 1])
-
-ax1.errorbar(R, Vobs, yerr=errV, fmt='o', color='#1f77b4', capsize=3,
-             markersize=5, label=r'$V_{\\rm obs}$', zorder=5)
-ax1.plot(R, Vbar,  's-', color='#d62728', lw=1.5, label=r'$V_{\\rm bar}$')
-ax1.plot(R, V_adj, '^-', color='#2ca02c', lw=1.8,
-         label=fr'$V_{{\\rm adj}}$ ($\\omega={omega:.2f}$ rad/Gyr)')
-ax1.plot(R, V_kep, '--', color='#ff7f0e', lw=1.2, label='Keplerian')
-ax1.set_ylabel('km/s', fontsize=11)
-ax1.set_title(f'{GALAXY} — Full Kinematic Report | EPS Research Corpus v7.0', fontsize=11)
-ax1.legend(fontsize=8)
-
-ax2.plot(R, Vgas,  'g^-', lw=1.2, label=r'$V_{\\rm gas}$')
-ax2.plot(R, Vdisk, 'bv-', lw=1.2, label=r'$V_{\\rm disk}$')
-ax2.plot(R, Vbul,  'rs-', lw=1.2, label=r'$V_{\\rm bul}$')
-ax2.axhline(0, color='k', lw=0.7, alpha=0.4)
-ax2.set_xlabel('Radius (kpc)', fontsize=10)
-ax2.set_ylabel('km/s', fontsize=10)
-ax2.set_title('Baryonic Components', fontsize=10)
-ax2.legend(fontsize=8)
-
-lnR = np.log(R)
-lnV = np.log(Vobs)
-slope = np.gradient(lnV, lnR)
-ax3.plot(R, slope, 'o-', color='#9467bd', lw=1.5)
-ax3.axhline(-0.5, color='orange', ls='--', lw=1, label='Keplerian (-0.5)')
-ax3.axhline(0.0,  color='gray',   ls='--', lw=1, label='Flat (0.0)')
-ax3.set_xlabel('Radius (kpc)', fontsize=10)
-ax3.set_ylabel('d ln V / d ln R', fontsize=10)
-ax3.set_title('Log-Slope Profile', fontsize=10)
-ax3.legend(fontsize=8)
-
-plt.savefig(f'ex24_{GALAXY}_report.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# SPARC Example 24: Single Galaxy Full Report\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nA complete kinematic report for a single SPARC galaxy:\nall metadata, rotation curve, baryonic decomposition, omega correction,\nand RMSE diagnostics — from a single JSON load.\n\nThis is the kind of output a RAG system would generate\nin response to: \"Give me a full kinematic analysis of NGC 2403.\"\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import json\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport matplotlib.gridspec as gridspec\n\nwith open('rotation_curve_corpus_v7.json') as f:\n    corpus = json.load(f)\n\nGALAXY = 'NGC2403'  # Change to any SPARC galaxy\ng = next(g for g in corpus['galaxies'] if g['galaxy'] == GALAXY)\nd = g['data']\n\nR     = np.array([p['Rad']   for p in d])\nVobs  = np.array([p['Vobs']  for p in d])\nerrV  = np.array([p['errV']  for p in d])\nVgas  = np.array([p['Vgas']  for p in d])\nVdisk = np.array([p['Vdisk'] for p in d])\nVbul  = np.array([p['Vbul']  for p in d])\n\nVbar = np.where(Vgas<0, -np.sqrt(Vgas**2+Vdisk**2+Vbul**2),\n                         np.sqrt(Vgas**2+Vdisk**2+Vbul**2))\n\nR1, V1 = R[0],  Vobs[0]\nR2, V2 = R[-1], Vobs[-1]\nouter_term    = (V2 / R2)\ninner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\nomega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]\nomega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr\nomega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic\nV_adj   = Vobs - R * omega_kms_kpc\nGM      = V2**2 * R2\nV_kep   = np.sqrt(GM / R)\n\nrmse_omega  = np.sqrt(np.mean((V_adj - Vbar)**2))\nrmse_kepler = np.sqrt(np.mean((V_kep  - Vbar)**2))\nouter_gap   = (V2 - R2*omega_kms_kpc) - np.sqrt(Vgas[-1]**2+Vdisk[-1]**2+Vbul[-1]**2)\n\nprint(f\"=== {GALAXY} — EPS Research Full Kinematic Report ===\")\nprint(f\"Survey:        {g['survey']} Tier {g['quality_tier']}\")\nprint(f\"Distance:      {g['distance_mpc']} ± {g.get('e_distance_mpc','?')} Mpc\")\nprint(f\"Inclination:   {g['inc_deg']} ± {g.get('e_inc_deg','?')} deg\")\nprint(f\"N rings:       {g['n_points']}\")\nprint(f\"R range:       {R.min():.2f} -- {R.max():.2f} kpc\")\nprint(f\"Vmax:          {Vobs.max():.1f} km/s\")\nprint(f\"Omega:         {omega:.3f} rad/Gyr\")\nprint(f\"RMSE omega:    {rmse_omega:.2f} km/s\")\nprint(f\"RMSE Kepler:   {rmse_kepler:.2f} km/s\")\nprint(f\"Outer gap:     {outer_gap:.2f} km/s ({'negative ✓' if outer_gap<0 else 'positive'})\")"),
+    code("fig = plt.figure(figsize=(11, 7))\ngs  = gridspec.GridSpec(2, 2, figure=fig, hspace=0.35, wspace=0.3)\nax1 = fig.add_subplot(gs[0, :])\nax2 = fig.add_subplot(gs[1, 0])\nax3 = fig.add_subplot(gs[1, 1])\n\nax1.errorbar(R, Vobs, yerr=errV, fmt='o', color='#1f77b4', capsize=3,\n             markersize=5, label=r'$V_{\\rm obs}$', zorder=5)\nax1.plot(R, Vbar,  's-', color='#d62728', lw=1.5, label=r'$V_{\\rm bar}$')\nax1.plot(R, V_adj, '^-', color='#2ca02c', lw=1.8,\n         label=fr'$V_{{\\rm adj}}$ ($\\omega={omega:.2f}$ rad/Gyr)')\nax1.plot(R, V_kep, '--', color='#ff7f0e', lw=1.2, label='Keplerian')\nax1.set_ylabel('km/s', fontsize=11)\nax1.set_title(f'{GALAXY} — Full Kinematic Report | EPS Research Corpus v7.0', fontsize=11)\nax1.legend(fontsize=8)\n\nax2.plot(R, Vgas,  'g^-', lw=1.2, label=r'$V_{\\rm gas}$')\nax2.plot(R, Vdisk, 'bv-', lw=1.2, label=r'$V_{\\rm disk}$')\nax2.plot(R, Vbul,  'rs-', lw=1.2, label=r'$V_{\\rm bul}$')\nax2.axhline(0, color='k', lw=0.7, alpha=0.4)\nax2.set_xlabel('Radius (kpc)', fontsize=10)\nax2.set_ylabel('km/s', fontsize=10)\nax2.set_title('Baryonic Components', fontsize=10)\nax2.legend(fontsize=8)\n\nlnR = np.log(R)\nlnV = np.log(Vobs)\nslope = np.gradient(lnV, lnR)\nax3.plot(R, slope, 'o-', color='#9467bd', lw=1.5)\nax3.axhline(-0.5, color='orange', ls='--', lw=1, label='Keplerian (-0.5)')\nax3.axhline(0.0,  color='gray',   ls='--', lw=1, label='Flat (0.0)')\nax3.set_xlabel('Radius (kpc)', fontsize=10)\nax3.set_ylabel('d ln V / d ln R', fontsize=10)\nax3.set_title('Log-Slope Profile', fontsize=10)\nax3.legend(fontsize=8)\n\nplt.savefig(f'ex24_{GALAXY}_report.png', dpi=150, bbox_inches='tight')\nplt.show()")
 ])
 
 # ── EX25: End-to-end omega workflow ───────────────────────────────────────────
 notebooks["ex25_end_to_end_omega_workflow.ipynb"] = nb([
-md(f"""# SPARC Example 25: End-to-End Omega Workflow
-
-**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**
-
-This capstone example runs the complete EPS Research omega workflow
-on the full SPARC sample and produces a summary table mirroring
-Table 2 from Flynn & Cannaliato (2025).
-
-Steps:
-1. Load corpus
-2. Filter SPARC Q=1 galaxies
-3. Compute omega for each
-4. Compute RMSE improvement
-5. Flag outer gap sign
-6. Print summary table
-
-**Reference:** Flynn, D.C. & Cannaliato, J. (2025).
-DOI: 10.3389/fspas.2025.1680387
-
-{CORPUS_NOTE}"""),
-code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
-
-with open('rotation_curve_corpus_v7.json') as f:
-    corpus = json.load(f)
-
-results = []
-for g in corpus['galaxies']:
-    if g['survey'] != 'SPARC' or not g.get('data') or len(g['data']) < 3:
-        continue
-    d  = g['data']
-    R  = np.array([p['Rad']  for p in d])
-    V  = np.array([p['Vobs'] for p in d])
-    R1, V1 = R[0],  V[0]
-    R2, V2 = R[-1], V[-1]
-    if R1<=0 or R2<=0 or V1<=0 or V2<=0:
-        continue
-    outer_term    = (V2 / R2)
-    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-    V_adj = V - R * omega_kms_kpc
-    GM    = V2**2 * R2
-    V_kep = np.sqrt(GM / R)
-    Vgas  = np.array([p.get('Vgas', 0)  for p in d])
-    Vdisk = np.array([p.get('Vdisk', 0) for p in d])
-    Vbul  = np.array([p.get('Vbul', 0)  for p in d])
-    Vbar  = np.where(Vgas<0,
-                     -np.sqrt(Vgas**2+Vdisk**2+Vbul**2),
-                      np.sqrt(Vgas**2+Vdisk**2+Vbul**2))
-    if np.all(Vbar == 0):
-        continue
-    rmse_o = np.sqrt(np.mean((V_adj - Vbar)**2))
-    rmse_k = np.sqrt(np.mean((V_kep  - Vbar)**2))
-    gap    = (V[-1] - R[-1]*omega) - np.abs(Vbar[-1])
-    results.append({
-        'galaxy':   g['galaxy'],
-        'omega':    omega,
-        'rmse_o':   rmse_o,
-        'rmse_k':   rmse_k,
-        'improved': rmse_o < rmse_k,
-        'gap':      gap,
-        'gap_neg':  gap < 0,
-    })
-
-# Summary
-omegas  = [r['omega']  for r in results]
-rmse_os = [r['rmse_o'] for r in results]
-rmse_ks = [r['rmse_k'] for r in results]
-improved = sum(1 for r in results if r['improved'])
-gaps_neg = sum(1 for r in results if r['gap_neg'])
-
-print(f"{'='*60}")
-print(f"EPS Research Omega Workflow — SPARC Summary")
-print(f"{'='*60}")
-print(f"Galaxies analyzed:     {len(results)}")
-print(f"Mean omega:            {np.mean(omegas):.2f} ± {np.std(omegas):.2f} rad/Gyr")
-print(f"Mean RMSE (omega):     {np.mean(rmse_os):.2f} km/s")
-print(f"Mean RMSE (Keplerian): {np.mean(rmse_ks):.2f} km/s")
-print(f"Improved:              {improved}/{len(results)}")
-print(f"Regressions:           {len(results)-improved}/{len(results)}")
-print(f"Outer gaps negative:   {gaps_neg}/{len(results)}")
-print(f"\\nPublished results (Flynn & Cannaliato 2025):")
-print(f"  Mean RMSE (omega):  25.45 ± 1.57 km/s")
-print(f"  Improved:           53/84")
-print(f"  Regressions:        0/84")
-print(f"  Outer gaps neg:     84/84")"""),
-code("""fig, axes = plt.subplots(1, 3, figsize=(14, 4))
-
-axes[0].hist(omegas, bins=25, color='#2166ac', alpha=0.8, edgecolor='white')
-axes[0].axvline(np.mean(omegas), color='red', ls='--', lw=1.5,
-                label=f'Mean={np.mean(omegas):.2f}')
-axes[0].set_xlabel(r'$\\omega$ (rad/Gyr)', fontsize=11)
-axes[0].set_ylabel('N', fontsize=11)
-axes[0].set_title('Omega Distribution', fontsize=10)
-axes[0].legend(fontsize=8)
-
-axes[1].scatter(rmse_ks, rmse_os, s=18, alpha=0.6, color='#2166ac')
-lim = [0, max(rmse_ks+rmse_os)*1.05]
-axes[1].plot(lim, lim, 'k--', lw=1, alpha=0.4, label='1:1')
-axes[1].set_xlabel('RMSE Keplerian (km/s)', fontsize=11)
-axes[1].set_ylabel('RMSE Omega (km/s)', fontsize=11)
-axes[1].set_title('RMSE Comparison', fontsize=10)
-axes[1].legend(fontsize=8)
-
-gaps = [r['gap'] for r in results]
-axes[2].hist(gaps, bins=25, color='#d62728', alpha=0.8, edgecolor='white')
-axes[2].axvline(0, color='black', ls='--', lw=1.5, label='Gap=0')
-axes[2].set_xlabel('Outer gap (km/s)', fontsize=11)
-axes[2].set_ylabel('N', fontsize=11)
-axes[2].set_title('Outer Gap Distribution', fontsize=10)
-axes[2].legend(fontsize=8)
-
-plt.suptitle('End-to-End EPS Omega Workflow — SPARC Sample\\n'
-             'Flynn & Cannaliato (2025) | DOI: 10.3389/fspas.2025.1680387',
-             fontsize=10)
-plt.tight_layout()
-plt.savefig('ex25_end_to_end.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+    md("# SPARC Example 25: End-to-End Omega Workflow\n\n**EPS Research RAG Astrophysics Corpus — Unified HI Corpus v7.0**\n\nThis capstone example runs the complete EPS Research omega workflow\non the full SPARC sample and produces a summary table mirroring\nTable 2 from Flynn & Cannaliato (2025).\n\nSteps:\n1. Load corpus\n2. Filter SPARC Q=1 galaxies\n3. Compute omega for each\n4. Compute RMSE improvement\n5. Flag outer gap sign\n6. Print summary table\n\n**Reference:** Flynn, D.C. & Cannaliato, J. (2025).\nDOI: 10.3389/fspas.2025.1680387\n\n**Important note on corpus fidelity:** The `rotation_curve_corpus_v7_flat.csv` and `rotation_curve_corpus_v7.json` are **full-fidelity** — not a summary or veneer. The CSV contains every kinematic parameter published by Lelli et al. (2016) including per-galaxy inclination, distance uncertainties, mass-to-light ratios, and rotation curve statistics. The JSON adds full per-ring data: Vobs, Vgas, Vdisk, Vbul, errV at every radial point. This is the complete published dataset in a single machine-readable file.\n\n**Corpus:** Flynn (2026), Zenodo DOI: 10.5281/zenodo.19563417  \n**Source:** Lelli, McGaugh & Schombert (2016), AJ 152, 157  \n**Dependencies:** Python 3, numpy, matplotlib, csv (standard library only)"),
+    code("import json\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nwith open('rotation_curve_corpus_v7.json') as f:\n    corpus = json.load(f)\n\nresults = []\nfor g in corpus['galaxies']:\n    if g['survey'] != 'SPARC' or not g.get('data') or len(g['data']) < 3:\n        continue\n    d  = g['data']\n    R  = np.array([p['Rad']  for p in d])\n    V  = np.array([p['Vobs'] for p in d])\n    R1, V1 = R[0],  V[0]\n    R2, V2 = R[-1], V[-1]\n    if R1<=0 or R2<=0 or V1<=0 or V2<=0:\n        continue\n    outer_term    = (V2 / R2)\n    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)\n    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]\n    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr\n    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic\n    V_adj = V - R * omega_kms_kpc\n    GM    = V2**2 * R2\n    V_kep = np.sqrt(GM / R)\n    Vgas  = np.array([p.get('Vgas', 0)  for p in d])\n    Vdisk = np.array([p.get('Vdisk', 0) for p in d])\n    Vbul  = np.array([p.get('Vbul', 0)  for p in d])\n    Vbar  = np.where(Vgas<0,\n                     -np.sqrt(Vgas**2+Vdisk**2+Vbul**2),\n                      np.sqrt(Vgas**2+Vdisk**2+Vbul**2))\n    if np.all(Vbar == 0):\n        continue\n    rmse_o = np.sqrt(np.mean((V_adj - Vbar)**2))\n    rmse_k = np.sqrt(np.mean((V_kep  - Vbar)**2))\n    gap    = (V[-1] - R[-1]*omega) - np.abs(Vbar[-1])\n    results.append({\n        'galaxy':   g['galaxy'],\n        'omega':    omega,\n        'rmse_o':   rmse_o,\n        'rmse_k':   rmse_k,\n        'improved': rmse_o < rmse_k,\n        'gap':      gap,\n        'gap_neg':  gap < 0,\n    })\n\n# Summary\nomegas  = [r['omega']  for r in results]\nrmse_os = [r['rmse_o'] for r in results]\nrmse_ks = [r['rmse_k'] for r in results]\nimproved = sum(1 for r in results if r['improved'])\ngaps_neg = sum(1 for r in results if r['gap_neg'])\n\nprint(f\"{'='*60}\")\nprint(f\"EPS Research Omega Workflow — SPARC Summary\")\nprint(f\"{'='*60}\")\nprint(f\"Galaxies analyzed:     {len(results)}\")\nprint(f\"Mean omega:            {np.mean(omegas):.2f} ± {np.std(omegas):.2f} rad/Gyr\")\nprint(f\"Mean RMSE (omega):     {np.mean(rmse_os):.2f} km/s\")\nprint(f\"Mean RMSE (Keplerian): {np.mean(rmse_ks):.2f} km/s\")\nprint(f\"Improved:              {improved}/{len(results)}\")\nprint(f\"Regressions:           {len(results)-improved}/{len(results)}\")\nprint(f\"Outer gaps negative:   {gaps_neg}/{len(results)}\")\nprint(f\"\\nPublished results (Flynn & Cannaliato 2025):\")\nprint(f\"  Mean RMSE (omega):  25.45 ± 1.57 km/s\")\nprint(f\"  Improved:           53/84\")\nprint(f\"  Regressions:        0/84\")\nprint(f\"  Outer gaps neg:     84/84\")\nprint()\nprint(\"NOTE: Raw boundary-point formula gives different values than Paper 2.\")\nprint(\"Paper 2 uses Keplerian-corrected formulation with optimised Upsilon.\")\nprint(\"For Paper 2 reproduced results, see: doi.org/10.5281/zenodo.19798527\")"),
+    code("fig, axes = plt.subplots(1, 3, figsize=(14, 4))\n\naxes[0].hist(omegas, bins=25, color='#2166ac', alpha=0.8, edgecolor='white')\naxes[0].axvline(np.mean(omegas), color='red', ls='--', lw=1.5,\n                label=f'Mean={np.mean(omegas):.2f}')\naxes[0].set_xlabel(r'$\\omega$ (rad/Gyr)', fontsize=11)\naxes[0].set_ylabel('N', fontsize=11)\naxes[0].set_title('Omega Distribution', fontsize=10)\naxes[0].legend(fontsize=8)\n\naxes[1].scatter(rmse_ks, rmse_os, s=18, alpha=0.6, color='#2166ac')\nlim = [0, max(rmse_ks+rmse_os)*1.05]\naxes[1].plot(lim, lim, 'k--', lw=1, alpha=0.4, label='1:1')\naxes[1].set_xlabel('RMSE Keplerian (km/s)', fontsize=11)\naxes[1].set_ylabel('RMSE Omega (km/s)', fontsize=11)\naxes[1].set_title('RMSE Comparison', fontsize=10)\naxes[1].legend(fontsize=8)\n\ngaps = [r['gap'] for r in results]\naxes[2].hist(gaps, bins=25, color='#d62728', alpha=0.8, edgecolor='white')\naxes[2].axvline(0, color='black', ls='--', lw=1.5, label='Gap=0')\naxes[2].set_xlabel('Outer gap (km/s)', fontsize=11)\naxes[2].set_ylabel('N', fontsize=11)\naxes[2].set_title('Outer Gap Distribution', fontsize=10)\naxes[2].legend(fontsize=8)\n\nplt.suptitle('End-to-End EPS Omega Workflow — SPARC Sample\\n'\n             'Flynn & Cannaliato (2025) | DOI: 10.3389/fspas.2025.1680387',\n             fontsize=10)\nplt.tight_layout()\nplt.savefig('ex25_end_to_end.png', dpi=150, bbox_inches='tight')\nplt.show()")
 ])
 
 # ── Write all notebooks ───────────────────────────────────────────────────────
 
 written = 0
 for filename, notebook in notebooks.items():
+    if filename == "ex19_baryonic_tully_fisher.ipynb":
+        notebook["cells"][1]["source"] = COLAB_SETUP_EX19
     with open(filename, 'w') as f:
-        json.dump(notebook, f, indent=1)
+        json.dump(notebook, f, indent=1, ensure_ascii=False)
+        f.write('\n')
     written += 1
     print(f"Written: {filename}")
 
