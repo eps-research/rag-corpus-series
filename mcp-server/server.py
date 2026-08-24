@@ -14,7 +14,7 @@ Custom routes when running this FastMCP application directly:
 Five EPS Research corpora served:
   v7:    Unified HI Rotation Curve Corpus v7.0    (438 galaxies,   z~0)
   dwarf: Dwarf/Irregular HI Corpus v1.0           (129 galaxies,   z~0)
-  gc:    Milky Way Globular Cluster Corpus v1.3.1  (174 clusters,   z=0)
+  gc:    Milky Way Globular Cluster Corpus v1.4.0  (174 clusters,   z=0)
   intz:  IntZ Kinematic Corpus v1.0               (1,292 galaxies, z=0.38-2.68)
   z1:    High-z Kinematic Corpus Z1               (31 galaxies,    z=4.26-5.68)
 
@@ -76,14 +76,14 @@ CORPORA = {
         "status": "published",
     },
     "gc": {
-        "name": "Milky Way Globular Cluster Corpus v1.3.1",
+        "name": "Milky Way Globular Cluster Corpus v1.4.0",
         "description": "174 Milky Way globular clusters. Multi-survey kinematic and structural parameters.",
         "n_objects": 174,
         "object_type": "cluster",
         "redshift_range": "z = 0 (Milky Way)",
         "tracer": "Multi-survey",
-        "zenodo_doi": "10.5281/zenodo.19907766",
-        "data_url": "https://zenodo.org/records/19907766/files/harris_gc_corpus_v1.3.1.jsonl",
+        "zenodo_doi": "10.5281/zenodo.22077426",
+        "data_url": "https://zenodo.org/records/22077426/files/harris_gc_corpus_v1.4.0.jsonl",
         "id_field": "cluster_id",
         "status": "published",
     },

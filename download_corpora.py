@@ -68,13 +68,19 @@ CORPORA = {
 
     "gc": {
         "name": "Milky Way Globular Cluster Corpus v1.4.0",
-        "doi": None,
+        "doi": "10.5281/zenodo.22077426",
         "files": [
-            (None, "harris_gc_corpus_v1.4.0.json"),
-            (None, "harris_gc_corpus_v1.4.0.jsonl"),
+            (
+                "https://zenodo.org/records/22077426/files/harris_gc_corpus_v1.4.0.json",
+                "harris_gc_corpus_v1.4.0.json",
+            ),
+            (
+                "https://zenodo.org/records/22077426/files/harris_gc_corpus_v1.4.0.jsonl",
+                "harris_gc_corpus_v1.4.0.jsonl",
+            ),
         ],
         "dest": "examples/gc",
-        "bundled": True,
+        "bundled": False,
     },
 
     "intz": {
