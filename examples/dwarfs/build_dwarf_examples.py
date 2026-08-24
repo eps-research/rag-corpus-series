@@ -74,7 +74,7 @@ print(f"N rings:  {g.get('n_points', len(g.get('data', [])))}")
 code("""d    = g.get('data', [])
 if d:
     R    = [p['Rad']  for p in d]
-    Vobs = [p['Vobs'] for p in d]
+    Vobs = [(p['Vrot'] if 'Vrot' in p else p['Vobs']) for p in d]
     errV = [p.get('errV', 0) for p in d]
 
     fig, ax = plt.subplots(figsize=(8, 5))
@@ -99,84 +99,48 @@ else:
 
 # ── DW02: DDO154 omega computation ────────────────────────────────────────────
 notebooks["dw02_ddo154_omega.ipynb"] = nb([
-md(f"""# Dwarf Example 02: DDO154 Omega Computation
+md(f"""# Dwarf Example 02: DDO154 Boundary-Omega Computation
 
 **EPS Research — Dwarf/Irregular HI Corpus v1.0**
 
-DDO154 is one of the best-studied dark-matter-dominated dwarfs.
-This example reproduces the DDO154 omega computation from Flynn (2026):
-omega = 6.86 rad/Gyr (SPARC rotmod) — consistent with the SPARC mean of 7.06.
+This example computes the corrected two-boundary omega estimator for DDO154.
 
-The dwarf corpus median omega = 9.94 rad/Gyr (24 omega-ready LITTLE THINGS),
-higher than the SPARC mean, consistent with deeper dark matter dominance.
+No dwarf population aggregate and no dwarf/SPARC population comparison are
+asserted pending completion of the dwarf boundary-convention revalidation.
+
+Boundary convention: first and last rows as listed in the source record;
+duplicate radii are not silently collapsed.
 
 {NOTE}"""),
 code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
 
 with open('dwarf_irregular_corpus_v1.json') as f:
     corpus = json.load(f)
 
-# Find omega-ready dwarfs
-omega_ready = [g for g in corpus['galaxies']
-               if g.get('omega_ready') and g.get('data') and len(g['data']) >= 2]
-print(f"Omega-ready dwarfs: {len(omega_ready)}")
+g = next(
+    g for g in corpus['galaxies']
+    if g['galaxy'] == 'DDO_154' and g.get('data')
+)
 
-# Compute omega for all
-results = []
-for g in omega_ready:
-    d  = g['data']
-    R  = [p['Rad']  for p in d]
-    V  = [p['Vobs'] for p in d]
-    R1, V1 = R[0],  V[0]
-    R2, V2 = R[-1], V[-1]
-    if R1>0 and R2>0 and V1>0 and V2>0:
-        outer_term    = (V2 / R2)
-        inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-        omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-        omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-        omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-        results.append({'galaxy': g['galaxy'], 'omega': omega,
-                        'distance': g['distance_mpc']})
+d = g['data']
+R = [p['Rad'] for p in d]
+V = [(p['Vrot'] if 'Vrot' in p else p['Vobs']) for p in d]
 
-omegas = [r['omega'] for r in results]
-print(f"\\nOmega results ({len(results)} galaxies):")
-print(f"  Median: {np.median(omegas):.2f} rad/Gyr")
-print(f"  Mean:   {np.mean(omegas):.2f} ± {np.std(omegas):.2f} rad/Gyr")
-print(f"\\nPublished (Flynn 2026): median = 9.94 rad/Gyr")
-print(f"SPARC mean (Flynn & Cannaliato 2025): 7.06 rad/Gyr")
-print(f"\\nTop 10 by omega:")
-for r in sorted(results, key=lambda x: x['omega'], reverse=True)[:10]:
-    print(f"  {r['galaxy']:<15} omega={r['omega']:.2f} rad/Gyr")
-"""),
-code("""fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+R1, V1 = R[0], V[0]
+R2, V2 = R[-1], V[-1]
 
-axes[0].hist(omegas, bins=15, color='#2ca02c', alpha=0.8, edgecolor='white')
-axes[0].axvline(np.median(omegas), color='red', ls='--', lw=1.5,
-                label=f'Median={np.median(omegas):.2f}')
-axes[0].axvline(7.06, color='blue', ls=':', lw=1.5,
-                label='SPARC mean=7.06')
-axes[0].set_xlabel(r'$\\omega$ (rad/Gyr)', fontsize=11)
-axes[0].set_ylabel('N dwarfs', fontsize=11)
-axes[0].set_title('Omega Distribution — Dwarf Sample', fontsize=10)
-axes[0].legend(fontsize=8)
+outer_term = V2 / R2
+inner_term = (V1 / R1) * ((R1 / R2) ** 1.5)
 
-axes[1].scatter([r['distance'] for r in results], omegas,
-                s=40, color='#2ca02c', alpha=0.8)
-axes[1].axhline(np.median(omegas), color='red', ls='--', lw=1.2)
-axes[1].axhline(7.06, color='blue', ls=':', lw=1.2)
-axes[1].set_xlabel('Distance (Mpc)', fontsize=11)
-axes[1].set_ylabel(r'$\\omega$ (rad/Gyr)', fontsize=11)
-axes[1].set_title('Omega vs Distance', fontsize=10)
+omega_kms_kpc = outer_term - inner_term
+omega_rad_gyr = omega_kms_kpc * 1.0227
 
-plt.suptitle('Dwarf Omega Distribution — EPS Research Corpus v1.0\\n'
-             'Flynn (2026) | DOI: 10.5281/zenodo.20320362', fontsize=10)
-plt.tight_layout()
-plt.savefig('dw02_omega_distribution.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+print(f"Galaxy: {g['galaxy']}")
+print(f"omega = {omega_kms_kpc:.3f} km/s/kpc")
+print(f"omega = {omega_rad_gyr:.3f} rad/Gyr")
+print("Population aggregate: WITHHELD pending boundary revalidation.")
+""")
 ])
-
 # ── DW03: Corpus overview ─────────────────────────────────────────────────────
 notebooks["dw03_corpus_overview.ipynb"] = nb([
 md(f"""# Dwarf Example 03: Corpus Overview and Survey Breakdown
@@ -250,121 +214,56 @@ plt.show()""")
 
 # ── DW04: All 24 omega-ready dwarfs ──────────────────────────────────────────
 notebooks["dw04_omega_ready_sample.ipynb"] = nb([
-md(f"""# Dwarf Example 04: All 24 Omega-Ready Dwarfs
+md(f"""# Dwarf Example 04: Omega-Ready Sample
 
 **EPS Research — Dwarf/Irregular HI Corpus v1.0**
 
-24 LITTLE THINGS galaxies are 'omega-ready': they have
-per-ring rotation curves with n_points >= 5 and regular kinematics.
-All 24 show negative outer gaps — consistent with the SPARC result.
+This notebook reports corpus eligibility only.
+
+The corpus currently marks 24 records as omega-ready. Population-level dwarf
+omega statistics and the former simplified outer-gap result are withheld
+pending boundary-convention revalidation.
 
 {NOTE}"""),
 code("""import json
-import numpy as np
-import matplotlib.pyplot as plt
 
 with open('dwarf_irregular_corpus_v1.json') as f:
     corpus = json.load(f)
 
-omega_ready = [g for g in corpus['galaxies']
-               if g.get('omega_ready') and g.get('data') and len(g['data']) >= 2]
-print(f"Omega-ready dwarfs: {len(omega_ready)}")
+eligible = [
+    g for g in corpus['galaxies']
+    if g.get('omega_ready') and g.get('data') and len(g['data']) >= 2
+]
 
-results = []
-for g in omega_ready:
-    d  = g['data']
-    R  = [p['Rad']  for p in d]
-    V  = [p['Vobs'] for p in d]
-    R1, V1 = R[0],  V[0]
-    R2, V2 = R[-1], V[-1]
-    if R1>0 and R2>0 and V1>0 and V2>0:
-        outer_term    = (V2 / R2)
-        inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-        omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-        omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-        omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-        V_adj_R2 = V2 - R2 * omega
-        outer_gap= V_adj_R2 - V2  # simplified outer gap
-        results.append({'galaxy': g['galaxy'], 'omega': omega,
-                        'outer_gap': outer_gap, 'vmax': max(V),
-                        'n_points': len(d)})
-
-gaps = [r['outer_gap'] for r in results]
-print(f"\\nAll outer gaps negative: {all(g < 0 for g in gaps)}")
-print(f"Mean outer gap: {np.mean(gaps):.1f} km/s")
-
-print(f"\\n{'Galaxy':<18} {'omega':>8} {'outer_gap':>10} {'Vmax':>6} {'N':>4}")
-print('-' * 52)
-for r in sorted(results, key=lambda x: x['omega']):
-    print(f"{r['galaxy']:<18} {r['omega']:>8.2f} {r['outer_gap']:>10.2f} "
-          f"{r['vmax']:>6.1f} {r['n_points']:>4}")
-"""),
-code("""fig, axes = plt.subplots(1, 2, figsize=(11, 4))
-
-omegas = [r['omega'] for r in results]
-names  = [r['galaxy'] for r in results]
-
-axes[0].barh(range(len(omegas)),
-             sorted(omegas),
-             color=['#2ca02c' if o > 0 else '#d62728' for o in sorted(omegas)],
-             alpha=0.8)
-axes[0].axvline(7.06, color='blue', ls=':', lw=1.5, label='SPARC mean=7.06')
-axes[0].axvline(9.94, color='red',  ls='--', lw=1.5, label='Dwarf median=9.94')
-axes[0].set_xlabel(r'$\\omega$ (rad/Gyr)', fontsize=11)
-axes[0].set_title('Omega — All 24 Omega-Ready Dwarfs', fontsize=10)
-axes[0].legend(fontsize=8)
-
-axes[1].scatter([r['vmax'] for r in results], omegas,
-                s=50, color='#2ca02c', alpha=0.8)
-for r in results:
-    axes[1].annotate(r['galaxy'][:6], (r['vmax'], r['omega']),
-                     textcoords='offset points', xytext=(3,2), fontsize=6)
-axes[1].set_xlabel(r'$V_{\\rm max}$ (km/s)', fontsize=11)
-axes[1].set_ylabel(r'$\\omega$ (rad/Gyr)', fontsize=11)
-axes[1].set_title('Omega vs Vmax', fontsize=10)
-
-plt.suptitle('24 Omega-Ready Dwarfs — EPS Research Corpus v1.0\\n'
-             'Flynn (2026) | DOI: 10.5281/zenodo.20320362', fontsize=10)
-plt.tight_layout()
-plt.savefig('dw04_omega_ready.png', dpi=150, bbox_inches='tight')
-plt.show()""")
+print(f"Omega-ready records: {len(eligible)}")
+print("Population omega aggregate: WITHHELD pending revalidation.")
+print("Simplified outer-gap diagnostic: WITHDRAWN.")
+""")
 ])
-
 # ── DW05-25: Remaining dwarf notebooks ───────────────────────────────────────
 # (compact definitions for brevity — all fully functional)
 
 remaining_dwarfs = {
 
 "dw05_outer_gap_all_dwarfs.ipynb": nb([
-md(f"# Dwarf Example 05: Outer Gap Distribution\n\n**EPS Research — Dwarf/Irregular HI Corpus v1.0**\n\nOuter gap = V_adj(R2) - V_bary(R2). All 24 negative.\n\n{NOTE}"),
-code("""import json, numpy as np, matplotlib.pyplot as plt
-with open('dwarf_irregular_corpus_v1.json') as f:
-    corpus = json.load(f)
-omega_ready = [g for g in corpus['galaxies']
-               if g.get('omega_ready') and g.get('data') and len(g['data'])>=2]
-gaps = []
-for g in omega_ready:
-    d = g['data']
-    R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
-    R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
-    if R1>0 and R2>0 and V1>0 and V2>0:
-        outer_term    = (V2 / R2)
-        inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-        omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-        omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-        omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-        gaps.append((V2-R2*omega)-V2)
-print(f"All gaps negative: {all(g<0 for g in gaps)}")
-print(f"Mean: {np.mean(gaps):.1f} km/s  Std: {np.std(gaps):.1f} km/s")
-fig,ax=plt.subplots(figsize=(7,4))
-ax.hist(gaps,bins=12,color='#d62728',alpha=0.8,edgecolor='white')
-ax.axvline(0,color='black',ls='--',lw=1.5,label='Gap=0')
-ax.set_xlabel('Outer gap (km/s)',fontsize=11); ax.set_ylabel('N',fontsize=11)
-ax.set_title('Outer Gap Distribution — 24 Omega-Ready Dwarfs',fontsize=10)
-ax.legend(); plt.tight_layout()
-plt.savefig('dw05_outer_gap.png',dpi=150,bbox_inches='tight'); plt.show()""")
-]),
+md(f"""# Dwarf Example 05: Simplified Outer-Gap Diagnostic — Withdrawn
 
+**EPS Research — Dwarf/Irregular HI Corpus v1.0**
+
+The former dwarf outer-gap diagnostic compared an adjusted outer velocity
+against the same observed outer velocity used in the boundary construction.
+Its sign is therefore algebraically constrained rather than an independent
+scientific test.
+
+The diagnostic is withdrawn from FAIR2 analysis.
+
+No corpus measurements are changed by this notebook correction.
+
+{NOTE}"""),
+code("""print("Simplified dwarf outer-gap diagnostic: WITHDRAWN")
+print("Reason: former definition was not an independent residual.")
+""")
+]),
 "dw06_lvhis_sample.ipynb": nb([
 md(f"# Dwarf Example 06: LVHIS Subsample\n\n**EPS Research — Dwarf/Irregular HI Corpus v1.0**\n\nLVHIS (Local Volume HI Survey): 33 galaxies from Koribalski et al. (2019).\n\n{NOTE}"),
 code("""import csv, numpy as np, matplotlib.pyplot as plt
@@ -433,45 +332,33 @@ plt.savefig('dw08_hi_mass.png',dpi=150,bbox_inches='tight'); plt.show()""")
 ]),
 
 "dw09_dwarf_vs_sparc_comparison.ipynb": nb([
-md(f"# Dwarf Example 09: Dwarf Corpus vs SPARC Comparison\n\n**EPS Research — Cross-Corpus**\n\nCompare the dwarf corpus omega distribution to SPARC.\nDwarfs: median 9.94 rad/Gyr. SPARC: mean 7.06 rad/Gyr.\n\n{NOTE}"),
-code("""import json, numpy as np, matplotlib.pyplot as plt
+md(f"""# Dwarf Example 09: Dwarf-vs-SPARC Omega Comparison — Deferred
 
-# Load dwarf corpus
+**EPS Research — Cross-Corpus**
+
+No dwarf-vs-SPARC population omega comparison is asserted here.
+
+The former comparison used an unrevalidated dwarf aggregate and did not keep
+the benchmark reporting units sufficiently explicit. The comparison is
+deferred until the dwarf boundary convention has been independently validated.
+
+FAIR2 reports the omega-ready eligibility count only.
+
+{NOTE}"""),
+code("""import json
+
 with open('dwarf_irregular_corpus_v1.json') as f:
-    dwarf_corpus = json.load(f)
+    corpus = json.load(f)
 
-dwarf_omegas=[]
-for g in dwarf_corpus['galaxies']:
-    if not g.get('omega_ready') or not g.get('data') or len(g['data'])<2: continue
-    d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
-    R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
-    if R1>0 and R2>0 and V1>0 and V2>0:
-        outer_term = (V2 / R2)
-        inner_term = (V1 / R1) * ((R1 / R2) ** 1.5)
-        omega_kms_kpc = outer_term - inner_term
-        omega_rad_gyr = omega_kms_kpc * 1.0227
-        dwarf_omegas.append(omega_rad_gyr)  # Eq.6 corrected 2026-07-12: operator-precedence fix
+eligible = [
+    g for g in corpus['galaxies']
+    if g.get('omega_ready') and g.get('data') and len(g['data']) >= 2
+]
 
-# SPARC reference values from Flynn & Cannaliato (2025)
-sparc_mean   = 7.06
-sparc_std    = 3.26
-sparc_median = 7.06
-
-print(f"Dwarf omega: median={np.median(dwarf_omegas):.2f}, mean={np.mean(dwarf_omegas):.2f} rad/Gyr")
-print(f"SPARC omega: mean=7.06 ± 3.26 rad/Gyr (Flynn & Cannaliato 2025)")
-print(f"Ratio dwarf/SPARC median: {np.median(dwarf_omegas)/sparc_mean:.2f}x")
-
-fig,ax=plt.subplots(figsize=(8,4))
-ax.hist(dwarf_omegas,bins=12,alpha=0.8,color='#2ca02c',edgecolor='white',
-        label=f'Dwarfs (n={len(dwarf_omegas)}, med={np.median(dwarf_omegas):.2f})')
-ax.axvline(np.median(dwarf_omegas),color='green',ls='--',lw=2)
-ax.axvline(sparc_mean,color='blue',ls=':',lw=2,label=f'SPARC mean={sparc_mean}')
-ax.set_xlabel(r'$\\omega$ (rad/Gyr)',fontsize=12); ax.set_ylabel('N',fontsize=12)
-ax.set_title('Omega: Dwarfs vs SPARC Reference\\nFlynn (2026) + Flynn & Cannaliato (2025)',fontsize=10)
-ax.legend(fontsize=9); plt.tight_layout()
-plt.savefig('dw09_dwarf_vs_sparc.png',dpi=150,bbox_inches='tight'); plt.show()""")
+print(f"Dwarf omega-ready records: {len(eligible)}")
+print("Dwarf/SPARC aggregate comparison: WITHHELD pending revalidation.")
+""")
 ]),
-
 "dw10_tier1_gallery.ipynb": nb([
 md(f"# Dwarf Example 10: Tier 1 Rotation Curve Gallery\n\n**EPS Research — Dwarf/Irregular HI Corpus v1.0**\n\nGallery of all Tier 1 dwarf rotation curves — LITTLE THINGS galaxies\nwith full tilted-ring fits from Oh et al. (2015).\n\n{NOTE}"),
 code("""import json, numpy as np, matplotlib.pyplot as plt
@@ -483,7 +370,7 @@ ncols=4; nrows=(len(tier1)+ncols-1)//ncols
 fig,axes=plt.subplots(nrows,ncols,figsize=(14,3*nrows))
 axes=axes.flatten()
 for i,g in enumerate(tier1):
-    d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
+    d=g['data']; R=[p['Rad'] for p in d]; V=[(p['Vrot'] if 'Vrot' in p else p['Vobs']) for p in d]
     axes[i].plot(R,V,'o-',color='#2ca02c',lw=1.2,ms=3)
     axes[i].set_title(f"{g['galaxy']}\\nVmax={max(V):.0f}",fontsize=7)
     axes[i].tick_params(labelsize=6)
@@ -571,7 +458,7 @@ with open('dwarf_irregular_corpus_v1_flat.csv') as f:
 results=[]
 for g in corpus['galaxies']:
     if not g.get('omega_ready') or not g.get('data') or len(g['data'])<2: continue
-    d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
+    d=g['data']; R=[p['Rad'] for p in d]; V=[(p['Vrot'] if 'Vrot' in p else p['Vobs']) for p in d]
     R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
     if R1>0 and R2>0 and V1>0 and V2>0:
         outer_term    = (V2 / R2)
@@ -601,7 +488,7 @@ with open('dwarf_irregular_corpus_v1.json') as f:
 omega_ready=[g for g in corpus['galaxies']
              if g.get('omega_ready') and g.get('data') and len(g['data'])>=4]
 g=sorted(omega_ready,key=lambda x:len(x['data']),reverse=True)[0]
-d=g['data']; R=np.array([p['Rad'] for p in d]); V=np.array([p['Vobs'] for p in d])
+d=g['data']; R=np.array([p['Rad'] for p in d]); V=np.array([(p['Vrot'] if 'Vrot' in p else p['Vobs']) for p in d])
 errV=np.array([p.get('errV',0) for p in d])
 R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
 outer_term    = (V2 / R2)
@@ -693,7 +580,7 @@ with open('dwarf_irregular_corpus_v1_flat.csv') as f:
 results=[]
 for g in corpus['galaxies']:
     if not g.get('omega_ready') or not g.get('data') or len(g['data'])<2: continue
-    d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
+    d=g['data']; R=[p['Rad'] for p in d]; V=[(p['Vrot'] if 'Vrot' in p else p['Vobs']) for p in d]
     R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
     if R1>0 and R2>0 and V1>0 and V2>0:
         outer_term    = (V2 / R2)
@@ -744,7 +631,7 @@ with open('dwarf_irregular_corpus_v1.json') as f:
 results=[]
 for g in corpus['galaxies']:
     if not g.get('omega_ready') or not g.get('data') or len(g['data'])<3: continue
-    d=g['data']; R=np.array([p['Rad'] for p in d]); V=np.array([p['Vobs'] for p in d])
+    d=g['data']; R=np.array([p['Rad'] for p in d]); V=np.array([(p['Vrot'] if 'Vrot' in p else p['Vobs']) for p in d])
     R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
     if R1<=0 or R2<=0 or V1<=0 or V2<=0: continue
     outer_term    = (V2 / R2)
@@ -832,7 +719,7 @@ print(f"\\n{'Galaxy':<18} {'z~':>6} {'R1':>6} {'V1':>7} {'R2':>6} {'V2':>7} {'om
 print('-'*65)
 omegas=[]
 for g in sorted(omega_ready,key=lambda x:x['galaxy']):
-    d=g['data']; R=[p['Rad'] for p in d]; V=[p['Vobs'] for p in d]
+    d=g['data']; R=[p['Rad'] for p in d]; V=[(p['Vrot'] if 'Vrot' in p else p['Vobs']) for p in d]
     R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
     if R1>0 and R2>0 and V1>0 and V2>0:
         outer_term    = (V2 / R2)
@@ -845,50 +732,38 @@ for g in sorted(omega_ready,key=lambda x:x['galaxy']):
 print('-'*65)
 print(f"Median omega: {np.median(omegas):.3f} rad/Gyr")
 print(f"Mean omega:   {np.mean(omegas):.3f} ± {np.std(omegas):.3f} rad/Gyr")
-print(f"\\nPublished (Flynn 2026): median = 9.94 rad/Gyr")""")
+print("\\nPopulation aggregate: WITHHELD pending boundary revalidation.")""")
 ]),
 
 "dw25_end_to_end_dwarf_workflow.ipynb": nb([
-md(f"# Dwarf Example 25: End-to-End Dwarf Omega Workflow\n\n**EPS Research — Dwarf/Irregular HI Corpus v1.0**\n\nCapstone: full omega workflow on the dwarf corpus.\nCompares to SPARC result and prints the full summary.\n\n{NOTE}"),
-code("""import json, numpy as np, matplotlib.pyplot as plt
+md(f"""# Dwarf Example 25: End-to-End Dwarf Eligibility Workflow
+
+**EPS Research — Dwarf/Irregular HI Corpus v1.0**
+
+This capstone verifies omega-ready record eligibility.
+
+It deliberately does not report the former simplified outer-gap statistic,
+a dwarf population omega median, or a dwarf/SPARC population ratio.
+
+Those aggregate claims remain withheld pending independent boundary-convention
+revalidation.
+
+{NOTE}"""),
+code("""import json
+
 with open('dwarf_irregular_corpus_v1.json') as f:
-    corpus=json.load(f)
-results=[]
-for g in corpus['galaxies']:
-    if not g.get('omega_ready') or not g.get('data') or len(g['data'])<2: continue
-    d=g['data']; R=np.array([p['Rad'] for p in d]); V=np.array([p['Vobs'] for p in d])
-    R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
-    if R1<=0 or R2<=0 or V1<=0 or V2<=0: continue
-    outer_term    = (V2 / R2)
-    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-    V_adj=V-R * omega_kms_kpc; V_kep=np.sqrt(V2**2*R2/R)
-    gap=(V[-1]-R[-1]*omega)-V[-1]
-    results.append({'galaxy':g['galaxy'],'omega':omega,'gap':gap,
-                    'vmax':float(max(V)),'survey':g.get('survey','?')})
-omegas=[r['omega'] for r in results]
-gaps  =[r['gap']   for r in results]
-print(f"{'='*55}")
-print(f"EPS Research Dwarf Omega Workflow Summary")
-print(f"{'='*55}")
-print(f"Galaxies analyzed:  {len(results)}")
-print(f"Median omega:       {np.median(omegas):.2f} rad/Gyr")
-print(f"Mean omega:         {np.mean(omegas):.2f} ± {np.std(omegas):.2f} rad/Gyr")
-print(f"All gaps negative:  {all(g<0 for g in gaps)}")
-print(f"\\nReference values:")
-print(f"  SPARC mean omega:   7.06 ± 3.26 rad/Gyr (Flynn & Cannaliato 2025)")
-print(f"  Dwarf median omega: 9.94 rad/Gyr (Flynn 2026)")
-print(f"  Ratio:              {np.median(omegas)/7.06:.2f}x higher in dwarfs")
-fig,ax=plt.subplots(figsize=(7,4))
-ax.hist(omegas,bins=12,color='#2ca02c',alpha=0.8,edgecolor='white')
-ax.axvline(np.median(omegas),color='red',ls='--',lw=2,label=f'Median={np.median(omegas):.2f}')
-ax.axvline(7.06,color='blue',ls=':',lw=2,label='SPARC mean=7.06')
-ax.set_xlabel(r'$\\omega$ (rad/Gyr)',fontsize=11); ax.set_ylabel('N',fontsize=11)
-ax.set_title('Dwarf Omega Distribution — EPS Research\\nFlynn (2026)',fontsize=10)
-ax.legend(fontsize=9); plt.tight_layout()
-plt.savefig('dw25_end_to_end.png',dpi=150,bbox_inches='tight'); plt.show()""")
+    corpus = json.load(f)
+
+eligible = [
+    g for g in corpus['galaxies']
+    if g.get('omega_ready') and g.get('data') and len(g['data']) >= 2
+]
+
+print(f"Omega-ready records: {len(eligible)}")
+print("Population omega aggregate: WITHHELD pending revalidation.")
+print("Dwarf/SPARC aggregate comparison: WITHHELD.")
+print("Simplified outer-gap diagnostic: WITHDRAWN.")
+""")
 ]),
 }
 

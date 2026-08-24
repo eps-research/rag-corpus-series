@@ -34,15 +34,15 @@ import urllib.request
 CORPORA = {
     "hi": {
         "name": "Unified HI Rotation Curve Corpus v7.1",
-        "doi": "10.5281/zenodo.19563417",
+        "doi": "10.5281/zenodo.21768240",
         "files": [
             (
-                "https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.json",
+                "https://zenodo.org/records/21768240/files/rotation_curve_corpus_v7.json",
                 "rotation_curve_corpus_v7.json",
             ),
             (
-                "https://zenodo.org/records/19563417/files/rotation_curve_corpus_v7.1_flat.csv",
-                "rotation_curve_corpus_v7.1_flat.csv",
+                "https://zenodo.org/records/21768240/files/rotation_curve_corpus_v7.1_flat.csv",
+                "rotation_curve_corpus_v7_flat.csv",
             ),
         ],
         "dest": "examples/hi",
