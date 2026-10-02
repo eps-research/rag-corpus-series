@@ -105,3 +105,58 @@ Zenodo 10.5281/zenodo.21834678.
 intz_corpus_v1b.json, intz_corpus_v1b_flat.csv, and intz_corpus_v1b.jsonl.
 Legacy values preserved in legacy_omega_value field. Corrected corpus
 published at Zenodo 10.5281/zenodo.21841382.
+
+---
+
+## 2 October 2026 — LITTLE THINGS model rows in HI v7.x and Dwarf v1.0; dwarf ω v1.1
+
+**Severity:** Data-provenance (per-ring); no change to any published headline result
+**Affected:** HI Corpus v7.0/v7.1 (25 of 26 LITTLE THINGS galaxies); Dwarf/Irregular Corpus v1.0
+(24 omega-ready galaxies, inherited via v7 transfer); omega_results_dwarfs.csv v1.0
+
+### What happened
+
+LITTLE THINGS rotation curves were ingested from Oh et al. (2015), VizieR J/AJ/149/180/rotdmbar
+(1,716 rows = 877 `Data` + 839 `Model`). The `Type` column was dropped, so the 839
+pseudo-isothermal model rows were stored as `Vobs` after the observed rows. The model rows were
+also rescaled with the Data R0.3/V0.3 rather than their own scale factors.
+
+### Effect on dwarf ω
+
+`compute_omega_dwarfs.py` v1.0 sorted the combined rows by radius, so the outer boundary point
+could come from the model curve (17 of 24 galaxies changed, −20% to +24%). Separately, v1.0
+divided by 1.022 instead of multiplying by 1.0227 (rad/Gyr values ~4.4% low), retained the
+withdrawn outer-gap diagnostic, and compared against SPARC 7.06 mislabelled as rad/Gyr
+(7.06 is km/s/kpc = 7.22 rad/Gyr).
+
+### Correction
+
+`omega_results_dwarfs` v1.1 uses observed (`Type == 'Data'`) rows only, canonical Eq. 6 in
+named-term form, and the correct conversion (× 1.0227). Outer-gap and SPARC-comparison columns
+are removed. All 24 values are positive. Per-galaxy eligibility values only; no population
+statistic is reported.
+
+### Verification
+
+Independent recompute from VizieR `Data` rows
+(`audits/2026-10-02_little_things/lt_provenance_and_dwarf_omega_check.ipynb`, run in JupyterLab
+on Node1, 2 October 2026):
+- VizieR `Data` rows match the v7.1 first block in 26/26 galaxies
+- DDO 154 at Rmax = 7.32 kpc: second block 49.23 km/s vs catalogue Viso(Rmax) 49.2 (model);
+  first block 47.86 vs observed V(Rmax) 47.8
+- Dwarf ω: 24/24 positive; max |Δω| vs v1.1 = 5×10⁻⁵ km/s/kpc
+- Inputs: HI v7.1 JSON (Zenodo 21768240) sha256
+  `a9d668ea9649be5473f161157ab20436177ba98abfa2c9fdb9ad1069bee81327`;
+  Dwarf v1.0 JSON (Zenodo 20320362) sha256
+  `452fba4108d29a21e5246b5446a7910bfcf085dc2371f770ec9db5702a944429`
+
+### Not affected
+
+SPARC (175 galaxies, no duplicate radii), THINGS, WALLABY, the SPARC N = 84 benchmark
+(+7.06 km/s/kpc), Z1, IntZ.
+
+### Pending
+
+- New Zenodo versions of HI v7 and Dwarf v1 carrying a `curve_type` (Data/Model) field
+- LITTLE THINGS observed point count is 877, not 1,716; corpus totals to be restated
+- `check_omega_formula.py` to flag division by any conversion constant
