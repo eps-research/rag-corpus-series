@@ -133,11 +133,13 @@ IntZ\_v1 combines two major IFU surveys into a unified schema:
 
 Z1 provides ALPINE survey morpho-kinematic data with per-ring 3DBarolo rotation curves for 8 confirmed rotators and morpho-kinematic classifications for 23 additional galaxies at z~4–6.
 
+**HI corpus correction (v7.3, October 2026).** All HI notebooks read corpus v7.3 ([10.5281/zenodo.23442703](https://doi.org/10.5281/zenodo.23442703)): WALLABY curves are the published DR2 WKAPP models with their per-ring uncertainties, THINGS uncertainties are the combined errors of de Blok et al. (2008), and the corpus holds 7,804 observed points. Earlier versions, including v7.1 cited by Flynn (2027), are superseded; the v7.3 record's CORRECTIONS.md lists every change.
+
 **Omega status (corrected August 2026):**
 
 | Corpus | Survey | N (T1) | Tracer | ω status |
 |--------|--------|--------|--------|----------|
-| HI v7.0 | SPARC | 175 | HI 21cm | ω = +7.13 km/s/kpc (retained) |
+| HI v7.3 | SPARC | 175 | HI 21cm | ω = +7.13 km/s/kpc (retained) |
 | IntZ v1.0 | KROSS | 166 | Hα | ω withdrawn — template-derived; no boundary-ring data |
 | Z1 v1.0 | ALPINE | 8 | [CII] | ω = +12.621 rad/Gyr median (all 8 positive) — corrected Aug 2026 |
 
@@ -191,7 +193,7 @@ jupyter lab
 |-------|---------|----------|--------|
 | Flynn & Cannaliato (2025) — Omega correction introduced | Frontiers Astron Space Sci | [10.3389/fspas.2025.1680387](https://doi.org/10.3389/fspas.2025.1680387) | Published |
 | Flynn (2026) — 84 SPARC baryonic validation | Seeking journal | [10.5281/zenodo.20132805](https://doi.org/10.5281/zenodo.20132805) | Preprint |
-| Flynn (2026) — Unified HI Corpus v7.3 data descriptor | Astronomy & Computing | [arXiv:2604.13489](https://arxiv.org/abs/2604.13489) | Under review |
+| Flynn (2027) — Unified HI Corpus data descriptor | Astron. Comput. 58, 101179 | [10.1016/j.ascom.2026.101179](https://doi.org/10.1016/j.ascom.2026.101179) · [arXiv:2604.13489](https://arxiv.org/abs/2604.13489) | Published; data corrected in v7.3 |
 | Flynn (2026) — GC Corpus v1.3.1 data descriptor | PASP | [arXiv:2605.03099](https://arxiv.org/abs/2605.03099) | Submitted |
 | Flynn (2026) — Dwarf/Irregular Corpus v1.0 data descriptor | PASP | [arXiv:2605.22163](https://arxiv.org/abs/2605.22163) | Submitted |
 | Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Preprint |

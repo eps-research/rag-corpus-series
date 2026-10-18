@@ -4,38 +4,41 @@
 
 ## Overview
 
-A unified corpus of 8,963 spatially resolved HI rotation curve measurements across 438 galaxies from four major surveys: SPARC (175), THINGS (34), LITTLE THINGS (26), and WALLABY DR2 (203).
+A unified corpus of 7,804 observed, spatially resolved HI rotation curve points across 438 galaxies from four surveys: SPARC (175), THINGS (34), LITTLE THINGS (26) and WALLABY DR2 (203).
 
-Designed for traditional kinematic analysis and LLM-based RAG pipelines. All radii in kpc, all velocities in km/s. Two-tier quality system: Tier 1 (hand-curated) and Tier 2 (automated WALLABY pipeline).
+Designed for kinematic analysis and LLM-based RAG pipelines. All radii in kpc, all velocities in km/s. Two-tier quality system: Tier 1 (SPARC, THINGS, LITTLE THINGS) and Tier 2 (WALLABY DR2, published WKAPP kinematic models).
+
+**v7.3 is a corrective release.** It supersedes all earlier versions, including v7.1 (10.5281/zenodo.21768240), the version cited by Flynn (2027). See CORRECTIONS.md in the Zenodo record for every change.
 
 ## Quick Links
 
 | Resource | Link |
 |----------|------|
-| Zenodo deposit | [10.5281/zenodo.23442703](https://doi.org/10.5281/zenodo.23442703) |
+| Zenodo deposit (v7.3) | [10.5281/zenodo.23442703](https://doi.org/10.5281/zenodo.23442703) |
+| Data descriptor | Flynn (2027), *Astronomy and Computing* 58, 101179, [10.1016/j.ascom.2026.101179](https://doi.org/10.1016/j.ascom.2026.101179) |
 | arXiv preprint | [arXiv:2604.13489](https://arxiv.org/abs/2604.13489) |
-| Journal submission | Astronomy & Computing (ASCOM-D-26-00129) |
 
 ## Coverage
 
 | Survey | Galaxies | Data Points | Tier |
 |--------|----------|-------------|------|
 | SPARC | 175 | 3,391 | 1 |
-| THINGS | 34 (19 w/data) | 2,110 | 1 |
-| LITTLE THINGS | 26 | 1,716 | 1 |
-| WALLABY DR2 | 203 | 1,746 | 2 |
-| **Total** | **438** | **8,963** | |
+| THINGS | 34 (19 with curves) | 2,110 | 1 |
+| LITTLE THINGS | 26 | 877 | 1 |
+| WALLABY DR2 | 203 | 1,426 | 2 |
+| **Total** | **438** | **7,804** | |
 
-## Files
+## Files (Zenodo record)
 
 | File | Description |
 |------|-------------|
-| `rotation_curve_corpus_v7.json` | Master JSON (~2.0 MB) |
-| `rotation_curve_corpus_v7.1_flat.csv` | Flat CSV (438 rows, 29 columns) |
+| `rotation_curve_corpus_v7.json` | Master JSON, authoritative (~2.3 MB) |
+| `rotation_curve_corpus_v7.jsonl` | One galaxy per line |
+| `rotation_curve_corpus_v7.1_flat.csv` | Catalogue table, 438 rows × 29 columns |
 | `rotation_curve_corpus_v7_by_galaxy.zip` | Per-galaxy JSON archive |
-| `READMEv7.md` | Full documentation |
-| `wallaby_ingest.py` | WALLABY ingestion script |
-| `make_figures_v7.py` | Figure generation script |
+| `READMEv7.md`, `CORRECTIONS.md` | Documentation and corrections log |
+| `wallaby_dr2_ingest_v73.py` | WALLABY DR2 ingest script |
+| `make_figures_v73.py` | Figure script |
 
 ## Quick Start
 
@@ -45,21 +48,23 @@ import json
 with open('rotation_curve_corpus_v7.json') as f:
     corpus = json.load(f)
 
-# Get DDO161 rotation curve
+# DDO161 rotation curve
 g = next(g for g in corpus['galaxies'] if g['galaxy'] == 'DDO161')
 data = g['data']
 R    = [p['Rad']  for p in data]
 Vobs = [p['Vobs'] for p in data]
 ```
 
+WALLABY rows use `Rad`, `Vrot` and `e_Vrot`; SPARC rows use `Rad`, `Vobs` and `errV`.
+
 ## Citation
 
 ```
-Flynn, D.C. (2026). Unified Galaxy HI Rotation Curve Corpus v7.3.
+Flynn, D.C. (2026). Unified Galaxy Rotation Curve Corpus (v7.3).
 Zenodo. DOI: 10.5281/zenodo.23442703
 
-Flynn, D.C. & Cannaliato, J. (2025). Frontiers in Astronomy and Space Sciences, 12.
-DOI: 10.3389/fspas.2025.1680387
+Flynn, D.C. (2027). Astronomy and Computing, 58, 101179.
+DOI: 10.1016/j.ascom.2026.101179
 ```
 
 ---

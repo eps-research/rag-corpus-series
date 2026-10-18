@@ -39,3 +39,7 @@ papers/*.log
 *.bak
 *.bak[0-9]
 *.orig
+
+# v7.3 HI catalogue tables, bundled deliberately (md5 d11d4c8b7e1dd5f479f961bca7639b70)
+!examples/hi/rotation_curve_corpus_v7.1_flat.csv
+!examples/highschool/rotation_curve_corpus_v7.1_flat.csv
