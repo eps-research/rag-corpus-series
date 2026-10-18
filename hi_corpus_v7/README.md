@@ -1,4 +1,4 @@
-# Unified HI Rotation Curve Corpus v7.0
+# Unified HI Rotation Curve Corpus v7.3
 
 **EPS Research — Flynn, D.C. (2026)**
 
@@ -12,7 +12,7 @@ Designed for traditional kinematic analysis and LLM-based RAG pipelines. All rad
 
 | Resource | Link |
 |----------|------|
-| Zenodo deposit | [10.5281/zenodo.19563417](https://doi.org/10.5281/zenodo.19563417) |
+| Zenodo deposit | [10.5281/zenodo.23442703](https://doi.org/10.5281/zenodo.23442703) |
 | arXiv preprint | [arXiv:2604.13489](https://arxiv.org/abs/2604.13489) |
 | Journal submission | Astronomy & Computing (ASCOM-D-26-00129) |
 
@@ -31,7 +31,7 @@ Designed for traditional kinematic analysis and LLM-based RAG pipelines. All rad
 | File | Description |
 |------|-------------|
 | `rotation_curve_corpus_v7.json` | Master JSON (~2.0 MB) |
-| `rotation_curve_corpus_v7_flat.csv` | Flat CSV (438 rows, 29 columns) |
+| `rotation_curve_corpus_v7.1_flat.csv` | Flat CSV (438 rows, 29 columns) |
 | `rotation_curve_corpus_v7_by_galaxy.zip` | Per-galaxy JSON archive |
 | `READMEv7.md` | Full documentation |
 | `wallaby_ingest.py` | WALLABY ingestion script |
@@ -55,8 +55,8 @@ Vobs = [p['Vobs'] for p in data]
 ## Citation
 
 ```
-Flynn, D.C. (2026). Unified Galaxy HI Rotation Curve Corpus v7.0.
-Zenodo. DOI: 10.5281/zenodo.19563417
+Flynn, D.C. (2026). Unified Galaxy HI Rotation Curve Corpus v7.3.
+Zenodo. DOI: 10.5281/zenodo.23442703
 
 Flynn, D.C. & Cannaliato, J. (2025). Frontiers in Astronomy and Space Sciences, 12.
 DOI: 10.3389/fspas.2025.1680387

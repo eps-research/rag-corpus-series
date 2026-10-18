@@ -2,7 +2,7 @@
 
 | Key   | Description                                       | Objects |
 |-------|---------------------------------------------------|---------|
-| v7    | Unified HI Rotation Curve Corpus v7.0             | ~300    |
+| v7    | Unified HI Rotation Curve Corpus v7.3             | ~300    |
 | dwarf | Dwarf & Irregular Galaxy HI Corpus v1.0           | ~129    |
 | gc    | Milky Way Globular Cluster Corpus v1.4.0          | 174     |
 | intz  | IntZ High-z Kinematic Corpus (KROSS + KMOS3D)     | ~800    |

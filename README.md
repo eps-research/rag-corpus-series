@@ -110,7 +110,7 @@ Three unified, machine-readable corpora of the local universe, designed for both
 
 | Corpus | N | Tracer | Zenodo | arXiv |
 |--------|---|--------|--------|-------|
-| Unified HI Rotation Curve Corpus v7.0 | 438 galaxies | HI 21cm | [10.5281/zenodo.19563417](https://doi.org/10.5281/zenodo.19563417) | [2604.13489](https://arxiv.org/abs/2604.13489) |
+| Unified HI Rotation Curve Corpus v7.3 | 438 galaxies | HI 21cm | [10.5281/zenodo.23442703](https://doi.org/10.5281/zenodo.23442703) | [2604.13489](https://arxiv.org/abs/2604.13489) |
 | Dwarf/Irregular HI Corpus v1.0 | 129 galaxies | HI 21cm | [10.5281/zenodo.20320362](https://doi.org/10.5281/zenodo.20320362) | [2605.22163](https://arxiv.org/abs/2605.22163) |
 | Milky Way Globular Cluster Corpus v1.4.0 | 174 clusters | Multi-survey | [10.5281/zenodo.22077426](https://doi.org/10.5281/zenodo.22077426) | [2605.03099](https://arxiv.org/abs/2605.03099) |
 
@@ -191,7 +191,7 @@ jupyter lab
 |-------|---------|----------|--------|
 | Flynn & Cannaliato (2025) — Omega correction introduced | Frontiers Astron Space Sci | [10.3389/fspas.2025.1680387](https://doi.org/10.3389/fspas.2025.1680387) | Published |
 | Flynn (2026) — 84 SPARC baryonic validation | Seeking journal | [10.5281/zenodo.20132805](https://doi.org/10.5281/zenodo.20132805) | Preprint |
-| Flynn (2026) — Unified HI Corpus v7.0 data descriptor | Astronomy & Computing | [arXiv:2604.13489](https://arxiv.org/abs/2604.13489) | Under review |
+| Flynn (2026) — Unified HI Corpus v7.3 data descriptor | Astronomy & Computing | [arXiv:2604.13489](https://arxiv.org/abs/2604.13489) | Under review |
 | Flynn (2026) — GC Corpus v1.3.1 data descriptor | PASP | [arXiv:2605.03099](https://arxiv.org/abs/2605.03099) | Submitted |
 | Flynn (2026) — Dwarf/Irregular Corpus v1.0 data descriptor | PASP | [arXiv:2605.22163](https://arxiv.org/abs/2605.22163) | Submitted |
 | Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Preprint |

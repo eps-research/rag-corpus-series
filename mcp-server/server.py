@@ -12,7 +12,7 @@ Custom routes when running this FastMCP application directly:
   GET  /hint         – Browser UI ID-format hints
 
 Five EPS Research corpora served:
-  v7:    Unified HI Rotation Curve Corpus v7.0    (438 galaxies,   z~0)
+  v7:    Unified HI Rotation Curve Corpus v7.3    (438 galaxies,   z~0)
   dwarf: Dwarf/Irregular HI Corpus v1.0           (129 galaxies,   z~0)
   gc:    Milky Way Globular Cluster Corpus v1.4.0  (174 clusters,   z=0)
   intz:  IntZ Kinematic Corpus v1.0               (1,292 galaxies, z=0.38-2.68)
@@ -52,14 +52,14 @@ logger = logging.getLogger(__name__)
 
 CORPORA = {
     "v7": {
-        "name": "Unified HI Rotation Curve Corpus v7.0",
+        "name": "Unified HI Rotation Curve Corpus v7.3",
         "description": "438 galaxies from SPARC, THINGS, LITTLE THINGS, WALLABY DR2. HI 21cm kinematics. Local universe.",
         "n_objects": 438,
         "object_type": "galaxy",
         "redshift_range": "z ~ 0",
         "tracer": "HI 21cm",
-        "zenodo_doi": "10.5281/zenodo.20695697",
-        "data_url": "https://zenodo.org/records/20695697/files/rotation_curve_corpus_v7.jsonl",
+        "zenodo_doi": "10.5281/zenodo.23442703",
+        "data_url": "https://zenodo.org/records/23442703/files/rotation_curve_corpus_v7.jsonl",
         "id_field": "galaxy",
         "status": "published",
     },
