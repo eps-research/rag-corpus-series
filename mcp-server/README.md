@@ -25,7 +25,7 @@ Both run from the same local server. The MCP server itself runs on HuggingFace S
 
 | Key | Name | Objects | Description |
 |-----|------|---------|-------------|
-| `v7` | Unified HI Rotation Curve Corpus v7.3 | ~300 | Multi-survey HI rotation curves for spiral and irregular galaxies |
+| `v7` | Unified HI Rotation Curve Corpus v7.3 | 438 | Multi-survey HI rotation curves for spiral and irregular galaxies |
 | `dwarf` | Dwarf & Irregular Galaxy HI Corpus v1.0 | ~129 | Low-mass galaxy HI kinematics extending the v7 regime |
 | `gc` | Milky Way Globular Cluster Corpus v1.4.0 | 174 | Unified parameter set for MW globular clusters |
 | `intz` | IntZ High-z Kinematic Corpus | ~800 | KROSS + KMOS3D galaxy kinematics at z≈0.6–2.5 |

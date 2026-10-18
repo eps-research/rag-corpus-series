@@ -33,7 +33,7 @@ Derived from two boundary points (innermost and outermost measured rotation curv
 - Empirical correction derived from boundary kinematics only
 - Reproducible, minimally dependent on mass modeling
 - Does not alter Newtonian dynamics or invoke dark matter distributions
-- Mean omega = +7.06 ± 3.26 rad/Gyr across 84 SPARC Q=1 galaxies
+- Mean omega = +7.06 ± 3.26 km/s/kpc (= +7.22 ± 3.33 rad/Gyr) across 84 SPARC Q=1 galaxies
 
 ---
 
@@ -66,7 +66,7 @@ Full baryonic validation of the omega correction applied to 84 SPARC Q=1 disk ga
 
 ---
 
-## Paper 3 — Unified HI Corpus v7.0 Data Descriptor
+## Paper 3 — Unified HI Corpus Data Descriptor (Flynn 2027, Astron. Comput. 58, 101179; corrected data: v7.3)
 
 **Flynn, D.C. (2026)**  
 *A Unified HI Rotation Curve Corpus for Computational Astrophysics: 438 Galaxies from SPARC, THINGS, LITTLE THINGS, and WALLABY DR2*  
