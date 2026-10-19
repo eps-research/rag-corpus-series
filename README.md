@@ -193,15 +193,17 @@ jupyter lab
 |-------|---------|----------|--------|
 | Flynn & Cannaliato (2025) — Omega correction introduced | Frontiers Astron Space Sci | [10.3389/fspas.2025.1680387](https://doi.org/10.3389/fspas.2025.1680387) | Published |
 | Flynn (2026) — 84 SPARC baryonic validation | arXiv (astro-ph.GA) | [arXiv:2608.14101](https://arxiv.org/abs/2608.14101) | Preprint |
-| Flynn (2027) — Unified HI Corpus data descriptor | Astron. Comput. 58, 101179 | [10.1016/j.ascom.2026.101179](https://doi.org/10.1016/j.ascom.2026.101179) · [arXiv:2604.13489](https://arxiv.org/abs/2604.13489) | Published; data corrected in v7.3 |
-| Flynn (2026) — GC Corpus v1.3.1 data descriptor | PASP | [arXiv:2605.03099](https://arxiv.org/abs/2605.03099) | Submitted |
-| Flynn (2026) — Dwarf/Irregular Corpus v1.0 data descriptor | PASP | [arXiv:2605.22163](https://arxiv.org/abs/2605.22163) | Submitted |
-| Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Preprint |
-| Flynn (2026) — IntZ Kinematic Corpus v1.0 data descriptor | arXiv (astro-ph.IM) | [Zenodo:21841382](https://doi.org/10.5281/zenodo.21841382) | Preprint |
-| Flynn (2026) — EPS Astro Extractor v1.1.0 (software) | Zenodo | [10.5281/zenodo.20534420](https://doi.org/10.5281/zenodo.20534420) | Published |
-| Flynn (2026) — EPS Astro-RAG MCP Server v2.3.0 (software) | Zenodo | [10.5281/zenodo.21154451](https://doi.org/10.5281/zenodo.21154451) | Published |
-| Flynn (2026) — FAISS Semantic Search Indexes v1.0 (software) | Zenodo | [10.5281/zenodo.21147895](https://doi.org/10.5281/zenodo.21147895) | Published |
-| Flynn (2026) — Cross-epoch omega correction note | Zenodo | [10.5281/zenodo.21383809](https://doi.org/10.5281/zenodo.21383809) | **Corrected Aug 2026** |
+| Flynn (2026) — Unified HI Corpus data descriptor | Astron. Comput. 58, 101179 | [10.1016/j.ascom.2026.101179](https://doi.org/10.1016/j.ascom.2026.101179) | Published; data corrected in v7.3 |
+| Flynn (2026) — GC Corpus v1.3.1 data descriptor | arXiv (astro-ph.GA) | [arXiv:2605.03099](https://arxiv.org/abs/2605.03099) | Preprint |
+| Flynn (2026) — Dwarf/Irregular Corpus v1.0 data descriptor | arXiv (astro-ph.GA) | [arXiv:2605.22163](https://arxiv.org/abs/2605.22163) | Preprint |
+| Flynn (2026) — High-z Kinematic Corpus Z1 data descriptor | arXiv (astro-ph.GA) | [arXiv:2605.25339](https://arxiv.org/abs/2605.25339) | Preprint |
+| Flynn (2026) — IntZ Kinematic Corpus v1.0 data descriptor | Zenodo | [10.5281/zenodo.21841382](https://doi.org/10.5281/zenodo.21841382) | Preprint |
+| Flynn (2026) — EPS Research Astro-RAG Platform (paper) | arXiv (astro-ph.IM) | [arXiv:2605.30384](https://arxiv.org/abs/2605.30384) | Preprint |
+| Flynn (2026) — EPS Astro Extractor v1.1.0 (software) | Zenodo | [10.5281/zenodo.20534420](https://doi.org/10.5281/zenodo.20534420) | Preprint |
+| Flynn (2026) — EPS Astro-RAG MCP Server v2.3.0 (software) | Zenodo | [10.5281/zenodo.21154451](https://doi.org/10.5281/zenodo.21154451) | Preprint |
+| Flynn (2026) — Model Context Protocol server for astrophysical RAG (paper) | arXiv (astro-ph.GA) | [arXiv:2607.03946](https://arxiv.org/abs/2607.03946) | Preprint |
+| Flynn (2026) — FAISS Semantic Search Indexes v1.0 (software) | Zenodo | [10.5281/zenodo.21147895](https://doi.org/10.5281/zenodo.21147895) | Preprint |
+| Flynn (2026) — Cross-epoch omega correction note | Zenodo | [10.5281/zenodo.21383809](https://doi.org/10.5281/zenodo.21383809) | Preprint |
 | Flynn (2026+) — Cross-epoch omega analysis (revised) | TBD | pending | Pending corrected data |
 | Flynn (2026+) — RAMSES simulation Paper 3 | TBD | planned | Planned |
 | Flynn (2026+) — Omega correction: implications for gravitational lensing | TBD | planned | Planned |
