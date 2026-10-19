@@ -11,10 +11,12 @@
     "redshift_range": "0.382-2.675",
     "tier1_count": 166,
     "tier2_count": 1126,
-    "omega_n": 166,
-    "omega_median_rad_gyr": -9.087,
-    "omega_stdev_rad_gyr": 8.94,
-    "omega_sign": "ALL_NEGATIVE",
+    "omega_n": 0,
+    "omega_median_rad_gyr": null,
+    "omega_stdev_rad_gyr": null,
+    "omega_sign": null,
+    "omega_status": "WITHDRAWN (August 2026): the 166 KROSS omega values came from an incorrect Eq. 6 grouping; there is no current IntZ omega result. See CORRECTIONS.md, 4 and 7 August 2026.",
+    "omega_legacy_withdrawn": {"n": 166, "median_rad_gyr": -9.087, "stdev_rad_gyr": 8.94, "sign": "ALL_NEGATIVE", "note": "Superseded statistics from the incorrect grouping, kept for provenance only; not a current result."},
     "excluded_surveys": {
       "MOSDEF": "Price et al. 2020 ApJ 894 91 \u2014 individual galaxy kinematic catalog not publicly archived; only binned median statistics published. Data request recommended to S. Price (sedona.price@)."
     },

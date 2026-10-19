@@ -291,8 +291,9 @@ code("""import csv, numpy as np, matplotlib.pyplot as plt
 rows=[]
 with open('dwarf_irregular_corpus_v1_flat.csv') as f:
     for r in csv.DictReader(f):
-        if r['survey']=='VLA-ANGST': rows.append(r)
+        if r['survey']=='VLA_ANGST': rows.append(r)  # canonical survey value in the flat CSV
 print(f"VLA-ANGST galaxies: {len(rows)}")
+assert len(rows) == 29, f"expected 29 VLA-ANGST rows, got {len(rows)}"
 dists=[float(r['distance_mpc']) for r in rows]
 vmaxs=[float(r['vrot_max_kms']) for r in rows if r['vrot_max_kms']]
 print(f"Distance range: {min(dists):.1f}--{max(dists):.1f} Mpc")
@@ -624,39 +625,33 @@ plt.tight_layout(); plt.savefig('dw20_wallaby_dwarfs.png',dpi=150,bbox_inches='t
 ]),
 
 "dw21_rm_se_improvement_dwarfs.ipynb": nb([
-md(f"# Dwarf Example 21: RMSE Improvement in Dwarfs\n\n**EPS Research — Dwarf/Irregular HI Corpus v1.0**\n\nApply the omega correction to all 24 omega-ready dwarfs\nand measure RMSE improvement vs Keplerian baseline.\n\n{NOTE}"),
-code("""import json, numpy as np, matplotlib.pyplot as plt
+md(f"""# Dwarf Example 21: RMSE Diagnostic in Dwarfs (Withdrawn)
+
+**EPS Research — Dwarf/Irregular HI Corpus v1.0**
+
+> **Withdrawn (October 2026).** This notebook previously applied the omega correction
+> to the 24 omega-ready dwarfs and compared an "omega RMSE" with a Keplerian RMSE.
+> That diagnostic is withdrawn. Its boundary points came from the mixed observed + model
+> LITTLE THINGS curves (CORRECTIONS.md, 2 October 2026), and its "omega RMSE" compared
+> the corrected curve with the observed curve itself, so it measured the size of the
+> correction rather than agreement with a physical target.
+> Corrected per-galaxy omega values are in dw24 (dwarf omega v1.1, eligibility only).
+
+{NOTE}"""),
+code("""import json
+
 with open('dwarf_irregular_corpus_v1.json') as f:
-    corpus=json.load(f)
-results=[]
-for g in corpus['galaxies']:
-    if not g.get('omega_ready') or not g.get('data') or len(g['data'])<3: continue
-    d=g['data']; R=np.array([p['Rad'] for p in d]); V=np.array([(p['Vrot'] if 'Vrot' in p else p['Vobs']) for p in d])
-    R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
-    if R1<=0 or R2<=0 or V1<=0 or V2<=0: continue
-    outer_term    = (V2 / R2)
-    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-    omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-    omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-    V_adj=V-R * omega_kms_kpc; V_kep=np.sqrt(V2**2*R2/R)
-    rmse_o=np.sqrt(np.mean((V_adj-V)**2))
-    rmse_k=np.sqrt(np.mean((V_kep-V)**2))
-    results.append({'galaxy':g['galaxy'],'rmse_o':rmse_o,'rmse_k':rmse_k,
-                    'improved':rmse_o<rmse_k,'omega':omega})
-print(f"Dwarfs analyzed: {len(results)}")
-print(f"Improved: {sum(1 for r in results if r['improved'])}/{len(results)}")
-ro=[r['rmse_o'] for r in results]; rk=[r['rmse_k'] for r in results]
-print(f"Mean RMSE omega:   {np.mean(ro):.1f} km/s")
-print(f"Mean RMSE Kepler:  {np.mean(rk):.1f} km/s")
-fig,ax=plt.subplots(figsize=(7,6))
-ax.scatter(rk,ro,s=40,color='#2ca02c',alpha=0.8,zorder=3)
-lim=[0,max(rk+ro)*1.05]
-ax.plot(lim,lim,'k--',lw=1,alpha=0.4,label='1:1')
-ax.set_xlabel('RMSE Keplerian (km/s)',fontsize=11); ax.set_ylabel('RMSE Omega (km/s)',fontsize=11)
-ax.set_title('RMSE Improvement — Omega-Ready Dwarfs\\nPoints below diagonal = improved',fontsize=10)
-ax.legend(); plt.tight_layout()
-plt.savefig('dw21_rmse_dwarfs.png',dpi=150,bbox_inches='tight'); plt.show()""")
+    corpus = json.load(f)
+
+eligible = [
+    g for g in corpus['galaxies']
+    if g.get('omega_ready') and g.get('data') and len(g['data']) >= 2
+]
+
+print(f"Omega-ready records: {len(eligible)}")
+print("Former RMSE improvement diagnostic: WITHDRAWN (mixed-curve boundaries; self-referential target).")
+print("Per-galaxy corrected omega values: see dw24 (dwarf omega v1.1, eligibility only).")
+""")
 ]),
 
 "dw22_cross_epoch_progenitors.ipynb": nb([
@@ -707,32 +702,43 @@ plt.savefig('dw23_models.png',dpi=150,bbox_inches='tight'); plt.show()""")
 ]),
 
 "dw24_little_things_omega_all.ipynb": nb([
-md(f"# Dwarf Example 24: LITTLE THINGS — Full Omega Table\n\n**EPS Research — Dwarf/Irregular HI Corpus v1.0**\n\nReproduce the LITTLE THINGS omega table from Flynn (2026).\nAll 24 omega-ready galaxies with R1, V1, R2, V2, omega.\n\n{NOTE}"),
-code("""import json, numpy as np
-with open('dwarf_irregular_corpus_v1.json') as f:
-    corpus=json.load(f)
-omega_ready=[g for g in corpus['galaxies']
-             if g.get('omega_ready') and g.get('survey')=='LITTLE_THINGS'
-             and g.get('data') and len(g['data'])>=2]
-print(f"LITTLE THINGS omega-ready: {len(omega_ready)}")
-print(f"\\n{'Galaxy':<18} {'z~':>6} {'R1':>6} {'V1':>7} {'R2':>6} {'V2':>7} {'omega':>8}")
-print('-'*65)
-omegas=[]
-for g in sorted(omega_ready,key=lambda x:x['galaxy']):
-    d=g['data']; R=[p['Rad'] for p in d]; V=[(p['Vrot'] if 'Vrot' in p else p['Vobs']) for p in d]
-    R1,V1=R[0],V[0]; R2,V2=R[-1],V[-1]
-    if R1>0 and R2>0 and V1>0 and V2>0:
-        outer_term    = (V2 / R2)
-        inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
-        omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
-        omega_rad_gyr = omega_kms_kpc * 1.0227           # 1 km/s/kpc = 1.0227 rad/Gyr
-        omega = omega_rad_gyr  # reporting/storage only — use omega_kms_kpc for velocity arithmetic
-        omegas.append(omega)
-        print(f"{g['galaxy']:<18} {'0.0':>6} {R1:>6.2f} {V1:>7.2f} {R2:>6.2f} {V2:>7.2f} {omega:>8.3f}")
-print('-'*65)
-print(f"Median omega: {np.median(omegas):.3f} rad/Gyr")
-print(f"Mean omega:   {np.mean(omegas):.3f} ± {np.std(omegas):.3f} rad/Gyr")
-print("\\nPopulation aggregate: WITHHELD pending boundary revalidation.")""")
+md(f"""# Dwarf Example 24: LITTLE THINGS — Per-Galaxy Omega Table (v1.1)
+
+**EPS Research — Dwarf/Irregular HI Corpus v1.0**
+
+Per-galaxy omega for the 24 omega-ready LITTLE THINGS galaxies, from the corrected
+**dwarf omega v1.1** table (CORRECTIONS.md, 2 October 2026). v1.1 uses observed
+(`Type == 'Data'`) rows only, the innermost and outermost observed rings, canonical
+Eq. 6 in named-term form, and multiplies by 1.0227 for rad/Gyr.
+
+This is **per-galaxy eligibility output, not population validation**. No population
+median or mean is reported.
+
+{NOTE}"""),
+code("""import csv
+
+# Corrected table, committed with the 2 October 2026 LITTLE THINGS audit
+V11 = '../../audits/2026-10-02_little_things/omega_results_dwarfs_v1.1.csv'
+with open(V11) as f:
+    rows = list(csv.DictReader(f))
+print(f"LITTLE THINGS omega-ready (observed rows only): {len(rows)}")
+print()
+print(f"{'Galaxy':<12} {'R1':>6} {'V1':>7} {'R2':>6} {'V2':>7} {'omega km/s/kpc':>15} {'rad/Gyr':>9}")
+print('-' * 68)
+worst = 0.0
+for r in sorted(rows, key=lambda x: x['galaxy']):
+    R1, V1, R2, V2 = (float(r[k]) for k in ('R1_kpc', 'V1_kms', 'R2_kpc', 'V2_kms'))
+    outer_term    = (V2 / R2)
+    inner_term    = (V1 / R1) * ((R1 / R2) ** 1.5)
+    omega_kms_kpc = outer_term - inner_term          # Flynn & Cannaliato 2025 Eq.6  [km/s/kpc]
+    worst = max(worst, abs(omega_kms_kpc - float(r['omega_kms_kpc'])))
+    print(f"{r['galaxy']:<12} {R1:>6.2f} {V1:>7.2f} {R2:>6.2f} {V2:>7.2f} "
+          f"{float(r['omega_kms_kpc']):>15.4f} {float(r['omega_rad_gyr']):>9.4f}")
+print('-' * 68)
+print(f"Eq. 6 recomputed from the listed boundary points: max |difference| vs table = {worst:.1e} km/s/kpc")
+print("Status: per-galaxy eligibility output only (observed innermost/outermost boundary).")
+print("Population aggregate (median, mean): WITHHELD pending boundary revalidation; not computed.")
+""")
 ]),
 
 "dw25_end_to_end_dwarf_workflow.ipynb": nb([

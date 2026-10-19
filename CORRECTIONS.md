@@ -155,8 +155,56 @@ on Node1, 2 October 2026):
 SPARC (175 galaxies, no duplicate radii), THINGS, WALLABY, the SPARC N = 84 benchmark
 (+7.06 km/s/kpc), Z1, IntZ.
 
-### Pending
+### Status (updated 18 October 2026)
 
-- New Zenodo versions of HI v7 and Dwarf v1 carrying a `curve_type` (Data/Model) field
-- LITTLE THINGS observed point count is 877, not 1,716; corpus totals to be restated
-- `check_omega_formula.py` to flag division by any conversion constant
+- **HI: done.** HI v7.3 is published at Zenodo 10.5281/zenodo.23442703 with observed rows only
+  (LITTLE THINGS 877 points; corpus total 7,804), and this repository is re-pinned to it.
+- **Dwarf: still pending.** A Dwarf v1 Zenodo version carrying a `curve_type` (Data/Model) field
+  has not yet been published. The repository uses the observed-only v1.1 table (dw24).
+- `check_omega_formula.py` to flag division by any conversion constant: pending.
+
+---
+
+## 18 October 2026 — Notebook repository re-pinned to HI v7.3; audit findings and known open items
+
+### What changed
+
+- HI notebooks, generators, QuickStart and documentation use HI Corpus v7.3 (Zenodo
+  10.5281/zenodo.23442703): 438 entries, 7,804 observed points. The bundled copies match the
+  published files byte for byte.
+- One baryonic-velocity helper implements Eq. 1 (sign applied to the gas term only) in every HI
+  notebook that needs V_bar.
+- Published omega values are labelled in their native units: DDO161 4.69 km/s/kpc
+  (= 4.80 rad/Gyr); SPARC N = 84 mean 7.06 ± 3.26 km/s/kpc (= 7.22 ± 3.33 rad/Gyr).
+- Fixes from the independent audits (Sol 6.1, 18–19 October 2026): the IntZ bridge uses SPARC
+  only (175 entries); ex06 bins include all 423 curves; p2_nb2 prints a computed verdict; p2_nb5 is
+  labelled a static illustration; hz_nb3 converts its z = 0 anchors and drops the withheld dwarf
+  median; the IntZ corpus metadata no longer reports withdrawn omega statistics as current; dw24
+  uses the observed-only dwarf omega v1.1 table; the dw21 RMSE diagnostic is withdrawn; dw07 selects
+  VLA-ANGST correctly; the High-Z notebooks build their flat CSV from the JSON when it is absent.
+
+### Known open items (not resolved by this release)
+
+1. **Paper 2 notebooks (`examples/paper2`) are frozen pending the author's audit.** p2_nb2: the
+   published headline (78/84 improved, 0 regressions) is not reproduced from the embedded table
+   (56/84, 1 regression). p2_nb5: the mass-quartile values are static and their provenance is
+   unverified. The published outer gap (−51.4 ± 25.0 km/s) is not reproduced by any convention
+   tested; p2_nb4 and hs_b_05 keep a ÷ 1.0227 step pending that audit. p2_nb6 fails with a
+   NameError. p2_nb1–nb4 still label published omega as rad/Gyr. None of these notebooks should be
+   cited as reproducing Paper 2.
+2. **The HI FAISS retrieval text is historical.** `faiss/v7_sparc_texts.json` (and its copy under
+   `build_scripts/faiss_legacy_texts/`) still carries superseded wording: the "thermal pressure"
+   explanation of negative SPARC gas velocities (175 entries) and older WALLABY statements on
+   uncertainties, distances (H0 = 75) and geometry. Mentions of 3DBarolo in the WALLABY text are not
+   themselves wrong: the WKAPP models combine FAT and 3DBarolo fits (Deg et al. 2022). Commit 9734a42
+   repaired the index identities and the GC, IntZ and Z1 texts, not the HI scientific text. A
+   rebuild from the v7.3 records will follow as a separate release.
+3. **IntZ omega is withdrawn.** The repository's `corpus_metadata` reports no current omega result;
+   the former statistics are kept under `omega_legacy_withdrawn`. The Zenodo deposit
+   (10.5281/zenodo.21841382) still carries the old summary metadata and 166 `rag_summary` strings
+   stating the old omega values, so the repository and deposited texts differ.
+4. **Dwarf omega v1.1 is per-galaxy eligibility output, not population validation.** No population
+   median, mean or dwarf/SPARC ratio is reported.
+5. **GC v1.4.0:** the build reproduces from the committed scripts and its arithmetic and census were
+   checked; this is not an independent re-audit of every source measurement.
+6. **The MCP server's live deployment** has not yet been updated or tested against this release.
