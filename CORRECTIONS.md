@@ -203,8 +203,14 @@ SPARC (175 galaxies, no duplicate radii), THINGS, WALLABY, the SPARC N = 84 benc
    the former statistics are kept under `omega_legacy_withdrawn`. The Zenodo deposit
    (10.5281/zenodo.21841382) still carries the old summary metadata and 166 `rag_summary` strings
    stating the old omega values, so the repository and deposited texts differ.
-4. **Dwarf omega v1.1 is per-galaxy eligibility output, not population validation.** No population
-   median, mean or dwarf/SPARC ratio is reported.
+4. **Dwarf omega v1.1 is per-galaxy eligibility output, not population validation.** The corrected
+   dwarf v1.1 workflows report per-galaxy eligibility values only and withhold population summaries.
+   Historical comparisons remain in High-Z nb1 (markdown), nb8 and nb25, including uncorrected
+   local-reference units and, in nb1 and nb25, the old dwarf median. Those comparisons are not
+   validated current results and must not be cited as such; their correction is pending. The hz_nb3
+   comparison was corrected in this release. Its DDO154 anchor (Flynn 2026, arXiv:2605.22163v1,
+   Figure 1) is omitted because the reported rad/Gyr value uses a legacy conversion and has not been
+   revalidated; the value itself has a documented source.
 5. **GC v1.4.0:** the build reproduces from the committed scripts and its arithmetic and census were
    checked; this is not an independent re-audit of every source measurement.
 6. **The MCP server's live deployment** has not yet been updated or tested against this release.
