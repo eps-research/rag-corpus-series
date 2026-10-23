@@ -34,13 +34,39 @@ def test_ngc0024_record(service):
     assert env["data"]["object_id"] == "SPARC:NGC0024"
 
 
+def test_v7_is_the_supported_release(service):
+    assert service.corpora["v7"].version == "7.3"
+
+
 def test_v7_distance_filter(service):
-    """Manuscript Sec. 3.2.2 quotes 119 for HI corpus v7.0. The bundled corpus is
-    v7.3 (WALLABY distances re-sourced, 2026-10-15), which gives 115."""
+    """Manuscript Sec. 3.2.2 (revised for HI v7.3): 115 of 438 galaxies at 1-10 Mpc.
+    (The superseded v7.0 gave 119.)"""
     env = service.call("filter_objects", corpus="v7", field="distance_mpc", min_val=1, max_val=10)
     assert env["success"]
-    expected = {"7.0": 119, "7.3": 115}[service.corpora["v7"].version]
-    assert env["data"]["n_matched"] == expected
+    assert env["data"]["n_matched"] == 115
+
+
+def test_superseded_v7_file_is_refused(tmp_path):
+    import json
+    import shutil
+
+    import pytest
+
+    from astro_rag_mcp.config import CORPORA, resolve_data_layout
+    from astro_rag_mcp.server import build_service
+
+    src = resolve_data_layout()
+    dst = tmp_path / "data"
+    (dst / "corpora").mkdir(parents=True)
+    shutil.copytree(src.faiss_dir(), dst / "faiss")
+    for spec in CORPORA.values():
+        shutil.copy2(src.corpus_path(spec), dst / "corpora" / spec.filename)
+    p = dst / "corpora" / CORPORA["v7"].filename
+    doc = json.loads(p.read_text(encoding="utf-8"))
+    doc["metadata"]["version"] = "7.0"
+    p.write_text(json.dumps(doc), encoding="utf-8")
+    with pytest.raises(ValueError, match="supports only"):
+        build_service(str(dst), semantic=False)
 
 
 def test_intz_redshift_filter_nested_field(service):

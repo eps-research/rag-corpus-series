@@ -44,6 +44,7 @@ class CorpusSpec:
     faiss_stem: str        # FAISS artifact stem
     expected_records: int
     release_label: str     # fallback version label if the file carries none
+    required_version: Optional[str] = None   # if set, any other file version is refused
 
 
 CORPORA: dict[str, CorpusSpec] = {
@@ -61,6 +62,9 @@ CORPORA: dict[str, CorpusSpec] = {
         faiss_stem="v7_sparc",
         expected_records=438,
         release_label="7.3",
+        # v7.3 is the only supported HI release: v7.0-v7.2 carry LITTLE THINGS
+        # model rows and superseded WALLABY data (CORRECTIONS.md).
+        required_version="7.3",
     ),
     "dwarf": CorpusSpec(
         key="dwarf",

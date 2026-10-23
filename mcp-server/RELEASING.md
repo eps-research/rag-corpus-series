@@ -3,7 +3,8 @@
 The release builder refuses to package a stale semantic index, and the
 Docker build refuses to build without passing `verify --with-model --strict`.
 Run the steps in order on a machine that can reach pypi.org, the PyTorch CPU
-index and huggingface.co (e.g. Node1). Paths are relative to the repository root.
+index and huggingface.co. Primary build host: the maintainer's laptop
+(Linux side); Node1 is optional redundancy. The laptop's Windows side covers §5. Paths are relative to the repository root.
 
 ## 1. Environment
 
@@ -34,6 +35,9 @@ example, do not change.
 
 ## 3. Verify with the real model
 
+"Real model" here is the MiniLM **embedding** model, not the chat LLM; Qwen is
+used only in §4.
+
 ```bash
 cd mcp-server
 python -m astro_rag_mcp verify --with-model --strict        # must print VERIFY: PASS
@@ -49,7 +53,7 @@ outputs unit vectors without explicit normalisation.
 
 ```bash
 python launch.py --no-browser &                                     # the server
-python tools/llm_acceptance.py --model qwen3:8b --repeats 3         # Ollama
+python tools/llm_acceptance.py --model qwen3:8b --repeats 3         # Ollama; use the exact tag `ollama list` shows
 python tools/llm_acceptance.py --llm http://localhost:1234/v1 --model <lmstudio-model-id> --repeats 3
 ```
 

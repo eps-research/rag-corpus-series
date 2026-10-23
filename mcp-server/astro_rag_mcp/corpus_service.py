@@ -225,12 +225,18 @@ def load_corpus(spec: CorpusSpec, layout: DataLayout) -> LoadedCorpus:
         raise ValueError(
             f"{spec.key}: expected {spec.expected_records} records, found {len(records)} in {path}"
         )
+    version = _version_from_file(spec, doc)
+    if spec.required_version and version != spec.required_version:
+        raise ValueError(
+            f"{spec.key}: {path.name} is version {version}; this server supports only "
+            f"{spec.name} v{spec.required_version}"
+        )
     ids = [canonical_object_id(spec.key, r) for r in records]
     lc = LoadedCorpus(
         spec=spec,
         path=path,
         sha256=sha256_file(path),
-        version=_version_from_file(spec, doc),
+        version=version,
         records=records,
         ids=ids,
     )
