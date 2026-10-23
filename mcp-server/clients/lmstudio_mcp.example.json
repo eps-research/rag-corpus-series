@@ -1,0 +1,7 @@
+{
+  "_comment": "LM Studio: open the Program tab, choose Install > Edit mcp.json, and merge one of the entries below. 'astro-rag-local' connects to a server started with 'python launch.py'; 'astro-rag-hosted' needs no installation. Then load a tool-capable model (e.g. a Qwen 3 instruct model) and enable the astro-rag tools in the chat.",
+  "mcpServers": {
+    "astro-rag-local": { "url": "http://127.0.0.1:8080/mcp" },
+    "astro-rag-hosted": { "url": "https://dflynn5656-astro-rag-mcp.hf.space/mcp" }
+  }
+}

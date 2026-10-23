@@ -556,6 +556,7 @@
       <button class="op-btn"        data-op="get_object"       onclick="selectOp(this)">Get object</button>
       <button class="op-btn"        data-op="search_metadata"  onclick="selectOp(this)">Search metadata</button>
       <button class="op-btn"        data-op="filter_objects"   onclick="selectOp(this)">Filter objects</button>
+      <button class="op-btn"        data-op="semantic_search"  onclick="selectOp(this)">Semantic search</button>
     </div>
   </aside>
 
@@ -606,7 +607,7 @@ const OPS = {
     params: [
       { id:'corpus',  label:'Corpus',  type:'corpus' },
       { id:'survey',  label:'Survey',  type:'text',   optional:true,  placeholder:'e.g. THINGS' },
-      { id:'tier',    label:'Tier',    type:'text',   optional:true,  placeholder:'e.g. gold' },
+      { id:'quality_tier', label:'Tier', type:'number', optional:true, placeholder:'1 or 2', width:'70px' },
       { id:'page',    label:'Page',    type:'number', default:'1',    width:'70px' },
       { id:'limit',   label:'Limit',   type:'number', default:'25',   width:'70px' },
     ],
@@ -637,6 +638,15 @@ const OPS = {
       { id:'min',              label:'Min',     type:'number', optional:true, width:'80px' },
       { id:'max',              label:'Max',     type:'number', optional:true, width:'80px' },
       { id:'omega_ready_only', label:'ω-ready', type:'bool',   optional:true },
+    ],
+  },
+  semantic_search: {
+    label: 'Semantic search',
+    endpoint: '/api/semantic_search',
+    params: [
+      { id:'corpus', label:'Corpus', type:'corpus' },
+      { id:'query',  label:'Query',  type:'text',   placeholder:'e.g. dwarf irregular low surface brightness', grow:true },
+      { id:'top_k',  label:'Top k',  type:'number', default:'10', width:'70px' },
     ],
   },
 };
@@ -800,7 +810,7 @@ function renderResult(json) {
   area.innerHTML = '';
 
   if (!json.success) {
-    area.innerHTML = `<div class="error-box">Error from server: ${json.error || 'Unknown error'}</div>`;
+    area.innerHTML = `<div class="error-box">Error from server: ${(json.error && (json.error.message || json.error)) || 'Unknown error'}</div>`;
     return;
   }
 

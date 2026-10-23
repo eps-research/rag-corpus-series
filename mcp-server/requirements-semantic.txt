@@ -1,0 +1,4 @@
+# Optional: the embedding model for semantic_search (all-MiniLM-L6-v2).
+# Pulls in PyTorch (CPU). The other six tools work without these packages.
+# The model itself (~90 MB) is downloaded from huggingface.co on first use.
+sentence-transformers>=2.7,<6

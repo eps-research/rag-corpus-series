@@ -43,3 +43,11 @@ papers/*.log
 # v7.3 HI catalogue tables, bundled deliberately (md5 d11d4c8b7e1dd5f479f961bca7639b70)
 !examples/hi/rotation_curve_corpus_v7.1_flat.csv
 !examples/highschool/rotation_curve_corpus_v7.1_flat.csv
+
+# MCP server: every file under mcp-server/ is source and must be committed,
+# including JSON (the global *.json rule above silently dropped such files).
+!mcp-server/**/*.json
+mcp-server/.venv/
+mcp-server/data/
+mcp-server/dist/
+.pytest_cache/

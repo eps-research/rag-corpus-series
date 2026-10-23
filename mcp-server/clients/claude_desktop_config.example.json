@@ -1,0 +1,11 @@
+{
+  "_comment": "Merge into Claude Desktop's claude_desktop_config.json (Settings > Developer > Edit Config). Replace PATH_TO with the absolute path of the extracted mcp-server folder, or run 'python launch.py --print-config' to get this block with your paths filled in. Windows: use ...\\.venv\\Scripts\\python.exe and double backslashes.",
+  "mcpServers": {
+    "astro-rag": {
+      "command": "PATH_TO/mcp-server/.venv/bin/python",
+      "args": ["-m", "astro_rag_mcp", "serve", "--transport", "stdio"],
+      "cwd": "PATH_TO/mcp-server",
+      "env": { "PYTHONPATH": "PATH_TO/mcp-server" }
+    }
+  }
+}

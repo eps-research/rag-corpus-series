@@ -1,0 +1,15 @@
+# EPS Research Astro-RAG MCP Server 2.4.0 — core requirements (Python 3.10–3.13)
+#
+# Bounded ranges so a fresh install resolves on every supported Python version.
+# The exact versions used for the release test run are in requirements.lock.txt.
+#
+# mcp is capped below 2.0: mcp 2.x renamed FastMCP and removed
+# mcp.server.fastmcp, which made the previous unpinned "mcp>=1.0.0" install fail.
+mcp>=1.26,<2
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
+pydantic>=2.7,<3
+httpx>=0.27,<1
+anyio>=4.4,<5
+numpy>=1.26,<3
+faiss-cpu>=1.8,<2

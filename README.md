@@ -26,8 +26,8 @@ Click the link above — the interface loads instantly in your browser via Huggi
 |-----------|-----|---------|
 | Query UI | [dflynn5656-astro-rag-mcp.hf.space](https://dflynn5656-astro-rag-mcp.hf.space) | Daily research — human-readable results, download options |
 | REST API / Swagger | [.../docs](https://dflynn5656-astro-rag-mcp.hf.space/docs) | Developer integration — full OpenAPI explorer |
-| MCP endpoint | `https://dflynn5656-astro-rag-mcp.hf.space/` | AI assistant integration (Claude, Copilot, etc.) |
-| Semantic search | [.../api/semantic_search](https://dflynn5656-astro-rag-mcp.hf.space/api/semantic_search) | Natural-language similarity search via FAISS |
+| MCP endpoint | `https://dflynn5656-astro-rag-mcp.hf.space/mcp` | AI assistant integration (Claude, LM Studio, Copilot, etc.) — Streamable HTTP |
+| Semantic search | [.../api/semantic_search?corpus=z1&query=rotator](https://dflynn5656-astro-rag-mcp.hf.space/api/semantic_search?corpus=z1&query=rotator) | Natural-language similarity search via FAISS |
 
 Corpus keys: `v7` · `dwarf` · `gc` · `intz` · `z1`
 
@@ -35,19 +35,14 @@ Corpus keys: `v7` · `dwarf` · `gc` · `intz` · `z1`
 
 ## 💻 Local Installation (offline / high-performance use)
 
-For local deployment on Windows 11 or Ubuntu:
-
-Download: [astro-rag-mcp-server-v2.3.0.zip from Zenodo](https://doi.org/10.5281/zenodo.21154451) · MIT License
+Runs the complete server (MCP, REST, browser UI, semantic search) on your own machine — Windows 11 or Ubuntu, Python 3.10–3.13. The corpora and FAISS indexes are read locally; nothing is proxied to Hugging Face.
 
 ```bash
-# Windows
-python launch.py
-
-# Ubuntu / Linux
-python3 launch.py
+cd mcp-server          # in this repository, or the extracted release ZIP
+python launch.py       # Windows   (Ubuntu: python3 launch.py)
 ```
 
-The launcher installs all dependencies automatically (first run ~60 seconds), then opens your browser to `http://localhost:8080`.
+The launcher creates a virtual environment, installs dependencies, verifies the data (2,064 objects, checksums, FAISS integrity) and starts the server at `http://127.0.0.1:8080` (MCP at `/mcp`). Full instructions, including Claude Desktop, LM Studio and Ollama/Qwen set-up: **[mcp-server/INSTALL.md](mcp-server/INSTALL.md)** · problems: [TROUBLESHOOTING.md](mcp-server/TROUBLESHOOTING.md).
 
 ---
 
@@ -74,9 +69,9 @@ Suitable for high school students — no command line required on Windows, no AP
 
 ## MCP Server
 
-All five corpora are available via a persistent Model Context Protocol (MCP) server — a true LLM-native data API implementing the Anthropic MCP specification with SSE and Streamable HTTP transports.
+All five corpora are available via a persistent Model Context Protocol (MCP) server — a true LLM-native data API implementing the Model Context Protocol over Streamable HTTP (JSON-RPC 2.0) and stdio. There is no separate SSE endpoint.
 
-**Endpoint:** `https://dflynn5656-astro-rag-mcp.hf.space/`
+**Endpoint:** `https://dflynn5656-astro-rag-mcp.hf.space/mcp` · run locally: [mcp-server/INSTALL.md](mcp-server/INSTALL.md)
 
 | Tool | Description |
 |------|-------------|
