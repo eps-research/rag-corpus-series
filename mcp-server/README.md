@@ -17,9 +17,13 @@ with FAISS semantic search. MIT License.
 | `intz` | IntZ Kinematic Corpus v1.0 | 1,292 | z ≈ 0.38–2.68 | 10.5281/zenodo.21841382 |
 | `z1` | High-z ALPINE Kinematic Corpus Z1 v3 | 31 | z = 4.26–5.68 | 10.5281/zenodo.21834678 |
 
-IntZ ω values are withdrawn and Z1 ω values were recomputed (August 2026); the
-server attaches these notices to every affected response. See
-[../CORRECTIONS.md](../CORRECTIONS.md).
+Corrections that affect served data are attached to every affected response:
+IntZ ω values are withdrawn and Z1 ω values recomputed (August 2026); GC v1.4.0
+replaces the parser-defective v1.0–v1.3.3; HI v7.3 supersedes v7.0–v7.2; and
+Dwarf v1.0 LITTLE THINGS curves contain unmarked model rows (flagged per record,
+with a pointer to the observed curve in `v7`). Full history:
+[CORRECTIONS.md](https://github.com/eps-research/rag-corpus-series/blob/main/CORRECTIONS.md)
+(a copy is included in the release archive).
 
 ## Tools
 
@@ -60,8 +64,21 @@ discovery aid; take values from `get_object`.
 * `data/SHA256SUMS` in a release or container — any mismatch stops the server;
 * each FAISS index: `IndexFlatL2`, d = 384, vectors = IDs = texts = records,
   every ID resolves to a record, finite unit vectors;
+* index freshness: the text embedded for every record must agree with the
+  record now served (distance, inclination, velocities, redshift, ω, caveats …),
+  and, when `faiss/index_manifest.json` exists, the index must have been built
+  from the loaded corpus file. A stale index is reported and semantic search on
+  that corpus is refused; the other tools are unaffected;
 * embedding self-test: one stored text per corpus is re-embedded and must
-  reproduce its stored vector, so a different model cannot silently change rankings.
+  reproduce its stored vector, so a different model cannot silently change
+  rankings; query embeddings are L2-normalised explicitly.
+
+Record-level data-quality flags: Dwarf v1.0 LITTLE THINGS records report
+`data_quality` with the number of model rows and the `v7` record holding the
+observed curve.
+
+**Pre-release status:** the v7 semantic index predates HI v7.3 and is `stale`
+until rebuilt (see [RELEASING.md](RELEASING.md)).
 
 `python -m astro_rag_mcp verify` prints the full report; `/health` serves it live.
 
@@ -73,12 +90,15 @@ mcp-server/
 ├── astro_rag_mcp/         the server package
 │   ├── corpus_service.py  the seven operations (shared by MCP and REST)
 │   ├── semantic.py        FAISS loading, integrity checks, search
+│   ├── index_text.py      index-text/record consistency rules (shared with the builder)
 │   ├── server.py          MCP tools, REST routes, UI on one ASGI app
 │   ├── cli.py             serve / verify / version
 │   └── static/index.html  browser interface
 ├── clients/               Claude Desktop & LM Studio configs, local-LLM bridge
 ├── tests/                 pytest suite (parity, manuscript values, integrity)
 ├── tools/build_release.py builds the ZIP, MANIFEST.txt and SHA256SUMS
+├── tools/llm_acceptance.py recorded pass/fail test of a real local LLM
+├── tools/make_evidence.py  evidence bundle for independent audits
 ├── Dockerfile             Hugging Face Space image (built from the release)
 └── requirements*.txt
 ```
@@ -96,7 +116,7 @@ ASTRO_RAG_TEST_REAL_MODEL=1 pytest             # also run the real-model test (d
 ## Citation
 
 Flynn, D. C. (2026). *EPS Research Astro-RAG MCP Server* (v2.4.0). Zenodo.
-Concept DOI and version DOI: see [../CITATION.cff](../CITATION.cff).
+Machine-readable citation: [CITATION.cff](CITATION.cff).
 
 Flynn, D. C. (2026). Astro-RAG MCP Server: AI-native, reproducible access to
 cross-epoch astrophysical kinematic corpora. *Frontiers in Astronomy and Space

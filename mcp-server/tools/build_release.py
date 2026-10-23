@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -33,10 +34,28 @@ from astro_rag_mcp.config import CORPORA, DataLayout, resolve_data_layout  # noq
 
 TOP_FILES = [
     "launch.py", "README.md", "INSTALL.md", "TROUBLESHOOTING.md", "CHANGELOG.md",
-    "LICENSE", "CORPUS_KEYS.md", "Dockerfile", "requirements.txt",
+    "LICENSE", "CORPUS_KEYS.md", "CITATION.cff", "RELEASING.md", "requirements-full.lock.txt", "Dockerfile", "requirements.txt",
     "requirements-semantic.txt", "requirements-dev.txt", "requirements.lock.txt", "MANIFEST.txt",
 ]
 TREES = ["astro_rag_mcp", "tests", "clients", "tools"]
+# Repository-root files bundled into the release root (referenced by the docs).
+REPO_FILES = ["CORRECTIONS.md"]
+LINK = re.compile(r"\]\(([^)\s]+)\)")
+
+
+def broken_links(root: Path) -> list[str]:
+    """Relative Markdown links under ``root`` that do not resolve inside ``root``."""
+    bad = []
+    for md in sorted(root.rglob("*.md")):
+        if set(md.relative_to(root).parts) & SKIP_PARTS:
+            continue
+        for target in LINK.findall(md.read_text(encoding="utf-8")):
+            if re.match(r"^[a-z][a-z0-9+.-]*:", target) or target.startswith("#"):
+                continue
+            path = (md.parent / target.split("#", 1)[0]).resolve()
+            if not path.exists() or root.resolve() not in path.parents and path != root.resolve():
+                bad.append(f"{md.relative_to(root)} -> {target}")
+    return bad
 SKIP_PARTS = {"__pycache__", ".pytest_cache", ".venv", "data", "dist"}
 ZIP_DATE = (2026, 1, 1, 0, 0, 0)
 
@@ -77,12 +96,24 @@ def git_commit() -> str:
         return "unknown"
 
 
-def build(out_root: Path) -> Path:
+def index_states() -> dict[str, str]:
+    from astro_rag_mcp.server import build_service
+    svc = build_service()
+    return {k: ci.state for k, ci in svc.semantic.indexes.items()}
+
+
+def build(out_root: Path, allow_stale: bool = False) -> Path:
+    states = index_states()
+    stale = sorted(k for k, s in states.items() if s != "ok")
+    if stale and not allow_stale:
+        sys.exit(f"refusing to build a release: semantic indexes not current: {stale} ({states}). "
+                 "Rebuild them (build_scripts/build_faiss_indexes.py), or pass --allow-stale "
+                 "for a clearly labelled pre-release.")
     files = write_manifest()
     missing = [f for f in files if not (SERVER / f).is_file()]
     if missing:
         sys.exit(f"missing program files: {missing}")
-    name = f"astro-rag-mcp-server-{__version__}"
+    name = f"astro-rag-mcp-server-{__version__}" + ("-prerelease" if stale else "")
     stage = out_root / name
     if stage.exists():
         shutil.rmtree(stage)
@@ -92,6 +123,13 @@ def build(out_root: Path) -> Path:
         dst = stage / f
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(SERVER / f, dst)
+
+    repo_root = SERVER.parent
+    for f in REPO_FILES:
+        if not (repo_root / f).is_file():
+            sys.exit(f"missing repository file {f}")
+        shutil.copy2(repo_root / f, stage / f)
+        files.append(f)
 
     src = resolve_data_layout()
     rel_out = DataLayout(stage / "data", "release")
@@ -105,6 +143,10 @@ def build(out_root: Path) -> Path:
             shutil.copy2(src.faiss_dir() / f"{spec.faiss_stem}{suffix}",
                          rel_out.faiss_dir() / f"{spec.faiss_stem}{suffix}")
             data_files.append(f"faiss/{spec.faiss_stem}{suffix}")
+    manifest = src.faiss_dir() / "index_manifest.json"
+    if manifest.is_file():
+        shutil.copy2(manifest, rel_out.faiss_dir() / manifest.name)
+        data_files.append(f"faiss/{manifest.name}")
     (stage / "data" / "SHA256SUMS").write_text(
         "".join(f"{sha256(stage / 'data' / f)}  {f}\n" for f in sorted(data_files)),
         encoding="utf-8", newline="\n")
@@ -118,7 +160,13 @@ def build(out_root: Path) -> Path:
         "corpora": {k: s.filename for k, s in CORPORA.items()},
         "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
         "mcp_transport": "Streamable HTTP at /mcp (JSON-RPC 2.0); stdio; no SSE endpoint",
+        "semantic_index_states": states,
+        "status": "release" if not stale else
+                  f"PRE-RELEASE: semantic indexes not current for {stale}; not for publication",
     }
+    bad = broken_links(stage)
+    if bad:
+        sys.exit("broken relative links in release documents:\n  " + "\n  ".join(bad))
     (stage / "RELEASE.json").write_text(json.dumps(release, indent=2) + "\n", encoding="utf-8")
 
     every = sorted(p.relative_to(stage).as_posix() for p in stage.rglob("*")
@@ -144,11 +192,13 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--manifest-only", action="store_true")
     ap.add_argument("--out", default=str(SERVER / "dist"))
+    ap.add_argument("--allow-stale", action="store_true",
+                    help="build a '-prerelease' archive even if a semantic index is stale")
     a = ap.parse_args()
     if a.manifest_only:
         print(f"MANIFEST.txt: {len(write_manifest())} files")
         return
-    build(Path(a.out))
+    build(Path(a.out), allow_stale=a.allow_stale)
 
 
 if __name__ == "__main__":

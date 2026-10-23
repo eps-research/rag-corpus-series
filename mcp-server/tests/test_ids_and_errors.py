@@ -92,3 +92,25 @@ def test_list_objects_filters_and_paging(service):
 
 def test_unknown_tool(service):
     assert service.call("drop_tables")["error"]["code"] == "UNKNOWN_TOOL"
+
+
+def test_dwarf_little_things_model_rows_flagged(service):
+    """Dwarf v1.0 LITTLE THINGS curves carry 839 unmarked model rows in 25 of 26
+    galaxies (CORRECTIONS.md, 2 Oct 2026). Every affected record is flagged and
+    points to its observed-only curve in v7; no data are changed."""
+    notes = [n for (c, _), n in service.record_notes.items() if c == "dwarf"]
+    assert len(notes) == 25
+    assert sum(n["n_model_rows"] for n in notes) == 839
+    env = service.call("get_object", corpus="dwarf", object_id="CVnIdwA")
+    assert env["success"] and env["warnings"]
+    dq = env["data"]["data_quality"]
+    assert dq["n_model_rows"] == 16 and dq["observed_curve"] == {"corpus": "v7", "object_id": "LITTLE_THINGS:CVnIdwA"}
+    obs = service.call("get_object", **dq["observed_curve"])
+    assert obs["success"] and len(obs["data"]["record"]["data"]) == dq["n_observed_rows"]
+    assert len(env["data"]["record"]["data"]) == 30        # data served unchanged
+
+
+def test_omega_ready_only_on_corpus_without_omega_warns(service):
+    env = service.call("filter_objects", corpus="v7", field="distance_mpc", omega_ready_only=True)
+    assert env["data"]["n_matched"] == 0
+    assert any("by construction" in w for w in env["warnings"])

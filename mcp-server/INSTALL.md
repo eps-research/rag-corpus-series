@@ -117,6 +117,7 @@ Options:
 | `python launch.py --no-browser` | do not open a browser (servers, SSH) |
 | `python launch.py --host 0.0.0.0` | allow other machines on your network to connect |
 | `python launch.py --check` | install, verify, run the test suite, exit |
+| `python launch.py --locked` | install the exact dependency versions the release was tested with (`requirements*.lock.txt`) |
 | `python launch.py --print-config` | print MCP client configuration with your paths |
 
 **Manual alternative** (no launcher):
@@ -190,6 +191,16 @@ The same bridge works with LM Studio (`--llm http://localhost:1234/v1`),
 llama.cpp's server and vLLM. Add `-q "your question"` for a single question.
 Tool calling with models below ~7B parameters is often unreliable.
 
+To record whether a given model actually works with the server, run the
+acceptance harness. It asks five fixed questions (including one about a
+withdrawn ω value that the model must report as withdrawn), checks the tool
+calls and answers automatically, and writes a JSON evidence file:
+
+```bash
+.venv/bin/python tools/llm_acceptance.py --model qwen3:8b                              # Ollama
+.venv/bin/python tools/llm_acceptance.py --llm http://localhost:1234/v1 --model qwen3-8b  # LM Studio
+```
+
 ### Python, without an LLM
 
 ```python
@@ -211,14 +222,39 @@ anyio.run(main)
 
 ---
 
-## D. Offline use and pre-downloading the model
+## D. Network use and offline operation
 
-Everything except the embedding model is local. To use `semantic_search` on a
-machine without internet access, run `python launch.py --check` once on a
-connected machine (this downloads the model into `~/.cache/huggingface`), then
-copy that cache folder to the same place on the offline machine and set
-`HF_HUB_OFFLINE=1`. At every start the server re-embeds one stored record per
-corpus and refuses to run semantic search if the result differs from the
-stored vector, so a mismatched model cannot silently produce wrong rankings.
+What needs the network, and when:
+
+| Step | Network | Source |
+|---|---|---|
+| Installing dependencies (first run) | yes | pypi.org; download.pytorch.org (CPU PyTorch) |
+| Corpora and FAISS indexes | **no** | bundled in the release / repository |
+| Embedding model (first `semantic_search` only) | yes, once | huggingface.co, ~90 MB, cached in `~/.cache/huggingface` |
+| Running the server and all seven tools afterwards | **no** | — |
+
+To run fully offline (e.g. an air-gapped analysis node): on a connected
+machine run `python launch.py --check`, which installs everything and
+downloads the model; copy the `mcp-server` folder (including `.venv` if the
+OS and Python version match, otherwise reinstall from a local wheel cache) and
+`~/.cache/huggingface` (Windows: `%USERPROFILE%\.cache\huggingface`) to the
+offline machine, and set `HF_HUB_OFFLINE=1`. Without the model, the server
+still runs and the other six tools work; `semantic_search` returns
+`SEMANTIC_UNAVAILABLE`.
+
+At every start the server re-embeds one stored record per corpus and refuses
+semantic search for that corpus if the result differs from the stored vector,
+so a different model or model revision cannot silently change rankings. When
+`faiss/index_manifest.json` records the model revision used to build the
+indexes, the server loads exactly that revision.
+
+## E. Semantic index status
+
+`/health` (and `list_corpora`) report a state for each corpus's semantic index:
+`ok`, `stale` (the index was built from an earlier version of the corpus;
+semantic search on that corpus is refused, other tools are unaffected) or
+`failed`. In this 2.4.0 pre-release the **v7** index is `stale`: it was built
+from HI corpus v7.0, while the server serves v7.3. It is rebuilt with
+`build_scripts/build_faiss_indexes.py` (see `RELEASING.md`).
 
 See `TROUBLESHOOTING.md` for common problems.

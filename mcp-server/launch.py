@@ -103,28 +103,38 @@ def pip(args: list) -> None:
              "Check your internet connection or proxy, then run launch.py again.")
 
 
-def install(semantic: bool, dev: bool) -> None:
-    want = {"core": True, "semantic": semantic, "dev": dev}
+def torch_pin() -> str:
+    for ln in (HERE / "requirements-full.lock.txt").read_text(encoding="utf-8").splitlines():
+        if ln.startswith("torch=="):
+            return ln.split(";")[0].strip()
+    return "torch"
+
+
+def install(semantic: bool, dev: bool, locked: bool = False) -> None:
+    want = {"core": True, "semantic": semantic, "dev": dev, "locked": locked}
     have = json.loads(STAMP.read_text(encoding="utf-8")) if STAMP.is_file() else {}
     req_hash = {n: (HERE / n).read_text(encoding="utf-8") for n in
-                ("requirements.txt", "requirements-semantic.txt", "requirements-dev.txt")}
+                ("requirements.txt", "requirements-semantic.txt", "requirements-dev.txt",
+                 "requirements.lock.txt", "requirements-full.lock.txt")}
     if have.get("reqs") == req_hash and all(have.get(k) for k, v in want.items() if v):
         say("[4/6] Dependencies already installed")
         return
     say("[4/6] Installing dependencies (first run: ~1 min core, several minutes with semantic search)")
     pip(["install", "--upgrade", "pip", "-q"])
-    pip(["install", "-r", HERE / "requirements.txt"])
+    core_req = "requirements.lock.txt" if locked else "requirements.txt"
+    if not (locked and semantic):
+        pip(["install", "-r", HERE / core_req])
     if dev:
         pip(["install", "-r", HERE / "requirements-dev.txt"])
     if semantic:
         if platform.system() in ("Windows", "Linux"):
             # CPU-only PyTorch: ~200 MB instead of multi-GB CUDA wheels.
-            r = run([venv_python(), "-m", "pip", "install", "torch",
+            r = run([venv_python(), "-m", "pip", "install", torch_pin() if locked else "torch",
                      "--index-url", "https://download.pytorch.org/whl/cpu",
                      "--disable-pip-version-check"])
             if r.returncode != 0:
                 say("      CPU PyTorch index unavailable; installing PyTorch from PyPI instead")
-        pip(["install", "-r", HERE / "requirements-semantic.txt"])
+        pip(["install", "-r", HERE / ("requirements-full.lock.txt" if locked else "requirements-semantic.txt")])
     STAMP.write_text(encoding="utf-8", data=json.dumps({**{k: v or have.get(k, False) for k, v in want.items()},
                                  "reqs": req_hash}))
 
@@ -148,6 +158,10 @@ def verify(semantic: bool, with_model: bool) -> None:
         f"checksums {'verified' if rep['checksums'].get('checked') else 'not applicable (repository layout)'}; "
         f"FAISS: " + (", ".join(f"{k} {v['state']}" for k, v in sem.get("indexes", {}).items())
                       or "not loaded (--no-semantic)"))
+    for k, v in sem.get("indexes", {}).items():
+        if v["state"] == "stale":
+            say(f"      WARNING: semantic index '{k}' predates a corpus correction; semantic_search "
+                f"on '{k}' is disabled until it is rebuilt (the other tools are unaffected).")
     if with_model:
         say(f"      embedding model: {sem.get('state')}"
             + (f" — {sem.get('model_error')}" if sem.get("model_error") else ""))
@@ -186,6 +200,8 @@ def main() -> None:
     ap.add_argument("--no-semantic", action="store_true")
     ap.add_argument("--no-browser", action="store_true")
     ap.add_argument("--check", action="store_true", help="set up, verify and run the test suite, then exit")
+    ap.add_argument("--locked", action="store_true",
+                    help="install the exact versions in the lock files (the release-tested set)")
     ap.add_argument("--print-config", action="store_true")
     ap.add_argument("--stdio", action="store_true", help="serve MCP over stdio (no setup output)")
     a = ap.parse_args()
@@ -210,7 +226,7 @@ def main() -> None:
     check_python()
     check_manifest()
     ensure_venv()
-    install(semantic, dev=a.check)
+    install(semantic, dev=a.check, locked=a.locked)
     verify(semantic, with_model=semantic and a.check)
 
     if a.check:

@@ -8,7 +8,9 @@ text sidecars are therefore retained as frozen serialization baselines.
 Migration policy
 ----------------
 v7:
-    preserve legacy retrieval text exactly;
+    preserve the legacy retrieval grammar; rewrite in place only the values
+    corrected by HI corpus v7.2/v7.3 (distance, inclination, max/mean rotation
+    velocity, radial extent), using mcp-server/astro_rag_mcp/index_text.py;
     canonical ID = survey:galaxy.
 
 dwarf:
@@ -31,19 +33,34 @@ GC:
     the legacy sidecar contains stale Harris-parser values;
     canonical ID = cluster_id.
 
+Every corpus:
+    before embedding, the text of every record is checked against the record
+    with the same field specifications the server uses at start-up
+    (index_text.check_text); any disagreement aborts the build.
+
 Embedding:
-    sentence-transformers/all-MiniLM-L6-v2
-    384 dimensions
+    sentence-transformers/all-MiniLM-L6-v2, revision recorded
+    384 dimensions, explicitly L2-normalised
     FAISS IndexFlatL2
+
+Provenance:
+    faiss/index_manifest.json records, per corpus, the SHA-256 of the corpus
+    file, of the three artifacts, the model name and revision, and the build
+    time. The server marks an index stale if its corpus file changes.
 """
 
 import argparse
+import datetime
+import hashlib
 import json
 import re
 import shutil
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "mcp-server"))
+from astro_rag_mcp.index_text import check_text, refresh_v7_text  # noqa: E402
 BASE = ROOT / "build_scripts" / "faiss_legacy_texts"
 MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
@@ -79,6 +96,26 @@ SPECS = {
         "count": 129,
     },
 }
+
+
+MANIFEST = "index_manifest.json"
+
+
+def sha256(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def write_manifest(path, entries):
+    """Merge per-corpus build records into faiss/index_manifest.json."""
+    doc = {"schema": 1, "corpora": {}}
+    if path.exists():
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    doc.setdefault("corpora", {}).update(entries)
+    path.write_text(json.dumps(doc, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def load_json(path):
@@ -161,8 +198,11 @@ def build_texts(kind, rows):
             f"{kind}: baseline count {len(old)} != corpus count {len(rows)}"
         )
 
-    if kind in ("v7", "dwarf"):
+    if kind == "dwarf":
         return list(old)
+
+    if kind == "v7":
+        return [refresh_v7_text(text, r) for r, text in zip(rows, old)]
 
     if kind == "intz":
         out = []
@@ -290,6 +330,12 @@ def prepare(kind):
     if any(not isinstance(t, str) or not t.strip() for t in texts):
         raise RuntimeError(f"{kind}: invalid blank text")
 
+    stale = [(i, b) for i, (r, t) in enumerate(zip(rows, texts)) if (b := check_text(kind, r, t))]
+    if stale:
+        raise RuntimeError(
+            f"{kind}: {len(stale)} texts disagree with the corpus, e.g. row {stale[0][0]}: {stale[0][1]}"
+        )
+
     return rows, ids, texts
 
 
@@ -303,6 +349,8 @@ def main():
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--text-only", action="store_true")
     ap.add_argument("--install", action="store_true")
+    ap.add_argument("--revision", default=None,
+                    help="Hugging Face revision (commit hash) of the embedding model to pin")
     args = ap.parse_args()
 
     out = Path(args.out_dir)
@@ -333,7 +381,17 @@ def main():
     import numpy as np
     from sentence_transformers import SentenceTransformer
 
-    model = SentenceTransformer(MODEL, local_files_only=True)
+    model = SentenceTransformer(MODEL, local_files_only=True,
+                                **({"revision": args.revision} if args.revision else {}))
+    revision = args.revision
+    if not revision:
+        for mod in model.modules():
+            path = getattr(getattr(mod, "auto_model", None), "name_or_path", "") or ""
+            m = re.search(r"snapshots[/\\]([0-9a-f]{40})", str(path))
+            if m:
+                revision = m.group(1)
+                break
+    print(f"model: {MODEL} revision {revision or 'UNKNOWN'}")
 
     try:
         dim = model.get_embedding_dimension()
@@ -343,6 +401,7 @@ def main():
     if dim != 384:
         raise RuntimeError(f"embedding dimension {dim}, expected 384")
 
+    manifest_entries = {}
     for kind in kinds:
         _, ids, texts = prepared[kind]
         stem = SPECS[kind]["stem"]
@@ -352,7 +411,7 @@ def main():
             batch_size=64,
             show_progress_bar=True,
             convert_to_numpy=True,
-            normalize_embeddings=False,
+            normalize_embeddings=True,
         ).astype("float32", copy=False)
 
         if vec.shape != (len(texts), 384):
@@ -362,6 +421,9 @@ def main():
 
         if not np.isfinite(vec).all():
             raise RuntimeError(f"{kind}: non-finite embeddings")
+
+        if np.abs(np.linalg.norm(vec, axis=1) - 1.0).max() > 1e-4:
+            raise RuntimeError(f"{kind}: embeddings not unit-normalised")
 
         index = faiss.IndexFlatL2(384)
         index.add(vec)
@@ -387,6 +449,21 @@ def main():
             f"dim={reread.d}"
         )
 
+        manifest_entries[kind] = {
+            "source_file": SPECS[kind]["source"].name,
+            "source_sha256": sha256(SPECS[kind]["source"]),
+            "records": len(texts),
+            "embedding_model": MODEL,
+            "embedding_revision": revision,
+            "normalized": True,
+            "index_type": "IndexFlatL2",
+            "built_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "artifact_sha256": {
+                f"{stem}{suf}": sha256(out / f"{stem}{suf}")
+                for suf in (".faiss", "_ids.json", "_texts.json")
+            },
+        }
+
     total = sum(len(prepared[k][1]) for k in kinds)
 
     if args.only == "all" and total != 2064:
@@ -396,8 +473,11 @@ def main():
 
     print(f"vector total: {total}")
 
+    write_manifest(out / MANIFEST, manifest_entries)
+
     if args.install:
         dest = ROOT / "faiss"
+        write_manifest(dest / MANIFEST, manifest_entries)
 
         for kind in kinds:
             stem = SPECS[kind]["stem"]

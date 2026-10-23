@@ -127,24 +127,38 @@ CORPORA: dict[str, CorpusSpec] = {
 CORPUS_KEYS = list(CORPORA)
 EXPECTED_TOTAL = sum(s.expected_records for s in CORPORA.values())   # 2064
 
+CORRECTIONS_URL = "https://github.com/eps-research/rag-corpus-series/blob/main/CORRECTIONS.md"
+
 # Scientific status notes attached to responses from the affected corpora so a
 # client (human or LLM) cannot read a withdrawn value without seeing its status.
 CORRECTION_NOTICES: dict[str, str] = {
+    "v7": (
+        "HI corpus v7.3 (2026-10-15) supersedes v7.0-v7.2: LITTLE THINGS model rows removed "
+        "(v7.2) and WALLABY curves, geometry and distances re-sourced to the DR2 kinematic "
+        "catalogue (v7.3). See CORRECTIONS.md (also in the release)."
+    ),
+    "dwarf": (
+        "Dwarf/Irregular v1.0 LITTLE THINGS curves (26 galaxies, including all 24 omega-ready "
+        "ones) contain Oh et al. (2015) pseudo-isothermal MODEL rows interleaved with the "
+        "observed rows and stored as Vrot; summary fields of those records derive from the "
+        "combined rows. The observed-only curves are the LITTLE_THINGS records of corpus v7 "
+        "(HI v7.3). A corrected Dwarf release is pending. See CORRECTIONS.md (2 October 2026)."
+    ),
     "intz": (
         "All 166 IntZ omega values were withdrawn in August 2026 (formula-implementation "
         "discrepancy and template-derived boundary points). Every record has "
         "omega.omega_available=false. Fields named legacy_omega_* hold the withdrawn "
         "values for provenance only and must not be used as measurements. "
-        "See CORRECTIONS.md."
+        "See CORRECTIONS.md (also in the release)."
     ),
     "z1": (
         "Z1 omega values were recomputed with the canonical Eq. 6 on 2026-08-07; earlier "
         "negative values are withdrawn. Use omega.omega_value_rad_gyr only where "
-        "omega.omega_available=true. See CORRECTIONS.md."
+        "omega.omega_available=true. See CORRECTIONS.md (also in the release)."
     ),
     "gc": (
         "GC v1.4.0 replaces releases v1.0-v1.3.3, which carried a fixed-width parsing "
-        "defect (127 of 174 records changed). See CORRECTIONS.md."
+        "defect (127 of 174 records changed). See CORRECTIONS.md (also in the release)."
     ),
 }
 

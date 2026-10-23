@@ -1,0 +1,59 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "EPS Research Astro-RAG MCP Server"
+version: "2.4.0"
+authors:
+  - family-names: Flynn
+    given-names: David C.
+    orcid: "https://orcid.org/0000-0002-2768-6650"
+    affiliation: EPS Research
+license: MIT
+repository-code: "https://github.com/eps-research/rag-corpus-series"
+url: "https://dflynn5656-astro-rag-mcp.hf.space"
+abstract: >
+  Model Context Protocol server, REST API and browser interface for five
+  DOI-versioned astrophysical kinematic corpora (2,064 objects, z = 0 to 5.68)
+  with FAISS semantic search, start-up data-integrity checks and provenance
+  in every response.
+keywords:
+  - Model Context Protocol
+  - astrostatistics
+  - FAISS
+  - semantic search
+  - galaxy kinematics
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21154451"
+    description: "Software version 2.3.0 (previous version). Add the 2.4.0 version DOI here when it is minted."
+references:
+  - type: data
+    title: "Unified HI Rotation Curve Corpus v7.3"
+    authors:
+      - family-names: Flynn
+        given-names: David C.
+    doi: "10.5281/zenodo.23442703"
+  - type: data
+    title: "Dwarf/Irregular HI Corpus v1.0"
+    authors:
+      - family-names: Flynn
+        given-names: David C.
+    doi: "10.5281/zenodo.20320362"
+  - type: data
+    title: "Milky Way Globular Cluster Corpus v1.4.0"
+    authors:
+      - family-names: Flynn
+        given-names: David C.
+    doi: "10.5281/zenodo.22077426"
+  - type: data
+    title: "IntZ Kinematic Corpus v1.0"
+    authors:
+      - family-names: Flynn
+        given-names: David C.
+    doi: "10.5281/zenodo.21841382"
+  - type: data
+    title: "High-z ALPINE Kinematic Corpus Z1 v3"
+    authors:
+      - family-names: Flynn
+        given-names: David C.
+    doi: "10.5281/zenodo.21834678"

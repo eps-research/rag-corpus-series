@@ -84,7 +84,9 @@ def test_ui_docs_health(client):
     spec = client.get("/openapi.json").json()
     assert {p.split("/api/")[1] for p in spec["paths"] if p.startswith("/api/")} == EXPECTED_TOOLS
     h = client.get("/health").json()
-    assert h["status"] == "ok" and h["n_total"] == 2064
+    assert h["status"] in ("ok", "degraded") and h["n_total"] == 2064
+    stale = [k for k, i in h["semantic_search"]["indexes"].items() if i["state"] == "stale"]
+    assert (h["status"] == "degraded") == bool(stale)
 
 
 def test_parity_in_process(service, client):

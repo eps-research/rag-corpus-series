@@ -42,6 +42,8 @@ def main(argv: list[str] | None = None) -> int:
     _common(v)
     v.add_argument("--with-model", action="store_true",
                    help="Also load the embedding model and run the re-embedding self-test")
+    v.add_argument("--strict", action="store_true",
+                   help="Also fail on stale semantic indexes (release and container builds use this)")
 
     sub.add_parser("version", help="Print the version")
 
@@ -67,10 +69,16 @@ def main(argv: list[str] | None = None) -> int:
         report = service.health()
         print(json.dumps(report, indent=2))
         sem = report["semantic_search"]
-        idx_ok = sem.get("state") == "disabled" or all(
-            i["state"] == "ok" for i in sem.get("indexes", {}).values())
-        model_ok = (not args.with_model) or sem.get("state") == "ready"
-        ok = report["n_total"] == 2064 and idx_ok and model_ok
+        idx = sem.get("indexes", {})
+        failed = [k for k, i in idx.items() if i["state"] == "failed"]
+        stale = [k for k, i in idx.items() if i["state"] == "stale"]
+        model_ok = (not args.with_model) or sem.get("state") in ("ready", "degraded")
+        ok = report["n_total"] == 2064 and not failed and model_ok and not (args.strict and stale)
+        for k in stale:
+            print(f"WARNING: semantic index '{k}' is STALE; semantic_search on '{k}' is refused "
+                  f"until it is rebuilt: {idx[k]['reason']}", file=sys.stderr)
+        for k in failed:
+            print(f"ERROR: semantic index '{k}' FAILED: {idx[k]['reason']}", file=sys.stderr)
         print("VERIFY: PASS" if ok else "VERIFY: FAIL", file=sys.stderr)
         return 0 if ok else 1
 

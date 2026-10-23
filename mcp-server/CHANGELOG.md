@@ -2,6 +2,28 @@
 
 ## 2.4.0 — 2026-10 (response to Frontiers review, manuscript 2001275)
 
+### Audit round 1 (Sol, 2026-10-23)
+- **Stale v7 semantic index detected and enforced.** The v7 FAISS text was built
+  from HI v7.0 (0 disagreements with v7.0; 438 of 438 with v7.3: WALLABY
+  distances/geometry/velocities, LITTLE THINGS velocities and extents, superseded
+  caveat wording). The server now checks index text against the served records
+  at start-up and refuses semantic search on a stale corpus (`INDEX_STALE`).
+  The builder regenerates v7 text from v7.3 and writes `faiss/index_manifest.json`;
+  the rebuild itself needs the real model (RELEASING.md §2).
+- **Dwarf v1.0 LITTLE THINGS model rows flagged.** 839 unmarked Oh et al. (2015)
+  model rows in 25 of 26 curves (matching CORRECTIONS.md). Records now carry
+  `data_quality` and a warning naming the observed curve in `v7`. No data changed.
+- Explicit L2 normalisation of query and index embeddings; model revision
+  recorded by the builder and pinned by the server.
+- Release ZIP bundles CORRECTIONS.md and a software CITATION.cff; the builder
+  fails on broken relative links and on stale indexes (`--allow-stale` produces
+  a `-prerelease` archive).
+- Full dependency lock (`requirements-full.lock.txt`, Python 3.10–3.13, Linux and
+  Windows) and `launch.py --locked`; the Docker image installs from it.
+- `tools/llm_acceptance.py` (recorded pass/fail runs with a real local model) and
+  `tools/make_evidence.py` (evidence bundle for independent audits).
+- `filter_objects(..., omega_ready_only=True)` warns when a corpus has no ω field.
+
 Fixes to make local installation and reproduction work from a clean download.
 
 ### Fixed

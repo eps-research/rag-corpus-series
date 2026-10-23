@@ -51,3 +51,5 @@ mcp-server/.venv/
 mcp-server/data/
 mcp-server/dist/
 .pytest_cache/
+mcp-server/evidence/
+llm_acceptance_*.json

@@ -30,6 +30,7 @@ from .config import (
     CORPORA,
     CORPUS_KEYS,
     CORRECTION_NOTICES,
+    CORRECTIONS_URL,
     EXPECTED_TOTAL,
     CorpusSpec,
     DataLayout,
@@ -259,6 +260,9 @@ class CorpusService:
         self.corpora: dict[str, LoadedCorpus] = {}
         self.semantic = semantic          # astro_rag_mcp.semantic.SemanticIndex or None
         self.checksum_report: dict[str, Any] = {"checked": False}
+        # (corpus, row) -> list of record-level warnings, and machine-readable notes
+        self.record_warnings: dict[tuple[str, int], list[str]] = {}
+        self.record_notes: dict[tuple[str, int], dict] = {}
 
     # ── loading ──
     def load(self, verify_checksums: bool = True) -> None:
@@ -274,6 +278,45 @@ class CorpusService:
             raise ValueError(f"expected {EXPECTED_TOTAL} records in total, found {total}")
         if verify_checksums:
             self.verify_checksums()
+        self._flag_dwarf_little_things()
+
+    def _flag_dwarf_little_things(self) -> None:
+        """Flag Dwarf v1.0 LITTLE THINGS curves that carry interleaved model rows.
+
+        The observed curve of each galaxy is the LITTLE_THINGS record in v7
+        (HI v7.3, observed rows only); rows of the dwarf curve not found in it
+        are model rows. No data are changed; affected records get a warning.
+        """
+        dwarf, v7 = self.corpora.get("dwarf"), self.corpora.get("v7")
+        if not dwarf or not v7:
+            return
+        for i, r in enumerate(dwarf.records):
+            if r.get("survey") != "LITTLE_THINGS":
+                continue
+            vid = f"LITTLE_THINGS:{r['galaxy']}"
+            j = v7.by_id.get(vid)
+            if j is None:
+                continue
+            observed = {(round(float(x["Rad"]), 4), round(float(x["Vobs"]), 3))
+                        for x in v7.records[j].get("data") or [] if x.get("Vobs") is not None}
+            rows = r.get("data") or []
+            n_obs = sum((round(float(x["Rad"]), 4), round(float(x["Vrot"]), 3)) in observed
+                        for x in rows if x.get("Vrot") is not None)
+            n_model = len(rows) - n_obs
+            if n_model <= 0:
+                continue
+            self.record_warnings[("dwarf", i)] = [
+                f"This LITTLE THINGS curve has {len(rows)} rows: {n_obs} observed and {n_model} "
+                f"Oh et al. (2015) model rows stored as Vrot (not marked). Summary fields "
+                f"(e.g. vrot_mean_kms, r_max_kpc, omega_ready) derive from the combined rows. "
+                f"Use corpus 'v7' object '{vid}' (HI v7.3, observed rows only)."
+            ]
+            self.record_notes[("dwarf", i)] = {
+                "status": "contains_model_rows",
+                "n_rows": len(rows), "n_observed_rows": n_obs, "n_model_rows": n_model,
+                "observed_curve": {"corpus": "v7", "object_id": vid},
+                "reference": CORRECTIONS_URL + "#2-october-2026",
+            }
 
     def verify_checksums(self) -> dict:
         """Compare data files with data/SHA256SUMS when the file is present.
@@ -407,11 +450,15 @@ class CorpusService:
 
     def _row_summary(self, lc: LoadedCorpus, i: int) -> dict:
         r = lc.records[i]
-        return {
+        out = {
             "object_id": lc.ids[i],
             "name": display_name(lc.spec.key, r),
             "survey": record_survey(r),
         }
+        note = self.record_notes.get((lc.spec.key, i))
+        if note:
+            out["data_quality"] = note["status"]
+        return out
 
     # ── 1. list_corpora ──
     def list_corpora(self) -> dict:
@@ -484,7 +531,7 @@ class CorpusService:
         lc = self._corpus(corpus)
         i = self.resolve_object(lc, object_id)
         r = lc.records[i]
-        warnings = []
+        warnings = list(self.record_warnings.get((corpus, i), []))
         om = r.get("omega")
         if isinstance(om, dict) and om.get("omega_available") is False and any(
             k.startswith("legacy_omega") for k in om
@@ -500,6 +547,8 @@ class CorpusService:
             "record": r,
             "provenance": self.provenance(lc),
         }
+        if (corpus, i) in self.record_notes:
+            data["data_quality"] = self.record_notes[(corpus, i)]
         human = f"{lc.ids[i]} from {lc.spec.name} v{lc.version} (DOI {lc.spec.zenodo_doi})."
         summary_fields = ["distance_mpc", "inc_deg", "vrot_mean_kms", "vrot_max_kms",
                           "quality_tier", "hubble_type"]
@@ -593,6 +642,7 @@ class CorpusService:
             "results": page,
             "provenance": self.provenance(lc),
         }
+        flagged = sum(1 for m in matches if m.get("data_quality"))
         rng = f"{'-inf' if min_val is None else min_val} <= {dotted} <= {'inf' if max_val is None else max_val}"
         human = (
             f"{len(matches)} of {len(lc.records)} objects in '{corpus}' satisfy {rng}"
@@ -602,6 +652,12 @@ class CorpusService:
         warnings = []
         if n_numeric == 0:
             warnings.append(f"No record in '{corpus}' has a numeric value for {dotted}.")
+        if omega_ready_only and not any(omega_ready(r) for r in lc.records):
+            warnings.append(f"No record in '{corpus}' ({lc.spec.name} v{lc.version}) carries a valid "
+                            "omega determination, so omega_ready_only returns no objects by construction.")
+        if flagged:
+            warnings.append(f"{flagged} matching records carry data_quality flags; "
+                            "see get_object for details before using their values.")
         return ok("filter_objects", data, human, warnings)
 
     # ── 6. get_corpus_schema ──
@@ -654,7 +710,7 @@ class CorpusService:
                 "SEMANTIC_UNAVAILABLE",
                 "Semantic search is disabled in this deployment. The other six tools are unaffected.",
             )
-        hits = self.semantic.search(keys, query, int(top_k))   # may raise ServiceError
+        hits, excluded = self.semantic.search(keys, query, int(top_k))   # may raise ServiceError
         results = []
         for h in hits:
             lc = self.corpora[h["corpus"]]
@@ -680,11 +736,15 @@ class CorpusService:
             "index_sha256": {k: self.semantic.index_sha256(k) for k in keys},
             "results": results,
             "caution": "Semantic rank is a discovery aid, not a measurement. Retrieve values with get_object.",
+            "excluded_corpora": excluded,
         }
+        warnings = [f"Corpus '{k}' was not searched: {why}" for k, why in excluded.items()]
         human = f"Top {len(results)} semantic matches for '{query}' in {corpus}:\n" + "\n".join(
             f"{r['rank']}. {r['id']} ({r['corpus']}) score={r['score']:.3f}" for r in results
         )
-        return ok("semantic_search", data, human)
+        if warnings:
+            human += "\nWARNING: " + " ".join(warnings)
+        return ok("semantic_search", data, human, warnings)
 
     # ── dispatch used by every interface ──
     def call(self, tool: str, **kwargs: Any) -> dict:
