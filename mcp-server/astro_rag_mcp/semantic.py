@@ -223,7 +223,7 @@ class SemanticIndex:
             if rev:
                 kwargs["revision"] = rev
             model = SentenceTransformer(self.model_name, **kwargs)
-            self.model_revision = rev or _resolved_revision(model)
+            self.model_revision = rev or _resolved_revision(model) or hf_cache_revision(self.model_name)
 
             def encode(texts: list[str]) -> np.ndarray:
                 return model.encode(texts, convert_to_numpy=True, normalize_embeddings=True,
@@ -328,6 +328,35 @@ class SemanticIndex:
         order = {k: n for n, k in enumerate(keys)}
         hits.sort(key=lambda h: (h["score"], order[h["corpus"]], h["id"]))
         return hits[:top_k], excluded
+
+
+def hf_cache_revision(model_name: str, cache_dir: Optional[str] = None) -> Optional[str]:
+    """Commit hash of the locally cached Hugging Face snapshot of ``model_name``.
+
+    Reads the cache layout directly (``models--org--name/refs/main`` and
+    ``snapshots/<hash>/``), so it works across sentence-transformers and
+    huggingface_hub versions. Returns None if the model is not cached.
+    """
+    import os
+    from pathlib import Path
+
+    if cache_dir is None:
+        try:
+            from huggingface_hub import constants
+            cache_dir = constants.HF_HUB_CACHE
+        except Exception:
+            home = os.environ.get("HF_HOME") or os.path.join(os.path.expanduser("~"), ".cache", "huggingface")
+            cache_dir = os.path.join(home, "hub")
+    repo = Path(cache_dir) / ("models--" + model_name.replace("/", "--"))
+    ref = repo / "refs" / "main"
+    if ref.is_file():
+        h = ref.read_text(encoding="utf-8").strip()
+        if len(h) == 40 and (repo / "snapshots" / h).is_dir():
+            return h
+    snaps = sorted((repo / "snapshots").glob("*")) if (repo / "snapshots").is_dir() else []
+    if len(snaps) == 1 and len(snaps[0].name) == 40:
+        return snaps[0].name
+    return None
 
 
 def _resolved_revision(model: Any) -> Optional[str]:

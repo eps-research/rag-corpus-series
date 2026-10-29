@@ -61,6 +61,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "mcp-server"))
 from astro_rag_mcp.index_text import check_text, refresh_v7_text  # noqa: E402
+from astro_rag_mcp.semantic import hf_cache_revision  # noqa: E402
 BASE = ROOT / "build_scripts" / "faiss_legacy_texts"
 MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
@@ -349,6 +350,7 @@ def main():
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--text-only", action="store_true")
     ap.add_argument("--install", action="store_true")
+    ap.add_argument("--allow-unknown-revision", action="store_true")
     ap.add_argument("--revision", default=None,
                     help="Hugging Face revision (commit hash) of the embedding model to pin")
     args = ap.parse_args()
@@ -391,7 +393,13 @@ def main():
             if m:
                 revision = m.group(1)
                 break
+    revision = revision or hf_cache_revision(MODEL)
     print(f"model: {MODEL} revision {revision or 'UNKNOWN'}")
+    if not revision and not args.allow_unknown_revision:
+        raise RuntimeError(
+            "could not determine the embedding model revision; pass --revision <commit> "
+            "(or --allow-unknown-revision for a test build)"
+        )
 
     try:
         dim = model.get_embedding_dimension()

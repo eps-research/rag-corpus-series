@@ -302,3 +302,24 @@ def test_real_model_is_normalised_natively():
     m = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device="cpu")
     v = m.encode(["Galaxy NGC0024. survey SPARC."], normalize_embeddings=False)
     assert abs(float(np.linalg.norm(v[0])) - 1.0) < 1e-4
+
+
+def test_hf_cache_revision_reads_cache_layout(tmp_path):
+    from astro_rag_mcp.semantic import hf_cache_revision
+
+    h = "a" * 40
+    repo = tmp_path / "models--sentence-transformers--all-MiniLM-L6-v2"
+    (repo / "snapshots" / h).mkdir(parents=True)
+    (repo / "refs").mkdir()
+    (repo / "refs" / "main").write_text(h + "\n")
+    assert hf_cache_revision("sentence-transformers/all-MiniLM-L6-v2", str(tmp_path)) == h
+    assert hf_cache_revision("sentence-transformers/other-model", str(tmp_path)) is None
+
+
+@pytest.mark.needs_model
+def test_real_model_revision_is_recorded():
+    """With the real model loaded, the server knows the exact revision it uses."""
+    svc = build_service()
+    svc.semantic.start_model_load(background=False)
+    rev = svc.semantic.status()["embedding_revision"]
+    assert rev and len(rev) == 40

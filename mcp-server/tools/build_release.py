@@ -105,6 +105,12 @@ def index_states() -> dict[str, str]:
 def build(out_root: Path, allow_stale: bool = False) -> Path:
     states = index_states()
     stale = sorted(k for k, s in states.items() if s != "ok")
+    mpath = resolve_data_layout().faiss_dir() / "index_manifest.json"
+    manifest = json.loads(mpath.read_text(encoding="utf-8")).get("corpora", {}) if mpath.is_file() else {}
+    unpinned = sorted(k for k, e in manifest.items() if not e.get("embedding_revision"))
+    if unpinned and not allow_stale:
+        sys.exit(f"refusing to build a release: index_manifest.json has no embedding_revision for {unpinned}. "
+                 "Rebuild those indexes (build_scripts/build_faiss_indexes.py prints the revision).")
     if stale and not allow_stale:
         sys.exit(f"refusing to build a release: semantic indexes not current: {stale} ({states}). "
                  "Rebuild them (build_scripts/build_faiss_indexes.py), or pass --allow-stale "
