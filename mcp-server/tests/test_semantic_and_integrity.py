@@ -110,7 +110,10 @@ def test_query_normalisation_is_explicit(oracle):
 
     a = build_service(encoder=oracle).call("semantic_search", corpus="z1", query="rotator", top_k=8)
     b = build_service(encoder=scaled).call("semantic_search", corpus="z1", query="rotator", top_k=8)
-    assert a["data"]["results"] == b["data"]["results"]
+    ra, rb = a["data"]["results"], b["data"]["results"]
+    assert [r["id"] for r in ra] == [r["id"] for r in rb]
+    # Scaling then renormalising in float32 can move the 6th decimal by one unit.
+    assert all(abs(x["score"] - y["score"]) < 1e-5 for x, y in zip(ra, rb))
 
 
 def test_stored_vectors_are_unit_norm(service):
