@@ -42,12 +42,26 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: launch.py --check --locked (install, verify, test suite)
-        run: python launch.py --check --locked --no-browser
+        run: |
+          set -o pipefail
+          python launch.py --check --locked --no-browser 2>&1 | tee ../ci-install.log
       - name: Real-model verification and evidence bundle
         run: |
+          set -o pipefail
           PY=.venv/bin/python
           [ -f .venv/Scripts/python.exe ] && PY=.venv/Scripts/python.exe
-          "$PY" tools/make_evidence.py --with-model
+          "$PY" tools/make_evidence.py --with-model 2>&1 | tee ../ci-evidence.log
+      # Failure details as an annotation, which is readable on the public run page
+      # without signing in (job logs are not).
+      - name: Publish failure summary
+        if: failure()
+        run: |
+          for f in ../ci-install.log ../ci-evidence.log; do
+            [ -f "$f" ] || continue
+            body=$(grep -vE '^\s*$' "$f" | tail -45 | cut -c1-220)
+            body=${body//'%'/'%25'}; body=${body//$'\r'/}; body=${body//$'\n'/'%0A'}
+            echo "::error title=${{ matrix.os }} py${{ matrix.python }} $(basename "$f")::${body}"
+          done
       - name: Upload evidence
         if: always()
         uses: actions/upload-artifact@v4
