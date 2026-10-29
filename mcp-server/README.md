@@ -4,6 +4,8 @@ A Model Context Protocol (MCP) server, REST API and browser interface for five
 DOI-versioned astrophysical kinematic corpora (2,064 objects, z = 0 to 5.68),
 with FAISS semantic search. MIT License.
 
+[![mcp-server clean install: Linux, Windows, macOS](https://github.com/eps-research/rag-corpus-series/actions/workflows/mcp-server.yml/badge.svg)](https://github.com/eps-research/rag-corpus-series/actions/workflows/mcp-server.yml)
+
 **Use it now:** <https://dflynn5656-astro-rag-mcp.hf.space> · MCP endpoint `…/mcp` · REST docs `…/docs`
 **Run it locally:** `python launch.py` — see [INSTALL.md](INSTALL.md) (Windows 11, Ubuntu; Claude Desktop, LM Studio, Ollama)
 

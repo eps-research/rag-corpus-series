@@ -1,0 +1,57 @@
+# Clean-install test of the Astro-RAG MCP Server on Linux, Windows and macOS.
+#
+# Each job does what a new user does: a fresh checkout, `python launch.py
+# --check --locked` (virtual environment, locked dependencies including the
+# semantic-search stack, data verification, full test suite), then
+# tools/make_evidence.py --with-model, which downloads the pinned MiniLM
+# revision, runs `verify --strict` and the real-model tests (including the
+# manuscript's Z1 top-five query). The evidence ZIP of every job is uploaded
+# as a workflow artifact.
+name: mcp-server
+
+on:
+  push:
+    branches: [main, "mcp-server-*"]
+    paths: ["mcp-server/**", "faiss/**", "examples/**", "build_scripts/**", ".github/workflows/mcp-server.yml"]
+  pull_request:
+    paths: ["mcp-server/**", "faiss/**", "examples/**", "build_scripts/**", ".github/workflows/mcp-server.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  clean-install:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.10", "3.13"]
+    defaults:
+      run:
+        shell: bash
+        working-directory: mcp-server
+    env:
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: launch.py --check --locked (install, verify, test suite)
+        run: python launch.py --check --locked --no-browser
+      - name: Real-model verification and evidence bundle
+        run: |
+          PY=.venv/bin/python
+          [ -f .venv/Scripts/python.exe ] && PY=.venv/Scripts/python.exe
+          "$PY" tools/make_evidence.py --with-model
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ matrix.os }}-py${{ matrix.python }}
+          path: mcp-server/evidence/*.zip
+          if-no-files-found: warn
