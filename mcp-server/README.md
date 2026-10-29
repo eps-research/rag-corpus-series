@@ -7,7 +7,7 @@ with FAISS semantic search. MIT License.
 [![mcp-server clean install: Linux, Windows, macOS](https://github.com/eps-research/rag-corpus-series/actions/workflows/mcp-server.yml/badge.svg)](https://github.com/eps-research/rag-corpus-series/actions/workflows/mcp-server.yml)
 
 **Use it now:** <https://dflynn5656-astro-rag-mcp.hf.space> · MCP endpoint `…/mcp` · REST docs `…/docs`
-**Run it locally:** `python launch.py` — see [INSTALL.md](INSTALL.md) (Windows 11, Ubuntu; Claude Desktop, LM Studio, Ollama)
+**Run it locally:** `python launch.py` — see [INSTALL.md](INSTALL.md) (Windows, Ubuntu, macOS; Claude Desktop, LM Studio, Ollama)
 
 ## Corpora
 
@@ -79,8 +79,8 @@ Record-level data-quality flags: Dwarf v1.0 LITTLE THINGS records report
 `data_quality` with the number of model rows and the `v7` record holding the
 observed curve.
 
-**Pre-release status:** the v7 semantic index predates HI v7.3 and is `stale`
-until rebuilt (see [RELEASING.md](RELEASING.md)).
+In release 2.4.0 all five indexes are current; the v7 index was rebuilt from
+HI v7.3 ([RELEASING.md](RELEASING.md) describes the procedure).
 
 `python -m astro_rag_mcp verify` prints the full report; `/health` serves it live.
 

@@ -76,8 +76,10 @@ the clone on its own — use the ZIP for that.
 * **Windows 11:** install Python 3.12 from <https://www.python.org/downloads/>.
   In the installer tick **"Add python.exe to PATH"**. Then open *PowerShell*.
 * **Ubuntu 22.04 / 24.04:** `sudo apt install python3 python3-venv python3-pip`
+* **macOS 14 or later:** install Python 3.12 from <https://www.python.org/downloads/>
+  and use `python3` in *Terminal*, as on Ubuntu.
 
-Check with `python --version` (Windows) or `python3 --version` (Ubuntu).
+Check with `python --version` (Windows) or `python3 --version` (Ubuntu, macOS).
 
 ### 3. Run the launcher
 
@@ -253,8 +255,9 @@ indexes, the server loads exactly that revision.
 `/health` (and `list_corpora`) report a state for each corpus's semantic index:
 `ok`, `stale` (the index was built from an earlier version of the corpus;
 semantic search on that corpus is refused, other tools are unaffected) or
-`failed`. In this 2.4.0 pre-release the **v7** index is `stale`: it was built
-from HI corpus v7.0, while the server serves v7.3. It is rebuilt with
-`build_scripts/build_faiss_indexes.py` (see `RELEASING.md`).
+`failed`. In release 2.4.0 all five indexes are `ok`; the v7 index was rebuilt
+from HI v7.3 (`faiss/index_manifest.json` records the source file and model
+revision). A future corpus correction makes the affected index `stale` until it
+is rebuilt with `build_scripts/build_faiss_indexes.py` (see `RELEASING.md`).
 
 See `TROUBLESHOOTING.md` for common problems.

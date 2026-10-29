@@ -3,8 +3,9 @@
 The release builder refuses to package a stale semantic index, and the
 Docker build refuses to build without passing `verify --with-model --strict`.
 Run the steps in order on a machine that can reach pypi.org, the PyTorch CPU
-index and huggingface.co. Primary build host: the maintainer's laptop
-(Linux side); Node1 is optional redundancy. The laptop's Windows side covers §5. Paths are relative to the repository root.
+index and huggingface.co. Build host for 2.4.0: Node1
+(Ubuntu 24.04). Windows, macOS and Linux clean installs are tested by CI
+(`.github/workflows/mcp-server.yml`). Paths are relative to the repository root.
 
 ## 1. Environment
 

@@ -2,6 +2,16 @@
 
 ## 2.4.0 — 2026-10 (response to Frontiers review, manuscript 2001275)
 
+### Cross-platform CI (2026-10-29)
+- GitHub Actions clean-install test (`launch.py --check --locked`, then
+  `make_evidence.py --with-model`) on Linux, Windows and macOS with Python 3.10
+  and 3.13; all six jobs pass.
+- **Windows clone fix:** Git for Windows converted the JSON data and FAISS text
+  files to CRLF on checkout, so they failed their SHA-256 checks. `.gitattributes`
+  now keeps them byte-exact. (The release ZIP was not affected.)
+- **macOS fix:** faiss-cpu and PyTorch each bundle libomp; the server now loads
+  PyTorch first and runs OpenMP single-threaded on macOS.
+
 ### Audit round 1 (Sol, 2026-10-23)
 - **Stale v7 semantic index detected and enforced.** The v7 FAISS text was built
   from HI v7.0 (0 disagreements with v7.0; 438 of 438 with v7.3: WALLABY

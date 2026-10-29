@@ -15,7 +15,7 @@ Start with `python launch.py --check` (installs, verifies, runs the tests) and
 | `semantic_search` → `SEMANTIC_UNAVAILABLE` "sentence-transformers is not installed" | You used `--no-semantic`. Run `python launch.py` without it. |
 | `semantic_search` → `SEMANTIC_UNAVAILABLE` "Could not load embedding model" | The one-time model download from huggingface.co was blocked (proxy/firewall). Allow it once, or see INSTALL.md §D. The other six tools keep working. |
 | `semantic_search` → `SEMANTIC_LOADING` | The model is still loading after start-up (up to ~1 min on first run). Retry. |
-| `INDEX_STALE` | The semantic index for that corpus was built from an earlier corpus version (in the 2.4.0 pre-release: `v7`). Use `filter_objects`/`search_metadata`, or semantic search on the other corpora, until the index is rebuilt. |
+| `INDEX_STALE` | The semantic index for that corpus was built from an earlier corpus version (none in release 2.4.0). Use `filter_objects`/`search_metadata`, or semantic search on the other corpora, until the index is rebuilt. |
 | `data_quality: contains_model_rows` on a `dwarf` record | Dwarf v1.0 LITTLE THINGS curves contain unmarked Oh et al. (2015) model rows. Use the observed curve named in `data_quality.observed_curve` (a `v7` LITTLE_THINGS record). |
 | `INDEX_INTEGRITY_FAILED` | A FAISS file does not match its corpus, or your embedding model differs from the one used to build the index. `/health` shows the reason per corpus. |
 | PyTorch install fails on Windows | Install the *Microsoft Visual C++ Redistributable* (x64) and retry; or use `--no-semantic`. |
