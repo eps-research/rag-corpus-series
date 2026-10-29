@@ -143,7 +143,8 @@ def install(semantic: bool, dev: bool, locked: bool = False) -> None:
 def verify(semantic: bool, with_model: bool) -> None:
     say("[5/6] Verifying corpora, checksums and FAISS indexes"
         + (" (and downloading/self-testing the embedding model)" if with_model else ""))
-    cmd = [venv_python(), "-m", "astro_rag_mcp", "verify", "--log-level", "WARNING"]
+    # -X faulthandler: a native crash (e.g. in faiss or PyTorch) prints a Python stack.
+    cmd = [venv_python(), "-X", "faulthandler", "-m", "astro_rag_mcp", "verify", "--log-level", "WARNING"]
     if not semantic:
         cmd.append("--no-semantic")
     if with_model:
@@ -151,6 +152,8 @@ def verify(semantic: bool, with_model: bool) -> None:
     r = run(cmd, cwd=HERE, capture_output=True, text=True)
     if r.returncode != 0:
         sys.stderr.write(r.stdout[-3000:] + r.stderr[-3000:])
+        sys.stderr.write(f"\nverify exited with code {r.returncode}"
+                         + (" (killed by a signal: native crash)" if r.returncode < 0 else "") + "\n")
         fail("Data verification failed.", "Re-download the release; do not edit files under data/.")
     rep = json.loads(r.stdout)
     sem = rep["semantic_search"]

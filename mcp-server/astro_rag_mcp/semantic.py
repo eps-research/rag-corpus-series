@@ -29,6 +29,8 @@ from __future__ import annotations
 
 import json
 import logging
+import os
+import sys
 import threading
 from pathlib import Path
 from typing import Any, Callable, Optional
@@ -40,6 +42,26 @@ from .corpus_service import LoadedCorpus, ServiceError, sha256_file
 from .index_text import check_text
 
 logger = logging.getLogger("astro_rag_mcp")
+
+if sys.platform == "darwin":
+    # On macOS the faiss-cpu and PyTorch wheels each bundle their own libomp.
+    # Two OpenMP runtimes in one process can abort or segfault on the first
+    # parallel call. Allow the duplicate, keep OpenMP single-threaded (the
+    # indexes are small), and load PyTorch before faiss (_import_faiss).
+    os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
+    os.environ.setdefault("OMP_NUM_THREADS", "1")
+
+
+def _import_faiss():
+    if sys.platform == "darwin":
+        try:
+            import torch  # noqa: F401  (load its libomp first; see above)
+        except ImportError:
+            pass
+    import faiss
+    if sys.platform == "darwin":
+        faiss.omp_set_num_threads(1)
+    return faiss
 
 SELF_TEST_TOLERANCE = 1e-3
 MANIFEST_NAME = "index_manifest.json"
@@ -108,14 +130,13 @@ class SemanticIndex:
     # ── artifact loading and structural integrity ──
     def _load_indexes(self, corpora: dict[str, LoadedCorpus]) -> None:
         try:
-            import faiss  # noqa: F401
+            faiss = _import_faiss()
         except ImportError as e:
             for key in corpora:
                 ci = _CorpusIndex(key)
                 ci.state, ci.reason = "failed", f"faiss is not installed ({e}); pip install faiss-cpu"
                 self.indexes[key] = ci
             return
-        import faiss
 
         fdir = self.layout.faiss_dir()
         for key, lc in corpora.items():

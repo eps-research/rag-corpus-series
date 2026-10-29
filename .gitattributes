@@ -1,0 +1,6 @@
+# Corpus files, FAISS sidecars and the index manifest are verified byte-for-byte
+# (SHA-256). Never convert their line endings (Git for Windows does by default).
+*.json   -text
+*.jsonl  -text
+*.faiss  binary
+*.npy    binary

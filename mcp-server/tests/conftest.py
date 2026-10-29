@@ -46,7 +46,8 @@ def pytest_collection_modifyitems(config, items):
 
 
 def make_oracle_encoder(data_dir=None):
-    import faiss
+    from astro_rag_mcp.semantic import _import_faiss
+    faiss = _import_faiss()
 
     layout = resolve_data_layout(data_dir)
     table: dict[str, np.ndarray] = {}

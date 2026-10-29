@@ -146,7 +146,8 @@ def _pseudo(texts):
 
 def _synthetic_rebuild(dst, key, texts, ids):
     """What build_faiss_indexes.py --install does, with a stand-in encoder."""
-    import faiss
+    from astro_rag_mcp.semantic import _import_faiss
+    faiss = _import_faiss()
 
     stem = CORPORA[key].faiss_stem
     idx = faiss.IndexFlatL2(384)
