@@ -1,0 +1,20 @@
+{
+  "corpora": {
+    "v7": {
+      "artifact_sha256": {
+        "v7_sparc.faiss": "544de4964fe90a75480c33475c1e1c65430e74fdf688b171c7c3184f744b39f7",
+        "v7_sparc_ids.json": "8905d38bfab04883235c16ab69d3b02d18e3e46f78e9ccb5465a5c5f9d7e7e3f",
+        "v7_sparc_texts.json": "80262151625951c1733f8c4a173e0e37020800a9b401ac9db5aaa840c5aaca38"
+      },
+      "built_utc": "2026-10-29T04:17:58Z",
+      "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+      "embedding_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+      "index_type": "IndexFlatL2",
+      "normalized": true,
+      "records": 438,
+      "source_file": "rotation_curve_corpus_v7.json",
+      "source_sha256": "ce9a4148582dd6c82663ca9b717b71271e67948dd890b0765c33a295b3d76209"
+    }
+  },
+  "schema": 1
+}
