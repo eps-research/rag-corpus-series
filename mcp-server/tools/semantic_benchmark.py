@@ -204,7 +204,7 @@ def main(argv=None):
     if "minilm" in systems:
         service.semantic.start_model_load(background=False)
         st = service.semantic.status()
-        print(f"model {st['model']} revision {st['embedding_revision']}", file=sys.stderr)
+        print(f"model {st['embedding_model']} revision {st['embedding_revision']}", file=sys.stderr)
     res = run(service, systems)
     if "minilm" in systems:
         res["embedding_model"] = service.semantic.model_name
