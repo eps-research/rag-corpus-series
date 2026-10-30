@@ -13,6 +13,7 @@ import semantic_benchmark as sb  # noqa: E402
 def test_every_query_has_relevant_records(service):
     assert len(sb.QUERIES) == 25
     assert len({q[0] for q in sb.QUERIES}) == 25
+    assert sb.NUMERIC <= {q[0] for q in sb.QUERIES} and len(sb.NUMERIC) == 14
     for qid, corpus, _, p2, _ in sb.QUERIES:
         lc = service.corpora[corpus]
         assert any(p2(r) for r in lc.records), qid

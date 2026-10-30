@@ -103,6 +103,13 @@ QUERIES = [
 ]
 
 
+# Queries whose request hinges on a numeric threshold; the others ask for a
+# survey, group, class or flag. Reported separately because the two kinds
+# behave differently.
+NUMERIC = {"v7-slow", "v7-fast", "v7-edgeon", "v7-near", "v7-extended", "dw-gasrich", "dw-trgb",
+           "gc-metalpoor", "gc-metalrich", "gc-outer", "gc-massive", "iz-z2", "iz-sfr", "iz-massive"}
+
+
 # ── BM25 (Okapi; Robertson & Zaragoza 2009), k1 = 1.2, b = 0.75 ──
 TOKEN = re.compile(r"[a-z0-9]+(?:[.\-][a-z0-9]+)*")
 
@@ -172,8 +179,14 @@ def run(service, systems: list[str], seed: int = 0) -> dict:
         rnd = [metrics(rng.sample(ci.ids, K), grade) for _ in range(200)]
         row["random"] = {m: statistics.fmean(x[m] for x in rnd) for m in rnd[0]}
         out["queries"].append(row)
-    out["mean"] = {s: {m: statistics.fmean(q[s][m] for q in out["queries"]) for m in ("P@5", "P@10", "R@10", "nDCG@10", "MRR")}
-                   for s in out["systems"]}
+    ms = ("P@5", "P@10", "R@10", "nDCG@10", "MRR")
+    out["mean"] = {s: {m: statistics.fmean(q[s][m] for q in out["queries"]) for m in ms} for s in out["systems"]}
+    for q in out["queries"]:
+        q["kind"] = "numeric" if q["id"] in NUMERIC else "categorical"
+    out["mean_by_kind"] = {
+        kind: {s: {m: statistics.fmean(q[s][m] for q in out["queries"] if q["kind"] == kind) for m in ms}
+               for s in out["systems"]}
+        for kind in ("categorical", "numeric")}
     return out
 
 
@@ -183,6 +196,11 @@ def markdown(res: dict) -> str:
              "| System | " + " | ".join(ms) + " |", "|---|" + "---|" * len(ms)]
     for s in res["systems"]:
         lines.append(f"| {s} | " + " | ".join(f"{res['mean'][s][m]:.2f}" for m in ms) + " |")
+    lines += ["", "nDCG@10 by query kind:", "", "| Kind | n | " + " | ".join(res["systems"]) + " |",
+              "|---|---|" + "---|" * len(res["systems"])]
+    for kind, d in res["mean_by_kind"].items():
+        n = sum(q["kind"] == kind for q in res["queries"])
+        lines.append(f"| {kind} | {n} | " + " | ".join(f"{d[s]['nDCG@10']:.2f}" for s in res["systems"]) + " |")
     lines += ["", "| Query | Corpus | relevant (grade 2 / 1) | " + " | ".join(f"{s} nDCG@10" for s in res["systems"]) + " |",
               "|---|---|---|" + "---|" * len(res["systems"])]
     for q in res["queries"]:
