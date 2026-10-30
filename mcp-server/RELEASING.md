@@ -3,7 +3,7 @@
 The release builder refuses to package a stale semantic index, and the
 Docker build refuses to build without passing `verify --with-model --strict`.
 Run the steps in order on a machine that can reach pypi.org, the PyTorch CPU
-index and huggingface.co. Build host for 2.4.0: Node1
+index and huggingface.co. Build host for 2.4.x: Node1
 (Ubuntu 24.04). Windows, macOS and Linux clean installs are tested by CI
 (`.github/workflows/mcp-server.yml`). Paths are relative to the repository root.
 
@@ -75,9 +75,9 @@ git add faiss/v7_sparc.faiss faiss/v7_sparc_texts.json faiss/v7_sparc_ids.json f
 git add -f faiss/*.json            # the root .gitignore ignores *.json
 git commit -m "Rebuild v7 semantic index from HI v7.3"
 cd mcp-server && python tools/build_release.py       # refuses if any index is stale
-docker build -t astro-rag-mcp dist/astro-rag-mcp-server-2.4.0   # Space image; verifies with the model
+docker build -t astro-rag-mcp dist/astro-rag-mcp-server-<version>   # Space image; verifies with the model
 ```
 
-Upload `dist/astro-rag-mcp-server-2.4.0.zip` to Zenodo (new version of the
+Upload `dist/astro-rag-mcp-server-<version>.zip` to Zenodo (new version of the
 2.3.0 record); add the version DOI to `CITATION.cff`, the README and the
 manuscript; deploy the same directory to the Hugging Face Space.

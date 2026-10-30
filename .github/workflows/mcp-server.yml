@@ -12,9 +12,9 @@ name: mcp-server
 on:
   push:
     branches: [main, "mcp-server-*"]
-    paths: ["mcp-server/**", "faiss/**", "examples/**", "build_scripts/**", ".github/workflows/mcp-server.yml"]
+    paths: ["mcp-server/**", "faiss/**", "examples/**", "build_scripts/**", "check_omega_formula.py", ".github/workflows/mcp-server.yml"]
   pull_request:
-    paths: ["mcp-server/**", "faiss/**", "examples/**", "build_scripts/**", ".github/workflows/mcp-server.yml"]
+    paths: ["mcp-server/**", "faiss/**", "examples/**", "build_scripts/**", "check_omega_formula.py", ".github/workflows/mcp-server.yml"]
   workflow_dispatch:
 
 permissions:
@@ -41,6 +41,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
+      - name: Omega formula static check (superseded and compact forms are rejected)
+        run: python ../check_omega_formula.py $(git -C .. ls-files 'mcp-server/*.py' 'build_scripts/*.py' | sed 's|^|../|')
       - name: launch.py --check --locked (install, verify, test suite)
         run: |
           set -o pipefail

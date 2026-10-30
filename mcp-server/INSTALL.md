@@ -59,7 +59,7 @@ In Claude (web or desktop), add it under *Settings → Connectors → Add custom
 ### 1. Get the files
 
 Either download and **extract** the release ZIP
-(`astro-rag-mcp-server-2.4.0.zip`, Zenodo), or clone the repository:
+(`astro-rag-mcp-server-2.4.1.zip`, Zenodo), or clone the repository:
 
 ```bash
 git clone https://github.com/eps-research/rag-corpus-series.git
@@ -87,13 +87,13 @@ From the `mcp-server` folder (the one containing `launch.py`):
 
 ```powershell
 # Windows (PowerShell)
-cd C:\path\to\astro-rag-mcp-server-2.4.0
+cd C:\path\to\astro-rag-mcp-server-2.4.1
 python launch.py
 ```
 
 ```bash
 # Ubuntu
-cd ~/astro-rag-mcp-server-2.4.0
+cd ~/astro-rag-mcp-server-2.4.1
 python3 launch.py
 ```
 
@@ -255,7 +255,7 @@ indexes, the server loads exactly that revision.
 `/health` (and `list_corpora`) report a state for each corpus's semantic index:
 `ok`, `stale` (the index was built from an earlier version of the corpus;
 semantic search on that corpus is refused, other tools are unaffected) or
-`failed`. In release 2.4.0 all five indexes are `ok`; the v7 index was rebuilt
+`failed`. In release 2.4.x all five indexes are `ok`; the v7 index was rebuilt
 from HI v7.3 (`faiss/index_manifest.json` records the source file and model
 revision). A future corpus correction makes the affected index `stale` until it
 is rebuilt with `build_scripts/build_faiss_indexes.py` (see `RELEASING.md`).

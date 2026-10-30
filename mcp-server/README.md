@@ -1,4 +1,4 @@
-# EPS Research Astro-RAG MCP Server 2.4.0
+# EPS Research Astro-RAG MCP Server 2.4.1
 
 A Model Context Protocol (MCP) server, REST API and browser interface for five
 DOI-versioned astrophysical kinematic corpora (2,064 objects, z = 0 to 5.68),
@@ -75,11 +75,16 @@ discovery aid; take values from `get_object`.
   reproduce its stored vector, so a different model cannot silently change
   rankings; query embeddings are L2-normalised explicitly.
 
+* omega values: every stored omega is recomputed from its stored boundary points
+  with the canonical estimator (`astro_rag_mcp/omega.py`), and the points must be
+  rows of the record's measured curve; withdrawn values must carry no value.
+  A failure stops the server.
+
 Record-level data-quality flags: Dwarf v1.0 LITTLE THINGS records report
 `data_quality` with the number of model rows and the `v7` record holding the
 observed curve.
 
-In release 2.4.0 all five indexes are current; the v7 index was rebuilt from
+In release 2.4.x all five indexes are current; the v7 index was rebuilt from
 HI v7.3 ([RELEASING.md](RELEASING.md) describes the procedure).
 
 `python -m astro_rag_mcp verify` prints the full report; `/health` serves it live.
@@ -108,6 +113,16 @@ mcp-server/
 The release ZIP additionally contains `data/` (the five corpus files, fifteen
 FAISS files, `SHA256SUMS`), `RELEASE.json` and a top-level `SHA256SUMS`.
 
+## Validation tools
+
+| Tool | What it checks |
+|---|---|
+| `tests/test_omega.py` | omega estimator against analytic cases (Keplerian = 0, solid body, flat), served values, defect injection |
+| `tools/corpus_audit.py` | every derived field of the five corpora recomputed from its inputs; definitional notes |
+| `tools/semantic_benchmark.py` | 25 judged discovery queries: MiniLM + FAISS vs BM25 vs random (P@k, R@10, nDCG@10, MRR) |
+| `tools/llm_acceptance.py` | a real local LLM answering fixed questions through MCP |
+| `../check_omega_formula.py` | rejects the superseded omega forms in source code (run in CI) |
+
 ## Tests
 
 ```bash
@@ -117,7 +132,7 @@ ASTRO_RAG_TEST_REAL_MODEL=1 pytest             # also run the real-model test (d
 
 ## Citation
 
-Flynn, D. C. (2026). *EPS Research Astro-RAG MCP Server* (v2.4.0). Zenodo.
+Flynn, D. C. (2026). *EPS Research Astro-RAG MCP Server* (v2.4.1). Zenodo.
 Machine-readable citation: [CITATION.cff](CITATION.cff).
 
 Flynn, D. C. (2026). Astro-RAG MCP Server: AI-native, reproducible access to

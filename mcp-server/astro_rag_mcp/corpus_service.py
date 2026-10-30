@@ -269,6 +269,7 @@ class CorpusService:
         # (corpus, row) -> list of record-level warnings, and machine-readable notes
         self.record_warnings: dict[tuple[str, int], list[str]] = {}
         self.record_notes: dict[tuple[str, int], dict] = {}
+        self.omega_report: dict[str, Any] = {}
 
     # ── loading ──
     def load(self, verify_checksums: bool = True) -> None:
@@ -285,6 +286,22 @@ class CorpusService:
         if verify_checksums:
             self.verify_checksums()
         self._flag_dwarf_little_things()
+        self._check_omega()
+
+    def _check_omega(self) -> None:
+        """Recompute every stored omega value with the canonical estimator.
+
+        A stored value that does not reproduce from its stored boundary points,
+        or whose points are not rows of the measured curve, stops the server
+        (see astro_rag_mcp/omega.py for the validation protocol).
+        """
+        from .omega import check_corpus
+
+        self.omega_report = {k: check_corpus(k, c.records) for k, c in self.corpora.items()}
+        self.omega_report = {k: v for k, v in self.omega_report.items() if v["available"] or v["withdrawn"]}
+        errors = [e for v in self.omega_report.values() for e in v["errors"]]
+        if errors:
+            raise ValueError("omega integrity check failed: " + "; ".join(errors[:5]))
 
     def _flag_dwarf_little_things(self) -> None:
         """Flag Dwarf v1.0 LITTLE THINGS curves that carry interleaved model rows.
@@ -789,5 +806,7 @@ class CorpusService:
                         for k, c in self.corpora.items()},
             "n_total": sum(loaded.values()),
             "checksums": self.checksum_report,
+            "omega_check": {k: {kk: v[kk] for kk in ("available", "verified", "withdrawn")}
+                            for k, v in self.omega_report.items()},
             "semantic_search": sem,
         }

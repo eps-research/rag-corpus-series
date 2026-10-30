@@ -1,4 +1,4 @@
-# Corpus keys (server 2.4.0)
+# Corpus keys (server 2.4.x)
 
 | Key | Corpus | Objects | ID format |
 |---|---|---|---|

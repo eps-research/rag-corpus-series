@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.4.1 — 2026-10 (response to Reviewer 3, manuscript 2001275)
+
+- **omega validation protocol.** One canonical implementation
+  (`astro_rag_mcp/omega.py`). Tests against analytic cases: a Keplerian curve
+  gives exactly zero, which the superseded implementation fails; solid-body
+  and flat curves; uncertainty propagation checked against Monte Carlo.
+  Defect-injection tests (wrong stored value, derived boundary points, value
+  on a withdrawn record).
+- **Start-up omega check.** Every stored omega is recomputed from its stored
+  boundary points, which must be rows of the measured curve; withdrawn values
+  must be empty. A failure stops the server. `/health` reports `omega_check`.
+- **CI static check.** `check_omega_formula.py` rejects the superseded and
+  compact omega forms in all server and build-script sources.
+- **`tools/corpus_audit.py`.** Definitional audit of all five corpora: every
+  derived field recomputed from its inputs (25 checks), with notes on fields
+  that are estimates or come from scaling relations.
+- **`tools/semantic_benchmark.py`.** 25 discovery queries with exact,
+  predicate-defined relevance; MiniLM + FAISS against BM25 and random.
+- No change to data, indexes or the seven tools.
+
 ## 2.4.0 — 2026-10 (response to Frontiers review, manuscript 2001275)
 
 ### Cross-platform CI (2026-10-29)

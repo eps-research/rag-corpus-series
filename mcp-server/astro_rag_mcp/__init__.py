@@ -11,4 +11,4 @@ and every interface calls that implementation, so MCP and REST results are
 identical by construction (and checked by ``tests/test_parity.py``).
 """
 
-__version__ = "2.4.0"
+__version__ = "2.4.1"
