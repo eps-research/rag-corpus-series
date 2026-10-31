@@ -8,7 +8,7 @@
 
 ### What happened
 
-An external formula audit (conducted by Dennis Mungai using the Kimi model, 2 August 2026) identified two errors in the cross-epoch omega analysis:
+An external formula audit (conducted by Dennis Palatov using the Kimi model, 2 August 2026) identified two errors in the cross-epoch omega analysis:
 
 **1. Operator-precedence parenthesization error.**  
 The canonical omega equation (Flynn & Cannaliato 2025, Eq. 6) is:
@@ -86,7 +86,7 @@ Under uniform application of Formula B:
 
 ### Attribution
 
-The formula discrepancy was identified by Dennis Mungai via an audit conducted with the Kimi model (Moonshot AI). The audit reproduced the z=0 SPARC values, identified the parenthesization mismatch in the z>0 implementations, and discovered the KROSS template-derivation issue. This finding led directly to the present correction.
+The formula discrepancy was identified by Dennis Palatov via an audit conducted with the Kimi model (Moonshot AI). The audit reproduced the z=0 SPARC values, identified the parenthesization mismatch in the z>0 implementations, and discovered the KROSS template-derivation issue. This finding led directly to the present correction.
 
 ### Units clarification
 

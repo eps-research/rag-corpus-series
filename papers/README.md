@@ -145,7 +145,7 @@ Zenodo: [10.5281/zenodo.21383809](https://doi.org/10.5281/zenodo.21383809)
 
 ### Summary
 
-Documents the withdrawal of the previously reported cross-epoch omega sign reversal. An external audit (D. Mungai) established that the intermediate- and high-redshift omega values were generated using a parenthesized formula variant `(V₂/R₂ − V₁/R₁) × (R₁/R₂)^1.5` that differs from the canonical Equation 6 `V₂/R₂ − (V₁/R₁) × (R₁/R₂)^1.5`. Under uniform application of the canonical equation, the negative high-z values do not reproduce. Additionally, the KROSS boundary points were found to be template-derived rather than independently measured, disqualifying them from like-for-like cross-epoch comparison. The z=0 SPARC result under the canonical equation is retained.
+Documents the withdrawal of the previously reported cross-epoch omega sign reversal. An external audit (Dennis Palatov) established that the intermediate- and high-redshift omega values were generated using a parenthesized formula variant `(V₂/R₂ − V₁/R₁) × (R₁/R₂)^1.5` that differs from the canonical Equation 6 `V₂/R₂ − (V₁/R₁) × (R₁/R₂)^1.5`. Under uniform application of the canonical equation, the negative high-z values do not reproduce. Additionally, the KROSS boundary points were found to be template-derived rather than independently measured, disqualifying them from like-for-like cross-epoch comparison. The z=0 SPARC result under the canonical equation is retained.
 
 ---
 

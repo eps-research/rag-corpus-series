@@ -16,6 +16,7 @@ astro_rag_mcp/cli.py
 astro_rag_mcp/config.py
 astro_rag_mcp/corpus_service.py
 astro_rag_mcp/index_text.py
+astro_rag_mcp/omega.py
 astro_rag_mcp/semantic.py
 astro_rag_mcp/server.py
 astro_rag_mcp/static/index.html
@@ -33,9 +34,13 @@ tests/conftest.py
 tests/test_data_and_manuscript.py
 tests/test_ids_and_errors.py
 tests/test_local_llm_bridge.py
+tests/test_omega.py
 tests/test_release_docs.py
 tests/test_semantic_and_integrity.py
+tests/test_semantic_benchmark.py
 tests/test_transport_parity.py
 tools/build_release.py
+tools/corpus_audit.py
 tools/llm_acceptance.py
 tools/make_evidence.py
+tools/semantic_benchmark.py
