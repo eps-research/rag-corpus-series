@@ -37,7 +37,8 @@ from typing import Any, Callable, Optional
 
 import numpy as np
 
-from .config import EMBEDDING_DIM, EMBEDDING_MODEL, EMBEDDING_REVISION, DataLayout
+from .config import (EMBEDDING_DIM, EMBEDDING_MAX_SEQ_LENGTH, EMBEDDING_MODEL,
+                     EMBEDDING_REVISION, DataLayout)
 from .corpus_service import LoadedCorpus, ServiceError, sha256_file
 from .index_text import check_text
 
@@ -244,6 +245,7 @@ class SemanticIndex:
             if rev:
                 kwargs["revision"] = rev
             model = SentenceTransformer(self.model_name, **kwargs)
+            model.max_seq_length = EMBEDDING_MAX_SEQ_LENGTH
             self.model_revision = rev or _resolved_revision(model) or hf_cache_revision(self.model_name)
 
             def encode(texts: list[str]) -> np.ndarray:
@@ -269,14 +271,16 @@ class SemanticIndex:
         for key, ci in self.indexes.items():
             if ci.state != "ok":
                 continue   # a stale index's vectors describe other text; no meaningful probe
-            stored = ci.index.reconstruct(0)
-            got = l2_normalize(self._encoder([ci.texts[0]]))[0]
+            # Probe the longest text: a truncation-length mismatch shows there first.
+            j = max(range(len(ci.texts)), key=lambda k: len(ci.texts[k]))
+            stored = ci.index.reconstruct(j)
+            got = l2_normalize(self._encoder([ci.texts[j]]))[0]
             d2 = float(np.sum((stored - got) ** 2))
-            ci.self_test = {"probe_id": ci.ids[0], "squared_l2": d2, "passed": d2 < SELF_TEST_TOLERANCE}
+            ci.self_test = {"probe_id": ci.ids[j], "squared_l2": d2, "passed": d2 < SELF_TEST_TOLERANCE}
             if d2 >= SELF_TEST_TOLERANCE:
                 ci.state = "failed"
                 ci.reason = (
-                    f"embedding self-test failed: re-embedding '{ci.ids[0]}' differs from its "
+                    f"embedding self-test failed: re-embedding '{ci.ids[j]}' differs from its "
                     f"stored vector (squared L2 {d2:.3g}). The local embedding model does not "
                     "match the one used to build the index."
                 )

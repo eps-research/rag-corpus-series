@@ -2,7 +2,7 @@
   "corpora": {
     "v7": {
       "artifact_sha256": {
-        "v7_sparc.faiss": "544de4964fe90a75480c33475c1e1c65430e74fdf688b171c7c3184f744b39f7",
+        "v7_sparc.faiss": "4ad1296811278670ca71ca50682937cb9f0e012758bd60e932a4951c34ce5f82",
         "v7_sparc_ids.json": "8905d38bfab04883235c16ab69d3b02d18e3e46f78e9ccb5465a5c5f9d7e7e3f",
         "v7_sparc_texts.json": "80262151625951c1733f8c4a173e0e37020800a9b401ac9db5aaa840c5aaca38"
       },
@@ -13,7 +13,9 @@
       "normalized": true,
       "records": 438,
       "source_file": "rotation_curve_corpus_v7.json",
-      "source_sha256": "ce9a4148582dd6c82663ca9b717b71271e67948dd890b0765c33a295b3d76209"
+      "source_sha256": "ce9a4148582dd6c82663ca9b717b71271e67948dd890b0765c33a295b3d76209",
+      "max_seq_length": 512,
+      "vectors_rebuilt": "2026-11-05T00:30:55-0500"
     }
   },
   "schema": 1

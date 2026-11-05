@@ -27,6 +27,9 @@ EMBEDDING_MODEL = os.getenv(
 # Optional Hugging Face revision (commit hash) for the embedding model.
 EMBEDDING_REVISION = os.getenv("ASTRO_RAG_EMBED_REVISION") or None
 EMBEDDING_DIM = 384
+# Word pieces encoded per text. The library default (256) truncated 203 of the
+# 438 v7 texts, cutting their caveats; 512 is the model's position limit.
+EMBEDDING_MAX_SEQ_LENGTH = 512
 
 
 @dataclass(frozen=True)
@@ -142,8 +145,8 @@ CORRECTION_NOTICES: dict[str, str] = {
         "catalogue (v7.3). See CORRECTIONS.md (also in the release)."
     ),
     "dwarf": (
-        "Dwarf/Irregular v1.0 LITTLE THINGS curves (26 galaxies, including all 24 omega-ready "
-        "ones) contain Oh et al. (2015) pseudo-isothermal MODEL rows interleaved with the "
+        "Dwarf/Irregular v1.0 LITTLE THINGS curves (25 of the 26 galaxies, including 23 of the "
+        "24 omega-ready ones) contain Oh et al. (2015) pseudo-isothermal MODEL rows interleaved with the "
         "observed rows and stored as Vrot; summary fields of those records derive from the "
         "combined rows. The observed-only curves are the LITTLE_THINGS records of corpus v7 "
         "(HI v7.3). A corrected Dwarf release is pending. See CORRECTIONS.md (2 October 2026)."

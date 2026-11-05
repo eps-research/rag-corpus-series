@@ -98,7 +98,8 @@ def test_dwarf_little_things_model_rows_flagged(service):
     """Dwarf v1.0 LITTLE THINGS curves carry 839 unmarked model rows in 25 of 26
     galaxies (CORRECTIONS.md, 2 Oct 2026). Every affected record is flagged and
     points to its observed-only curve in v7; no data are changed."""
-    notes = [n for (c, _), n in service.record_notes.items() if c == "dwarf"]
+    notes = [n for (c, _), n in service.record_notes.items()
+             if c == "dwarf" and n.get("status") == "contains_model_rows"]
     assert len(notes) == 25
     assert sum(n["n_model_rows"] for n in notes) == 839
     env = service.call("get_object", corpus="dwarf", object_id="CVnIdwA")

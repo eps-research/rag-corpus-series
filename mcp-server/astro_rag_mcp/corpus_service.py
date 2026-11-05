@@ -286,6 +286,7 @@ class CorpusService:
         if verify_checksums:
             self.verify_checksums()
         self._flag_dwarf_little_things()
+        self._flag_dwarf_derived_fields()
         self._check_omega()
 
     def _check_omega(self) -> None:
@@ -340,6 +341,37 @@ class CorpusService:
                 "observed_curve": {"corpus": "v7", "object_id": vid},
                 "reference": CORRECTIONS_URL + "#2-october-2026",
             }
+
+    def _flag_dwarf_derived_fields(self, frac: float = 0.15, floor: float = 0.003) -> None:
+        """Warn where a stored derived field disagrees with its own inputs.
+
+        Dwarf v1.0 stores mhi_mdyn_ratio next to mhi_log_msun and log_mdyn.
+        The corpus audit found one record (NGC5408) whose stored ratio does not
+        follow from them (tolerance as in tools/corpus_audit.py: 15% of the stored
+        value, at least 0.003). No data are changed; the record gets a warning and a
+        machine-readable note until the corrected Dwarf release.
+        """
+        dwarf = self.corpora.get("dwarf")
+        if not dwarf:
+            return
+        for i, r in enumerate(dwarf.records):
+            try:
+                stored = float(r["mhi_mdyn_ratio"])
+                implied = 10 ** (float(r["mhi_log_msun"]) - float(r["log_mdyn"]))
+            except (KeyError, TypeError, ValueError):
+                continue
+            if abs(stored - implied) <= max(frac * abs(stored), floor):
+                continue
+            self.record_warnings.setdefault(("dwarf", i), []).append(
+                f"Stored mhi_mdyn_ratio = {stored:.3g} does not follow from this record's own "
+                f"mhi_log_msun and log_mdyn, which imply {implied:.3g}. Use the implied value; "
+                "the stored field will be corrected in the next Dwarf release."
+            )
+            self.record_notes.setdefault(("dwarf", i), {
+                "status": "derived_field_inconsistent",
+                "field": "mhi_mdyn_ratio", "stored": stored, "implied": round(implied, 4),
+                "reference": CORRECTIONS_URL,
+            })
 
     def verify_checksums(self) -> dict:
         """Compare data files with data/SHA256SUMS when the file is present.
@@ -629,9 +661,12 @@ class CorpusService:
         if min_val is not None and max_val is not None and min_val > max_val:
             raise ServiceError("INVALID_ARGUMENT", f"min_val ({min_val}) must be <= max_val ({max_val})")
         path = self.resolve_field(lc, field)
-        matches, n_numeric = [], 0
+        matches, n_numeric, n_excluded_flagged = [], 0, 0
         for i, r in enumerate(lc.records):
             if omega_ready_only and not omega_ready(r):
+                continue
+            if omega_ready_only and (self.record_notes.get((corpus, i)) or {}).get("status") == "contains_model_rows":
+                n_excluded_flagged += 1
                 continue
             v = get_path(r, path)
             if isinstance(v, bool) or v is None:
@@ -656,6 +691,7 @@ class CorpusService:
             "max_val": max_val,
             "bounds": "inclusive",
             "omega_ready_only": omega_ready_only,
+            "n_excluded_flagged": n_excluded_flagged,
             "n_total": len(lc.records),
             "n_with_numeric_value": n_numeric,
             "n_matched": len(matches),
@@ -678,6 +714,10 @@ class CorpusService:
         if omega_ready_only and not any(omega_ready(r) for r in lc.records):
             warnings.append(f"No record in '{corpus}' ({lc.spec.name} v{lc.version}) carries a valid "
                             "omega determination, so omega_ready_only returns no objects by construction.")
+        if n_excluded_flagged:
+            warnings.append(f"{n_excluded_flagged} records marked omega_ready were excluded because their "
+                            "curves contain model rows (data_quality = contains_model_rows); their omega "
+                            "readiness is not valid. See get_object for the observed curve in corpus 'v7'.")
         if flagged:
             warnings.append(f"{flagged} matching records carry data_quality flags; "
                             "see get_object for details before using their values.")
