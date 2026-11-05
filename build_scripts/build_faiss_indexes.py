@@ -385,6 +385,7 @@ def main():
 
     model = SentenceTransformer(MODEL, local_files_only=True,
                                 **({"revision": args.revision} if args.revision else {}))
+    model.max_seq_length = 512  # = astro_rag_mcp.config.EMBEDDING_MAX_SEQ_LENGTH (v2.4.2)
     revision = args.revision
     if not revision:
         for mod in model.modules():
