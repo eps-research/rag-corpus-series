@@ -62,8 +62,8 @@ def check_corpus(key: str, records: list[dict]) -> dict[str, Any]:
     value from their stored boundary points, and those points must be rows of
     the record's own curve. Withdrawn records must hold no current value.
     """
-    report: dict[str, Any] = {"available": 0, "withdrawn": 0, "verified": 0, "errors": []}
-    for r in records:
+    report: dict[str, Any] = {"available": 0, "withdrawn": 0, "verified": 0, "errors": [], "failed": {}}
+    for i, r in enumerate(records):
         om = r.get("omega")
         if not isinstance(om, dict):
             continue
@@ -72,22 +72,26 @@ def check_corpus(key: str, records: list[dict]) -> dict[str, Any]:
             report["withdrawn"] += 1
             if om.get("omega_value_rad_gyr") is not None:
                 report["errors"].append(f"{key}:{name}: withdrawn omega still carries a value")
+                report["failed"][i] = report["errors"][-1]
             continue
         report["available"] += 1
         try:
             r1, v1, r2, v2 = (float(om[k]) for k in ("R1_kpc", "V1_kms", "R2_kpc", "V2_kms"))
         except (KeyError, TypeError, ValueError):
             report["errors"].append(f"{key}:{name}: omega has no stored boundary points")
+            report["failed"][i] = report["errors"][-1]
             continue
         stored = om.get("omega_value_rad_gyr")
         recomputed = omega_rad_gyr(r1, v1, r2, v2)
         if stored is None or not math.isclose(float(stored), recomputed, rel_tol=REL_TOL, abs_tol=1e-9):
             report["errors"].append(f"{key}:{name}: stored omega {stored} != canonical {recomputed:.6f}")
+            report["failed"][i] = report["errors"][-1]
             continue
         rows = {(round(float(p["R_kpc"]), 4), round(float(p["Vrot_kms"]), 3))
                 for p in r.get("data") or [] if p.get("R_kpc") is not None and p.get("Vrot_kms") is not None}
         if (round(r1, 4), round(v1, 3)) not in rows or (round(r2, 4), round(v2, 3)) not in rows:
             report["errors"].append(f"{key}:{name}: boundary points are not rows of the measured curve")
+            report["failed"][i] = report["errors"][-1]
             continue
         report["verified"] += 1
     return report

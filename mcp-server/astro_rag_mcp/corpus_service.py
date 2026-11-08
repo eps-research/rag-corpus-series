@@ -293,16 +293,29 @@ class CorpusService:
         """Recompute every stored omega value with the canonical estimator.
 
         A stored value that does not reproduce from its stored boundary points,
-        or whose points are not rows of the measured curve, stops the server
-        (see astro_rag_mcp/omega.py for the validation protocol).
+        or whose points are not rows of the measured curve, is marked
+        UNVERIFIED for that record only: the record carries a warning and a
+        data_quality note, omega_ready_only excludes it, /health reports the
+        server as degraded, and `verify` (used by the release and container
+        builds) fails. The other records and tools keep working (since v2.4.2;
+        earlier versions refused to start). See astro_rag_mcp/omega.py.
         """
         from .omega import check_corpus
 
         self.omega_report = {k: check_corpus(k, c.records) for k, c in self.corpora.items()}
         self.omega_report = {k: v for k, v in self.omega_report.items() if v["available"] or v["withdrawn"]}
-        errors = [e for v in self.omega_report.values() for e in v["errors"]]
-        if errors:
-            raise ValueError("omega integrity check failed: " + "; ".join(errors[:5]))
+        for key, rep in self.omega_report.items():
+            for i, reason in rep.pop("failed", {}).items():
+                self.record_warnings.setdefault((key, i), []).append(
+                    f"The stored omega of this record is UNVERIFIED: {reason.split(': ', 1)[-1]}. "
+                    "Do not use it; the integrity check that guards omega values failed for this record."
+                )
+                self.record_notes[(key, i)] = {"status": "omega_unverified", "reason": reason,
+                                               "reference": CORRECTIONS_URL}
+
+    @property
+    def omega_errors(self) -> list[str]:
+        return [e for v in self.omega_report.values() for e in v["errors"]]
 
     def _flag_dwarf_little_things(self) -> None:
         """Flag Dwarf v1.0 LITTLE THINGS curves that carry interleaved model rows.
@@ -665,7 +678,8 @@ class CorpusService:
         for i, r in enumerate(lc.records):
             if omega_ready_only and not omega_ready(r):
                 continue
-            if omega_ready_only and (self.record_notes.get((corpus, i)) or {}).get("status") == "contains_model_rows":
+            if omega_ready_only and (self.record_notes.get((corpus, i)) or {}).get("status") in (
+                    "contains_model_rows", "omega_unverified"):
                 n_excluded_flagged += 1
                 continue
             v = get_path(r, path)
@@ -716,8 +730,8 @@ class CorpusService:
                             "omega determination, so omega_ready_only returns no objects by construction.")
         if n_excluded_flagged:
             warnings.append(f"{n_excluded_flagged} records marked omega_ready were excluded because their "
-                            "curves contain model rows (data_quality = contains_model_rows); their omega "
-                            "readiness is not valid. See get_object for the observed curve in corpus 'v7'.")
+                            "curves contain model rows or their stored omega failed the integrity check "
+                            "(data_quality = contains_model_rows or omega_unverified); see get_object.")
         if flagged:
             warnings.append(f"{flagged} matching records carry data_quality flags; "
                             "see get_object for details before using their values.")
@@ -833,7 +847,7 @@ class CorpusService:
     def health(self) -> dict:
         sem = self.semantic.status() if self.semantic else {"state": "disabled"}
         loaded = {k: len(c.records) for k, c in self.corpora.items()}
-        healthy = sum(loaded.values()) == EXPECTED_TOTAL
+        healthy = sum(loaded.values()) == EXPECTED_TOTAL and not self.omega_errors
         return {
             "status": "ok" if healthy and sem.get("state") in
                       ("ready", "disabled", "loading", "not_loaded") else "degraded",
@@ -847,6 +861,7 @@ class CorpusService:
             "n_total": sum(loaded.values()),
             "checksums": self.checksum_report,
             "omega_check": {k: {kk: v[kk] for kk in ("available", "verified", "withdrawn")}
+                            | {"unverified": len(v["errors"])}
                             for k, v in self.omega_report.items()},
             "semantic_search": sem,
         }

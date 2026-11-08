@@ -62,11 +62,21 @@ class Check:
     def row(self):
         return {"corpus": self.corpus, "field": self.field, "definition": self.definition,
                 "inputs": self.inputs, "inputs_independent": self.independent,
+                "tolerance": tol_text(self.tol),
                 "checked": self.n, "failed": self.fail, "examples": self.examples}
 
 
 def rel(frac, floor=0.0):
-    return lambda v: max(abs(v) * frac, floor)
+    f = lambda v: max(abs(v) * frac, floor)  # noqa: E731
+    f.desc = f"{frac * 100:g}% relative" + (f", at least {floor:g}" if floor else "")
+    return f
+
+
+def tol_text(t) -> str:
+    """Human-readable tolerance for the report tables."""
+    if callable(t):
+        return getattr(t, "desc", "relative")
+    return "exact" if t == 0 else f"{t:g} absolute"
 
 
 def audit_curves(key, recs, vcols, checks, notes):
@@ -126,10 +136,18 @@ def audit(layout):
         if r.get("mhi_log_msun") is not None and r.get("log_mdyn") is not None:
             c2.test(r["galaxy"], r.get("mhi_mdyn_ratio"), 10 ** (r["mhi_log_msun"] - r["log_mdyn"]))
     checks += [c, c2]
-    n_ready = sum(1 for r in dw if r.get("omega_ready"))
-    notes.append({"corpus": "dwarf", "note": f"omega_ready is true for {n_ready} of {len(dw)} records, all "
-                  "LITTLE THINGS curves that contain unmarked model rows (flagged by the server); "
-                  "no omega values are stored in Dwarf v1.0."})
+    # Model-row detection is the server's own (comparison with the observed v7.3 curves).
+    from astro_rag_mcp.corpus_service import CorpusService  # noqa: E402
+    svc = CorpusService(layout)
+    svc.load()
+    flagged = {i for (k, i), v in svc.record_notes.items()
+               if k == "dwarf" and v.get("status") == "contains_model_rows"}
+    ready = [i for i, r in enumerate(dw) if r.get("omega_ready")]
+    n_lt = sum(1 for r in dw if "LITTLE" in str(r.get("survey", "")).upper())
+    notes.append({"corpus": "dwarf", "note": f"{len(flagged)} of the {n_lt} LITTLE THINGS curves contain "
+                  f"unmarked model rows (flagged by the server); omega_ready is true for {len(ready)} of "
+                  f"{len(dw)} records, {sum(i in flagged for i in ready)} of them among the flagged curves. "
+                  "No omega values are stored in Dwarf v1.0."})
 
     # ── gc: Harris (2010) derived columns ──
     gc = load(layout, "gc")
@@ -217,8 +235,10 @@ def main(argv=None):
               "n_checks": len(rows), "n_values": sum(r["checked"] for r in rows),
               "n_failed": sum(r["failed"] for r in rows)}
     Path(a.out + ".json").write_text(json.dumps(report, indent=2), encoding="utf-8")
-    md = ["| Corpus | Field | Definition | Values checked | Mismatches |", "|---|---|---|---|---|"]
-    md += [f"| {r['corpus']} | `{r['field']}` | {r['definition']} | {r['checked']} | {r['failed']} |" for r in rows]
+    md = ["| Corpus | Field | Definition | Inputs | Tolerance | Values checked | Mismatches |",
+          "|---|---|---|---|---|---|---|"]
+    md += [f"| {r['corpus']} | `{r['field']}` | {r['definition']} | {r['inputs']} | {r['tolerance']} | "
+           f"{r['checked']} | {r['failed']} |" for r in rows]
     md += ["", "**omega:** " + "; ".join(f"{k}: {v['verified']} of {v['available']} available values reproduce "
                                          f"from measured rings, {v['withdrawn']} withdrawn, {len(v['errors'])} errors"
                                          for k, v in omega.items())]

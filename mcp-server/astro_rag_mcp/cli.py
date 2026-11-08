@@ -73,7 +73,11 @@ def main(argv: list[str] | None = None) -> int:
         failed = [k for k, i in idx.items() if i["state"] == "failed"]
         stale = [k for k, i in idx.items() if i["state"] == "stale"]
         model_ok = (not args.with_model) or sem.get("state") in ("ready", "degraded")
-        ok = report["n_total"] == 2064 and not failed and model_ok and not (args.strict and stale)
+        omega_bad = service.omega_errors
+        ok = (report["n_total"] == 2064 and not failed and model_ok and not (args.strict and stale)
+              and not omega_bad)
+        for e in omega_bad:
+            print(f"ERROR: omega integrity: {e}", file=sys.stderr)
         for k in stale:
             print(f"WARNING: semantic index '{k}' is STALE; semantic_search on '{k}' is refused "
                   f"until it is rebuilt: {idx[k]['reason']}", file=sys.stderr)
