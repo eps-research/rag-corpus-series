@@ -1,4 +1,4 @@
-# EPS Research Astro-RAG MCP Server 2.4.1
+# EPS Research Astro-RAG MCP Server 2.4.2
 
 A Model Context Protocol (MCP) server, REST API and browser interface for five
 DOI-versioned astrophysical kinematic corpora (2,064 objects, z = 0 to 5.68),
@@ -132,7 +132,7 @@ ASTRO_RAG_TEST_REAL_MODEL=1 pytest             # also run the real-model test (d
 
 ## Citation
 
-Flynn, D. C. (2026). *EPS Research Astro-RAG MCP Server* (v2.4.1). Zenodo.
+Flynn, D. C. (2026). *EPS Research Astro-RAG MCP Server* (v2.4.2). Zenodo.
 Machine-readable citation: [CITATION.cff](CITATION.cff).
 
 Flynn, D. C. (2026). Astro-RAG MCP Server: AI-native, reproducible access to

@@ -1,5 +1,31 @@
 # Changelog
 
+## 2.4.2 — 2026-11 (response to Reviewer 3, second round, manuscript 2001275)
+
+Zenodo: 10.5281/zenodo.24095713. No DOI-versioned corpus data were changed.
+
+- **Embedding truncation fixed.** The encoder now reads up to 512 word pieces
+  (the model's position limit) in the server and the index builder; the
+  library default of 256 had truncated 203 of the 438 `v7` index texts, cutting
+  their caveats. The `v7` index was rebuilt; the other four were unaffected.
+  Tests check that no index text exceeds the limit and that the longest text of
+  each corpus re-embeds to its stored vector; the start-up self-test uses it.
+- **Flagged records.** `omega_ready_only` excludes records whose curves contain
+  LITTLE THINGS model rows (23 of the 24 Dwarf records marked `omega_ready`) and
+  says so in a warning. Dwarf NGC5408 carries a record warning and a
+  machine-readable note: its stored `mhi_mdyn_ratio` (0.026) disagrees with its
+  own inputs (0.066). Corrected counts: 25 of the 26 LITTLE THINGS curves.
+- **omega: per-record handling.** A stored omega that fails the start-up check
+  is marked UNVERIFIED for that record (warning, `data_quality` note, excluded
+  from `omega_ready_only`); `/health` reports degraded and `verify` fails, so
+  release and container builds still stop. Earlier versions refused to start.
+- **omega: literature anchor.** CI recomputes the 84 SPARC omega values
+  published by Flynn & Cannaliato (2025, Table 2) from the stored rings.
+- **Corpus audit report.** Lists definition, inputs and tolerance for each of
+  the 25 checks; the Dwarf note derives its counts from the data.
+- Derived-field warning on records whose fields come from scaling relations or
+  extrapolation.
+
 ## 2.4.1 — 2026-10 (response to Reviewer 3, manuscript 2001275)
 
 - **omega validation protocol.** One canonical implementation

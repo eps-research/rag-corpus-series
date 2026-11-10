@@ -59,7 +59,7 @@ In Claude (web or desktop), add it under *Settings → Connectors → Add custom
 ### 1. Get the files
 
 Either download and **extract** the release ZIP
-(`astro-rag-mcp-server-2.4.1.zip`, Zenodo), or clone the repository:
+(`astro-rag-mcp-server-2.4.2.zip`, Zenodo), or clone the repository:
 
 ```bash
 git clone https://github.com/eps-research/rag-corpus-series.git
@@ -87,13 +87,13 @@ From the `mcp-server` folder (the one containing `launch.py`):
 
 ```powershell
 # Windows (PowerShell)
-cd C:\path\to\astro-rag-mcp-server-2.4.1
+cd C:\path\to\astro-rag-mcp-server-2.4.2
 python launch.py
 ```
 
 ```bash
 # Ubuntu
-cd ~/astro-rag-mcp-server-2.4.1
+cd ~/astro-rag-mcp-server-2.4.2
 python3 launch.py
 ```
 
