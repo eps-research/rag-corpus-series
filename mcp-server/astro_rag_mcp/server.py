@@ -152,8 +152,9 @@ def build_mcp(service: CorpusService, host: str = "127.0.0.1", port: int = 8080)
 
     @mcp.tool(description="Natural-language similarity search over curated record summaries using "
                           "FAISS (all-MiniLM-L6-v2, exact IndexFlatL2). corpus may be one key or 'all'. "
-                          "Returns ranked IDs with squared-L2 scores (lower = closer). A discovery aid: "
-                          "confirm values with get_object.")
+                          "Returns IDs ranked within each corpus, with squared-L2 scores (lower = closer). "
+                          "With 'all', each corpus returns its own top_k, grouped by corpus; scores are "
+                          "not comparable across corpora. A discovery aid: confirm values with get_object.")
     async def semantic_search(
         corpus: Annotated[str, Field(description="v7, dwarf, gc, intz, z1 or all")],
         query: Annotated[str, Field(description="Natural-language description")],
@@ -262,7 +263,7 @@ def build_app(service: CorpusService, host: str = "127.0.0.1", port: int = 8080)
             omega_ready_only=omega_ready_only, limit=limit, offset=offset))
 
     @app.get("/api/semantic_search", tags=["Search"])
-    def api_semantic_search(corpus: str = Query(..., description="Corpus key or 'all'"),
+    def api_semantic_search(corpus: str = Query(..., description="Corpus key, or 'all' for each corpus's own top_k, grouped by corpus"),
                             query: str = Query(...), top_k: int = Query(5, ge=1, le=50)):
         return respond(service.call("semantic_search", corpus=corpus, query=query, top_k=top_k))
 

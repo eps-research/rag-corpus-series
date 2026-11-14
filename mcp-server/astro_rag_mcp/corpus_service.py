@@ -789,11 +789,13 @@ class CorpusService:
             )
         hits, excluded = self.semantic.search(keys, query, int(top_k))   # may raise ServiceError
         results = []
+        rank_in = {}
         for h in hits:
             lc = self.corpora[h["corpus"]]
             row = lc.by_id.get(h["id"])
+            rank_in[h["corpus"]] = rank_in.get(h["corpus"], 0) + 1
             results.append({
-                "rank": len(results) + 1,
+                "rank": rank_in[h["corpus"]],
                 "corpus": h["corpus"],
                 "id": h["id"],
                 "object_id": h["id"],
@@ -809,6 +811,10 @@ class CorpusService:
             "n_returned": len(results),
             "metric": "squared L2 distance between unit-normalised MiniLM embeddings (lower = closer); "
                       "cosine_similarity = 1 - score/2",
+            "ranking": "within corpus: rank and score order results inside one corpus only. With "
+                       "corpus='all' each searchable corpus returns its own top_k, grouped by corpus; "
+                       "scores from different corpora are not on a common scale and are not ranked "
+                       "against each other.",
             "embedding_model": self.semantic.model_name,
             "index_sha256": {k: self.semantic.index_sha256(k) for k in keys},
             "results": results,
@@ -816,8 +822,13 @@ class CorpusService:
             "excluded_corpora": excluded,
         }
         warnings = [f"Corpus '{k}' was not searched: {why}" for k, why in excluded.items()]
-        human = f"Top {len(results)} semantic matches for '{query}' in {corpus}:\n" + "\n".join(
-            f"{r['rank']}. {r['id']} ({r['corpus']}) score={r['score']:.3f}" for r in results
+        if len(keys) > 1:
+            human = (f"Top {int(top_k)} semantic matches per corpus for '{query}' (grouped by corpus; "
+                     f"scores are not comparable across corpora):\n")
+        else:
+            human = f"Top {len(results)} semantic matches for '{query}' in {corpus}:\n"
+        human += "\n".join(
+            f"{r['corpus']} {r['rank']}. {r['id']} score={r['score']:.3f}" for r in results
         )
         if warnings:
             human += "\nWARNING: " + " ".join(warnings)

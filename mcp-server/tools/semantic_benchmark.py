@@ -9,7 +9,19 @@ its main criterion only (where a query has two parts). Both systems rank the
 same index texts (faiss/<stem>_texts.json) within the query's corpus.
 
 Metrics per query (k = 10): P@5, P@10, R@10 (recall against min(|rel|, 10),
-so large relevant sets are not penalised), nDCG@10 (graded), MRR.
+so large relevant sets are not penalised), nDCG@10 (graded), MRR, and
+chance-corrected nDCG@10 (nDCG@10 minus the random-ranking expectation).
+
+Systems: MiniLM + FAISS (as served), Okapi BM25, a hybrid that fuses the two
+full rankings by reciprocal rank fusion (RRF, k = 60; Cormack et al. 2009),
+and random ranking (mean of 200 draws).
+
+Uncertainty (per-query scores are paired across systems): 95 % percentile
+intervals on the mean difference in nDCG@10 from a paired bootstrap over
+queries (10,000 resamples), and two-sided p-values from a paired sign-flip
+permutation test (100,000 random sign assignments). Both use fixed seeds. The
+results are also stratified by base rate (fraction of the corpus that is
+relevant), because queries with large relevant sets barely discriminate.
 
 Usage:
   python tools/semantic_benchmark.py                 # MiniLM (needs the model) and BM25
@@ -168,18 +180,27 @@ def run(service, systems: list[str], seed: int = 0) -> dict:
             grade[oid] = 2 if p2(r) else (1 if p1 and p1(r) else 0)
         n2, n1 = sum(v == 2 for v in grade.values()), sum(v == 1 for v in grade.values())
         row = {"id": qid, "corpus": corpus, "query": text, "n_docs": len(grade), "n_grade2": n2, "n_grade1": n1}
+        full = {}
         if "minilm" in systems:
-            hits, _ = sem.search([corpus], text, K)
-            row["minilm"] = metrics([h["id"] for h in hits], grade)
-            row["minilm_top"] = [h["id"] for h in hits[:5]]
+            hits, _ = sem.search([corpus], text, len(ci.ids))
+            full["minilm"] = [h["id"] for h in hits]
+            row["minilm"] = metrics(full["minilm"], grade)
+            row["minilm_top"] = full["minilm"][:5]
         if "bm25" in systems:
             if corpus not in bm25:
                 bm25[corpus] = BM25(ci.texts)
-            row["bm25"] = metrics([ci.ids[i] for i in bm25[corpus].rank(text, K)], grade)
+            full["bm25"] = [ci.ids[i] for i in bm25[corpus].rank(text, len(ci.ids))]
+            row["bm25"] = metrics(full["bm25"], grade)
+        if "hybrid" in systems:
+            row["hybrid"] = metrics(rrf([full["minilm"], full["bm25"]]), grade)
+        row["base_rate"] = (n2 or n1) / len(grade)
         rnd = [metrics(rng.sample(ci.ids, K), grade) for _ in range(200)]
         row["random"] = {m: statistics.fmean(x[m] for x in rnd) for m in rnd[0]}
         out["queries"].append(row)
-    ms = ("P@5", "P@10", "R@10", "nDCG@10", "MRR")
+    for q in out["queries"]:
+        for sy in out["systems"]:
+            q[sy]["cnDCG@10"] = q[sy]["nDCG@10"] - q["random"]["nDCG@10"]
+    ms = ("P@5", "P@10", "R@10", "nDCG@10", "MRR", "cnDCG@10")
     out["mean"] = {s: {m: statistics.fmean(q[s][m] for q in out["queries"]) for m in ms} for s in out["systems"]}
     for q in out["queries"]:
         q["kind"] = "numeric" if q["id"] in NUMERIC else "categorical"
@@ -187,11 +208,59 @@ def run(service, systems: list[str], seed: int = 0) -> dict:
         kind: {s: {m: statistics.fmean(q[s][m] for q in out["queries"] if q["kind"] == kind) for m in ms}
                for s in out["systems"]}
         for kind in ("categorical", "numeric")}
+    out["strata"] = {}
+    for name, lo, hi in STRATA:
+        qs = [q for q in out["queries"] if lo <= q["base_rate"] < hi]
+        if qs:
+            out["strata"][name] = {"n": len(qs), **{s: {m: statistics.fmean(q[s][m] for q in qs)
+                                                        for m in ("nDCG@10", "cnDCG@10")}
+                                                    for s in out["systems"]}}
+    out["paired"] = paired_stats(out)
+    return out
+
+
+# Base-rate strata: fraction of the corpus that satisfies the request.
+STRATA = (("base rate < 5%", 0.0, 0.05), ("5-20%", 0.05, 0.20), ("> 20%", 0.20, 1.01))
+
+RRF_K = 60
+
+
+def rrf(rankings: list[list[str]], k: int = RRF_K) -> list[str]:
+    """Reciprocal rank fusion (Cormack, Clarke & Buettcher 2009) of full rankings."""
+    score: dict[str, float] = {}
+    for rk in rankings:
+        for i, x in enumerate(rk):
+            score[x] = score.get(x, 0.0) + 1.0 / (k + i + 1)
+    return sorted(score, key=lambda x: (-score[x], x))
+
+
+def paired_stats(res: dict, metric: str = "nDCG@10", n_boot: int = 10_000,
+                 n_perm: int = 100_000, seed: int = 0) -> list[dict]:
+    """Paired bootstrap CI and sign-flip permutation p for mean differences."""
+    sysnames = [s for s in res["systems"] if s != "random"]
+    pairs = [(a, b) for i, a in enumerate(sysnames) for b in sysnames[i + 1:]]
+    pairs += [(a, "random") for a in sysnames]
+    out = []
+    for subset in ("all", "categorical", "numeric"):
+        qs = [q for q in res["queries"] if subset == "all" or q["kind"] == subset]
+        n = len(qs)
+        for a, b in pairs:
+            d = [q[a][metric] - q[b][metric] for q in qs]
+            mean = statistics.fmean(d)
+            rng = random.Random(seed)
+            boots = sorted(statistics.fmean(rng.choices(d, k=n)) for _ in range(n_boot))
+            lo, hi = boots[int(0.025 * n_boot)], boots[int(0.975 * n_boot) - 1]
+            rng = random.Random(seed + 1)
+            obs = abs(mean)
+            ge = sum(abs(statistics.fmean(x if rng.random() < 0.5 else -x for x in d)) >= obs - 1e-12
+                     for _ in range(n_perm))
+            out.append({"subset": subset, "n": n, "a": a, "b": b, "metric": metric,
+                        "mean_diff": mean, "ci95": [lo, hi], "p_perm": (ge + 1) / (n_perm + 1)})
     return out
 
 
 def markdown(res: dict) -> str:
-    ms = ("P@5", "P@10", "R@10", "nDCG@10", "MRR")
+    ms = ("P@5", "P@10", "R@10", "nDCG@10", "MRR", "cnDCG@10")
     lines = [f"Mean over {len(res['queries'])} queries (k = {res['k']}):", "",
              "| System | " + " | ".join(ms) + " |", "|---|" + "---|" * len(ms)]
     for s in res["systems"]:
@@ -201,6 +270,16 @@ def markdown(res: dict) -> str:
     for kind, d in res["mean_by_kind"].items():
         n = sum(q["kind"] == kind for q in res["queries"])
         lines.append(f"| {kind} | {n} | " + " | ".join(f"{d[s]['nDCG@10']:.2f}" for s in res["systems"]) + " |")
+    lines += ["", "nDCG@10 (chance-corrected) by base rate:", "",
+              "| Stratum | n | " + " | ".join(res["systems"]) + " |", "|---|---|" + "---|" * len(res["systems"])]
+    for name, d in res["strata"].items():
+        lines.append(f"| {name} | {d['n']} | " + " | ".join(
+            f"{d[s]['nDCG@10']:.2f} ({d[s]['cnDCG@10']:+.2f})" for s in res["systems"]) + " |")
+    lines += ["", "Paired differences in nDCG@10 (bootstrap 95% CI, sign-flip permutation p):", "",
+              "| Subset | n | A - B | mean diff | 95% CI | p |", "|---|---|---|---|---|---|"]
+    for r in res["paired"]:
+        lines.append(f"| {r['subset']} | {r['n']} | {r['a']} - {r['b']} | {r['mean_diff']:+.3f} | "
+                     f"[{r['ci95'][0]:+.3f}, {r['ci95'][1]:+.3f}] | {r['p_perm']:.3f} |")
     lines += ["", "| Query | Corpus | relevant (grade 2 / 1) | " + " | ".join(f"{s} nDCG@10" for s in res["systems"]) + " |",
               "|---|---|---|" + "---|" * len(res["systems"])]
     for q in res["queries"]:
@@ -211,7 +290,7 @@ def markdown(res: dict) -> str:
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("--systems", default="minilm,bm25")
+    ap.add_argument("--systems", default="minilm,bm25,hybrid")
     ap.add_argument("--data-dir")
     ap.add_argument("--out", default="semantic_benchmark")
     a = ap.parse_args(argv)

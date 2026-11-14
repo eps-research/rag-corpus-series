@@ -349,10 +349,13 @@ class SemanticIndex:
                 d = float(d)
                 hits.append({"corpus": k, "id": ci.ids[i], "score": round(d, 6),
                              "cosine_similarity": round(1.0 - d / 2.0, 6), "text": ci.texts[i]})
-        # Deterministic order: distance, then corpus order, then ID.
+        # Distances from indexes built on different text templates are not on a
+        # common scale, so corpora are never ranked against each other: each
+        # corpus contributes its own top_k, ranked within that corpus, and the
+        # groups follow the order of ``keys``.
         order = {k: n for n, k in enumerate(keys)}
-        hits.sort(key=lambda h: (h["score"], order[h["corpus"]], h["id"]))
-        return hits[:top_k], excluded
+        hits.sort(key=lambda h: (order[h["corpus"]], h["score"], h["id"]))
+        return hits, excluded
 
 
 def hf_cache_revision(model_name: str, cache_dir: Optional[str] = None) -> Optional[str]:

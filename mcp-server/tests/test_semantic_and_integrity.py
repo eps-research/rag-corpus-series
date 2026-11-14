@@ -75,10 +75,10 @@ def test_record_text_retrieves_itself(service, key):
 
 
 def test_results_resolve_with_get_object(service):
-    env = service.call("semantic_search", corpus="all", query="rotating disk", top_k=20)
-    assert env["success"] and env["data"]["n_returned"] == 20
-    scores = [r["score"] for r in env["data"]["results"]]
-    assert scores == sorted(scores)
+    env = service.call("semantic_search", corpus="all", query="rotating disk", top_k=4)
+    assert env["success"]
+    ok_keys = [k for k, ci in service.semantic.indexes.items() if ci.state == "ok"]
+    assert env["data"]["n_returned"] == 4 * len(ok_keys)
     for r in env["data"]["results"]:
         got = service.call("get_object", corpus=r["corpus"], object_id=r["id"])
         assert got["success"] and got["data"]["object_id"] == r["id"]

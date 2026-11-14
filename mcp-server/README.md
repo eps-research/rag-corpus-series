@@ -58,7 +58,10 @@ never a silent empty result.
 
 **Semantic search** scores are squared L2 distances between unit-normalised
 embeddings (lower = closer; `cosine_similarity = 1 − score/2`). Ranks are a
-discovery aid; take values from `get_object`.
+discovery aid; take values from `get_object`. Ranks and scores are compared
+within one corpus only: with `corpus=all`, each corpus returns its own `top_k`,
+grouped by corpus, because distances from indexes with different text templates
+are not on a common scale.
 
 ## Reliability checks at start-up
 
@@ -119,7 +122,7 @@ FAISS files, `SHA256SUMS`), `RELEASE.json` and a top-level `SHA256SUMS`.
 |---|---|
 | `tests/test_omega.py` | omega estimator against analytic cases (Keplerian = 0, solid body, flat), served values, defect injection |
 | `tools/corpus_audit.py` | every derived field of the five corpora recomputed from its inputs; definitional notes |
-| `tools/semantic_benchmark.py` | 25 judged discovery queries: MiniLM + FAISS vs BM25 vs random (P@k, R@10, nDCG@10, MRR) |
+| `tools/semantic_benchmark.py` | 25 judged discovery queries: MiniLM + FAISS vs BM25 vs RRF hybrid vs random (P@k, R@10, nDCG@10, MRR, chance-corrected nDCG); paired bootstrap and permutation test; base-rate strata |
 | `tools/llm_acceptance.py` | a real local LLM answering fixed questions through MCP |
 | `../check_omega_formula.py` | rejects the superseded omega forms in source code (run in CI) |
 
