@@ -35,7 +35,11 @@ tests/test_data_and_manuscript.py
 tests/test_ids_and_errors.py
 tests/test_local_llm_bridge.py
 tests/test_omega.py
+tests/test_omega_published_sparc.py
 tests/test_release_docs.py
+tests/test_round3_flags.py
+tests/test_round3_omega_degrade.py
+tests/test_round3_seq.py
 tests/test_semantic_and_integrity.py
 tests/test_semantic_benchmark.py
 tests/test_transport_parity.py

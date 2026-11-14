@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.4.3 — 2026-11 (response to Reviewer 3, third round, manuscript 2001275)
+
+Zenodo: 10.5281/zenodo.24215066. No DOI-versioned corpus data or indexes were changed.
+
+- **`semantic_search` with `corpus=all`.** Each searchable corpus returns its
+  own `top_k`, ranked within that corpus and grouped in corpus order. Earlier
+  versions sorted squared-L2 distances across corpora, although indexes built
+  from different text templates do not share a distance scale. The response
+  states the rule (`data.ranking`); new tests check the grouping and that each
+  group equals the single-corpus result.
+- **Retrieval benchmark.** Adds a hybrid system (reciprocal rank fusion of the
+  MiniLM and BM25 rankings, k = 60), chance-corrected nDCG@10, paired bootstrap
+  intervals and paired sign-flip permutation tests over queries, and base-rate
+  strata. The MiniLM, BM25 and random scores are unchanged.
+
 ## 2.4.2 — 2026-11 (response to Reviewer 3, second round, manuscript 2001275)
 
 Zenodo: 10.5281/zenodo.24095713. No DOI-versioned corpus data were changed.

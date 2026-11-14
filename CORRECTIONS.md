@@ -1,5 +1,23 @@
 # Corrections Log
 
+## 14 November 2026 — Index of superseded public artifacts (MCP server v2.4.3)
+
+This index lists every public artifact known to have carried a superseded state,
+with the release that corrects it. Details are in the dated sections below and
+in Appendix A of the MCP server paper (Frontiers manuscript 2001275).
+
+| Artifact | Superseded state | Corrected in |
+|---|---|---|
+| Milky Way GC corpus v1.0–v1.3.3 | fixed-width Harris columns parsed by whitespace splitting; fields shifted | GC v1.4.0 (127 of 174 records, 1,360 values changed) |
+| Z1 corpus, eight Tier-1 ALPINE ω values | computed with the superseded form `(V2/R2 − V1/R1)(R1/R2)^1.5`; all negative | 4 August 2026; canonical form, all eight positive (four within 2σ of zero) |
+| IntZ corpus, 166 KROSS ω values | boundary points built from integrated quantities, not measured rings | 4 August 2026; withdrawn (legacy fields only) |
+| EPS Research Astro-RAG Platform descriptor (arXiv:2605.30384, earlier version) | reported the cross-epoch ω sign reversal | withdrawn; correction note 10.5281/zenodo.21833480 |
+| HI corpus v7.0–v7.1 | 839 LITTLE THINGS model rows stored as observed velocities (25 of 26 curves) | HI v7.2; WALLABY re-sourced to WKAPP models in v7.3 |
+| Dwarf/Irregular corpus v1.0 | same LITTLE THINGS model rows (25 records); NGC5408 `mhi_mdyn_ratio` 0.026 vs 0.066 from its own inputs | flagged and warned by the MCP server since v2.4.2; corrected Dwarf release pending |
+| MCP server v2.3.0, `v7` FAISS index | built from HI v7.0 while v7.3 was served | MCP server v2.4.0 (index rebuilt; start-up freshness check) |
+| MCP server ≤ v2.4.1, `v7` FAISS index | 203 of 438 index texts truncated at 256 word pieces, cutting their caveats | MCP server v2.4.2 (512 word pieces; index rebuilt) |
+| MCP server v2.3.0–v2.4.2, `semantic_search` with `corpus=all` | ranked results from different corpora by raw distance, although the indexes do not share a scale | MCP server v2.4.3 (per-corpus groups) |
+
 ## 4 August 2026 — Cross-Epoch Omega Formula Correction
 
 **Severity:** Result-changing  
@@ -214,3 +232,4 @@ SPARC (175 galaxies, no duplicate radii), THINGS, WALLABY, the SPARC N = 84 benc
 5. **GC v1.4.0:** the build reproduces from the committed scripts and its arithmetic and census were
    checked; this is not an independent re-audit of every source measurement.
 6. **The MCP server's live deployment** has not yet been updated or tested against this release.
+   (Resolved: the hosted server runs the current release; see the index at the top of this file.)
